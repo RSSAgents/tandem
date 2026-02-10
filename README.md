@@ -34,7 +34,7 @@ Follow these instructions to set up the project locally for development and test
 
 1.  **Install Node.js** if you haven't already
 2.  **Clone the project repository** to your local machine (https://github.com/RSSAgents/final-project.git)
-3.  **Go to folder final-project** - cd final-project
+3.  **Go to folder final-project** - cd tandem
 4.  **Install all dependencies:** - npm install (npm i)
 5.  **Create a new branch** for your feature development:
 
