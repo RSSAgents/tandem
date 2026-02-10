@@ -10,6 +10,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 
 - **Team Lead - Mentor** | Shakhzod |(https://github.com/Shakhzod235)
 - **Mentor** | Diana |(https://github.com/bt-diana)
+- **Mentor** | Khayitbek | (https://github.com/Khayitbek03)
 - **Developer** | Fayzullo | (https://github.com/Fayzullo05)
 - **Developer** | Ilia | (https://github.com/D15ND)
 - **Developer** | Margarita| (https://github.com/solarsungai)
@@ -39,7 +40,7 @@ Follow these instructions to set up the project locally for development and test
 
         git checkout development
         git pull origin development
-        git checkout -b feature/your-feature-name (or fix/your-feature-name)
+        git checkout -b feature/your-feature-name (or fix/your-fix-name)
 
     --
     ❗❗❗ _Always create feature/fix branches from the `development` branch, not from `main`_.
@@ -52,8 +53,10 @@ We follow a Git Flow-inspired model:
 - `development` – integration branch for completed features.
 - `feature/*` – new feature branches from `development` branch (e.g., `feature/auth-page`).
 - `fix/*` – bug fixes from `development` branch (e.g., `fix/header-bug`)
+- `docs/*` – documentation updates only (e.g., `docs/update-readme`)
+- `chore/*` – maintenance tasks, no functionality changes (e.g., `chore/package-updates`)
 
-All changes are merged into `development` via **Pull Requests**, which require at least one **approval from another team member** (or mentor) and passing CI checks. This ensures code review and collective ownership.
+All changes are merged into `development` via **Pull Requests**, which require at least 3 team members and 1 mentor and passing CI checks. This ensures code review and collective ownership.
 
 ❗❗❗ Merging into `main`: Only permitted when the application is release-ready.
 ❗❗❗ No direct pushes to `development` branch. PR → review → merge (PR can only be merged when all tests pass successfully.)
