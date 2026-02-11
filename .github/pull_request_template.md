@@ -19,14 +19,10 @@ Closes #<!-- ISSUE_NUMBER -->
 
 ## 🖼️ UI Screenshots
 
-<!-- If your changes affect the UI, add Before/After screenshots or a screen recording.
+<!-- If your changes affect the UI, add screenshots.
      Drag and drop images directly into this text box to upload them. -->
 
 > ⚠️ Required for any PR that modifies UI components, layouts, or styles. Delete this section if not applicable.
-
-| Before | After |
-|--------|-------|
-| _screenshot_ | _screenshot_ |
 
 ---
 
