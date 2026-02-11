@@ -4,6 +4,7 @@ import importPlugin from 'eslint-plugin-import'
 import unusedImports from 'eslint-plugin-unused-imports'
 import perfectionist from 'eslint-plugin-perfectionist'
 import { defineConfig } from 'eslint/config'
+import prettier from 'eslint-config-prettier'
 
 export default defineConfig([
   {
@@ -18,6 +19,7 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
+      prettier,
     ],
 
     rules: {
