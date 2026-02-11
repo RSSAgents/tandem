@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-cd tandem
-
-npx lint-staged
-npm run typecheck
