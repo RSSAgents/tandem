@@ -1,42 +1,21 @@
-## 📋 Summary
+1. **Summary:** _What changed, and why?_
 
-<!-- Provide a concise description of what this PR does and why. Reference the problem being solved.
-     Example: "Adds lazy loading to the product image gallery to reduce initial page load time." -->
+2. **Linked Issue:** Closes #
 
-_What changed, and why?_
-
----
-
-## 🔗 Linked Issue
-
-<!-- Every PR should be tied to a GitHub Issue. Use the magic closing keyword so the issue closes automatically when this PR is merged. -->
-
-Closes #<!-- ISSUE_NUMBER -->
-
-> 💡 Tip: Use `Closes`, `Fixes`, or `Resolves` followed by the issue number to auto-close it on merge.
+3. **UI Screenshots:** If applicable
 
 ---
 
-## 🖼️ UI Screenshots
+### PR Checklist
 
-<!-- If your changes affect the UI, add screenshots.
-     Drag and drop images directly into this text box to upload them. -->
-
-> ⚠️ Required for any PR that modifies UI components, layouts, or styles. Delete this section if not applicable.
-
----
-
-## ✅ PR Checklist
-
-### Code Quality
+#### Code Quality
 - [ ] My code follows the team's style guide and conventions
-- [ ] I have performed a self-review of my own code
-- [ ] I have removed all debug logs, `console.log`, and commented-out code
+- [ ] I have removed all debug logs, and commented-out code
 - [ ] No hardcoded secrets, tokens, or environment-specific values
+- [ ] No type assertions are used in the code.
+- [ ] There is no explicit use of the any type in the code.
 
-### Testing
+#### Testing
 - [ ] I have added or updated unit tests to cover my changes
 - [ ] All existing tests pass locally
 - [ ] Edge cases and error states have been considered and handled
-
----
