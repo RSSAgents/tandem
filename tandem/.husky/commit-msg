@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+cd tandem
+
+npx --no -- commitlint --edit "$1"
