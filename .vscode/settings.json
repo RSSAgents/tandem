@@ -25,7 +25,7 @@
   // --- Files ---
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true,
+  "files.trimFinalNewlines": false,
 
   // --- TypeScript ---
   "typescript.preferences.importModuleSpecifier": "relative",
