@@ -13,17 +13,12 @@
 
 ## Getting Started
 
-- **Install dependencies**
-  npm install
+- **Install dependencies**: npm install
 
-- **Start development server**
-  npm run dev
+- **Start development server**: npm run dev
 
-- **Build for production**
-  npm run build
+- **Build for production**: npm run build
 
-- **Preview production build**
-  npm run preview
+- **Preview production build**: npm run preview
 
-- **Run linter**
-  npm run lint
+- **Run linter**: npm run lint
