@@ -5,9 +5,9 @@
     "frontend"
   ],
   "scripts": {
-    "prepare": "husky install",
-    "lint": "npm run lint -w frontend",
-    "typecheck": "npm run typecheck -w frontend",
+    "prepare": "husky",
+    "lint": "npm run lint --workspace=frontend",
+    "typecheck": "npm run typecheck --workspace=frontend",
     "format": "prettier . --write",
     "format:check": "prettier . --check"
   },
