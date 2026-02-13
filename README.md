@@ -91,53 +91,53 @@ We follow the RS School Conventional Commits specification.
 ```
 src/
 ├── api/                      # API Service Layer
-│   ├── client.ts            # Axios instance с базовой конфигурацией
+│   ├── client.ts            # Axios instance with base configuration
 │   ├── auth.api.ts          # login, register, logout
 │   ├── dashboard.api.ts     # getStats, getHistory
 │   ├── widgets.api.ts       # getWidgetById, validateAnswer
 │   └── ai.api.ts            # sendMessage, startSession
 │
 ├── components/
-│   ├── ui/                  # Переиспользуемые UI
+│   ├── ui/                  # Reusable UI components
 │   │   ├── Button.tsx
 │   │   ├── Input.tsx
 │   │   └── Card.tsx
 │   │
-│   ├── layout/              # Layout компоненты
+│   ├── layout/              # Layout components
 │   │   ├── Header.tsx
 │   │   └── Sidebar.tsx
 │   │
-│   ├── features/            # Фича-компоненты
+│   ├── features/            # Feature components
 │   │   ├── auth/           # LoginForm, RegisterForm
 │   │   ├── dashboard/      # StatsCard, HistoryList
 │   │   ├── widgets/        # WidgetCard, AnswerForm
 │   │   └── chat/           # ChatWindow, MessageBubble
 │   │
-│   └── shared/              # Общие компоненты
+│   └── shared/              # Shared components
 │       ├── ErrorBoundary.tsx
 │       └── Loading.tsx
 │
 ├── hooks/                   # Custom hooks
-│   ├── useAuth.ts          # Работа с авторизацией
-│   ├── useDashboard.ts     # Загрузка дашборда
-│   └── useChat.ts          # Управление чатом
+│   ├── useAuth.ts          # Authentication logic
+│   ├── useDashboard.ts     # Dashboard data loading
+│   └── useChat.ts          # Chat management
 │
 ├── store/                   # RTK store
-│   ├── authStore.ts        # Стейт пользователя
-│   ├── dashboardStore.ts   # Кеш дашборда
-│   └── chatStore.ts        # История сообщений
+│   ├── authStore.ts        # User state
+│   ├── dashboardStore.ts   # Dashboard cache
+│   └── chatStore.ts        # Chat history
 │
-├── types/                   # TypeScript типы
-│   ├── api.types.ts        # Типы ответов API
-│   ├── models.types.ts     # Модели данных (User, Widget)
-│   └── common.types.ts     # Общие типы
+├── types/                   # TypeScript types
+│   ├── api.types.ts        # API response types
+│   ├── models.types.ts     # Data models (User, Widget)
+│   └── common.types.ts     # Common types
 │
-├── utils/                   # Утилиты
-│   ├── validation.ts       # Валидация форм
-│   └── formatters.ts       # Форматирование данных
+├── utils/                   # Utilities
+│   ├── validation.ts       # Form validation
+│   └── formatters.ts       # Data formatting
 │
 └── router/                  # React Router
-    └── index.tsx           # Роуты + защищённые роуты
+    └── index.tsx           # Routes + protected routes
 ```
 
 ## 📈 Task Tracking
