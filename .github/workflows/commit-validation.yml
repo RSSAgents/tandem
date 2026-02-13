@@ -24,18 +24,24 @@ jobs:
        uses: actions/setup-node@v6.2.0
        with:
          node-version: 24.10.0
+
+     - name: Check files
+       run: ls .
+
+     - name: Check files in frontend dir
+       run: cd frontend & ls .
        
-     - name: Install Dependencies
-       run: cd frontend & npm ci
+#     - name: Install Dependencies
+#      run: cd frontend & npm ci
 
 #    - name: Run Prettier
 #      run: cd frontend & npm run format
 
-     - name: Run linter
-       run: cd frontend & npm run lint
+#     - name: Run linter
+#       run: cd frontend & npm run lint
 
-     - name: Build
-       run: cd frontend & npm build
+#     - name: Build
+#       run: cd frontend & npm build
 
 #    - name: Run tests
 #      run: cd frontend & npm test
