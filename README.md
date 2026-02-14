@@ -88,7 +88,57 @@ We follow the RS School Conventional Commits specification.
 
 ## 📂 Project Structure
 
-Will be added late (добавлю позже)
+```
+src/
+├── api/                      # API Service Layer
+│   ├── client.ts            # Axios instance with base configuration
+│   ├── auth.api.ts          # login, register, logout
+│   ├── dashboard.api.ts     # getStats, getHistory
+│   ├── widgets.api.ts       # getWidgetById, validateAnswer
+│   └── ai.api.ts            # sendMessage, startSession
+│
+├── components/
+│   ├── ui/                  # Reusable UI components
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   └── Card.tsx
+│   │
+│   ├── layout/              # Layout components
+│   │   ├── Header.tsx
+│   │   └── Sidebar.tsx
+│   │
+│   ├── features/            # Feature components
+│   │   ├── auth/           # LoginForm, RegisterForm
+│   │   ├── dashboard/      # StatsCard, HistoryList
+│   │   ├── widgets/        # WidgetCard, AnswerForm
+│   │   └── chat/           # ChatWindow, MessageBubble
+│   │
+│   └── shared/              # Shared components
+│       ├── ErrorBoundary.tsx
+│       └── Loading.tsx
+│
+├── hooks/                   # Custom hooks
+│   ├── useAuth.ts          # Authentication logic
+│   ├── useDashboard.ts     # Dashboard data loading
+│   └── useChat.ts          # Chat management
+│
+├── store/                   # RTK store
+│   ├── authStore.ts        # User state
+│   ├── dashboardStore.ts   # Dashboard cache
+│   └── chatStore.ts        # Chat history
+│
+├── types/                   # TypeScript types
+│   ├── api.types.ts        # API response types
+│   ├── models.types.ts     # Data models (User, Widget)
+│   └── common.types.ts     # Common types
+│
+├── utils/                   # Utilities
+│   ├── validation.ts       # Form validation
+│   └── formatters.ts       # Data formatting
+│
+└── router/                  # React Router
+    └── index.tsx           # Routes + protected routes
+```
 
 ## 📈 Task Tracking
 
