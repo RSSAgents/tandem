@@ -2,7 +2,7 @@
 import './App.css';
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
-import { Header } from './components/layout/Header';
+import { Header } from './components/layout/Header/Header';
 
 function App() {
 
