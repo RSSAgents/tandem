@@ -1,10 +1,11 @@
-import classes from './Footer.module.css';
+import { Box } from '@mantine/core';
+import { footerStyles } from './FooterStyles';
 
 export const Footer = () => {
   return (
-    <div className={classes.footer}>
-      <div className={classes.logo}>RSSAgents</div>
-      <div className={classes.creationYear}>2026</div>
-    </div>
+    <Box component="header" style={footerStyles.footer}>
+      <div style={footerStyles.logo}>RSSAgents</div>
+      <div style={footerStyles.creationYear}>2026</div>
+    </Box>
   );
 };
