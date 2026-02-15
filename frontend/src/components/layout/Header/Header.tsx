@@ -13,13 +13,17 @@ export const Header = () => {
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light');
 
+  const handleToggleTheme = () => {
+    setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light');
+  };
+
   return (
     <Box component="header" style={headerStyles.header}>
       <Group justify="flex-end" h="100%">
         <Button variant="default">Log in</Button>
         <Button>Sign up</Button>
         <ActionIcon
-          onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+          onClick={handleToggleTheme}
           variant="default"
           size="xl"
           radius="md"
