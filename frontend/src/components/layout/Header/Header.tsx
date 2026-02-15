@@ -1,21 +1,10 @@
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Group,
-  useComputedColorScheme,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { ActionIcon, Box, Button, Group } from '@mantine/core';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { headerStyles } from './HeaderStyles';
+import { useTheme } from '@hooks/useTheme';
 
 export const Header = () => {
-  const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme('light');
-
-  const handleToggleTheme = () => {
-    setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light');
-  };
+  const { handleToggleTheme, isDark } = useTheme();
 
   return (
     <Box component="header" style={headerStyles.header}>
@@ -29,7 +18,8 @@ export const Header = () => {
           radius="md"
           aria-label="Toggle color scheme"
         >
-          {computedColorScheme === 'light' ? (
+          {' '}
+          {isDark ? (
             <IconSun style={headerStyles.icon} stroke={1.5} />
           ) : (
             <IconMoon style={headerStyles.icon} stroke={1.5} />
