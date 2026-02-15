@@ -6,14 +6,12 @@ import { Footer } from '@components/layout/Footer/Footer';
 
 function App() {
   return (
-    <>
-      <MantineProvider>
-        <Box component="main" className="main">
-          <Header />
-          <Footer />
-        </Box>
-      </MantineProvider>
-    </>
+    <MantineProvider>
+      <Box component="main" className="main">
+        <Header />
+        <Footer />
+      </Box>
+    </MantineProvider>
   );
 }
 
