@@ -1,4 +1,4 @@
-.header {
+/* .header {
   height: 60px;
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
@@ -28,4 +28,4 @@
   @mixin dark {
     display: block;
   }
-}
+} */
