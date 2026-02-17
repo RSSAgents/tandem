@@ -8,22 +8,18 @@ export const Header = () => {
 
   return (
     <Box component="header" style={headerStyles.header}>
-      <Group justify="flex-end" h="100%">
-        <Button variant="default">Log in</Button>
+      <Group style={headerStyles.group}>
+        <Button variant={headerStyles.buttonLogin.variant}>Log in</Button>
         <Button>Sign up</Button>
         <ActionIcon
           onClick={handleToggleTheme}
-          variant="default"
-          size="xl"
-          radius="md"
+          variant={headerStyles.actionIcon.variant}
+          size={headerStyles.actionIcon.size}
+          radius={headerStyles.actionIcon.radius}
           aria-label="Toggle color scheme"
         >
           {' '}
-          {isDark ? (
-            <IconSun style={headerStyles.icon} stroke={1.5} />
-          ) : (
-            <IconMoon style={headerStyles.icon} stroke={1.5} />
-          )}
+          {isDark ? <IconSun style={headerStyles.icon} /> : <IconMoon style={headerStyles.icon} />}
         </ActionIcon>
       </Group>
     </Box>
