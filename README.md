@@ -55,7 +55,7 @@ Follow these instructions to set up the project locally for development and test
         git pull origin development
         git checkout -b feature/your-feature-name (or fix/your-fix-name)
 
-    ❗❗❗ _Always create feature/fix branches from the `development` branch, not from `main`_.
+    **feature/fix branches can be created only from the `development` branch**
 
 ## 🤝 Team Workflow & Branch Strategy (Development-first)
 
@@ -70,11 +70,11 @@ We follow a Git Flow-inspired model:
 
 All changes are merged into `development` via **Pull Requests**, which require at least 3 team members and 1 mentor and passing CI checks. This ensures code review and collective ownership.
 
-❗❗❗ Merging into `main`: Only permitted when the application is release-ready.
+**main — merge only when release-ready**
 
-❗❗❗ No direct pushes to `development` branch. PR → review → merge (PR can only be merged when all tests pass successfully.)
+**development — no direct pushes; PR → review → merge (all tests must pass)**
 
-❗❗❗ Do not delete feature branches after merge — we keep them for history tracking.
+**feature branches — do not delete after merge (kept for history tracking)**
 
 ## 👆 Commit Requirements
 
@@ -103,10 +103,13 @@ src/
 │   │   ├── Input.tsx
 │   │   └── Card.tsx
 │   │
-│   ├── layout/              # Layout components
-│   │   ├── Header.tsx
-│   │   └── Sidebar.tsx
-│   │
+│   └── layout/              # Layout components
+│       ├── Header.tsx          # Header component
+│       ├── Sidebar.tsx         # Sidebar component
+│       ├── Footer.tsx          # Footer component
+│       ├── MainLayout.tsx      # Header, sidebar and footer
+│       └── MinimalLayout.tsx   # Header and footer
+│
 │   ├── features/            # Feature components
 │   │   ├── auth/           # LoginForm, RegisterForm
 │   │   ├── dashboard/      # StatsCard, HistoryList
@@ -116,6 +119,10 @@ src/
 │   └── shared/              # Shared components
 │       ├── ErrorBoundary.tsx
 │       └── Loading.tsx
+│
+├── pages/                   # Pages
+│   ├── DashboardPage.tsx   # Uses MainLayout Page
+│   └── LandingPage.tsx     # Uses MinimalLayout/MainLayout Page
 │
 ├── hooks/                   # Custom hooks
 │   ├── useAuth.ts          # Authentication logic
@@ -136,8 +143,13 @@ src/
 │   ├── validation.ts       # Form validation
 │   └── formatters.ts       # Data formatting
 │
-└── router/                  # React Router
-    └── index.tsx           # Routes + protected routes
+├── constants/               # Constants
+│   └── api.ts              # API constants
+│
+└── routes/                  # React Router
+    ├── routePaths.ts       # Route paths
+    ├── routeConfig.ts      # Route config
+    └── index.ts            # Routes export
 ```
 
 ## 📈 Task Tracking
