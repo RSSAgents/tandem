@@ -1,5 +1,5 @@
 import js from '@eslint/js';
-import prettier from 'eslint-config-prettier';
+import prettierConfig from 'eslint-config-prettier/flat';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
@@ -15,11 +15,28 @@ export default defineConfig([
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      prettier,
+      prettierConfig,
     ],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    rules: {
+      'no-console': 'error',
+      'prefer-const': 'error',
+      'no-var': 'error',
+      'prefer-template': 'error',
+      'no-duplicate-imports': 'error',
+      eqeqeq: ['error', 'always'],
+      quotes: ['error', 'single', { avoidEscape: true }],
+      semi: ['error', 'always'],
+      'no-warning-comments': [
+        'warn',
+        {
+          terms: ['todo', 'fix'],
+          location: 'anywhere',
+        },
+      ],
     },
   },
 ]);
