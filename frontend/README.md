@@ -10,7 +10,7 @@
 - **Build Tool** | Vite
 - **Code Quality** | ESLint, Prettier, Husky
 - **Testing** | Unit tests (Vitest), End-to-end tests (Cypress), React Testing Library
-- **HTTP Client** | Axios
+- **API Client** | Axios
 - **Package Manager** | NPM
 
 ## Getting Started
