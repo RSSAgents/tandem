@@ -1,8 +1,7 @@
 cd frontend
 echo "Start format"
 npm run format
-echo "Start lint fix"
-npm run lint:fix
+echo "Start lint"
+npm run lint
 echo "Start typecheck"
 npm run typecheck
-git add .
