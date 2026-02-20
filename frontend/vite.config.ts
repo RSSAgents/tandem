@@ -8,13 +8,13 @@ const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
   build: {
-    minify: true,
-    sourcemap: false,
-    outDir: 'dist',
     emptyOutDir: true,
+    minify: true,
+    outDir: 'dist',
+    sourcemap: false,
   },
+  plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

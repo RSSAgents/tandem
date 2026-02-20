@@ -5,3 +5,4 @@ echo "Start lint fix"
 npm run lint:fix
 echo "Start typecheck"
 npm run typecheck
+git add .
