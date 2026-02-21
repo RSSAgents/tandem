@@ -27,7 +27,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 - **Database & Auth** | Firebase / Supabase
 - **Build Tool** | Vite
 - **Code Quality** | ESLint, Prettier, Husky
-- **Testing** | Unit tests (Vitest), End-to-end tests (Cypress)
+- **Testing** | Unit tests (React Testing Library), End-to-end tests (Cypress), Vitest
 - **CI/CD** | GitHub Actions (Dev → Staging, Main → Production)
 - **API Client** | Axios
 
@@ -70,7 +70,7 @@ We follow a Git Flow-inspired model:
 
 All changes are merged into `development` via **Pull Requests**, which require at least 3 team members and 1 mentor and passing CI checks. This ensures code review and collective ownership.
 
-**main — merge only when release-ready**
+**main — merge only when release-ready, exception - development diary**
 
 **development — no direct pushes; PR → review → merge (all tests must pass)**
 
@@ -90,66 +90,86 @@ We follow the RS School Conventional Commits specification.
 
 ```
 src/
-├── api/                      # API Service Layer
-│   ├── client.ts            # Axios instance with base configuration
-│   ├── auth.api.ts          # login, register, logout
-│   ├── dashboard.api.ts     # getStats, getHistory
-│   ├── widgets.api.ts       # getWidgetById, validateAnswer
-│   └── ai.api.ts            # sendMessage, startSession
+├── api/                          # API Service Layer
+│   ├── client.ts                 # Axios instance with base configuration
+│   ├── auth.api.ts               # login, register, logout
+│   ├── dashboard.api.ts          # getStats, getHistory
+│   ├── widgets.api.ts            # getWidgetById, validateAnswer
+│   └── ai.api.ts                 # sendMessage, startSession
 │
 ├── components/
-│   ├── ui/                  # Reusable UI components
-│   │   ├── Button.tsx
-│   │   ├── Input.tsx
-│   │   └── Card.tsx
+│   ├── ui/                       # Reusable UI components
+│   │   ├── Input/
+│   │   │   ├── Input.tsx
+│   │   │   ├── Input.module.css
+│   │   │   └── Input.test.tsx
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.module.css
+│   │   │   └── Button.test.tsx
+│   │   └── Card/
+│   │       ├── Card.tsx
+│   │       ├── Card.module.css
+│   │       └── Card.test.tsx
 │   │
-│   └── layout/              # Layout components
-│       ├── Header.tsx          # Header component
-│       ├── Sidebar.tsx         # Sidebar component
-│       ├── Footer.tsx          # Footer component
-│       ├── MainLayout.tsx      # Header, sidebar and footer
-│       └── MinimalLayout.tsx   # Header and footer
-│
-│   ├── features/            # Feature components
-│   │   ├── auth/           # LoginForm, RegisterForm
-│   │   ├── dashboard/      # StatsCard, HistoryList
-│   │   ├── widgets/        # WidgetCard, AnswerForm
-│   │   └── chat/           # ChatWindow, MessageBubble
+│   ├── layouts/                  # Layout components
+│   │   ├── Header/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Header.module.css
+│   │   │   └── Header.test.tsx
+│   │   ├── Sidebar/
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── Sidebar.module.css
+│   │   │   └── Sidebar.test.tsx
+│   │   ├── Footer/
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Footer.module.css
+│   │   │   └── Footer.test.tsx
+│   │   ├── MainLayout/
+│   │   │   └── MainLayout.tsx    # Header, sidebar and footer
+│   │   └── MinimalLayout/
+│   │       └── MinimalLayout.tsx # Header and footer
 │   │
-│   └── shared/              # Shared components
+│   ├── features/                 # Feature components
+│   │   ├── auth/                 # LoginForm, RegisterForm
+│   │   ├── dashboard/            # StatsCard, HistoryList
+│   │   ├── widgets/              # WidgetCard, AnswerForm
+│   │   └── chat/                 # ChatWindow, MessageBubble
+│   │
+│   └── shared/                   # Shared components
 │       ├── ErrorBoundary.tsx
 │       └── Loading.tsx
 │
-├── pages/                   # Pages
-│   ├── DashboardPage.tsx   # Uses MainLayout Page
-│   └── LandingPage.tsx     # Uses MinimalLayout/MainLayout Page
+├── pages/                        # Pages
+│   ├── DashboardPage.tsx         # Uses MainLayout
+│   └── LandingPage.tsx           # Uses MinimalLayout / MainLayout
 │
-├── hooks/                   # Custom hooks
-│   ├── useAuth.ts          # Authentication logic
-│   ├── useDashboard.ts     # Dashboard data loading
-│   └── useChat.ts          # Chat management
+├── hooks/                        # Custom hooks
+│   ├── useAuth.ts                # Authentication logic
+│   ├── useDashboard.ts           # Dashboard data loading
+│   └── useChat.ts                # Chat management
 │
-├── store/                   # RTK store
-│   ├── authStore.ts        # User state
-│   ├── dashboardStore.ts   # Dashboard cache
-│   └── chatStore.ts        # Chat history
+├── store/                        # RTK store
+│   ├── authStore.ts              # User state
+│   ├── dashboardStore.ts         # Dashboard cache
+│   └── chatStore.ts              # Chat history
 │
-├── types/                   # TypeScript types
-│   ├── api.types.ts        # API response types
-│   ├── models.types.ts     # Data models (User, Widget)
-│   └── common.types.ts     # Common types
+├── types/                        # TypeScript types
+│   ├── api.types.ts              # API response types
+│   ├── models.types.ts           # Data models (User, Widget)
+│   └── common.types.ts           # Common types
 │
-├── utils/                   # Utilities
-│   ├── validation.ts       # Form validation
-│   └── formatters.ts       # Data formatting
+├── utils/                        # Utilities
+│   ├── validation.ts             # Form validation
+│   └── formatters.ts             # Data formatting
 │
-├── constants/               # Constants
-│   └── api.ts              # API constants
+├── constants/                    # Constants
+│   └── api.ts                    # API constants
 │
-└── routes/                  # React Router
-    ├── routePaths.ts       # Route paths
-    ├── routeConfig.ts      # Route config
-    └── index.ts            # Routes export
+└── routes/                       # React Router
+    ├── routePaths.ts             # Route paths
+    ├── routeConfig.ts            # Route configuration
+    └── index.ts                  # Routes export
 ```
 
 ## 📈 Task Tracking
