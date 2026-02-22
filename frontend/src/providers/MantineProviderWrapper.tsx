@@ -1,6 +1,5 @@
-import type { ReactNode } from 'react';
-
 import { MantineProvider } from '@mantine/core';
+import type { ReactNode } from 'react';
 
 interface MantineProviderWrapperProps {
   children: ReactNode;
