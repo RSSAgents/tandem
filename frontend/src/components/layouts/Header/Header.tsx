@@ -1,25 +1,27 @@
-import { ActionIcon, Box, Button, Group } from '@mantine/core';
+import { ActionIcon, Box, Button, Group, Text } from '@mantine/core';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { useTheme } from '@hooks/useTheme';
-import { headerStyles } from './HeaderStyles';
+import classes from './Header.module.css';
 
 export const Header = () => {
   const { handleToggleTheme, isDark } = useTheme();
 
   return (
-    <Box component="header" style={headerStyles.header}>
-      <Group style={headerStyles.group}>
-        <Button variant={headerStyles.buttonLogin.variant}>Log in</Button>
+    <Box component="header" className={classes.header}>
+      <Text component="a" href="/" className={classes.logo}>
+        Tandem
+      </Text>
+      <Group className={classes.group}>
+        <Button variant="default">Log in</Button>
         <Button>Sign up</Button>
         <ActionIcon
           onClick={handleToggleTheme}
-          variant={headerStyles.actionIcon.variant}
-          size={headerStyles.actionIcon.size}
-          radius={headerStyles.actionIcon.radius}
+          variant="default"
+          size="xl"
+          radius="md"
           aria-label="Toggle color scheme"
         >
-          {' '}
-          {isDark ? <IconSun style={headerStyles.icon} /> : <IconMoon style={headerStyles.icon} />}
+          {isDark ? <IconSun className={classes.icon} /> : <IconMoon className={classes.icon} />}
         </ActionIcon>
       </Group>
     </Box>

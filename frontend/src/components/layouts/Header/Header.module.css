@@ -1,0 +1,26 @@
+.header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.5;
+}
+
+.group {
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
