@@ -55,7 +55,7 @@ Follow these instructions to set up the project locally for development and test
         git pull origin development
         git checkout -b feature/your-feature-name (or fix/your-fix-name)
 
-    ❗❗❗ _Always create feature/fix branches from the `development` branch, not from `main`_.
+    **feature/fix branches can be created only from the `development` branch**
 
 ## 🤝 Team Workflow & Branch Strategy (Development-first)
 
@@ -70,11 +70,11 @@ We follow a Git Flow-inspired model:
 
 All changes are merged into `development` via **Pull Requests**, which require at least 3 team members and 1 mentor and passing CI checks. This ensures code review and collective ownership.
 
-❗❗❗ Merging into `main`: Only permitted when the application is release-ready.
+**main — merge only when release-ready, exception - development diary**
 
-❗❗❗ No direct pushes to `development` branch. PR → review → merge (PR can only be merged when all tests pass successfully.)
+**development — no direct pushes; PR → review → merge (all tests must pass)**
 
-❗❗❗ Do not delete feature branches after merge — we keep them for history tracking.
+**feature branches — do not delete after merge (kept for history tracking)**
 
 ## 👆 Commit Requirements
 
@@ -86,58 +86,117 @@ We follow the RS School Conventional Commits specification.
 
 📚 More information and examples here: https://rs.school/docs/en/git-convention
 
+## 🔀 Pull Request Requirements
+
+- PR title MUST follow Conventional Commits format:
+  type: short description
+
+  Example:
+  feat: implement login form validation
+  fix: resolve mobile layout issue
+
+- PR description MUST include:
+  - What was done
+  - Screenshots (if UI changes)
+  - Testing checks
+
+- Labels:
+  - Add appropriate label for every PR.
+
+- Assignees:
+  - Assign at least one developer responsible for reviewing/merging the PR.
+
+- All CI checks must pass before merge.
+- Minimum 1 approval + 1 mentor.
+
 ## 📂 Project Structure
 
 ```
 src/
-├── api/                      # API Service Layer
-│   ├── client.ts            # Axios instance with base configuration
-│   ├── auth.api.ts          # login, register, logout
-│   ├── dashboard.api.ts     # getStats, getHistory
-│   ├── widgets.api.ts       # getWidgetById, validateAnswer
-│   └── ai.api.ts            # sendMessage, startSession
+├── api/                             # API Service Layer
+│   ├── client.ts                    # Axios instance with base configuration
+│   ├── auth.api.ts                  # login, register, logout
+│   ├── dashboard.api.ts             # getStats, getHistory
+│   ├── widgets.api.ts               # getWidgetById, validateAnswer
+│   └── ai.api.ts                    # sendMessage, startSession
 │
 ├── components/
-│   ├── ui/                  # Reusable UI components
-│   │   ├── Button.tsx
-│   │   ├── Input.tsx
-│   │   └── Card.tsx
+│   ├── ui/                          # Reusable UI components
+│   │   ├── Input/
+│   │   │   ├── Input.tsx
+│   │   │   ├── Input.module.css
+│   │   │   └── Input.test.tsx
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.module.css
+│   │   │   └── Button.test.tsx
+│   │   └── Card/
+│   │       ├── Card.tsx
+│   │       ├── Card.module.css
+│   │       └── Card.test.tsx
 │   │
-│   ├── layout/              # Layout components
-│   │   ├── Header.tsx
-│   │   └── Sidebar.tsx
+│   ├── layouts/                     # Layout components
+│   │   ├── Header/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Header.module.css
+│   │   │   └── Header.test.tsx
+│   │   ├── Sidebar/
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── Sidebar.module.css
+│   │   │   └── Sidebar.test.tsx
+│   │   ├── Footer/
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Footer.module.css
+│   │   │   └── Footer.test.tsx
+│   │   ├── MainLayout/
+│   │   │   └── MainLayout.tsx       # Header, sidebar and footer
+│   │   └── MinimalLayout/
+│   │       └── MinimalLayout.tsx    # Header and footer
 │   │
-│   ├── features/            # Feature components
-│   │   ├── auth/           # LoginForm, RegisterForm
-│   │   ├── dashboard/      # StatsCard, HistoryList
-│   │   ├── widgets/        # WidgetCard, AnswerForm
-│   │   └── chat/           # ChatWindow, MessageBubble
+│   ├── features/                    # Feature components
+│   │   ├── auth/                    # LoginForm, RegisterForm
+│   │   ├── dashboard/               # StatsCard, HistoryList
+│   │   ├── widgets/                 # WidgetCard, AnswerForm
+│   │   └── chat/                    # ChatWindow, MessageBubble
 │   │
-│   └── shared/              # Shared components
+│   └── shared/                      # Shared components
 │       ├── ErrorBoundary.tsx
 │       └── Loading.tsx
 │
-├── hooks/                   # Custom hooks
-│   ├── useAuth.ts          # Authentication logic
-│   ├── useDashboard.ts     # Dashboard data loading
-│   └── useChat.ts          # Chat management
+├── pages/                           # Pages
+│   ├── DashboardPage/               # Uses MainLayout
+│   │   ├── DashboardPage.tsx
+│   │   └── DashboardPage.module.css
+│   └── LandingPage/                 # Uses MinimalLayout / MainLayout
+│       ├── LandingPage.tsx
+│       └── LandingPage.module.css 
 │
-├── store/                   # RTK store
-│   ├── authStore.ts        # User state
-│   ├── dashboardStore.ts   # Dashboard cache
-│   └── chatStore.ts        # Chat history
+├── hooks/                           # Custom hooks
+│   ├── useAuth.ts                   # Authentication logic
+│   ├── useDashboard.ts              # Dashboard data loading
+│   └── useChat.ts                   # Chat management
 │
-├── types/                   # TypeScript types
-│   ├── api.types.ts        # API response types
-│   ├── models.types.ts     # Data models (User, Widget)
-│   └── common.types.ts     # Common types
+├── store/                           # RTK store
+│   ├── authStore.ts                 # User state
+│   ├── dashboardStore.ts            # Dashboard cache
+│   └── chatStore.ts                 # Chat history
 │
-├── utils/                   # Utilities
-│   ├── validation.ts       # Form validation
-│   └── formatters.ts       # Data formatting
+├── types/                           # TypeScript types
+│   ├── api.types.ts                 # API response types
+│   ├── models.types.ts              # Data models (User, Widget)
+│   └── common.types.ts              # Common types
 │
-└── router/                  # React Router
-    └── index.tsx           # Routes + protected routes
+├── utils/                           # Utilities
+│   ├── validation.ts                # Form validation
+│   └── formatters.ts                # Data formatting
+│
+├── constants/                       # Constants
+│   └── api.ts                       # API constants
+│
+└── routes/                          # React Router
+    ├── routePaths.ts                # Route paths
+    ├── routeConfig.tsx              # Route configuration
+    └── index.ts                     # Routes export
 ```
 
 ## 📈 Task Tracking
