@@ -100,6 +100,12 @@ We follow the RS School Conventional Commits specification.
   - Screenshots (if UI changes)
   - Testing checks
 
+- Labels:
+  - Add appropriate label for every PR.
+
+- Assignees:
+  - Assign at least one developer responsible for reviewing/merging the PR.
+
 - All CI checks must pass before merge.
 - Minimum 1 approval + 1 mentor.
 
