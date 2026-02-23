@@ -86,6 +86,23 @@ We follow the RS School Conventional Commits specification.
 
 📚 More information and examples here: https://rs.school/docs/en/git-convention
 
+## 🔀 Pull Request Requirements
+
+- PR title MUST follow Conventional Commits format:
+  type: short description
+
+  Example:
+  feat: implement login form validation
+  fix: resolve mobile layout issue
+
+- PR description MUST include:
+  - What was done
+  - Screenshots (if UI changes)
+  - Testing checks
+
+- All CI checks must pass before merge.
+- Minimum 1 approval + 1 mentor.
+
 ## 📂 Project Structure
 
 ```
