@@ -27,7 +27,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 - **Database & Auth** | Firebase / Supabase
 - **Build Tool** | Vite
 - **Code Quality** | ESLint, Prettier, Husky
-- **Testing** | Unit tests (React Testing Library), End-to-end tests (Cypress), Vitest
+- **Testing** | Unit tests (Vitest), End-to-end tests (Cypress)
 - **CI/CD** | GitHub Actions (Dev → Staging, Main → Production)
 - **API Client** | Axios
 

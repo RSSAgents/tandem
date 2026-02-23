@@ -9,7 +9,7 @@
 - **State Management** | Redux Toolkit
 - **Build Tool** | Vite
 - **Code Quality** | ESLint, Prettier, Husky
-- **Testing** | Unit tests (React Testing Library), End-to-end tests (Cypress), Vitest
+- **Testing** | Unit tests (Vitest), End-to-end tests (Cypress), React Testing Library
 - **API Client** | Axios
 - **Package Manager** | NPM
 
