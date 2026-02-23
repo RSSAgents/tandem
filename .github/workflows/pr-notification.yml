@@ -1,0 +1,30 @@
+name: PR Notification
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    
+    steps:
+      - name: Send Telegram Notification
+        run: |
+          if [ "${{ github.event.action }}" == "opened" ]; then
+            EVENT="🆕 Новый PR"
+          elif [ "${{ github.event.action }}" == "reopened" ]; then
+            EVENT="🔄 PR переоткрыт"
+          else
+            EVENT="📝 PR готов к ревью"
+          fi
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "chat_id": "${{ secrets.TELEGRAM_CHAT_ID }}",
+              "text": "'"${EVENT}"'\n\n📝 ${{ github.event.pull_request.title }}\n👤 ${{ github.event.pull_request.user.login }}\n🌿 ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}\n📊 +${{ github.event.pull_request.additions }} / -${{ github.event.pull_request.deletions }} | файлов: ${{ github.event.pull_request.changed_files }}\n\n🔗 ${{ github.event.pull_request.html_url }}",
+              "parse_mode": "HTML",
+              "disable_web_page_preview": true
+            }'
