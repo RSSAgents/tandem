@@ -11,6 +11,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 | **Team Lead - Mentor** | Shakhzod  | (https://github.com/Shakhzod235) |
 | **Mentor**             | Diana     | (https://github.com/bt-diana)    |
 | **Mentor**             | Khayitbek | (https://github.com/Khayitbek03) |
+| **Mentor**             | Daria     | (https://github.com/dashque)     |
 | **Developer**          | Fayzullo  | (https://github.com/Fayzullo05)  |
 | **Developer**          | Ilia      | (https://github.com/D15ND)       |
 | **Developer**          | Margarita | (https://github.com/solarsungai) |
@@ -20,6 +21,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 ## 🏗️ Tech Stack
 
 - **Frontend** | React, TypeScript
+- **Design System** | Mantine
 - **Routing** | React Router DOM
 - **Forms** | React Hook Form
 - **State Management** | Redux Toolkit
