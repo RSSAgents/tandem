@@ -1,4 +1,4 @@
-import { Container } from '@mantine/core';
+import { Button, Container, Flex, Paper, Stack, Title } from '@mantine/core';
 import { useState } from 'react';
 
 interface IConsoleTasks {
@@ -61,7 +61,25 @@ export const WidgetConsole = () => {
 
   return (
     <>
-      <Container>{currentTask.code}</Container>
+      <Container>
+        <Title order={2}>В какой последовательности выведутся console.log?</Title>
+        <Stack>
+          <Paper>
+            <pre>{currentTask.code}</pre>
+          </Paper>
+        </Stack>
+
+        <Flex gap="xs">
+          <Button>Check result</Button>
+          <Button>Next question</Button>
+        </Flex>
+
+        {currentIndex === TASKS_DATA.length - 1 && (
+          <Paper>
+            <Title order={3}>Test completed!</Title>
+          </Paper>
+        )}
+      </Container>
     </>
   );
 };
