@@ -9,7 +9,6 @@ on:
     - fix/*
     - docs/*
     - chore/*
-    - ci/*
 
 jobs:
   commit-validation:
