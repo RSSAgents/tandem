@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './WidgetConsole.module.css';
 import { Button, Container, Flex, Paper, Stack, Title, Text } from '@mantine/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -27,35 +28,20 @@ interface ISortableItemProps {
   index: number;
 }
 
-function SortableItem({ value }: ISortableItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: value });
-
-  const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Text>{value}</Text>
-    </div>
-  );
-}
-
 const TASKS_DATA: IConsoleTasks[] = [
   {
     id: 1,
     code: `console.log(1);
 
-  setTimeout(() => {
-      console.log(2);
-  }, 0);
+setTimeout(() => {
+    console.log(2);
+}, 0);
 
-  Promise.resolve().then(() => {
-      console.log(3);
-  });
+Promise.resolve().then(() => {
+    console.log(3);
+});
 
-  console.log(4);`,
+console.log(4);`,
     options: ['1', '2', '3', '4'],
     correctSequence: ['1', '4', '3', '2'],
     explanation:
@@ -66,19 +52,19 @@ const TASKS_DATA: IConsoleTasks[] = [
     id: 2,
     code: `console.log('A');
 
-  setTimeout(() => {
-      console.log('B');
-  }, 100);
+setTimeout(() => {
+    console.log('B');
+}, 100);
 
-  setTimeout(() => {
-      console.log('C');
-  }, 0);
+setTimeout(() => {
+    console.log('C');
+}, 0);
 
-  console.log('D');
+console.log('D');
 
-  Promise.resolve().then(() => {
-      console.log('E');
-  });`,
+Promise.resolve().then(() => {
+    console.log('E');
+});`,
     options: ['A', 'B', 'C', 'D', 'E'],
     correctSequence: ['A', 'D', 'E', 'C', 'B'],
     explanation:
@@ -86,6 +72,21 @@ const TASKS_DATA: IConsoleTasks[] = [
     topic: 'Event Loop с таймерами',
   },
 ];
+
+function SortableItem({ value }: ISortableItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: value });
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <Text className={styles.dndItem}>{value}</Text>
+    </div>
+  );
+}
 
 const shuffleArray = <T,>(array: T[]): T[] => {
   return [...array].sort(() => Math.random() - 0.5);
@@ -146,11 +147,13 @@ export const WidgetConsole = () => {
 
   return (
     <>
-      <Container>
-        <Title order={2}>В какой последовательности выведутся console.log?</Title>
-        <Stack>
+      <Container size="lg">
+        <Title order={2} className={styles.questionTitle}>
+          В какой последовательности выведутся console.log?
+        </Title>
+        <Stack gap="xl">
           <Paper>
-            <pre>{currentTask.code}</pre>
+            <pre className={styles.pre}>{currentTask.code}</pre>
           </Paper>
 
           <DndContext
@@ -169,20 +172,28 @@ export const WidgetConsole = () => {
 
           {showResult && (
             <>
-              <Text c={isCorrect ? 'green' : 'red'}>{isCorrect ? '✅ Correct' : '❌ Mistake'}</Text>
-              <Text>{currentTask.explanation}</Text>
+              <Paper className={styles.resultContainer}>
+                <Text className={isCorrect ? styles.resultCorrect : styles.resultIncorrect}>
+                  {isCorrect ? '✅ Correct! Well done!' : '❌ Error!'}
+                </Text>
+                <Text mt="sm" size="sm">
+                  {currentTask.explanation}
+                </Text>
+              </Paper>
             </>
           )}
         </Stack>
 
-        <Flex gap="xs">
+        <Flex gap="md" className={styles.actionButtons}>
           <Button
+            className={styles.btnFullWidth}
             disabled={showResult}
             onClick={() => handleCheckResult(items, currentTask.correctSequence)}
           >
             Check result
           </Button>
           <Button
+            className={styles.btnFullWidth}
             disabled={!showResult || currentIndex === TASKS_DATA.length - 1}
             onClick={handleNextQuestion}
           >
@@ -192,8 +203,12 @@ export const WidgetConsole = () => {
 
         {currentIndex === TASKS_DATA.length - 1 && (
           <Paper>
-            <Title order={3}>Test completed!</Title>
-            <Text>Your score: {score}/2</Text>
+            <Title order={3} className={styles.completedTitle}>
+              Test completed!
+            </Title>
+            <Text className={styles.completedScore}>
+              Your score: {score}/{currentIndex + 1}
+            </Text>
           </Paper>
         )}
       </Container>
