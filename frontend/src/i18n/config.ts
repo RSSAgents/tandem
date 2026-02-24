@@ -5,6 +5,11 @@ import { initReactI18next } from 'react-i18next';
 import { en } from './locales/en';
 import { ru } from './locales/ru';
 
+export const SUPPORTED_LANGUAGES = [
+  { code: 'en', label: 'EN' },
+  { code: 'ru', label: 'RU' },
+] as const;
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)

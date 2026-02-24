@@ -2,5 +2,9 @@
   "login": "Войти",
   "signup": "Регистрация",
   "themeToggle": "Переключить тему",
-  "selectLanguage": "Выбрать язык"
+  "selectLanguage": "Выбрать язык",
+  "languages": {
+    "en": "English",
+    "ru": "Russian"
+  }
 }
