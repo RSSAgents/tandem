@@ -3,14 +3,12 @@
 ## Tech Stack
 
 - **Frontend** | React, TypeScript
-- **Design System** | Mantine
 - **Routing** | React Router DOM
 - **Forms** | React Hook Form
 - **State Management** | Redux Toolkit
 - **Build Tool** | Vite
 - **Code Quality** | ESLint, Prettier, Husky
-- **Testing** | Unit tests (React Testing Library), End-to-end tests (Cypress), Vitest
-- **API Client** | Axios
+- **Testing** | Unit tests (Vitest), End-to-end tests (Cypress)
 - **Package Manager** | NPM
 
 ## Getting Started
