@@ -67,7 +67,6 @@ We follow a Git Flow-inspired model:
 - `fix/*` – bug fixes from `development` branch (e.g., `fix/header-bug`)
 - `docs/*` – documentation updates only (e.g., `docs/update-readme`)
 - `chore/*` – maintenance tasks, no functionality changes (e.g., `chore/package-updates`)
-- `ci/*` – CI/CD configaration (e.g., `ci/ci-cd-configaration-fe`)
 
 All changes are merged into `development` via **Pull Requests**, which require at least 3 team members and 1 mentor and passing CI checks. This ensures code review and collective ownership.
 
