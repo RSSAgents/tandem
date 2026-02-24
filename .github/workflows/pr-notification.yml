@@ -29,32 +29,32 @@ jobs:
           PR_ACTION: ${{ github.event.action }}
         run: |
           if [ "$PR_ACTION" == "opened" ]; then
-            EVENT="🆕 New PR"
+            EVENT="🆕 <b>New PR</b>"
           elif [ "$PR_ACTION" == "reopened" ]; then
-            EVENT="🔄 PR Reopened"
+            EVENT="🔄 <b>PR Reopened</b>"
           else
-            EVENT="📝 Ready for Review"
+            EVENT="📝 <b>Ready for Review</b>"
           fi
           
-          [ -z "$PR_REVIEWERS" ] && PR_REVIEWERS="none"
-          [ -z "$PR_LABELS" ] && PR_LABELS="none"
+          [ -z "$PR_REVIEWERS" ] && PR_REVIEWERS="—"
+          [ -z "$PR_LABELS" ] && PR_LABELS="—"
           
           TEXT="$EVENT
           
-          📝 Title: $PR_TITLE
-          👤 Author: $PR_AUTHOR
-          👥 Reviewers: $PR_REVIEWERS
-          🏷️ Labels: $PR_LABELS
-          🌿 Branch: $PR_HEAD → $PR_BASE
-          📊 Changes: +$PR_ADDITIONS / -$PR_DELETIONS | files: $PR_FILES
+          ├ 📝 <b>Title:</b> $PR_TITLE
+          ├ 👤 <b>Author:</b> $PR_AUTHOR
+          ├ 👥 <b>Reviewers:</b> $PR_REVIEWERS
+          ├ 🏷️ <b>Labels:</b> $PR_LABELS
+          ├ 🌿 <b>Branch:</b> <code>$PR_HEAD</code> → <code>$PR_BASE</code>
+          └ 📊 <b>Changes:</b> +$PR_ADDITIONS / -$PR_DELETIONS ($PR_FILES files)
           
-          🔗 $PR_URL"
+          🔗 <a href=\"$PR_URL\">Open PR</a>"
 
           jq -n \
             --arg chat_id "$TELEGRAM_CHAT_ID" \
             --argjson thread_id "$TELEGRAM_THREAD_ID" \
             --arg text "$TEXT" \
-            '{chat_id: $chat_id, message_thread_id: $thread_id, text: $text, disable_web_page_preview: true}' \
+            '{chat_id: $chat_id, message_thread_id: $thread_id, text: $text, parse_mode: "HTML", disable_web_page_preview: true}' \
             | curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
               -H "Content-Type: application/json" \
               -d @-
