@@ -1,3 +1,4 @@
+import '@/i18n/config';
 import '@mantine/core/styles.css';
 import { store } from '@store/index.ts';
 import { StrictMode } from 'react';
