@@ -30,5 +30,6 @@ jobs:
             -d '{
               "chat_id": "${{ secrets.TELEGRAM_CHAT_ID }}",
               "text": "'"${EVENT}"'\n\n📝 Название: ${{ github.event.pull_request.title }}\n👤 Автор: ${{ github.event.pull_request.user.login }}\n👥 Ревьюеры: '"${REVIEWERS}"'\n🌿 Ветка: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}\n📊 Изменения: +${{ github.event.pull_request.additions }} / -${{ github.event.pull_request.deletions }} | файлов: ${{ github.event.pull_request.changed_files }}\n\n🔗 Ссылка: ${{ github.event.pull_request.html_url }}",
+              "message_thread_id": ${{ secrets.TELEGRAM_THREAD_ID }},
               "disable_web_page_preview": true
             }'
