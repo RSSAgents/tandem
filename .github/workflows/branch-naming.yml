@@ -15,7 +15,7 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
 
-          if [[ "$BRANCH_NAME" =~ ^(feature|fix|docs|chore|ci)/.+$ ]]; then
+          if [[ "$BRANCH_NAME" =~ ^(feature|fix|docs|chore)/.+$ ]]; then
             echo "✅ Branch name is valid"
           else
             echo "❌ Invalid branch name: $BRANCH_NAME"
