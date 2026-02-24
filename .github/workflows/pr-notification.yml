@@ -1,7 +1,8 @@
 name: PR Notification
 
 on:
-  pull_request_target:
+  pull_request:
+    branches: [main, development]
     types: [opened, reopened, ready_for_review]
 
 jobs:
@@ -25,11 +26,17 @@ jobs:
             REVIEWERS="не назначены"
           fi
           
+          LABELS='${{ join(github.event.pull_request.labels.*.name, ', ') }}'
+          if [ -z "$LABELS" ]; then
+            LABELS="нет"
+          fi
+          
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -H "Content-Type: application/json" \
             -d '{
               "chat_id": "${{ secrets.TELEGRAM_CHAT_ID }}",
-              "text": "'"${EVENT}"'\n\n📝 Название: ${{ github.event.pull_request.title }}\n👤 Автор: ${{ github.event.pull_request.user.login }}\n👥 Ревьюеры: '"${REVIEWERS}"'\n🌿 Ветка: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}\n📊 Изменения: +${{ github.event.pull_request.additions }} / -${{ github.event.pull_request.deletions }} | файлов: ${{ github.event.pull_request.changed_files }}\n\n🔗 Ссылка: ${{ github.event.pull_request.html_url }}",
               "message_thread_id": ${{ secrets.TELEGRAM_THREAD_ID }},
+              "text": "'"${EVENT}"'\n\n📝 Название: ${{ github.event.pull_request.title }}\n👤 Автор: ${{ github.event.pull_request.user.login }}\n👥 Ревьюеры: '"${REVIEWERS}"'\n🏷️ Метки: '"${LABELS}"'\n🌿 Ветка: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}\n📊 Изменения: +${{ github.event.pull_request.additions }} / -${{ github.event.pull_request.deletions }} | файлов: ${{ github.event.pull_request.changed_files }}\n\n🔗 Ссылка: ${{ github.event.pull_request.html_url }}",
               "disable_web_page_preview": true
             }'
+      
