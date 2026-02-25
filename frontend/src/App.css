@@ -21,7 +21,7 @@
 }
 
 /* light theme */
-body.light {
+[data-mantine-color-scheme='light'] {
   --bg: #f5f7fa;
   --card-bg: rgba(255, 255, 255, 0.85);
   --panel: #ffffff;

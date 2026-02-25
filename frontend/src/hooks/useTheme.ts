@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useMantineColorScheme } from '@mantine/core';
 import { ThemeType } from '@/types/theme';
+import { useMantineColorScheme } from '@mantine/core';
+import { useEffect } from 'react';
 
 export const useTheme = () => {
   const { setColorScheme, colorScheme } = useMantineColorScheme();

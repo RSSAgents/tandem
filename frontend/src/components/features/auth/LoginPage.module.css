@@ -6,6 +6,15 @@
   backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-light);
+  position: relative;
+}
+
+.themeToggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
 }
 
 .title {
@@ -20,7 +29,7 @@
   margin-bottom: 20px;
   color: var(--text-main);
   background-color: rgba(255, 255, 255, 0.05);
-  border: none;
+  border: 1px solid var(--border);
 }
 
 .input::placeholder {

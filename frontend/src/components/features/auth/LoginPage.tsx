@@ -1,9 +1,21 @@
-import { Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
+import { useTheme } from '@hooks/useTheme';
+import { ActionIcon, Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
+import { IconMoon, IconSun } from '@tabler/icons-react';
 import classes from './LoginPage.module.css';
 
 export const LoginPage = () => {
+  const { handleToggleTheme, isDark } = useTheme();
   return (
     <Paper className={classes.card}>
+      <ActionIcon
+        onClick={handleToggleTheme}
+        variant="subtle"
+        radius="md"
+        size="lg"
+        className={classes.themeToggle}
+      >
+        {isDark ? <IconSun size="1rem" /> : <IconMoon size="1rem" />}
+      </ActionIcon>
       <Text className={classes.title}>Tandem</Text>
       <TextInput
         radius="md"
