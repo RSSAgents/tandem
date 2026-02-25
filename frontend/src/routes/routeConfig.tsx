@@ -1,5 +1,5 @@
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
-import { LoginPage } from '../components/features/LoginPage';
+import { LoginPage } from '../components/features/auth/LoginPage';
 import { AuthLayout } from '../components/layouts/AuthLayout/AuthLayout';
 import { ROUTE_PATHS } from './routePaths';
 
