@@ -1,13 +1,30 @@
 import { createTheme, CSSVariablesResolver, MantineProvider } from '@mantine/core';
+import { ReactNode } from 'react';
+
+interface MantineProviderWrapperProps {
+  children: ReactNode;
+}
 
 const theme = createTheme({
   primaryColor: 'brand',
-  colors: {
-    brand: ['#e6f2ff', '#cce4ff', '#99c9ff', '#66adff', '#3392ff', '#0a84ff', '#006fe0', '#005bb8', '#00478f', '#003366'],
+   fontFamily: 'Inter, sans-serif',
+   colors: {
+    brand: [
+      '#e6f2ff',
+      '#cce4ff',
+      '#99c9ff',
+      '#66adff',
+      '#3392ff',
+      '#0a84ff',
+      '#006fe0',
+      '#005bb8',
+      '#00478f',
+      '#003366',
+    ],
   },
 });
 
-const resolver: CSSVariablesResolver = (theme) => ({
+const resolver: CSSVariablesResolver = () => ({
   variables: {
     '--shadow-light': '0 20px 40px rgba(0, 0, 0, 0.5)',
     '--shadow-heavy': '0 60px 120px rgba(0, 0, 0, 0.8)',
@@ -38,11 +55,10 @@ const resolver: CSSVariablesResolver = (theme) => ({
   },
 });
 
-export default function MantineProviderWrapper({ children }: { children: React.ReactNode }) {
+export default function MantineProviderWrapper({ children }: MantineProviderWrapperProps) {
   return (
     <MantineProvider theme={theme} cssVariablesResolver={resolver} defaultColorScheme="dark">
       {children}
     </MantineProvider>
   );
 }
-
