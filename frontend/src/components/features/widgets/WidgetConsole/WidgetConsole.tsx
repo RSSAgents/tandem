@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './WidgetConsole.module.css';
-import { Button, Flex, Paper, Stack, Title, Text } from '@mantine/core';
+import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -151,25 +151,35 @@ export const WidgetConsole = () => {
 
   return (
     <>
-      <Title order={2} className={styles.questionTitle}>
-        В какой последовательности выведутся console.log?
-      </Title>
-      <Stack gap="xl" className={styles.widgetContainer}>
-        <Paper className={styles.widgetPaper}>
-          <pre className={styles.pre}>{currentTask.code}</pre>
-        </Paper>
+      <Container size={800} className={styles.mainContainer}>
+        <Title order={2} className={styles.questionTitle}>
+          In what order will the console.logs appear?
+        </Title>
+        <Text className={styles.subtitle} c="dimmed">
+          Drag the items into the correct order
+        </Text>
 
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            <Stack gap="xs">
-              {items.map((item, index) => (
-                <SortableItem key={item} value={item} index={index} />
-              ))}
-            </Stack>
-          </SortableContext>
-        </DndContext>
+        <Stack className={styles.widgetContainer}>
+          <Paper className={styles.widgetPaper}>
+            <pre className={styles.pre}>{currentTask.code}</pre>
+          </Paper>
 
-        <Flex gap="md" className={styles.actionButtons}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext items={items} strategy={verticalListSortingStrategy}>
+              <Stack className={styles.sortableStack}>
+                {items.map((item, index) => (
+                  <SortableItem key={item} value={item} index={index} />
+                ))}
+              </Stack>
+            </SortableContext>
+          </DndContext>
+        </Stack>
+
+        <Flex className={styles.actionButtons}>
           <Button
             className={styles.btn}
             disabled={showResult}
@@ -186,16 +196,14 @@ export const WidgetConsole = () => {
           </Button>
         </Flex>
         {showResult && (
-          <>
-            <Paper className={styles.resultContainer}>
-              <Text className={isCorrect ? styles.resultCorrect : styles.resultIncorrect}>
-                {isCorrect ? '✅ Correct! Well done!' : '❌ Error!'}
-              </Text>
-              <Text mt="sm" size="sm">
-                {currentTask.explanation}
-              </Text>
-            </Paper>
-          </>
+          <Paper className={styles.resultContainer}>
+            <Text className={isCorrect ? styles.resultCorrect : styles.resultIncorrect}>
+              {isCorrect ? '✅ Correct! Well done!' : '❌ Error!'}
+            </Text>
+            <Text mt="sm" size="sm">
+              {currentTask.explanation}
+            </Text>
+          </Paper>
         )}
 
         {currentIndex === TASKS_DATA.length - 1 && showResult && (
@@ -208,7 +216,7 @@ export const WidgetConsole = () => {
             </Text>
           </Paper>
         )}
-      </Stack>
+      </Container>
     </>
   );
 };

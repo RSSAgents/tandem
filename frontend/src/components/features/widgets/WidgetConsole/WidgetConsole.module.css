@@ -1,6 +1,19 @@
-.questionTitle {
-  margin: 30px auto;
+.mainContainer {
+  margin-top: 40px;
+  width: 800px;
 }
+
+.questionTitle {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
 .paper {
   margin-bottom: var(--mantine-spacing-xl);
   background-color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-dark-8));
@@ -8,6 +21,10 @@
 }
 
 .pre {
+  flex: 1;
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
   background-color: #1e1e1e;
   color: #d4d4d4;
   padding: 16px;
@@ -19,8 +36,33 @@
 }
 
 .widgetContainer {
-  width: 600px;
+  width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.widgetPaper {
+  width: 100%;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sortableStack {
+  width: 30%;
+  gap: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 16px;
 }
 
 .itemWrapper {
@@ -45,6 +87,10 @@
 
 .btn {
   width: 100%;
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
 }
 
 .resultContainer {
@@ -64,7 +110,8 @@
 }
 
 .actionButtons {
-  gap: 16px;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 .completedTitle {
@@ -75,10 +122,16 @@
 }
 
 .completedScore {
-  color: #7f8c8d;
   font-size: 20px;
   font-weight: 500;
   text-align: center;
+}
+.scoreContainer {
+  margin-top: 24px;
+  padding: 24px;
+  text-align: center;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
 }
 
 @keyframes fadeIn {
@@ -89,5 +142,16 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .actionButtons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
   }
 }
