@@ -5,9 +5,7 @@ import { SUPPORTED_LANGUAGES } from '../../../i18n/config';
 export const LanguageSwitcher = () => {
   const { i18n, t } = useTranslation('header');
 
-  const changeLang = (lang: string) => {
-    i18n.changeLanguage(lang);
-  };
+  const currentLang = (i18n.resolvedLanguage || 'en').toUpperCase();
 
   return (
     <Menu shadow="md" width={100}>
@@ -16,17 +14,16 @@ export const LanguageSwitcher = () => {
           variant="default"
           size="xl"
           radius="md"
-          aria-label={`${t('selectLanguage')}. ${i18n.resolvedLanguage?.toUpperCase()}`}
+          aria-label={`${t('selectLanguage')}: ${currentLang}`}
         >
-          <Text aria-hidden="true">{i18n.resolvedLanguage?.toUpperCase()}</Text>
+          <Text aria-hidden="true"> {currentLang}</Text>
         </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
         {SUPPORTED_LANGUAGES.map((lang) => (
           <Menu.Item
             key={lang.code}
-            onClick={() => changeLang(lang.code)}
-            role="menuitemradio"
+            onClick={() => i18n.changeLanguage(lang.code)}
             aria-checked={i18n.resolvedLanguage === lang.code}
           >
             {lang.label}

@@ -1,4 +1,3 @@
-export type LocalizedString = {
-  ru: string;
-  en: string;
-};
+import { AppLanguage } from "../i18n/config";
+
+export type LocalizedString = Record<AppLanguage, string>;

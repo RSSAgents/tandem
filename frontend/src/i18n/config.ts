@@ -10,6 +10,8 @@ export const SUPPORTED_LANGUAGES = [
   { code: 'ru', label: 'RU' },
 ] as const;
 
+export type AppLanguage = (typeof SUPPORTED_LANGUAGES)[number]['code'];
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)

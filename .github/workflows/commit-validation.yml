@@ -1,0 +1,47 @@
+name: Commit Validation
+
+on:
+  push:
+    branches:
+    - main
+    - development
+    - feature/*
+    - fix/*
+    - docs/*
+    - chore/*
+
+jobs:
+  commit-validation:
+    name: Commit Validation
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: Checkout Repository
+       uses: actions/checkout@v6.0.2
+
+     - name: Setup Node.js environment
+       uses: actions/setup-node@v6.2.0
+       with:
+         node-version: 24.13.1
+       
+     - name: Install Dependencies
+       working-directory: ./frontend
+       run: npm ci
+
+     - name: Run Prettier
+       run: cd frontend & npm run ci:format
+
+     - name: Run linter
+       working-directory: ./frontend
+       run: npm run lint
+
+     - name: Build
+       working-directory: ./frontend
+       run: npm run build
+
+     - name: Run tests
+       run: cd frontend & npm test
+
+
+
+     
