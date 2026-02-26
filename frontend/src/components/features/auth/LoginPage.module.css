@@ -1,11 +1,10 @@
 .card {
   width: 380px;
   padding: 40px 30px;
-  border-radius: 16px;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-light);
+  border-radius: var(--mantine-radius-lg);
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  box-shadow: var(--mantine-shadow-xl);
   position: relative;
 }
 
@@ -13,34 +12,20 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: var(--panel-soft);
-  border: 1px solid var(--border);
+
+  border-radius: var(--mantine-radius-xl);
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 }
 
 .title {
   text-align: center;
-  font-size: 28px;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 10px;
-  color: var(--accent);
+  margin-bottom: 20px;
+  color: var(--mantine-color-blue-6);
 }
 
 .input {
-  margin-bottom: 20px;
-  color: var(--text-main);
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-}
-
-.input::placeholder {
-  color: var(--text-dim);
-  opacity: 1;
-}
-
-.label {
-  color: var(--text-main);
-}
-
-.button {
-  background: var(--accent);
+  margin-bottom: 16px;
 }
