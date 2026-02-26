@@ -30,7 +30,9 @@ export const LoginPage = () => {
       >
         {isDark ? <IconSun size="1rem" /> : <IconMoon size="1rem" />}
       </ActionIcon>
-      <Text className={classes.title}>Tandem</Text>
+      <Text className={classes.title} mb="lg">
+        Tandem
+      </Text>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           radius="md"
@@ -38,6 +40,7 @@ export const LoginPage = () => {
           placeholder="you@example.com"
           className={classes.input}
           {...form.getInputProps('email')}
+          mb="md"
         />
         <PasswordInput
           radius="md"
@@ -46,7 +49,7 @@ export const LoginPage = () => {
           className={classes.input}
           {...form.getInputProps('password')}
         />
-        <Button radius="md" fullWidth type="submit" className={classes.button}>
+        <Button radius="md" mt="lg" fullWidth type="submit" className={classes.button}>
           LOGIN
         </Button>
       </form>

@@ -22,10 +22,5 @@
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 20px;
   color: var(--mantine-color-blue-6);
-}
-
-.button {
-  margin-top: 20px;
 }
