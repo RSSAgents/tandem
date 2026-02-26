@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './WidgetConsole.module.css';
-import { Button, Container, Flex, Paper, Stack, Title, Text } from '@mantine/core';
+import { Button, Flex, Paper, Stack, Title, Text } from '@mantine/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -139,7 +139,11 @@ export const WidgetConsole = () => {
 
   const handleNextQuestion = () => {
     if (currentIndex < TASKS_DATA.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+      const nextIndex = currentIndex + 1;
+      const nextTask = TASKS_DATA[currentIndex + 1];
+
+      setCurrentIndex(nextIndex);
+      setItems(shuffleArray(nextTask.options));
       setShowResult(false);
       setIsCorrect(false);
     }
@@ -147,62 +151,55 @@ export const WidgetConsole = () => {
 
   return (
     <>
-      <Container size="lg">
-        <Title order={2} className={styles.questionTitle}>
-          В какой последовательности выведутся console.log?
-        </Title>
-        <Stack gap="xl">
-          <Paper>
-            <pre className={styles.pre}>{currentTask.code}</pre>
-          </Paper>
+      <Title order={2} className={styles.questionTitle}>
+        В какой последовательности выведутся console.log?
+      </Title>
+      <Stack gap="xl" className={styles.widgetContainer}>
+        <Paper className={styles.widgetPaper}>
+          <pre className={styles.pre}>{currentTask.code}</pre>
+        </Paper>
 
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext items={items} strategy={verticalListSortingStrategy}>
-              <Stack gap="xs">
-                {items.map((item, index) => (
-                  <SortableItem key={item} value={item} index={index} />
-                ))}
-              </Stack>
-            </SortableContext>
-          </DndContext>
-
-          {showResult && (
-            <>
-              <Paper className={styles.resultContainer}>
-                <Text className={isCorrect ? styles.resultCorrect : styles.resultIncorrect}>
-                  {isCorrect ? '✅ Correct! Well done!' : '❌ Error!'}
-                </Text>
-                <Text mt="sm" size="sm">
-                  {currentTask.explanation}
-                </Text>
-              </Paper>
-            </>
-          )}
-        </Stack>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
+            <Stack gap="xs">
+              {items.map((item, index) => (
+                <SortableItem key={item} value={item} index={index} />
+              ))}
+            </Stack>
+          </SortableContext>
+        </DndContext>
 
         <Flex gap="md" className={styles.actionButtons}>
           <Button
-            className={styles.btnFullWidth}
+            className={styles.btn}
             disabled={showResult}
             onClick={() => handleCheckResult(items, currentTask.correctSequence)}
           >
             Check result
           </Button>
           <Button
-            className={styles.btnFullWidth}
+            className={styles.btn}
             disabled={!showResult || currentIndex === TASKS_DATA.length - 1}
             onClick={handleNextQuestion}
           >
             Next question
           </Button>
         </Flex>
+        {showResult && (
+          <>
+            <Paper className={styles.resultContainer}>
+              <Text className={isCorrect ? styles.resultCorrect : styles.resultIncorrect}>
+                {isCorrect ? '✅ Correct! Well done!' : '❌ Error!'}
+              </Text>
+              <Text mt="sm" size="sm">
+                {currentTask.explanation}
+              </Text>
+            </Paper>
+          </>
+        )}
 
-        {currentIndex === TASKS_DATA.length - 1 && (
-          <Paper>
+        {currentIndex === TASKS_DATA.length - 1 && showResult && (
+          <Paper className={styles.scoreContainer}>
             <Title order={3} className={styles.completedTitle}>
               Test completed!
             </Title>
@@ -211,7 +208,7 @@ export const WidgetConsole = () => {
             </Text>
           </Paper>
         )}
-      </Container>
+      </Stack>
     </>
   );
 };

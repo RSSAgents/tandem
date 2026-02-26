@@ -1,25 +1,28 @@
+.questionTitle {
+  margin: 30px auto;
+}
 .paper {
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
-  line-height: 1.6;
   margin-bottom: var(--mantine-spacing-xl);
   background-color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-dark-8));
   color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-white));
 }
 
-.paper code,
-.paper pre {
-  background-color: transparent;
-}
-
 .pre {
-  margin: 0;
-  white-space: pre-wrap;
-  font-family: 'Courier New', monospace;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding: 16px;
+  border-radius: 8px;
   font-size: 14px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  border: 1px solid #333;
 }
 
-/* Контейнер для сортируемого элемента */
+.widgetContainer {
+  width: 600px;
+  margin: 0 auto;
+}
+
 .itemWrapper {
   margin-bottom: var(--mantine-spacing-sm);
   cursor: grab;
@@ -29,7 +32,6 @@
   cursor: grabbing;
 }
 
-/* Стиль для сортируемого элемента */
 .dndItem {
   display: flex;
   align-items: center;
@@ -41,82 +43,51 @@
   cursor: pointer;
 }
 
-/* Состояние при перетаскивании */
-.itemDragging {
-  box-shadow: var(--mantine-shadow-sm);
-  opacity: 0.8;
-  transform: scale(1.02);
-  z-index: 999;
-}
-
-/* Кнопка на всю ширину */
-.btnFullWidth {
+.btn {
   width: 100%;
 }
 
-/* Результат (правильно/неправильно) */
+.resultContainer {
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid;
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
 .resultCorrect {
-  color: var(--mantine-color-green-6);
-  font-weight: 500;
+  color: #27ae60;
 }
 
 .resultIncorrect {
-  color: var(--mantine-color-red-6);
-  font-weight: 500;
+  color: #e74c3c;
 }
 
-/* Контейнер для результата с объяснением */
-.resultContainer {
-  margin-top: var(--mantine-spacing-md);
-  padding: var(--mantine-spacing-md);
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-  border-radius: var(--mantine-radius-md);
-}
-
-/* Заголовок вопроса */
-.questionTitle {
-  margin-bottom: var(--mantine-spacing-lg);
-  font-size: 24px;
-}
-
-/* Блок с кодом */
-.codeBlock {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
-  border-radius: var(--mantine-radius-md);
-  padding: var(--mantine-spacing-md);
-  overflow-x: auto;
-}
-
-/* Кнопки действий */
 .actionButtons {
-  margin-top: var(--mantine-spacing-xl);
-}
-
-/* Итоговый результат */
-.completedPaper {
-  margin-top: var(--mantine-spacing-xl);
-  padding: var(--mantine-spacing-lg);
-  text-align: center;
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  gap: 16px;
 }
 
 .completedTitle {
-  margin-bottom: var(--mantine-spacing-sm);
-  color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-white));
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
 .completedScore {
+  color: #7f8c8d;
   font-size: 20px;
-  font-weight: 600;
-  color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-4));
+  font-weight: 500;
+  text-align: center;
 }
 
-.itemDragging {
-  box-shadow: var(--mantine-shadow-sm);
-}
-
-.symbol {
-  font-size: 30px;
-  font-weight: 700;
-  width: 60px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
