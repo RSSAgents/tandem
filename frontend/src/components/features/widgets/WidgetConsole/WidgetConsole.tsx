@@ -13,6 +13,7 @@ import {
   KeyboardSensor,
   useSensor,
 } from '@dnd-kit/core';
+import { shuffleArray } from '@/utils/shuffleArray';
 
 interface IConsoleTasks {
   id: number;
@@ -87,10 +88,6 @@ function SortableItem({ value }: ISortableItemProps) {
     </div>
   );
 }
-
-const shuffleArray = <T,>(array: T[]): T[] => {
-  return [...array].sort(() => Math.random() - 0.5);
-};
 
 export const WidgetConsole = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
