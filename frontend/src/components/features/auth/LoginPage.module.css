@@ -3,7 +3,7 @@
   padding: 40px 30px;
   border-radius: var(--mantine-radius-lg);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
-  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   box-shadow: var(--mantine-shadow-xl);
   position: relative;
 }
@@ -20,12 +20,12 @@
 
 .title {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
   margin-bottom: 20px;
   color: var(--mantine-color-blue-6);
 }
 
-.input {
-  margin-bottom: 16px;
+.button {
+  margin-top: 20px;
 }
