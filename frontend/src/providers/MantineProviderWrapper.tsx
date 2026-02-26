@@ -7,8 +7,8 @@ interface MantineProviderWrapperProps {
 
 const theme = createTheme({
   primaryColor: 'brand',
-   fontFamily: 'Inter, sans-serif',
-   colors: {
+  fontFamily: 'Inter, sans-serif',
+  colors: {
     brand: [
       '#e6f2ff',
       '#cce4ff',
