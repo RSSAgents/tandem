@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import styles from './WidgetConsole.module.css';
 import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
-import { useSortable } from '@dnd-kit/sortable';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import {
   DndContext,
   closestCenter,
@@ -15,7 +13,7 @@ import {
 } from '@dnd-kit/core';
 import { shuffleArray } from '@/utils/shuffleArray';
 import { IConsoleTasks } from '@/types/widgetConsole';
-import { ISortableItemProps } from '@/types/sortable';
+import { SortableItem } from './SortableItem';
 
 const TASKS_DATA: IConsoleTasks[] = [
   {
@@ -62,25 +60,12 @@ Promise.resolve().then(() => {
   },
 ];
 
-function SortableItem({ value }: ISortableItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: value });
-
-  const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Text className={styles.dndItem}>{value}</Text>
-    </div>
-  );
-}
-
 export const WidgetConsole = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentTask = TASKS_DATA[currentIndex];
   const [items, setItems] = useState(shuffleArray(currentTask.options));
+  console.log(items);
+
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
