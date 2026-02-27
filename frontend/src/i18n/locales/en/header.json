@@ -2,9 +2,5 @@
   "login": "Log in",
   "signup": "Sign up",
   "themeToggle": "Toggle color scheme",
-  "selectLanguage": "Select language",
-  "languages": {
-    "en": "Английский",
-    "ru": "Русский"
-  }
+  "selectLanguage": "Select language"
 }
