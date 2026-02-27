@@ -4,17 +4,21 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import { NotFoundPage } from './NotFoundPage';
 
+export const renderNotFound = (route = '/invalid-route') => {
+  return render(
+    <MantineProvider>
+      <MemoryRouter initialEntries={[route]}>
+        <Routes>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </MemoryRouter>
+    </MantineProvider>,
+  );
+};
+
 describe('NotFoundPage', () => {
   it('render 404 on invalid route', () => {
-    render(
-      <MantineProvider>
-        <MemoryRouter initialEntries={['/invalid/route']}>
-          <Routes>
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </MemoryRouter>
-      </MantineProvider>,
-    );
+    renderNotFound();
 
     expect(screen.getByText('404')).toBeInTheDocument();
     expect(screen.getByText(/wandered off the learning path/i)).toBeInTheDocument();
