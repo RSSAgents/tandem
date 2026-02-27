@@ -1,6 +1,7 @@
 import { ActionIcon, Menu, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { SUPPORTED_LANGUAGES } from '../../../i18n/config';
+import { SUPPORTED_LANGUAGES } from '@i18n/config';
+
 
 export const LanguageSwitcher = () => {
   const { i18n, t } = useTranslation('header');

@@ -1,4 +1,4 @@
-import { AppLanguage } from '../i18n/config';
+import { AppLanguage } from '@i18n/config';
 import { LocalizedString } from '../types/localizedString';
 
 export function getLocalizedString(str: LocalizedString, lang: AppLanguage = 'en'): string {

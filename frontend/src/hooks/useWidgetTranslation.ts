@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { AppLanguage } from '../i18n/config';
-import { getLocalizedString } from '../utils/localize';
-
-export type LocalizedString = Record<AppLanguage, string>;
+import { AppLanguage } from '@i18n/config';
+import { getLocalizedString } from '@utils//localize';
+import { LocalizedString } from '../types/localizedString';
 
 export const useWidgetTranslation = () => {
   const { i18n } = useTranslation();
