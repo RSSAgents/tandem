@@ -16,9 +16,9 @@ describe('NotFoundPage', () => {
       </MantineProvider>,
     );
 
-    expect(screen.getByText('404')).toBeDefined();
-    expect(screen.getByText(/wandered off the learning path/i)).toBeDefined();
-    expect(screen.getByText('Back to learning')).toBeDefined();
+    expect(screen.getByText('404')).toBeInTheDocument();
+    expect(screen.getByText(/wandered off the learning path/i)).toBeInTheDocument();
+    expect(screen.getByText('Back to learning')).toBeInTheDocument();
   });
 
   it('does not render 404 on existing route', () => {
@@ -33,6 +33,6 @@ describe('NotFoundPage', () => {
       </MantineProvider>,
     );
 
-    expect(screen.queryByText('404')).toBeNull();
+    expect(screen.queryByText('404')).not.toBeInTheDocument();
   });
 });
