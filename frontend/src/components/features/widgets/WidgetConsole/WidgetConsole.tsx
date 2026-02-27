@@ -6,8 +6,8 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { IConsoleTasks } from '@/types/widgetConsole.types';
 import { SortableItem } from './SortableItem';
 import { useDragAndDrop } from '@/hooks/useDragAndDrop';
-import { ScoreDisplay } from '../../../shared/ScoreDisplay/ScoreDisplay';
-import { ResultDisplay } from '../../../shared/ResultDisplay/ResultDisplay';
+import { ScoreDisplay } from '@/components/shared/ScoreDisplay/ScoreDisplay';
+import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 
 const TASKS_DATA: IConsoleTasks[] = [
   {

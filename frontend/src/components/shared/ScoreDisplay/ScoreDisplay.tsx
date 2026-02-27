@@ -1,6 +1,6 @@
 import { Paper, Text, Title } from '@mantine/core';
 import styles from './ScoreDisplay.module.css';
-import { IScoreDisplayProps } from '../../../types/scoreDisplay.types';
+import { IScoreDisplayProps } from '@/types/scoreDisplay.types';
 
 export const ScoreDisplay = ({ score, total }: IScoreDisplayProps) => {
   return (
