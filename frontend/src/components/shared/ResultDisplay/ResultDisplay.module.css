@@ -1,0 +1,15 @@
+.resultContainer {
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid;
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.resultCorrect {
+  color: #27ae60;
+}
+
+.resultIncorrect {
+  color: #e74c3c;
+}

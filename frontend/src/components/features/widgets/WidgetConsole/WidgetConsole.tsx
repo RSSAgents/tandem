@@ -6,7 +6,8 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { IConsoleTasks } from '@/types/widgetConsole.types';
 import { SortableItem } from './SortableItem';
 import { useDragAndDrop } from '@/hooks/useDragAndDrop';
-import { ScoreDisplay } from '../../../shared/ScoreDisplay';
+import { ScoreDisplay } from '../../../shared/ScoreDisplay/ScoreDisplay';
+import { ResultDisplay } from '../../../shared/ResultDisplay/ResultDisplay';
 
 const TASKS_DATA: IConsoleTasks[] = [
   {
@@ -64,10 +65,10 @@ export const WidgetConsole = () => {
     initialOptions: currentTask.options,
   });
 
-  const handleCheckResult = () => {
-    const isCorrect = userOrder.every(
-      (value, index) => value === currentTask.correctSequence[index],
-    );
+  const handleCheckResult = (userAnswers: string[], correctAnswers: string[]) => {
+    const isCorrect =
+      userAnswers.length === correctAnswers.length &&
+      userAnswers.every((val, index) => val === correctAnswers[index]);
 
     setIsCorrect(isCorrect);
     setShowResult(true);
@@ -75,6 +76,8 @@ export const WidgetConsole = () => {
     if (isCorrect) {
       setScore((prevScore) => prevScore + 1);
     }
+
+    return isCorrect;
   };
 
   const handleNextQuestion = () => {
@@ -120,7 +123,11 @@ export const WidgetConsole = () => {
         </Stack>
 
         <Flex className={styles.actionButtons}>
-          <Button className={styles.btn} disabled={showResult} onClick={handleCheckResult}>
+          <Button
+            className={styles.btn}
+            disabled={showResult}
+            onClick={() => handleCheckResult(userOrder, currentTask.correctSequence)}
+          >
             Check result
           </Button>
           <Button
@@ -132,14 +139,7 @@ export const WidgetConsole = () => {
           </Button>
         </Flex>
         {showResult && (
-          <Paper className={styles.resultContainer}>
-            <Text className={isCorrect ? styles.resultCorrect : styles.resultIncorrect}>
-              {isCorrect ? '✅ Correct! Well done!' : '❌ Error!'}
-            </Text>
-            <Text mt="sm" size="sm">
-              {currentTask.explanation}
-            </Text>
-          </Paper>
+          <ResultDisplay isCorrect={isCorrect} explanation={currentTask.explanation} />
         )}
 
         {currentIndex === TASKS_DATA.length - 1 && showResult && (
