@@ -14,7 +14,7 @@ jobs:
           TITLE="${{ github.event.pull_request.title }}"
           echo "Checking title: $TITLE"
 
-          if [[ ! "$TITLE" =~ ^(feat|fix|docs|chore|refactor|test|ci)(\([a-z0-9_-]+\))?:\ .+ ]]; then
+          if [[ ! "$TITLE" =~ ^(feature|fix|chore|refactor)(\([a-z0-9_-]+\))?:\ .+ ]]; then
             echo "Invalid PR title format."
             echo "Expected: type: description"
             exit 1
