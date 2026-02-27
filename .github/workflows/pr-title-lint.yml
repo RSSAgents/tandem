@@ -16,6 +16,6 @@ jobs:
 
           if [[ ! "$TITLE" =~ ^(feat|fix|docs|chore|refactor|test|ci)(\([a-z0-9_-]+\))?:\ .+ ]]; then
             echo "Invalid PR title format."
-            echo "Expected: type(scope): description"
+            echo "Expected: type: description"
             exit 1
           fi
