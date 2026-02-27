@@ -14,20 +14,8 @@ import {
   useSensor,
 } from '@dnd-kit/core';
 import { shuffleArray } from '@/utils/shuffleArray';
-
-interface IConsoleTasks {
-  id: number;
-  code: string;
-  options: string[];
-  correctSequence: string[];
-  explanation?: string;
-  topic?: string;
-}
-
-interface ISortableItemProps {
-  value: string;
-  index: number;
-}
+import { IConsoleTasks } from '@/types/widgetConsole';
+import { ISortableItemProps } from '@/types/sortable';
 
 const TASKS_DATA: IConsoleTasks[] = [
   {
