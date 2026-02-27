@@ -6,6 +6,7 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { IConsoleTasks } from '@/types/widgetConsole.types';
 import { SortableItem } from './SortableItem';
 import { useDragAndDrop } from '@/hooks/useDragAndDrop';
+import { ScoreDisplay } from '../../../shared/ScoreDisplay';
 
 const TASKS_DATA: IConsoleTasks[] = [
   {
@@ -63,10 +64,10 @@ export const WidgetConsole = () => {
     initialOptions: currentTask.options,
   });
 
-  const handleCheckResult = (userAnswers: string[], correctAnswers: string[]) => {
-    const isCorrect =
-      userAnswers.length === correctAnswers.length &&
-      userAnswers.every((val, index) => val === correctAnswers[index]);
+  const handleCheckResult = () => {
+    const isCorrect = userOrder.every(
+      (value, index) => value === currentTask.correctSequence[index],
+    );
 
     setIsCorrect(isCorrect);
     setShowResult(true);
@@ -74,8 +75,6 @@ export const WidgetConsole = () => {
     if (isCorrect) {
       setScore((prevScore) => prevScore + 1);
     }
-
-    return isCorrect;
   };
 
   const handleNextQuestion = () => {
@@ -121,11 +120,7 @@ export const WidgetConsole = () => {
         </Stack>
 
         <Flex className={styles.actionButtons}>
-          <Button
-            className={styles.btn}
-            disabled={showResult}
-            onClick={() => handleCheckResult(userOrder, currentTask.correctSequence)}
-          >
+          <Button className={styles.btn} disabled={showResult} onClick={handleCheckResult}>
             Check result
           </Button>
           <Button
@@ -148,14 +143,7 @@ export const WidgetConsole = () => {
         )}
 
         {currentIndex === TASKS_DATA.length - 1 && showResult && (
-          <Paper className={styles.scoreContainer}>
-            <Title order={3} className={styles.completedTitle}>
-              Test completed!
-            </Title>
-            <Text className={styles.completedScore}>
-              Your score: {score}/{currentIndex + 1}
-            </Text>
-          </Paper>
+          <ScoreDisplay score={score} total={TASKS_DATA.length} />
         )}
       </Container>
     </>
