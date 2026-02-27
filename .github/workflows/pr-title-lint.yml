@@ -13,10 +13,6 @@ jobs:
         working-directory: frontend
 
     steps:
-      - uses: actions/checkout@v4
-
-      - run: npm ci
-
       - name: Validate PR title
         run: |
           echo "${{ github.event.pull_request.title }}" | npx commitlint
