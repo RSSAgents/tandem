@@ -1,7 +1,7 @@
-import { Text } from '@mantine/core';
+import { ISortableItemProps } from '@/types/dnd.types';
 import { useSortable } from '@dnd-kit/sortable';
-import { ISortableItemProps } from '@/types/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { Text } from '@mantine/core';
 import styles from './WidgetConsole.module.css';
 
 export function SortableItem({ value }: ISortableItemProps) {

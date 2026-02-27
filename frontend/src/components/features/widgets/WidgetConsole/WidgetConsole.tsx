@@ -2,18 +2,10 @@ import { useState } from 'react';
 import styles from './WidgetConsole.module.css';
 import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import {
-  DndContext,
-  closestCenter,
-  DragEndEvent,
-  useSensors,
-  PointerSensor,
-  KeyboardSensor,
-  useSensor,
-} from '@dnd-kit/core';
-import { shuffleArray } from '@/utils/shuffleArray';
-import { IConsoleTasks } from '@/types/widgetConsole';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { IConsoleTasks } from '@/types/widgetConsole.types';
 import { SortableItem } from './SortableItem';
+import { useDragAndDrop } from '@/hooks/useDragAndDrop';
 
 const TASKS_DATA: IConsoleTasks[] = [
   {
@@ -63,32 +55,13 @@ Promise.resolve().then(() => {
 export const WidgetConsole = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentTask = TASKS_DATA[currentIndex];
-  const [userOrder, setUserOrder] = useState(shuffleArray(currentTask.options));
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor),
-  );
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (!over || active.id === over.id) {
-      return;
-    }
-
-    const oldIndex = userOrder.findIndex((item) => item === active.id);
-    const newIndex = userOrder.findIndex((item) => item === over.id);
-
-    const newItems = [...userOrder];
-    const [movedItem] = newItems.splice(oldIndex, 1);
-    newItems.splice(newIndex, 0, movedItem);
-
-    setUserOrder(newItems);
-  };
+  const { userOrder, sensors, handleDragEnd, resetUserOrder } = useDragAndDrop({
+    initialOptions: currentTask.options,
+  });
 
   const handleCheckResult = (userAnswers: string[], correctAnswers: string[]) => {
     const isCorrect =
@@ -111,9 +84,9 @@ export const WidgetConsole = () => {
       const nextTask = TASKS_DATA[currentIndex + 1];
 
       setCurrentIndex(nextIndex);
-      setUserOrder(shuffleArray(nextTask.options));
       setShowResult(false);
       setIsCorrect(false);
+      resetUserOrder(nextTask.options);
     }
   };
 
