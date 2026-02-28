@@ -1,20 +1,9 @@
+import { renderNotFound } from '@components/shared/renderWithRouter';
 import { MantineProvider } from '@mantine/core';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import { NotFoundPage } from './NotFoundPage';
-
-export const renderNotFound = (route = '/invalid-route') => {
-  return render(
-    <MantineProvider>
-      <MemoryRouter initialEntries={[route]}>
-        <Routes>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </MemoryRouter>
-    </MantineProvider>,
-  );
-};
 
 describe('NotFoundPage', () => {
   it('render 404 on invalid route', () => {
