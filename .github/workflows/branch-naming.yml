@@ -1,4 +1,4 @@
-name: Assert branch naming rules
+name: Branch Name Lint
 
 on:
   pull_request:
