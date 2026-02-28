@@ -1,4 +1,4 @@
-name: Commit Validation
+name: Commit Validation CI
 
 on:
   push:
