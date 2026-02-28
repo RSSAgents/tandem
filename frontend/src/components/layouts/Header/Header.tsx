@@ -1,6 +1,7 @@
+import { useTheme } from '@hooks/useTheme';
 import { ActionIcon, Box, Button, Group, Text } from '@mantine/core';
 import { IconMoon, IconSun } from '@tabler/icons-react';
-import { useTheme } from '@hooks/useTheme';
+import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
 
 export const Header = () => {
@@ -12,7 +13,9 @@ export const Header = () => {
         Tandem
       </Text>
       <Group className={classes.group}>
-        <Button variant="default">Log in</Button>
+        <Button variant="default" component={Link} to="/login">
+          Log in
+        </Button>
         <Button>Sign up</Button>
         <ActionIcon
           onClick={handleToggleTheme}
