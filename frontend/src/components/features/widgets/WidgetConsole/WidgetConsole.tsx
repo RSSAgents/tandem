@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './WidgetConsole.module.css';
-import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
+import { Button, Flex, Paper, Stack, Title, Text, Container, Loader } from '@mantine/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { IConsoleTasks } from '@/types/widgetConsole.types';
@@ -8,62 +8,46 @@ import { SortableItem } from './SortableItem';
 import { useDragAndDrop } from '@/hooks/useDragAndDrop';
 import { ScoreDisplay } from '@/components/shared/ScoreDisplay/ScoreDisplay';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
-
-const TASKS_DATA: IConsoleTasks[] = [
-  {
-    id: 1,
-    code: `console.log(1);
-
-setTimeout(() => {
-    console.log(2);
-}, 0);
-
-Promise.resolve().then(() => {
-    console.log(3);
-});
-
-console.log(4);`,
-    options: ['1', '2', '3', '4'],
-    correctSequence: ['1', '4', '3', '2'],
-    explanation:
-      'Сначала синхронный код (1,4), потом микротаски (Promise - 3), потом макротаски (setTimeout - 2)',
-    topic: 'Event Loop',
-  },
-  {
-    id: 2,
-    code: `console.log('A');
-
-setTimeout(() => {
-    console.log('B');
-}, 100);
-
-setTimeout(() => {
-    console.log('C');
-}, 0);
-
-console.log('D');
-
-Promise.resolve().then(() => {
-    console.log('E');
-});`,
-    options: ['A', 'B', 'C', 'D', 'E'],
-    correctSequence: ['A', 'D', 'E', 'C', 'B'],
-    explanation:
-      'A и D синхронно, затем микротаска E, потом C (setTimeout 0), затем B (setTimeout 100)',
-    topic: 'Event Loop с таймерами',
-  },
-];
+import { getWidgetTasks } from '../../../api/widgetConsole.api';
 
 export const WidgetConsole = () => {
+  const [tasks, setTasks] = useState<IConsoleTasks[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentTask = TASKS_DATA[currentIndex];
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
 
+  const currentTask = tasks[currentIndex];
+
   const { userOrder, sensors, handleDragEnd, resetUserOrder } = useDragAndDrop({
-    initialOptions: currentTask.options,
+    initialOptions: currentTask?.options || [],
   });
+
+  useEffect(() => {
+    const loadTasks = async () => {
+      try {
+        setLoading(true);
+        const data = await getWidgetTasks();
+        setTasks(data);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load tasks');
+        console.error('Error loading tasks:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTasks();
+  }, []);
+
+  useEffect(() => {
+    if (currentTask) {
+      resetUserOrder(currentTask.options);
+    }
+  }, [currentTask]);
 
   const handleCheckResult = (userAnswers: string[], correctAnswers: string[]) => {
     const isCorrect =
@@ -81,16 +65,45 @@ export const WidgetConsole = () => {
   };
 
   const handleNextQuestion = () => {
-    if (currentIndex < TASKS_DATA.length - 1) {
-      const nextIndex = currentIndex + 1;
-      const nextTask = TASKS_DATA[currentIndex + 1];
-
-      setCurrentIndex(nextIndex);
+    if (currentIndex < tasks.length - 1) {
+      setCurrentIndex(currentIndex + 1);
       setShowResult(false);
       setIsCorrect(false);
-      resetUserOrder(nextTask.options);
     }
   };
+
+  if (loading) {
+    return (
+      <Container size={800} className={styles.mainContainer}>
+        <Flex justify="center" align="center" style={{ minHeight: '400px' }}>
+          <Loader size="lg" />
+        </Flex>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container size={800} className={styles.mainContainer}>
+        <Paper p="xl" withBorder>
+          <Text c="red" ta="center">
+            Error: {error}
+          </Text>
+          <Button onClick={() => window.location.reload()} mt="md" fullWidth>
+            Try again
+          </Button>
+        </Paper>
+      </Container>
+    );
+  }
+
+  if (!currentTask) {
+    return (
+      <Container size={800} className={styles.mainContainer}>
+        <Text ta="center">No tasks available</Text>
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -132,7 +145,7 @@ export const WidgetConsole = () => {
           </Button>
           <Button
             className={styles.btn}
-            disabled={!showResult || currentIndex === TASKS_DATA.length - 1}
+            disabled={!showResult || currentIndex === tasks.length - 1}
             onClick={handleNextQuestion}
           >
             Next question
@@ -142,8 +155,8 @@ export const WidgetConsole = () => {
           <ResultDisplay isCorrect={isCorrect} explanation={currentTask.explanation} />
         )}
 
-        {currentIndex === TASKS_DATA.length - 1 && showResult && (
-          <ScoreDisplay score={score} total={TASKS_DATA.length} />
+        {currentIndex === tasks.length - 1 && showResult && (
+          <ScoreDisplay score={score} total={tasks.length} />
         )}
       </Container>
     </>

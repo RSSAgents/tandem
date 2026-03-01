@@ -5,7 +5,9 @@ import { Text } from '@mantine/core';
 import styles from './WidgetConsole.module.css';
 
 export function SortableItem({ value }: ISortableItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: value });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: value || `item-${Math.random()}`,
+  });
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -14,7 +16,7 @@ export function SortableItem({ value }: ISortableItemProps) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Text className={styles.dndItem}>{value}</Text>
+      <Text className={styles.dndItem}>{value || ''}</Text>
     </div>
   );
 }
