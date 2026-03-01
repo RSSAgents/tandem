@@ -2,4 +2,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-left: var(--app-side-padding);
+  padding-right: var(--app-side-padding);
 }

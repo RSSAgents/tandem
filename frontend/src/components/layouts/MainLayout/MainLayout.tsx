@@ -4,11 +4,16 @@ import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
 import { Sidebar } from '../Sidebar/Sidebar';
 import classes from './MainLayout.module.css';
+import { LAYOUT_CONFIG } from '../../../constants/layout';
 
 export const MainLayout = () => {
   return (
-    <AppShell header={{ height: 60 }} footer={{ height: 50 }} padding={0}>
-      <AppShell.Header withBorder={false}>
+    <AppShell
+      header={{ height: LAYOUT_CONFIG.HEADER_HEIGHT }}
+      footer={{ height: LAYOUT_CONFIG.FOOTER_HEIGHT }}
+      padding={0}
+    >
+      <AppShell.Header withBorder={false} px="var(--app-side-padding)">
         <Header />
       </AppShell.Header>
 
@@ -24,7 +29,7 @@ export const MainLayout = () => {
         </div>
       </AppShell.Main>
 
-      <AppShell.Footer withBorder={false}>
+      <AppShell.Footer withBorder={false} px="var(--app-side-padding)">
         <Footer />
       </AppShell.Footer>
     </AppShell>
