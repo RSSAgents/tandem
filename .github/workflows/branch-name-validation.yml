@@ -1,4 +1,4 @@
-name: Branch Name Lint
+name: Branch Name Validation
 
 on:
   pull_request:
