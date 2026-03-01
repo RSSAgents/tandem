@@ -8,7 +8,7 @@ import { SortableItem } from './SortableItem';
 import { useDragAndDrop } from '@/hooks/useDragAndDrop';
 import { ScoreDisplay } from '@/components/shared/ScoreDisplay/ScoreDisplay';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
-import { getWidgetTasks } from '../../../api/widgetConsole.api';
+import { getWidgetTasks } from '@/api/widgetConsole.api';
 
 export const WidgetConsole = () => {
   const [tasks, setTasks] = useState<IConsoleTasks[]>([]);
