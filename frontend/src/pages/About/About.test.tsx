@@ -34,7 +34,9 @@ describe('About Page', () => {
 
     expect(screen.getByText('Meet Our Team')).toBeInTheDocument();
     expect(
-      screen.getByText(/The creators behind Tandem - united by code, creativity, and the RS School spirit/i)
+      screen.getByText(
+        /The creators behind Tandem - united by code, creativity, and the RS School spirit/i,
+      ),
     ).toBeInTheDocument();
   });
 
