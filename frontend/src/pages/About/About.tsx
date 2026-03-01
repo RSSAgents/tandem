@@ -13,7 +13,8 @@ import { IconBrandGithub } from '@tabler/icons-react';
 import classes from './About.module.css';
 
 const TITLE = 'Meet Our Team';
-const SUBTITLE = 'The creators behind Tandem - united by code, creativity, and the RS School spirit.';
+const SUBTITLE =
+  'The creators behind Tandem - united by code, creativity, and the RS School spirit.';
 const GUTHUBNAME = 'GitHub';
 const AVATAR_SIZE = 120;
 const GITHUB_ICON_SIZE = 14;

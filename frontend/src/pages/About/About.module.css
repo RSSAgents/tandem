@@ -1,23 +1,10 @@
 .title {
   color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-5));
-  display: flex;
-  align-items: center;
-  gap: 20px;
   letter-spacing: -0.03em;
 }
 
 .subtitle {
   font-size: 1.1rem;
-}
-
-.title::before,
-.title::after {
-  content: '';
-  height: 1.1em;
-  width: 6px;
-  background-color: var(--mantine-color-blue-5);
-  border-radius: 4px;
-  display: inline-block;
 }
 
 .teamGrid {
