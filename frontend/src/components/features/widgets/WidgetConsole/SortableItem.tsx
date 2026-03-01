@@ -4,9 +4,11 @@ import { CSS } from '@dnd-kit/utilities';
 import { Text } from '@mantine/core';
 import styles from './WidgetConsole.module.css';
 
-export function SortableItem({ value }: ISortableItemProps) {
+export function SortableItem({ value, index }: ISortableItemProps) {
+  const itemId = `${value}-${index}`;
+
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-    id: value || `item-${Math.random()}`,
+    id: itemId,
   });
 
   const style: React.CSSProperties = {
@@ -16,7 +18,7 @@ export function SortableItem({ value }: ISortableItemProps) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Text className={styles.dndItem}>{value || ''}</Text>
+      <Text className={styles.dndItem}>{value}</Text>
     </div>
   );
 }

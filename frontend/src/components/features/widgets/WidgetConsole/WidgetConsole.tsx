@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './WidgetConsole.module.css';
-import { Button, Flex, Paper, Stack, Title, Text, Container, Loader } from '@mantine/core';
+import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { IConsoleTasks } from '@/types/widgetConsole.types';
@@ -9,6 +9,8 @@ import { useDragAndDrop } from '@/hooks/useDragAndDrop';
 import { ScoreDisplay } from '@/components/shared/ScoreDisplay/ScoreDisplay';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { getWidgetTasks } from '@/api/widgetConsole.api';
+import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
+import { ErrorDisplay } from '../../../shared/ErrorDisplay/ErrorDisplay';
 
 export const WidgetConsole = () => {
   const [tasks, setTasks] = useState<IConsoleTasks[]>([]);
@@ -34,7 +36,6 @@ export const WidgetConsole = () => {
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load tasks');
-        console.error('Error loading tasks:', err);
       } finally {
         setLoading(false);
       }
@@ -47,7 +48,7 @@ export const WidgetConsole = () => {
     if (currentTask) {
       resetUserOrder(currentTask.options);
     }
-  }, [currentTask]);
+  }, [currentTask, resetUserOrder]);
 
   const handleCheckResult = (userAnswers: string[], correctAnswers: string[]) => {
     const isCorrect =
@@ -72,30 +73,8 @@ export const WidgetConsole = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <Container size={800} className={styles.mainContainer}>
-        <Flex justify="center" align="center" style={{ minHeight: '400px' }}>
-          <Loader size="lg" />
-        </Flex>
-      </Container>
-    );
-  }
-
-  if (error) {
-    return (
-      <Container size={800} className={styles.mainContainer}>
-        <Paper p="xl" withBorder>
-          <Text c="red" ta="center">
-            Error: {error}
-          </Text>
-          <Button onClick={() => window.location.reload()} mt="md" fullWidth>
-            Try again
-          </Button>
-        </Paper>
-      </Container>
-    );
-  }
+  if (loading) return <PageLoader />;
+  if (error) return <ErrorDisplay error={error} />;
 
   if (!currentTask) {
     return (
