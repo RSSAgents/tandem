@@ -22,6 +22,13 @@ const theme = createTheme({
       '#003366',
     ],
   },
+  headings: {
+    fontWeight: '800',
+    sizes: {
+      h1: { fontSize: '3rem', lineHeight: '1.2' },
+      h3: { fontSize: '1.5rem', lineHeight: '1.3' },
+    },
+  },
 });
 
 const resolver: CSSVariablesResolver = () => ({
