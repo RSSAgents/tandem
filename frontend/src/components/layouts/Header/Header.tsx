@@ -1,10 +1,13 @@
+import { useTheme } from '@hooks/useTheme';
 import { ActionIcon, Box, Button, Group, Text } from '@mantine/core';
 import { IconMoon, IconSun } from '@tabler/icons-react';
-import { useTheme } from '@hooks/useTheme';
+import { useTranslation } from 'react-i18next';
 import classes from './Header.module.css';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export const Header = () => {
   const { handleToggleTheme, isDark } = useTheme();
+  const { t } = useTranslation('header');
 
   return (
     <Box component="header" className={classes.header}>
@@ -12,17 +15,18 @@ export const Header = () => {
         Tandem
       </Text>
       <Group className={classes.group}>
-        <Button variant="default">Log in</Button>
-        <Button>Sign up</Button>
+        <Button variant="default">{t('login')}</Button>
+        <Button>{t('signup')}</Button>
         <ActionIcon
           onClick={handleToggleTheme}
           variant="default"
           size="xl"
           radius="md"
-          aria-label="Toggle color scheme"
+          aria-label={t('themeToggle')}
         >
           {isDark ? <IconSun className={classes.icon} /> : <IconMoon className={classes.icon} />}
         </ActionIcon>
+        <LanguageSwitcher />
       </Group>
     </Box>
   );
