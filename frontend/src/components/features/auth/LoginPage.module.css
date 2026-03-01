@@ -1,26 +1,20 @@
 .card {
   width: 380px;
-  padding: 40px 30px;
-  border-radius: var(--mantine-radius-lg);
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
-  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  box-shadow: var(--mantine-shadow-xl);
+  padding: var(--mantine-spacing-3xl) var(--mantine-spacing-2xl);
+
+  border-radius: var(--mantine-radius-2xl);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+
+  box-shadow: var(--shadow-light);
   position: relative;
 }
 
-.themeToggle {
+.topControls {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: var(--mantine-spacing-lg);
+  right: var(--mantine-spacing-lg);
 
-  border-radius: var(--mantine-radius-xl);
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
-  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-}
-
-.title {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--mantine-color-blue-6);
+  display: flex;
+  gap: var(--mantine-spacing-sm);
 }
