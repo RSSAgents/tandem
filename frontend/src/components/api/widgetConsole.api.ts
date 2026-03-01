@@ -1,4 +1,5 @@
 import { IConsoleTasks } from '@/types/widgetConsole.types';
+import { delay } from '@/utils/delay';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 const API_URL = import.meta.env.VITE_API_URL;
@@ -48,8 +49,6 @@ Promise.resolve().then(() => {
     topic: 'Event Loop с таймерами',
   },
 ];
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getWidgetTasks = async (): Promise<IConsoleTasks[]> => {
   if (USE_MOCK) {
