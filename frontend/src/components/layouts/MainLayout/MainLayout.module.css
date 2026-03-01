@@ -1,5 +1,41 @@
-.layout {
-  min-height: 100vh;
+.main {
+  height: var(--app-shell-main-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg);
+  overflow: hidden;
+  padding: 20px;
+}
+
+.appBoard {
+  display: flex;
+  width: 1280px;
+  max-width: 100%;
+  height: 90%;
+  max-height: 820px;
+  min-height: 500px;
+
+  background: var(--panel);
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  box-shadow: 0 60px 120px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.sidebarSection {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--panel-soft);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.contentSection {
+  flex: 1;
+  overflow-y: auto;
+  padding: 80px 60px 40px;
   display: flex;
   flex-direction: column;
 }
