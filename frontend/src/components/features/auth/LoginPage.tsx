@@ -3,13 +3,15 @@ import { ActionIcon, Button, Paper, PasswordInput, Text, TextInput } from '@mant
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, LoginFormValues } from './login.schema';
+import { loginSchema, LoginFormValues, LoginErrorKeys } from './login.schema';
 import classes from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { LanguageSwitcher } from '@components/layouts/Header/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation('auth');
   const { handleToggleTheme, isDark } = useTheme();
 
   const {
@@ -31,38 +33,38 @@ export const LoginPage = () => {
         <LanguageSwitcher />
 
         <ActionIcon onClick={handleToggleTheme} variant="default" size="xl" radius="md">
-          {isDark ? <IconSun size="1rem" /> : <IconMoon size="1rem" />}
+          {isDark ? <IconSun size="1.2rem" /> : <IconMoon size="1.2rem" />}
         </ActionIcon>
       </div>
 
-      <Text size="2xl" fw={600} ta="center" mb="xl" c="brand.5">
+      <Text size="2xl" fw={600} ta="center" mb="xl" mt="xl" c="brand.5">
         Tandem
       </Text>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          label="Email"
+          label={t('email')}
           placeholder="you@example.com"
           {...register('email')}
-          error={errors.email?.message}
+          error={errors.email?.message ? t(errors.email.message as LoginErrorKeys) : undefined}
           mb="lg"
         />
 
         <PasswordInput
-          label="Password"
+          label={t('password')}
           placeholder="••••••"
           {...register('password')}
-          error={errors.password?.message}
+          error={errors.password?.message ? t(errors.password.message as LoginErrorKeys) : undefined}
           mb="xl"
         />
 
         <Button type="submit" fullWidth loading={isSubmitting}>
-          LOGIN
+          {t('login')}
         </Button>
       </form>
 
       <Text size="sm" mt="lg" c="dimmed">
-        Forgot password?
+        {t('forgotPassword')}
       </Text>
     </Paper>
   );

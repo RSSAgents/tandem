@@ -1,6 +1,6 @@
 .card {
   width: 380px;
-  padding: var(--mantine-spacing-3xl) var(--mantine-spacing-2xl);
+  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-2xl);
 
   border-radius: var(--mantine-radius-2xl);
   background: var(--card-bg);
@@ -12,8 +12,8 @@
 
 .topControls {
   position: absolute;
-  top: var(--mantine-spacing-lg);
-  right: var(--mantine-spacing-lg);
+  top: var(--mantine-spacing-md);
+  right: var(--mantine-spacing-md);
 
   display: flex;
   gap: var(--mantine-spacing-sm);

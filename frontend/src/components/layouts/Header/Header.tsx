@@ -4,6 +4,7 @@ import { IconMoon, IconSun } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import classes from './Header.module.css';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const { handleToggleTheme, isDark } = useTheme();
@@ -15,7 +16,7 @@ export const Header = () => {
         Tandem
       </Text>
       <Group className={classes.group}>
-        <Button variant="default">{t('login')}</Button>
+        <Button variant="default" component={Link} to="/login">{t('login')}</Button>
         <Button>{t('signup')}</Button>
         <ActionIcon
           onClick={handleToggleTheme}
