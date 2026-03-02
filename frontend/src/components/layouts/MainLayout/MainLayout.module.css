@@ -14,7 +14,6 @@
   height: 90%;
   max-height: var(--board-max-height);
   min-height: 650px;
-
   background: var(--panel);
   border-radius: var(--mantine-radius-xl);
   border: 1px solid var(--border);
@@ -23,7 +22,7 @@
 }
 
 .sidebarSection {
-  width: var(--sidebar-width, 260px);
+  width: var(--sidebar-width);
   flex-shrink: 0;
   background: var(--panel-soft);
   border-right: 1px solid var(--border);
