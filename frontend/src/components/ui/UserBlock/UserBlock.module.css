@@ -1,0 +1,17 @@
+.userBlock {
+  padding-bottom: var(--mantine-spacing-xl);
+  margin-bottom: var(--mantine-spacing-xl);
+  border-bottom: 1px solid var(--border);
+}
+
+.name {
+  color: var(--text-main);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.rank {
+  color: var(--accent);
+  font-weight: 500;
+  text-transform: capitalize;
+}
