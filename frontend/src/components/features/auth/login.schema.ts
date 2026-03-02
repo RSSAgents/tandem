@@ -7,6 +7,4 @@ export const loginSchema = z.object({
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 
-export type LoginErrorKeys =
-  | 'errors.invalidEmail'
-  | 'errors.invalidPassword';
+export type LoginErrorKeys = 'errors.invalidEmail' | 'errors.invalidPassword';

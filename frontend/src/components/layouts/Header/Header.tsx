@@ -16,7 +16,9 @@ export const Header = () => {
         Tandem
       </Text>
       <Group className={classes.group}>
-        <Button variant="default" component={Link} to="/login">{t('login')}</Button>
+        <Button variant="default" component={Link} to="/login">
+          {t('login')}
+        </Button>
         <Button>{t('signup')}</Button>
         <ActionIcon
           onClick={handleToggleTheme}

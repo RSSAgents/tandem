@@ -41,24 +41,28 @@ export const LoginPage = () => {
         Tandem
       </Text>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
         <TextInput
           label={t('email')}
           placeholder="you@example.com"
           {...register('email')}
           error={errors.email?.message ? t(errors.email.message as LoginErrorKeys) : undefined}
           mb="lg"
+          data-testid="login-email"
         />
 
         <PasswordInput
           label={t('password')}
           placeholder="••••••"
           {...register('password')}
-          error={errors.password?.message ? t(errors.password.message as LoginErrorKeys) : undefined}
+          error={
+            errors.password?.message ? t(errors.password.message as LoginErrorKeys) : undefined
+          }
           mb="xl"
+          data-testid="login-password"
         />
 
-        <Button type="submit" fullWidth loading={isSubmitting}>
+        <Button type="submit" fullWidth loading={isSubmitting} data-testid="login-submit">
           {t('login')}
         </Button>
       </form>
