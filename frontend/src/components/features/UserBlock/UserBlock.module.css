@@ -1,6 +1,6 @@
 .userBlock {
-  padding-bottom: var(--mantine-spacing-xl);
-  margin-bottom: var(--mantine-spacing-xl);
+  padding-bottom: var(--mantine-spacing-md);
+  margin-bottom: var(--mantine-spacing-md);
   border-bottom: 1px solid var(--border);
 }
 

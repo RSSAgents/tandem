@@ -1,5 +1,8 @@
 .sidebar {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: var(--mantine-spacing-2xl);
   background-color: var(--panel-soft);
   border-right: 1px solid var(--border);

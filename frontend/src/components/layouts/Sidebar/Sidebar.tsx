@@ -7,15 +7,20 @@ import { SidebarNavigation } from './SidebarNavigation';
 
 export const Sidebar = () => {
   const user = { name: 'Alex', rank: 'Mage' };
+  const stats = { current: 3, total: 6 };
 
   return (
     <Stack className={classes.sidebar}>
       <Box>
         <UserBlock name={user.name} rank={user.rank} />
         <SidebarNavigation />
-        <ProgressBar current={3} total={6} />
-        <PrizeCard title={'Bronze Badge'} description={'Complete 1 module'} />
       </Box>
+      <Stack gap="md">
+        <ProgressBar current={stats.current} total={stats.total} />
+        <PrizeCard title="Bronze Badge" description="Complete 1 module" />
+        <PrizeCard title="Silver Medal" description="Complete 3 modules" />
+        <PrizeCard title="Gold Trophy" description="Complete 6 modules" />
+      </Stack>
     </Stack>
   );
 };
