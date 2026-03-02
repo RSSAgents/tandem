@@ -187,4 +187,4 @@ src/
 
 For deployment, the project will use Vercel.
 
-🔗 **Ссылка на проект:** [emty-link](https://emty-link.vercel.app)
+🔗 **Ссылка на проект:** [Tandem](https://tandem-three.vercel.app/)
