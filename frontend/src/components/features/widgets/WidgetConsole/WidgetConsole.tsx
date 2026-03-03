@@ -85,59 +85,51 @@ export const WidgetConsole = () => {
   }
 
   return (
-    <>
-      <Container size={800} className={styles.mainContainer}>
-        <Title order={2} className={styles.questionTitle}>
-          In what order will the console.logs appear?
-        </Title>
-        <Text className={styles.subtitle} c="dimmed">
-          Drag the items into the correct order
-        </Text>
+    <Container size={800} className={styles.mainContainer}>
+      <Title order={2} className={styles.questionTitle}>
+        In what order will the console.logs appear?
+      </Title>
+      <Text className={styles.subtitle} c="dimmed">
+        Drag the items into the correct order
+      </Text>
 
-        <Stack className={styles.widgetContainer}>
-          <Paper className={styles.widgetPaper}>
-            <pre className={styles.pre}>{currentTask.code}</pre>
-          </Paper>
+      <Stack className={styles.widgetContainer}>
+        <Paper className={styles.widgetPaper}>
+          <pre className={styles.pre}>{currentTask.code}</pre>
+        </Paper>
 
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext items={userOrder} strategy={verticalListSortingStrategy}>
-              <Stack className={styles.sortableStack}>
-                {userOrder.map((item, index) => (
-                  <SortableItem key={item} value={item} index={index} />
-                ))}
-              </Stack>
-            </SortableContext>
-          </DndContext>
-        </Stack>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={userOrder} strategy={verticalListSortingStrategy}>
+            <Stack className={styles.sortableStack}>
+              {userOrder.map((item, index) => (
+                <SortableItem key={item} value={item} index={index} />
+              ))}
+            </Stack>
+          </SortableContext>
+        </DndContext>
+      </Stack>
 
-        <Flex className={styles.actionButtons}>
-          <Button
-            className={styles.btn}
-            disabled={showResult}
-            onClick={() => handleCheckResult(userOrder, currentTask.correctSequence)}
-          >
-            Check result
-          </Button>
-          <Button
-            className={styles.btn}
-            disabled={!showResult || currentIndex === tasks.length - 1}
-            onClick={handleNextQuestion}
-          >
-            Next question
-          </Button>
-        </Flex>
-        {showResult && (
-          <ResultDisplay isCorrect={isCorrect} explanation={currentTask.explanation} />
-        )}
+      <Flex className={styles.actionButtons}>
+        <Button
+          className={styles.btn}
+          disabled={showResult}
+          onClick={() => handleCheckResult(userOrder, currentTask.correctSequence)}
+        >
+          Check result
+        </Button>
+        <Button
+          className={styles.btn}
+          disabled={!showResult || currentIndex === tasks.length - 1}
+          onClick={handleNextQuestion}
+        >
+          Next question
+        </Button>
+      </Flex>
+      {showResult && <ResultDisplay isCorrect={isCorrect} explanation={currentTask.explanation} />}
 
-        {currentIndex === tasks.length - 1 && showResult && (
-          <ScoreDisplay score={score} total={tasks.length} />
-        )}
-      </Container>
-    </>
+      {currentIndex === tasks.length - 1 && showResult && (
+        <ScoreDisplay score={score} total={tasks.length} />
+      )}
+    </Container>
   );
 };
