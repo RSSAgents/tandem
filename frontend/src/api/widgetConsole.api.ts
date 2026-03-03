@@ -50,13 +50,23 @@ Promise.resolve().then(() => {
   },
 ];
 
-export const getWidgetTasks = async (): Promise<IConsoleTasks[]> => {
+export const getWidgetTasks = async (options?: {
+  signal?: AbortSignal;
+}): Promise<IConsoleTasks[]> => {
   if (USE_MOCK) {
     await delay(500);
+
+    if (options?.signal?.aborted) {
+      throw new DOMException('Aborted', 'AbortError');
+    }
+
     return MOCK_TASKS;
   }
 
-  const response = await fetch(endpointUrl);
+  const response = await fetch(endpointUrl, {
+    signal: options?.signal,
+  });
+
   if (!response.ok) {
     throw new Error(`Failed to fetch tasks: ${response.status}`);
   }

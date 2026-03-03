@@ -30,13 +30,18 @@ export const useWidgetConsole = () => {
   }, [currentTask, resetUserOrder]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const loadTasks = async () => {
       try {
         setLoading(true);
-        const data = await getWidgetTasks();
+        const data = await getWidgetTasks({ signal: abortController.signal });
         setTasks(data);
         setError(null);
       } catch (err) {
+        if (err instanceof Error && err.name === 'AbortError') {
+          return;
+        }
         setError(err instanceof Error ? err.message : 'Failed to load tasks');
       } finally {
         setLoading(false);
@@ -44,6 +49,7 @@ export const useWidgetConsole = () => {
     };
 
     loadTasks();
+    return () => abortController.abort();
   }, []);
 
   const handleCheckResult = useCallback((userAnswers: string[], correctAnswers: string[]) => {
