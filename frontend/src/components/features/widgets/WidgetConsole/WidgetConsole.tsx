@@ -10,7 +10,7 @@ import { ScoreDisplay } from '@/components/shared/ScoreDisplay/ScoreDisplay';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { getWidgetTasks } from '@/api/widgetConsole.api';
 import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
-import { ErrorDisplay } from '../../../shared/ErrorDisplay/ErrorDisplay';
+import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
 
 export const WidgetConsole = () => {
   const [tasks, setTasks] = useState<IConsoleTasks[]>([]);
