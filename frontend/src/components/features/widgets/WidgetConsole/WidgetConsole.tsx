@@ -17,6 +17,7 @@ export const WidgetConsole = () => {
     showResult,
     isCorrect,
     score,
+    explanation,
     tasks,
     currentIndex,
     userOrder,
@@ -48,7 +49,7 @@ export const WidgetConsole = () => {
 
       <Stack className={styles.widgetContainer}>
         <Paper className={styles.widgetPaper}>
-          <pre className={styles.pre}>{currentTask.code}</pre>
+          <pre className={styles.pre}>{currentTask.payload.code}</pre>
         </Paper>
 
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -63,11 +64,7 @@ export const WidgetConsole = () => {
       </Stack>
 
       <Flex className={styles.actionButtons}>
-        <Button
-          className={styles.btn}
-          disabled={showResult}
-          onClick={() => handleCheckResult(userOrder, currentTask.correctSequence)}
-        >
+        <Button className={styles.btn} disabled={showResult} onClick={() => handleCheckResult()}>
           Check result
         </Button>
         <Button
@@ -78,7 +75,7 @@ export const WidgetConsole = () => {
           Next question
         </Button>
       </Flex>
-      {showResult && <ResultDisplay isCorrect={isCorrect} explanation={currentTask.explanation} />}
+      {showResult && <ResultDisplay isCorrect={isCorrect} explanation={explanation} />}
 
       {currentIndex === tasks.length - 1 && showResult && (
         <ScoreDisplay score={score} total={tasks.length} />

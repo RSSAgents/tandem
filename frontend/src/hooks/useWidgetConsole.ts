@@ -1,22 +1,23 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { IConsoleTasks } from '@/types/widgetConsole.types';
+import { IConsoleAnswer, IConsoleTask } from '@/types/widgetConsole.types';
 import { useDragAndDrop } from './useDragAndDrop';
-import { getWidgetTasks } from '@/api/widgetConsole.api';
+import { getWidgetTasks, checkWidgetAnswer } from '@/api/widgetConsole.api';
 
 export const useWidgetConsole = () => {
-  const [tasks, setTasks] = useState<IConsoleTasks[]>([]);
+  const [tasks, setTasks] = useState<IConsoleTask[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
+  const [explanation, setExplanation] = useState('');
 
   const currentTask = tasks[currentIndex];
 
   const dragAndDropParams = useMemo(
     () => ({
-      initialOptions: currentTask?.options || [],
+      initialOptions: currentTask?.payload.options || [],
     }),
     [currentTask],
   );
@@ -25,7 +26,7 @@ export const useWidgetConsole = () => {
 
   useEffect(() => {
     if (currentTask) {
-      resetUserOrder(currentTask.options);
+      resetUserOrder(currentTask.payload.options);
     }
   }, [currentTask, resetUserOrder]);
 
@@ -52,26 +53,36 @@ export const useWidgetConsole = () => {
     return () => abortController.abort();
   }, []);
 
-  const handleCheckResult = useCallback((userAnswers: string[], correctAnswers: string[]) => {
-    const isCorrect =
-      userAnswers.length === correctAnswers.length &&
-      userAnswers.every((val, index) => val === correctAnswers[index]);
+  const handleCheckResult = useCallback(async () => {
+    if (!currentTask) return;
 
-    setIsCorrect(isCorrect);
-    setShowResult(true);
+    try {
+      const answer: IConsoleAnswer = {
+        taskId: currentTask.id,
+        userSequence: userOrder,
+        timestamp: Date.now(),
+      };
 
-    if (isCorrect) {
-      setScore((prevScore) => prevScore + 1);
+      const result = await checkWidgetAnswer(answer);
+
+      setIsCorrect(result.isCorrect);
+      setExplanation(result.explanation || '');
+      setShowResult(true);
+
+      if (result.isCorrect) {
+        setScore((prevScore) => prevScore + 1);
+      }
+    } catch {
+      setError('Failed to check answer. Please try again.');
     }
-
-    return isCorrect;
-  }, []);
+  }, [currentTask, userOrder]);
 
   const handleNextQuestion = useCallback(() => {
     if (currentIndex < tasks.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setShowResult(false);
       setIsCorrect(false);
+      setExplanation('');
     }
   }, [currentIndex, tasks.length]);
 
@@ -83,6 +94,7 @@ export const useWidgetConsole = () => {
     showResult,
     isCorrect,
     score,
+    explanation,
     currentTask,
     userOrder,
 

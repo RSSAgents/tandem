@@ -1,8 +1,20 @@
-export interface IConsoleTasks {
-  id: number;
+export interface IConsoleTaskPayload {
   code: string;
   options: string[];
-  correctSequence: string[];
-  explanation?: string;
-  topic?: string;
+}
+
+export interface IConsoleTask {
+  id: string;
+  type: 'console-order';
+  topic: string;
+  difficulty: number;
+  tags: string[];
+  version: number;
+  payload: IConsoleTaskPayload;
+}
+
+export interface IConsoleAnswer {
+  taskId: string;
+  userSequence: string[];
+  timestamp: number;
 }

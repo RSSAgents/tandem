@@ -1,58 +1,45 @@
-import { IConsoleTasks } from '@/types/widgetConsole.types';
+import { IConsoleAnswer, IConsoleTask } from '@/types/widgetConsole.types';
 import { delay } from '@/utils/delay';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 const API_URL = import.meta.env.VITE_API_URL;
 const endpointUrl = `${API_URL}/tasks`; // should be changed later
 
-const MOCK_TASKS: IConsoleTasks[] = [
+const MOCK_TASKS: IConsoleTask[] = [
   {
-    id: 1,
-    code: `console.log(1);
-
-setTimeout(() => {
-    console.log(2);
-}, 0);
-
-Promise.resolve().then(() => {
-    console.log(3);
-});
-
-console.log(4);`,
-    options: ['1', '2', '3', '4'],
-    correctSequence: ['1', '4', '3', '2'],
-    explanation:
-      'Сначала синхронный код (1,4), потом микротаски (Promise - 3), потом макротаски (setTimeout - 2)',
+    id: 'console-001',
+    type: 'console-order',
     topic: 'Event Loop',
+    difficulty: 2,
+    tags: ['microtasks', 'macrotasks', 'promise', 'setTimeout'],
+    version: 1,
+    payload: {
+      code: 'console.log(1);\n\nsetTimeout(() => {\n  console.log(2);\n}, 0);\n\nPromise.resolve().then(() => {\n  console.log(3);\n});\n\nconsole.log(4);',
+      options: ['1', '2', '3', '4'],
+    },
   },
   {
-    id: 2,
-    code: `console.log('A');
-
-setTimeout(() => {
-    console.log('B');
-}, 100);
-
-setTimeout(() => {
-    console.log('C');
-}, 0);
-
-console.log('D');
-
-Promise.resolve().then(() => {
-    console.log('E');
-});`,
-    options: ['A', 'B', 'C', 'D', 'E'],
-    correctSequence: ['A', 'D', 'E', 'C', 'B'],
-    explanation:
-      'A и D синхронно, затем микротаска E, потом C (setTimeout 0), затем B (setTimeout 100)',
-    topic: 'Event Loop с таймерами',
+    id: 'console-002',
+    type: 'console-order',
+    topic: 'Event Loop 2',
+    difficulty: 2,
+    tags: ['microtasks', 'macrotasks', 'promise', 'setTimeout'],
+    version: 2,
+    payload: {
+      code: "console.log('A');\n\nsetTimeout(() => {\n  console.log('B');\n}, 100);\n\nsetTimeout(() => {\n  console.log('C');\n}, 0);\n\nconsole.log('D');\n\nPromise.resolve().then(() => {\n  console.log('E');\n});",
+      options: ['A', 'B', 'C', 'D', 'E'],
+    },
   },
 ];
 
+const MOCK_CORRECT_ANSWERS: Record<string, string[]> = {
+  'console-001': ['1', '4', '3', '2'],
+  'console-002': ['A', 'D', 'E', 'C', 'B'],
+};
+
 export const getWidgetTasks = async (options?: {
   signal?: AbortSignal;
-}): Promise<IConsoleTasks[]> => {
+}): Promise<IConsoleTask[]> => {
   if (USE_MOCK) {
     await delay(500);
 
@@ -74,4 +61,47 @@ export const getWidgetTasks = async (options?: {
   const data = await response.json();
 
   return data;
+};
+
+export const checkWidgetAnswer = async (
+  answer: IConsoleAnswer,
+): Promise<{
+  isCorrect: boolean;
+  score: number;
+  explanation?: string;
+}> => {
+  if (USE_MOCK) {
+    await delay(300);
+
+    const correctSequence = MOCK_CORRECT_ANSWERS[answer.taskId];
+
+    if (correctSequence) {
+      const isCorrect = answer.userSequence.join(',') === correctSequence.join(',');
+
+      return {
+        isCorrect,
+        score: isCorrect ? 1 : 0,
+        explanation: isCorrect ? 'Correct! Great job!' : 'Not quite right. Try again!',
+      };
+    }
+
+    return {
+      isCorrect: false,
+      score: 0,
+      explanation: 'Task not found',
+    };
+  }
+
+  // Real API request
+  const response = await fetch(`${API_URL}/tasks/check`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(answer),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to check answer');
+  }
+
+  return response.json();
 };
