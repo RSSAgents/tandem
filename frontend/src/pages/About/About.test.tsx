@@ -47,7 +47,7 @@ describe('About Page', () => {
     expect(memberCards).toHaveLength(10);
   });
 
-  it('should display specific info for a team leader', () => {
+  it('should display team leader name and role', () => {
     renderAbout();
 
     expect(screen.getByText('Shakhzod')).toBeInTheDocument();
