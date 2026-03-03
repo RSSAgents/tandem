@@ -64,7 +64,7 @@ describe('About Page', () => {
     expect(buttons).toHaveLength(10);
   });
 
-  it('should verify that external links open in a new tab', () => {
+  it('should open Github link in a new tab', () => {
     renderAbout();
 
     const links = screen.getAllByRole('link');
