@@ -3,3 +3,10 @@
   max-width: 500px;
   width: 100%;
 }
+
+.block {
+  height: 100%;
+  width: 100%;
+  border-radius: var(--mantine-radius-xl);
+  overflow: hidden;
+}
