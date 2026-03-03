@@ -1,10 +1,14 @@
 import { IUseDragAndDropProps } from '@/types/dnd.types';
 import { shuffleArray } from '@/utils/shuffleArray';
 import { DragEndEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export const useDragAndDrop = ({ initialOptions }: IUseDragAndDropProps) => {
   const [userOrder, setUserOrder] = useState(shuffleArray(initialOptions));
+
+  useEffect(() => {
+    setUserOrder(shuffleArray(initialOptions));
+  }, [initialOptions]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),

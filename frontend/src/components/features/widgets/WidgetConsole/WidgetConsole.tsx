@@ -1,77 +1,30 @@
-import { useEffect, useState } from 'react';
 import styles from './WidgetConsole.module.css';
 import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { DndContext, closestCenter } from '@dnd-kit/core';
-import { IConsoleTasks } from '@/types/widgetConsole.types';
 import { SortableItem } from './SortableItem';
-import { useDragAndDrop } from '@/hooks/useDragAndDrop';
 import { ScoreDisplay } from '@/components/shared/ScoreDisplay/ScoreDisplay';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
-import { getWidgetTasks } from '@/api/widgetConsole.api';
 import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
 import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
+import { useWidgetConsole } from '@/hooks/useWidgetConsole';
 
 export const WidgetConsole = () => {
-  const [tasks, setTasks] = useState<IConsoleTasks[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showResult, setShowResult] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [score, setScore] = useState(0);
-
-  const currentTask = tasks[currentIndex];
-
-  const { userOrder, sensors, handleDragEnd, resetUserOrder } = useDragAndDrop({
-    initialOptions: currentTask?.options || [],
-  });
-
-  useEffect(() => {
-    const loadTasks = async () => {
-      try {
-        setLoading(true);
-        const data = await getWidgetTasks();
-        setTasks(data);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load tasks');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadTasks();
-  }, []);
-
-  useEffect(() => {
-    if (currentTask) {
-      resetUserOrder(currentTask.options);
-    }
-  }, [currentTask, resetUserOrder]);
-
-  const handleCheckResult = (userAnswers: string[], correctAnswers: string[]) => {
-    const isCorrect =
-      userAnswers.length === correctAnswers.length &&
-      userAnswers.every((val, index) => val === correctAnswers[index]);
-
-    setIsCorrect(isCorrect);
-    setShowResult(true);
-
-    if (isCorrect) {
-      setScore((prevScore) => prevScore + 1);
-    }
-
-    return isCorrect;
-  };
-
-  const handleNextQuestion = () => {
-    if (currentIndex < tasks.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setShowResult(false);
-      setIsCorrect(false);
-    }
-  };
+  const {
+    loading,
+    error,
+    currentTask,
+    showResult,
+    isCorrect,
+    score,
+    tasks,
+    currentIndex,
+    userOrder,
+    sensors,
+    handleDragEnd,
+    handleCheckResult,
+    handleNextQuestion,
+  } = useWidgetConsole();
 
   if (loading) return <PageLoader />;
   if (error) return <ErrorDisplay error={error} />;

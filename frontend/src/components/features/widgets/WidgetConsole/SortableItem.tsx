@@ -4,11 +4,9 @@ import { CSS } from '@dnd-kit/utilities';
 import { Text } from '@mantine/core';
 import styles from './WidgetConsole.module.css';
 
-export function SortableItem({ value, index }: ISortableItemProps) {
-  const itemId = `${value}-${index}`;
-
+export function SortableItem({ value }: ISortableItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-    id: itemId,
+    id: value,
   });
 
   const style: React.CSSProperties = {
