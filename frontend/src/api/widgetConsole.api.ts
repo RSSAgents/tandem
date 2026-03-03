@@ -37,9 +37,7 @@ const MOCK_CORRECT_ANSWERS: Record<string, string[]> = {
   'console-002': ['A', 'D', 'E', 'C', 'B'],
 };
 
-export const getWidgetTasks = async (options?: {
-  signal?: AbortSignal;
-}): Promise<IConsoleTask[]> => {
+export const getWidgetTasks = async (options?: RequestInit): Promise<IConsoleTask[]> => {
   if (USE_MOCK) {
     await delay(500);
 
