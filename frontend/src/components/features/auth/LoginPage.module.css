@@ -1,6 +1,13 @@
+.wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .card {
   width: 380px;
-  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-2xl);
+  padding: var(--mantine-spacing-xl) var(--mantine-spacing-2xl);
 
   border-radius: var(--mantine-radius-2xl);
   background: var(--card-bg);
@@ -10,11 +17,12 @@
   position: relative;
 }
 
-.topControls {
-  position: absolute;
-  top: var(--mantine-spacing-md);
-  right: var(--mantine-spacing-md);
+.forgot {
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
 
-  display: flex;
-  gap: var(--mantine-spacing-sm);
+.forgot:hover {
+  color: var(--accent);
 }

@@ -1,8 +1,9 @@
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
 import { NotFoundPage } from '@pages/NotFoundPage/NotFoundPage';
-import { AuthLayout } from '../components/layouts/AuthLayout/AuthLayout';
-import { LoginPage } from '../components/features/auth/LoginPage';
 import { ROUTE_PATHS } from './routePaths';
+import { lazy } from 'react';
+
+const LoginPage = lazy(() => import('@components/features/auth/LoginPage'));
 
 export const appRoutes = [
   {
@@ -10,11 +11,8 @@ export const appRoutes = [
     element: <MainLayout />,
     children: [
       { index: true, element: <p>HomePage</p> },
+      { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
     ],
-  },
-  {
-    element: <AuthLayout />,
-    children: [{ path: ROUTE_PATHS.LOGIN, element: <LoginPage /> }],
   },
 ];

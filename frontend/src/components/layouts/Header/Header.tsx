@@ -4,9 +4,11 @@ import { IconMoon, IconSun } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import classes from './Header.module.css';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
   const { handleToggleTheme, isDark } = useTheme();
   const { t } = useTranslation('header');
 
@@ -16,10 +18,14 @@ export const Header = () => {
         Tandem
       </Text>
       <Group className={classes.group}>
-        <Button variant="default" component={Link} to="/login">
-          {t('login')}
-        </Button>
-        <Button>{t('signup')}</Button>
+        {!isLoginPage && (
+          <>
+            <Button variant="default" component={Link} to="/login">
+              {t('login')}
+            </Button>
+            <Button>{t('signup')}</Button>
+          </>
+        )}
         <ActionIcon
           onClick={handleToggleTheme}
           variant="default"

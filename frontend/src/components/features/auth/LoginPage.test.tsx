@@ -1,59 +1,39 @@
-import { MantineProvider } from '@mantine/core';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import { screen } from '@testing-library/react';
+import { describe, expect, it, beforeEach, vi } from 'vitest';
+import { mockNavigate } from '../../../../vitest.setup';
 import { LoginPage } from './LoginPage';
-
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
-  return {
-    ...actual,
-    useNavigate: () => vi.fn(),
-  };
-});
-
-const renderLogin = () =>
-  render(
-    <MantineProvider>
-      <MemoryRouter>
-        <LoginPage />
-      </MemoryRouter>
-    </MantineProvider>,
-  );
+import { setupUserEvent } from '@/utils/test-util';
 
 describe('LoginPage', () => {
-  it('render inputs and submit button', () => {
-    renderLogin();
-
-    expect(screen.getByTestId('login-email')).toBeInTheDocument();
-    expect(screen.getByTestId('login-password')).toBeInTheDocument();
-    expect(screen.getByTestId('login-submit')).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it('mark fields invalid on empty submit', async () => {
-    renderLogin();
+  it('renders login form elements', () => {
+    setupUserEvent(<LoginPage />);
 
-    fireEvent.click(screen.getByTestId('login-submit'));
-
-    expect(await screen.findByTestId('login-email')).toHaveAttribute(
-      'aria-invalid',
-      'true'
-    );
+    expect(screen.getByRole('textbox', { name: /email/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
   });
 
-  it('submit valid form', async () => {
-    renderLogin();
+  it('does not submit form when it is invalid', async () => {
+    const { user } = setupUserEvent(<LoginPage />);
 
-    fireEvent.change(screen.getByTestId('login-email'), {
-      target: { value: 'test@test.com' },
-    });
+    await user.click(screen.getByRole('button', { name: /login/i }));
 
-    fireEvent.change(screen.getByTestId('login-password'), {
-      target: { value: '123456' },
-    });
+    expect(mockNavigate).not.toHaveBeenCalled();
+  });
 
-    fireEvent.click(screen.getByTestId('login-submit'));
+  it('navigates to dashboard on valid submit', async () => {
+    const { user } = setupUserEvent(<LoginPage />);
 
-    expect(true).toBe(true);
+    await user.type(screen.getByRole('textbox', { name: /email/i }), 'test@test.com');
+
+    await user.type(screen.getByLabelText(/password/i), '123456');
+
+    await user.click(screen.getByRole('button', { name: /login/i }));
+
+    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
   });
 });

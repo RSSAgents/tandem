@@ -1,18 +1,14 @@
-import { useTheme } from '@hooks/useTheme';
-import { ActionIcon, Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
-import { IconMoon, IconSun } from '@tabler/icons-react';
+import { Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormValues, LoginErrorKeys } from './login.schema';
 import classes from './LoginPage.module.css';
 import { useNavigate } from 'react-router-dom';
-import { LanguageSwitcher } from '@components/layouts/Header/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('auth');
-  const { handleToggleTheme, isDark } = useTheme();
 
   const {
     register,
@@ -20,7 +16,7 @@ export const LoginPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   const onSubmit = async () => {
@@ -28,48 +24,42 @@ export const LoginPage = () => {
   };
 
   return (
-    <Paper className={classes.card}>
-      <div className={classes.topControls}>
-        <LanguageSwitcher />
+    <div className={classes.wrapper}>
+      <Paper className={classes.card}>
+        <Text size="2xl" fw={600} ta="center" mb="xl" c="brand.5">
+          Tandem
+        </Text>
 
-        <ActionIcon onClick={handleToggleTheme} variant="default" size="xl" radius="md">
-          {isDark ? <IconSun size="1.2rem" /> : <IconMoon size="1.2rem" />}
-        </ActionIcon>
-      </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextInput
+            label={t('email')}
+            placeholder="you@example.com"
+            {...register('email')}
+            error={errors.email?.message ? t(errors.email.message as LoginErrorKeys) : undefined}
+            mb="lg"
+          />
 
-      <Text size="2xl" fw={600} ta="center" mb="xl" mt="xl" c="brand.5">
-        Tandem
-      </Text>
+          <PasswordInput
+            label={t('password')}
+            placeholder="••••••"
+            {...register('password')}
+            error={
+              errors.password?.message ? t(errors.password.message as LoginErrorKeys) : undefined
+            }
+            mb="xl"
+          />
 
-      <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
-        <TextInput
-          label={t('email')}
-          placeholder="you@example.com"
-          {...register('email')}
-          error={errors.email?.message ? t(errors.email.message as LoginErrorKeys) : undefined}
-          mb="lg"
-          data-testid="login-email"
-        />
+          <Button type="submit" fullWidth loading={isSubmitting} color="blue">
+            {t('login')}
+          </Button>
+        </form>
 
-        <PasswordInput
-          label={t('password')}
-          placeholder="••••••"
-          {...register('password')}
-          error={
-            errors.password?.message ? t(errors.password.message as LoginErrorKeys) : undefined
-          }
-          mb="xl"
-          data-testid="login-password"
-        />
-
-        <Button type="submit" fullWidth loading={isSubmitting} data-testid="login-submit">
-          {t('login')}
-        </Button>
-      </form>
-
-      <Text size="sm" mt="lg" c="dimmed">
-        {t('forgotPassword')}
-      </Text>
-    </Paper>
+        <Text size="sm" mt="lg" className={classes.forgot}>
+          {t('forgotPassword')}
+        </Text>
+      </Paper>
+    </div>
   );
 };
+
+export default LoginPage;
