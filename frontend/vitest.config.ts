@@ -1,10 +1,21 @@
+import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
     passWithNoTests: true,
-    globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/setupTests.ts'],
+    globals: true,
+    setupFiles: './vitest.setup.ts',
+    include: ['**/*.test.tsx'],
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@pages': path.resolve(__dirname, './src/pages'),
+      '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@i18n': path.resolve(__dirname, './src/i18n'),
+    },
   },
 });

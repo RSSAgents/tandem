@@ -1,6 +1,10 @@
 import { About } from '@/pages/About/About';
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
+import { NotFoundPage } from '@pages/NotFoundPage/NotFoundPage';
 import { ROUTE_PATHS } from './routePaths';
+import { lazy } from 'react';
+
+const LoginPage = lazy(() => import('@components/features/auth/LoginPage'));
 
 export const appRoutes = [
   {
