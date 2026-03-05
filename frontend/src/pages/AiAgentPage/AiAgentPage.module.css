@@ -1,0 +1,124 @@
+.mainContent {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  min-height: calc(100vh - 120px);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.gridContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.gridContainer > div {
+  flex: 1;
+  height: 100%;
+}
+
+.glassPanel {
+  background: rgba(16, 18, 27, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.borderStrict {
+  border: 1px solid rgba(255, 0, 255, 0.3);
+  box-shadow: inset 0 0 15px rgba(255, 0, 255, 0.1), 0 0 20px rgba(255, 0, 255, 0.1);
+}
+
+.borderGentle {
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1), 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.neonInput input {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(0, 255, 255, 0.2);
+  color: white;
+}
+
+.chatInput {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.roleSwitcher {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.strictActive {
+  background-image: linear-gradient(45deg, #ff00ff, #7a00ff);
+}
+
+.gentleActive {
+  background-image: linear-gradient(45deg, #00ffff, #007aff);
+}
+
+.modeSwitcher {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.modeLabel {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.modeSwitcher [data-active] .modeLabel {
+  color: #fff !important;
+}
+
+.teacherActive {
+  background-image: linear-gradient(45deg, #00ffff, #007aff) !important;
+}
+
+.battleActive {
+  background-image: linear-gradient(45deg, #f08c00, #ff922b) !important;
+}
+
+.messageAi {
+  background: rgba(255, 0, 255, 0.1);
+  border-left: 3px solid #ff00ff;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.messageUser {
+  background: rgba(0, 255, 255, 0.1);
+  border-right: 3px solid #00ffff;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: right;
+}
+
+.reportBox {
+  background: rgba(255, 0, 255, 0.05);
+  border: 1px dashed rgba(255, 0, 255, 0.4);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.historyIconI, .historyIconT {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  color: white;
+}
+
+.historyIconI {
+  background: #ff00ff;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.historyIconT {
+  background: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  color: #000;
+}
