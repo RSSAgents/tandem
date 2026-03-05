@@ -5,11 +5,11 @@ import { Header } from '../Header/Header';
 import classes from './MainLayout.module.css';
 
 export const MainLayout = () => (
-  <>
-    <Container size="fluid" className={classes.layout}>
-      <Header />
+  <Container size="fluid" className={classes.layout}>
+    <Header />
+    <div className={classes.content}>
       <Outlet />
-      <Footer />
-    </Container>
-  </>
+    </div>
+    <Footer />
+  </Container>
 );
