@@ -27,12 +27,16 @@
 
 .borderStrict {
   border: 1px solid rgba(255, 0, 255, 0.3);
-  box-shadow: inset 0 0 15px rgba(255, 0, 255, 0.1), 0 0 20px rgba(255, 0, 255, 0.1);
+  box-shadow:
+    inset 0 0 15px rgba(255, 0, 255, 0.1),
+    0 0 20px rgba(255, 0, 255, 0.1);
 }
 
 .borderGentle {
   border: 1px solid rgba(0, 255, 255, 0.3);
-  box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1), 0 0 20px rgba(0, 255, 255, 0.1);
+  box-shadow:
+    inset 0 0 15px rgba(0, 255, 255, 0.1),
+    0 0 20px rgba(0, 255, 255, 0.1);
 }
 
 .neonInput input {
@@ -103,7 +107,8 @@
   padding: 12px;
 }
 
-.historyIconI, .historyIconT {
+.historyIconI,
+.historyIconT {
   width: 24px;
   height: 24px;
   border-radius: 50%;
