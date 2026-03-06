@@ -15,6 +15,11 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
 
+          if [[ "$BRANCH_NAME" == "development" || "$BRANCH_NAME" == "main" ]]; then
+            echo "✅ Long-lived branch is allowed: $BRANCH_NAME"
+            exit 0
+          fi
+
           if [[ "$BRANCH_NAME" =~ ^(feature|fix|docs|chore)/.+$ ]]; then
             echo "✅ Branch name is valid"
           else

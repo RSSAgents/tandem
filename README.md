@@ -11,6 +11,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 | **Team Lead - Mentor** | Shakhzod  | (https://github.com/Shakhzod235) |
 | **Mentor**             | Diana     | (https://github.com/bt-diana)    |
 | **Mentor**             | Khayitbek | (https://github.com/Khayitbek03) |
+| **Mentor**             | Daria     | (https://github.com/dashque)     |
 | **Developer**          | Fayzullo  | (https://github.com/Fayzullo05)  |
 | **Developer**          | Ilia      | (https://github.com/D15ND)       |
 | **Developer**          | Margarita | (https://github.com/solarsungai) |
@@ -20,6 +21,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 ## 🏗️ Tech Stack
 
 - **Frontend** | React, TypeScript
+- **Design System** | Mantine
 - **Routing** | React Router DOM
 - **Forms** | React Hook Form
 - **State Management** | Redux Toolkit
@@ -27,7 +29,7 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 - **Database & Auth** | Firebase / Supabase
 - **Build Tool** | Vite
 - **Code Quality** | ESLint, Prettier, Husky
-- **Testing** | Unit tests (Vitest), End-to-end tests (Cypress)
+- **Testing** | Unit tests (React Testing Library), End-to-end tests (Cypress), Vitest
 - **CI/CD** | GitHub Actions (Dev → Staging, Main → Production)
 - **API Client** | Axios
 
@@ -85,29 +87,6 @@ We follow the RS School Conventional Commits specification.
 - Imperative mood ("move cursor to ..." not "moves cursor to ..." should be used).
 
 📚 More information and examples here: https://rs.school/docs/en/git-convention
-
-## 🔀 Pull Request Requirements
-
-- PR title MUST follow Conventional Commits format:
-  type: short description
-
-  Example:
-  feat: implement login form validation
-  fix: resolve mobile layout issue
-
-- PR description MUST include:
-  - What was done
-  - Screenshots (if UI changes)
-  - Testing checks
-
-- Labels:
-  - Add appropriate label for every PR.
-
-- Assignees:
-  - Assign at least one developer responsible for reviewing/merging the PR.
-
-- All CI checks must pass before merge.
-- Minimum 1 approval + 1 mentor.
 
 ## 📂 Project Structure
 
@@ -169,7 +148,7 @@ src/
 │   │   └── DashboardPage.module.css
 │   └── LandingPage/                 # Uses MinimalLayout / MainLayout
 │       ├── LandingPage.tsx
-│       └── LandingPage.module.css 
+│       └── LandingPage.module.css
 │
 ├── hooks/                           # Custom hooks
 │   ├── useAuth.ts                   # Authentication logic
@@ -208,4 +187,4 @@ src/
 
 For deployment, the project will use Vercel.
 
-🔗 **Ссылка на проект:** [tandem-three.vercel.app](https://tandem-three.vercel.app/)
+🔗 **Ссылка на проект:** [Tandem](https://tandem-three.vercel.app/)
