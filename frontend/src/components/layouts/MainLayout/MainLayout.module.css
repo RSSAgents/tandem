@@ -1,39 +1,19 @@
+css
 .main {
-  height: var(--app-shell-main-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg);
-  padding: 20px var(--app-side-padding);
-}
-
-.appBoard {
-  display: flex;
-  width: var(--app-max-width);
-  max-width: 100%;
-  height: 90%;
-  max-height: var(--board-max-height);
-  min-height: 650px;
-  background: var(--panel);
-  border-radius: var(--mantine-radius-xl);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-heavy);
-  overflow: hidden;
-}
-
-.sidebarSection {
-  width: var(--sidebar-width);
-  flex-shrink: 0;
-  background: var(--panel-soft);
-  border-right: 1px solid var(--border);
+  padding-left: var(--app-shell-navbar-offset, 0px);
+  padding-top: var(--app-shell-header-offset, 0px);
+  padding-bottom: var(--app-shell-footer-offset, 0px);
+  padding-right: var(--app-side-padding);
+  padding-top: calc(var(--app-shell-header-offset) + 20px);
+  min-height: 100vh;
+  background: var(--bg);
   display: flex;
   flex-direction: column;
 }
 
-.contentSection {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--mantine-spacing-6xl) var(--mantine-spacing-3xl) var(--mantine-spacing-2xl);
+.sidebar {
+  background: var(--panel-soft);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
 }
