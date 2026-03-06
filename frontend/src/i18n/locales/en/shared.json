@@ -1,3 +1,4 @@
 {
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "progress": "{{current}} of {{total}} modules completed"
 }
