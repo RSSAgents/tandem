@@ -1,4 +1,5 @@
 import { Box, Progress, Text } from '@mantine/core';
+import { memo, useMemo } from 'react';
 import classes from './ProgressBar.module.css';
 
 interface ProgressBarProps {
@@ -6,8 +7,10 @@ interface ProgressBarProps {
   total: number;
 }
 
-export const ProgressBar = ({ current, total }: ProgressBarProps) => {
-  const percentage = total > 0 ? (current / total) * 100 : 0;
+export const ProgressBar = memo(({ current, total }: ProgressBarProps) => {
+  const percentage = useMemo(() => {
+    return total > 0 ? (current / total) * 100 : 0;
+  }, [current, total]);
 
   return (
     <Box className={classes.wrapper}>
@@ -24,4 +27,4 @@ export const ProgressBar = ({ current, total }: ProgressBarProps) => {
       />
     </Box>
   );
-};
+});
