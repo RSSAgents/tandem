@@ -143,6 +143,11 @@ src/
 │       ├── ErrorBoundary.tsx
 │       └── Loading.tsx
 │
+├── i18n/                            # Internationalization
+│   └── locales/                     # Translation files for supported languages
+│       ├── en/
+│       └── ru/
+│
 ├── pages/                           # Pages
 │   ├── DashboardPage/               # Uses MainLayout
 │   │   ├── DashboardPage.tsx
@@ -151,11 +156,14 @@ src/
 │       ├── LandingPage.tsx
 │       └── LandingPage.module.css
 │
+├── providers/                       # Global providers
+│   └── MantineProviderWrapper.ts    # Mantine UI theme config and CSS variables provider
+│
 ├── hooks/                           # Custom hooks
 │   ├── useAuth.ts                   # Authentication logic
 │   ├── useDashboard.ts              # Dashboard data loading
 │   └── useChat.ts                   # Chat management
-│
+
 ├── store/                           # RTK store
 │   ├── authStore.ts                 # User state
 │   ├── dashboardStore.ts            # Dashboard cache
