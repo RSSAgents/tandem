@@ -1,5 +1,5 @@
 import { RootState } from '@/store';
-import { Box, Container } from '@mantine/core';
+import { Box } from '@mantine/core';
 import MonacoEditor from '@monaco-editor/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ export const CodeEditor = () => {
   const editorCode = useSelector((state: RootState) => state.editorStore.code);
 
   const handleEditorChange = (code: string | undefined) => {
-    dispatch(setCodeEditor(code || ''));
+    dispatch(setCodeEditor(code ?? ''));
   };
 
   // Clear editor window after go out from page
@@ -24,10 +24,8 @@ export const CodeEditor = () => {
   }, [dispatch]);
 
   return (
-    <Container className={classes.container}>
-      <Box className={classes.block}>
-        <MonacoEditor {...config} value={editorCode} onChange={handleEditorChange} />
-      </Box>
-    </Container>
+    <Box className={classes.block}>
+      <MonacoEditor {...config} value={editorCode} onChange={handleEditorChange} />
+    </Box>
   );
 };
