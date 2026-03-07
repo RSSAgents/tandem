@@ -1,6 +1,6 @@
-import { RootState } from '@/store';
 import { Box } from '@mantine/core';
 import MonacoEditor from '@monaco-editor/react';
+import { RootState } from '@store/index';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classes from './CodeEditor.module.css';
