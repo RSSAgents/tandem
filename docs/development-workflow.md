@@ -24,7 +24,7 @@ A task is considered **Done** when the implemented changes meet the project qual
 
 The Definition of Done checklist is enforced through the Pull Request template located in:
 
-`.github/pull_request_template.md`
+[`.github/pull_request_template.md`](../github/pull_request_template.md)
 
 A task can only be considered **Done** when:
 
