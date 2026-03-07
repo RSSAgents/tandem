@@ -9,5 +9,4 @@
 Не возмущаюсь. Понимаю, что можно не делать. Но если нужна обратная связь - вот она, честная обратная связь.
 
 Tandem: Week 3 Checkpoint
-https://youtu.be/JMJYCz-o8_o
 [CI/CD configuration](https://youtu.be/JMJYCz-o8_o)
