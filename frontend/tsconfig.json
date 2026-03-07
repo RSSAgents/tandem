@@ -23,6 +23,7 @@
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "paths": {
       "@/*": ["./src/*"],
+      "@api/*": ["./src/api/*"],
       "@store/*": ["./src/store/*"],
       "@routes/*": ["./src/routes/*"],
       "@components/*": ["./src/components/*"],

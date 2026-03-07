@@ -1,10 +1,13 @@
+import { WidgetConsole } from '@/components/features/widgets/WidgetConsole/WidgetConsole';
+import { About } from '@/pages/About/About';
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
-import { lazy } from 'react';
-import { MinimalLayout } from '../components/layouts/MinimalLayout/MinimalLayout';
-import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
-import { ROUTE_PATHS } from './routePaths';
 
-const LoginPage = lazy(() => import('@components/features/auth/LoginPage'));
+import { lazy } from 'react';
+import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
+import { ROUTE_PATHS } from './routePaths';
+import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
+
+const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 
 export const appRoutes = [
   {
@@ -13,7 +16,9 @@ export const appRoutes = [
     children: [
       { index: true, element: <p>HomePage</p> },
       { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
+      { path: ROUTE_PATHS.ABOUT, element: <About /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
+      { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
     ],
   },
   {
