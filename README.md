@@ -152,12 +152,17 @@ src/
 │   ├── DashboardPage/               # Uses MainLayout
 │   │   ├── DashboardPage.tsx
 │   │   └── DashboardPage.module.css
-│   └── LandingPage/                 # Uses MinimalLayout / MainLayout
-│       ├── LandingPage.tsx
-│       └── LandingPage.module.css
-│
-├── providers/                       # Global providers
-│   └── MantineProviderWrapper.ts    # Mantine UI theme config and CSS variables provider
+│   ├── LandingPage/                 # Uses MinimalLayout / MainLayout
+│   │   ├── LandingPage.tsx
+│   │   └── LandingPage.module.css
+│   ├── About/                       # Uses MinimalLayout
+│   │   ├── About.tsx
+│   │   ├── About.test.tsx
+│   │   └── About.module.css
+│   └── NotFoundPage/                # Uses MinimalLayout
+│       ├── NotFoundPage.tsx
+│       ├── NotFoundPage.test.tsx
+│       └── NotFoundPage.module.css
 │
 ├── hooks/                           # Custom hooks
 │   ├── useAuth.ts                   # Authentication logic
