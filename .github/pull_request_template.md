@@ -6,18 +6,30 @@
 
 ---
 
-### PR Checklist
+## Definition of Done (DoD)
 
-#### Code Quality
+Before requesting review, confirm that:
 
-- [ ] My code follows the team's style guide and conventions
-- [ ] I have removed all debug logs, and commented-out code
-- [ ] No hardcoded secrets, tokens, or environment-specific values
-- [ ] No type assertions are used in the code.
-- [ ] There is no explicit use of the any type in the code.
+* [ ] Acceptance criteria are satisfied
+* [ ] Code follows project style guide and conventions
+* [ ] No debug logs or commented-out code remain
+* [ ] ESLint and formatting checks pass
+* [ ] No console errors or warnings
+* [ ] All existing tests pass locally
+* [ ] Edge cases and error states are handled
+* [ ] Pull request is linked to an issue
 
-#### Testing
+---
 
-- [ ] I have added or updated unit tests to cover my changes
-- [ ] All existing tests pass locally
-- [ ] Edge cases and error states have been considered and handled
+## PR Checklist
+
+### Code Quality
+
+* [ ] My code follows the team's style guide and conventions
+* [ ] No type assertions are used
+* [ ] No explicit `any` types are used
+
+### Testing
+
+* [ ] I have added or updated tests to cover my changes
+* [ ] All tests pass locally
