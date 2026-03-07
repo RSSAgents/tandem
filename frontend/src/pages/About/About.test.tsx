@@ -3,11 +3,10 @@ import { screen } from '@testing-library/react';
 import { About } from './About';
 
 describe('About Page', () => {
-  beforeEach(() => {
-    renderWithProviders(<About />);
-  });
+  const setup = () => renderWithProviders(<About />);
 
   it('should render the main title and subtitle', () => {
+    setup();
     expect(screen.getByText('Meet Our Team')).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -17,11 +16,13 @@ describe('About Page', () => {
   });
 
   it('should render all 10 team member cards', () => {
+    setup();
     const memberCards = screen.getAllByRole('link');
     expect(memberCards).toHaveLength(10);
   });
 
   it('should display team leader name and role', () => {
+    setup();
     expect(screen.getByText('Shakhzod')).toBeInTheDocument();
     expect(screen.getByText('Team Lead - Mentor')).toBeInTheDocument();
 
@@ -30,11 +31,13 @@ describe('About Page', () => {
   });
 
   it('should render GitHub buttons for members', () => {
+    setup();
     const buttons = screen.getAllByText('GitHub');
     expect(buttons).toHaveLength(10);
   });
 
   it('should open Github link in a new tab', () => {
+    setup();
     const links = screen.getAllByRole('link');
     links.forEach((link) => {
       expect(link).toHaveAttribute('target', '_blank');
@@ -42,6 +45,7 @@ describe('About Page', () => {
   });
 
   it('should display technical bio content for developers', () => {
+    setup();
     expect(screen.getByText(/asynchrony/i)).toBeInTheDocument();
     expect(screen.getByText(/Event Loop/i)).toBeInTheDocument();
     expect(screen.getByText(/technical strategist/i)).toBeInTheDocument();
