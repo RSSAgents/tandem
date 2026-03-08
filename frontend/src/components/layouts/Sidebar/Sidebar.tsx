@@ -5,8 +5,13 @@ import { UserBlock } from '../../features/UserBlock/UserBlock';
 import classes from './Sidebar.module.css';
 import { SidebarNavigation } from './SidebarNavigation';
 
-const user = { name: 'Alex', rank: 'Mage' };
-const stats = { current: 3, total: 6 };
+interface SidebarProps {
+  user?: { name: string; rank: string };
+  stats?: { current: number; total: number };
+}
+
+const DEFAULT_USER = { name: 'Alex', rank: 'Mage' };
+const DEFAULT_STATS = { current: 3, total: 6 };
 
 const MOCK_PRIZES = [
   { id: 1, title: 'Bronze Badge', description: 'Complete 1 module' },
@@ -14,7 +19,7 @@ const MOCK_PRIZES = [
   { id: 3, title: ' Gold Trophy', description: 'Complete 6 modules' },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = ({ user = DEFAULT_USER, stats = DEFAULT_STATS }: SidebarProps) => {
   return (
     <Stack className={classes.sidebar}>
       <Box>
