@@ -78,11 +78,11 @@
 }
 
 .teacherActive {
-  background-image: linear-gradient(45deg, #00ffff, #007aff) !important;
+  background-image: linear-gradient(45deg, #00ffff, #007aff);
 }
 
 .battleActive {
-  background-image: linear-gradient(45deg, #f08c00, #ff922b) !important;
+  background-image: linear-gradient(45deg, #f08c00, #ff922b);
 }
 
 .messageAi {
