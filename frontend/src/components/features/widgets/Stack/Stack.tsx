@@ -4,11 +4,9 @@ import classes from './Stack.module.css';
 const StackWidget = () => {
   return (
     <Container className={classes.container}>
-      <Title className={classes.title} order={1}>
-        Stack
-      </Title>
+      <Title order={1} className={classes.title}>STACK</Title>
       <Box className={classes.block}>
-        <Box className={classes.container_lifo}>
+        <Box className={classes.lifo}>
           <Box className={classes.books}>
             <Box className={classes.book}>
               <Text>5</Text>
@@ -28,8 +26,7 @@ const StackWidget = () => {
           </Box>
           <Box className={classes.cup}></Box>
         </Box>
-        <Box className={classes.container_fifo}>
-          <Box className={classes.cup}></Box>
+        <Box className={classes.fifo}>
           <Box className={classes.books}>
             <Box className={classes.book}>
               <Text>5</Text>
@@ -47,6 +44,7 @@ const StackWidget = () => {
               <Text>1</Text>
             </Box>
           </Box>
+          <Box className={classes.cup}></Box>
         </Box>
       </Box>
     </Container>
