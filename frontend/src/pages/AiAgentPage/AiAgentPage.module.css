@@ -7,15 +7,20 @@
   margin: 0 auto;
 }
 
-.gridContainer {
-  flex: 1;
+.tabButton {
+  position: fixed;
+  left: 0;
+  z-index: 100;
+  width: 20px;
+  height: 100px;
+  padding: 0;
+  border-radius: 0 8px 8px 0;
   display: flex;
-  flex-direction: column;
-}
-
-.gridContainer > div {
-  flex: 1;
-  height: 100%;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: none;
 }
 
 .glassPanel {
@@ -54,12 +59,17 @@
   background: rgba(0, 0, 0, 0.4);
 }
 
-.strictActive {
+/* FIX 4: семантические имена вместо strictActive/gentleActive */
+.gradientPink {
   background-image: linear-gradient(45deg, #ff00ff, #7a00ff);
 }
 
-.gentleActive {
+.gradientCyan {
   background-image: linear-gradient(45deg, #00ffff, #007aff);
+}
+
+.gradientOrange {
+  background-image: linear-gradient(45deg, #f08c00, #ff922b);
 }
 
 .modeSwitcher {
@@ -75,14 +85,6 @@
 
 .modeSwitcher [data-active] .modeLabel {
   color: #fff !important;
-}
-
-.teacherActive {
-  background-image: linear-gradient(45deg, #00ffff, #007aff);
-}
-
-.battleActive {
-  background-image: linear-gradient(45deg, #f08c00, #ff922b);
 }
 
 .messageAi {
@@ -107,8 +109,8 @@
   padding: 12px;
 }
 
-.historyIconI,
-.historyIconT {
+/* FIX 4: объединены дублирующиеся классы через data-атрибут */
+.historyIcon {
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -117,12 +119,12 @@
   color: white;
 }
 
-.historyIconI {
+.historyIcon[data-type='i'] {
   background: #ff00ff;
   box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
 }
 
-.historyIconT {
+.historyIcon[data-type='t'] {
   background: #00ffff;
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
   color: #000;
