@@ -4,7 +4,9 @@ import classes from './Stack.module.css';
 const StackWidget = () => {
   return (
     <Container className={classes.container}>
-      <Title order={1} className={classes.title}>STACK</Title>
+      <Title order={1} className={classes.title}>
+        STACK
+      </Title>
       <Box className={classes.block}>
         <Box className={classes.lifo}>
           <Box className={classes.books}>

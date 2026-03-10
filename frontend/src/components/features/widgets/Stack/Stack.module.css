@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   flex-direction: column;
   width: 100%;
@@ -38,23 +37,23 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 100px;
+  max-width: 120px;
   width: 100%;
   justify-content: end;
 }
 
 .book {
   background-color: var(--mantine-color-blue-8);
-  max-width: 100px;
+  max-width: 120px;
   width: 100%;
   text-align: center;
   border-radius: var(--mantine-radius-sm);
 }
 
 .cup {
-  border-left: 2px solid orange;
-  border-right: 2px solid orange;
-  border-bottom: 2px solid orange;
+  border-left: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  border-right: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  border-bottom: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
   max-width: 300px;
   width: 100%;
   min-height: 400px;
