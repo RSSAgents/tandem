@@ -81,8 +81,8 @@ export const AiAgentPage = () => {
         timestamp: Date.now(),
       };
       setThreads((current) =>
-        current.map((t) =>
-          t.id === threadId ? { ...t, messages: [...t.messages, aiMessage] } : t,
+        current.map((thread) =>
+          thread.id === threadId ? { ...thread, messages: [...thread.messages, aiMessage] } : thread,
         ),
       );
     }, 1000);
@@ -103,7 +103,7 @@ export const AiAgentPage = () => {
     let targetThreadId = '';
 
     setThreads((current) => {
-      const idx = current.findIndex((t) => t.topic === activeTopic && t.type === type);
+      const idx = current.findIndex((thread) => thread.topic === activeTopic && thread.type === type);
       if (idx !== -1) {
         targetThreadId = current[idx].id;
         const updated = [...current];
@@ -140,7 +140,7 @@ export const AiAgentPage = () => {
         </Center>
       );
     }
-    const thread = threads.find((t) => t.topic === activeTopic && t.type === type);
+    const thread = threads.find((thread) => thread.topic === activeTopic && thread.type === type);
     return (
       <Stack gap="md">
         {thread?.messages.map((msg) => (
@@ -193,18 +193,9 @@ export const AiAgentPage = () => {
   const SettingsPanel = (
     <Paper className={classes.glassPanel} p="sm" radius="md">
       <Group gap="xs" align="stretch" wrap="nowrap">
-        <Stack
-          gap={0}
-          justify="center"
-          align="center"
-          style={{ borderRight: '1px solid rgba(255,255,255,0.1)', paddingRight: '12px' }}
-        >
-          <Text fw={700} size="10px" c="dimmed" tt="uppercase">
-            Ready
-          </Text>
-          <Text fw={900} size="24px" c="cyan">
-            0%
-          </Text>
+        <Stack className={classes.statsDivider}>
+          <Text fw={700} size="10px" c="dimmed" tt="uppercase">Ready</Text>
+          <Text fw={900} size="24px" c="cyan">0%</Text>
         </Stack>
         <Stack gap={4} flex={1}>
           <SegmentedControl
