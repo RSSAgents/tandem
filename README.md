@@ -143,19 +143,32 @@ src/
 │       ├── ErrorBoundary.tsx
 │       └── Loading.tsx
 │
+├── i18n/                            # Internationalization
+│   └── locales/                     # Translation files for supported languages
+│       ├── en/
+│       └── ru/
+│
 ├── pages/                           # Pages
 │   ├── DashboardPage/               # Uses MainLayout
 │   │   ├── DashboardPage.tsx
 │   │   └── DashboardPage.module.css
-│   └── LandingPage/                 # Uses MinimalLayout / MainLayout
-│       ├── LandingPage.tsx
-│       └── LandingPage.module.css
+│   ├── LandingPage/                 # Uses MinimalLayout / MainLayout
+│   │   ├── LandingPage.tsx
+│   │   └── LandingPage.module.css
+│   ├── About/                       # Uses MinimalLayout
+│   │   ├── About.tsx
+│   │   ├── About.test.tsx
+│   │   └── About.module.css
+│   └── NotFoundPage/                # Uses MinimalLayout
+│       ├── NotFoundPage.tsx
+│       ├── NotFoundPage.test.tsx
+│       └── NotFoundPage.module.css
 │
 ├── hooks/                           # Custom hooks
 │   ├── useAuth.ts                   # Authentication logic
 │   ├── useDashboard.ts              # Dashboard data loading
 │   └── useChat.ts                   # Chat management
-│
+
 ├── store/                           # RTK store
 │   ├── authStore.ts                 # User state
 │   ├── dashboardStore.ts            # Dashboard cache
