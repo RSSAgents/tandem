@@ -5,8 +5,10 @@ import classes from './Sidebar.module.css';
 
 const SIDEBAR_NAV_ITEMS = [
   { label: 'Dashboard', path: ROUTE_PATHS.DASHBOARD },
+  { label: 'About', path: ROUTE_PATHS.ABOUT },
   { label: 'Library', path: ROUTE_PATHS.LIBRARY },
   { label: 'Achievements', path: ROUTE_PATHS.ACHIEVEMENTS },
+  { label: 'Result Page', path: ROUTE_PATHS.RESULT_PAGE },
 ] as const;
 
 export const SidebarNavigation = () => {
