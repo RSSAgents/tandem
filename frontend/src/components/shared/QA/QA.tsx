@@ -52,7 +52,11 @@ export const QA = ({
             />
           ))
         ) : (
-          <Radio.Group value={selected[0] || ''} onChange={(value) => handleSelect(value)}>
+          <Radio.Group
+            name={id}
+            value={selected[0] || ''}
+            onChange={(value) => handleSelect(value)}
+          >
             <Stack gap="sm">
               {options.map((option) => (
                 <Radio key={option.id} value={option.id} label={option.label} disabled={disabled} />
