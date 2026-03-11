@@ -1,50 +1,46 @@
 import { Avatar, Group, ScrollArea, Table, Text, Paper, Title, Stack, Badge } from '@mantine/core';
 import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
+import { Winner } from '@/types/winner.types';
 
-const data = [
+const data: Winner[] = [
   {
-    id: '1',
+    rank: 1,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
     name: 'Ivan Ivanov',
     score: 10,
-    email: 'test@gmail.com',
     widgetsAmount: { completed: 2, notCompleted: 3 },
   },
   {
-    id: '2',
+    rank: 2,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',
     name: 'Marge',
     score: 20,
-    email: 'test@gmail.com',
     widgetsAmount: { completed: 3, notCompleted: 2 },
   },
   {
-    id: '3',
+    rank: 3,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',
     name: 'Liza',
     score: 30,
-    email: 'test@gmail.com',
     widgetsAmount: { completed: 4, notCompleted: 1 },
   },
   {
-    id: '4',
+    rank: 4,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
     name: 'Bart',
     score: 40,
-    email: 'test@gmail.com',
     widgetsAmount: { completed: 5, notCompleted: 0 },
   },
   {
-    id: '5',
+    rank: 5,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png',
     name: 'Homer',
     score: 50,
-    email: 'test@gmail.com',
     widgetsAmount: { completed: 2, notCompleted: 3 },
   },
 ];
@@ -55,10 +51,10 @@ export const ResultPage = () => {
     const completedWidgets = (item.widgetsAmount.completed / totalAmountOfWidgets) * 100;
 
     return (
-      <Table.Tr key={item.id}>
+      <Table.Tr key={item.rank}>
         <Table.Td>
           <Text size="sm" fw={500}>
-            #{item.id}
+            #{item.rank}
           </Text>
         </Table.Td>
         <Table.Td>
