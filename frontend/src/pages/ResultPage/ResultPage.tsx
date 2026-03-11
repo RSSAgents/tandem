@@ -1,6 +1,7 @@
-import { Avatar, Group, ScrollArea, Table, Text, Paper, Title, Stack, Badge } from '@mantine/core';
+import { Avatar, Group, ScrollArea, Table, Text, Paper, Stack, Container } from '@mantine/core';
 import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
 import { Winner } from '@/types/winner.types';
+import classes from './ResultPage.module.css';
 
 const data: Winner[] = [
   {
@@ -79,28 +80,24 @@ export const ResultPage = () => {
   });
 
   return (
-    <Paper p="md" radius="lg" withBorder>
-      <Stack gap="lg">
-        <Group justify="space-between" align="center">
-          <Title order={2}>🏆 Leaderboard</Title>
-          <Badge size="lg" variant="light" color="blue">
-            Total participants: {data.length}
-          </Badge>
-        </Group>
-        <ScrollArea>
-          <Table miw={800} verticalSpacing="sm">
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th w={40} aria-label="Select all rows"></Table.Th>
-                <Table.Th>User</Table.Th>
-                <Table.Th>Score</Table.Th>
-                <Table.Th>Progress</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
-        </ScrollArea>
-      </Stack>
-    </Paper>
+    <Container size="xl" className={classes.wrapper}>
+      <Paper p="md" radius="lg" className={classes.paper}>
+        <Stack gap="lg">
+          <ScrollArea>
+            <Table miw={800} verticalSpacing="sm" className={classes.table}>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Position</Table.Th>
+                  <Table.Th>User</Table.Th>
+                  <Table.Th>Score</Table.Th>
+                  <Table.Th>Progress</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>{rows}</Table.Tbody>
+            </Table>
+          </ScrollArea>
+        </Stack>
+      </Paper>
+    </Container>
   );
 };

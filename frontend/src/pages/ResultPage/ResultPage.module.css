@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.paper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.table {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 1rem;
+  }
+
+  .paper {
+    max-width: 100%;
+  }
+}
