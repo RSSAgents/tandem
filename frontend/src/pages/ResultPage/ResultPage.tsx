@@ -1,16 +1,5 @@
-import {
-  Avatar,
-  Group,
-  ScrollArea,
-  Table,
-  Text,
-  Progress,
-  Paper,
-  Title,
-  Stack,
-  Badge,
-} from '@mantine/core';
-import classes from './ResultPage.module.css';
+import { Avatar, Group, ScrollArea, Table, Text, Paper, Title, Stack, Badge } from '@mantine/core';
+import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
 
 const data = [
   {
@@ -80,7 +69,6 @@ export const ResultPage = () => {
             </Text>
           </Group>
         </Table.Td>
-        <Table.Td>{item.email}</Table.Td>
         <Table.Td>{item.score}</Table.Td>
         <Table.Td>
           <Group justify="space-between">
@@ -88,14 +76,7 @@ export const ResultPage = () => {
               {completedWidgets.toFixed(0)}%
             </Text>
           </Group>
-          <Progress.Root>
-            <Progress.Section
-              className={classes.progressSection}
-              value={completedWidgets}
-              color="teal"
-              aria-label="Completed widgets"
-            />
-          </Progress.Root>
+          <ProgressBar current={item.widgetsAmount.completed} total={totalAmountOfWidgets} />
         </Table.Td>
       </Table.Tr>
     );
@@ -110,14 +91,12 @@ export const ResultPage = () => {
             Total participants: {data.length}
           </Badge>
         </Group>
-
         <ScrollArea>
           <Table miw={800} verticalSpacing="sm">
             <Table.Thead>
               <Table.Tr>
                 <Table.Th w={40} aria-label="Select all rows"></Table.Th>
                 <Table.Th>User</Table.Th>
-                <Table.Th>Email</Table.Th>
                 <Table.Th>Score</Table.Th>
                 <Table.Th>Progress</Table.Th>
               </Table.Tr>
