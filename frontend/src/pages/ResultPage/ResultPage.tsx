@@ -46,16 +46,23 @@ const data: Winner[] = [
   },
 ];
 
+const getRankDisplay = (rank: number) => {
+  if (rank === 1) return '🥇 1';
+  if (rank === 2) return '🥈 2';
+  if (rank === 3) return '🥉 3';
+  return `#${rank}`;
+};
+
 export const ResultPage = () => {
   const rows = data.map((item) => {
     const totalAmountOfWidgets = item.widgetsAmount.completed + item.widgetsAmount.notCompleted;
     const completedWidgets = (item.widgetsAmount.completed / totalAmountOfWidgets) * 100;
 
     return (
-      <Table.Tr key={item.rank}>
+      <Table.Tr key={item.rank} className={item.rank <= 3 ? classes.topRank : ''}>
         <Table.Td>
           <Text size="sm" fw={500}>
-            #{item.rank}
+            {getRankDisplay(item.rank)}
           </Text>
         </Table.Td>
         <Table.Td>
@@ -66,7 +73,12 @@ export const ResultPage = () => {
             </Text>
           </Group>
         </Table.Td>
-        <Table.Td>{item.score}</Table.Td>
+        <Table.Td>
+          <Group gap={4}>
+            <span>⭐</span>
+            {item.score}
+          </Group>
+        </Table.Td>
         <Table.Td>
           <Group justify="space-between">
             <Text fz="xs" c="teal" fw={700}>
@@ -81,10 +93,10 @@ export const ResultPage = () => {
 
   return (
     <Container size="xl" className={classes.wrapper}>
-      <Paper p="md" radius="lg" className={classes.paper}>
+      <Paper withBorder p="md" radius="lg" className={classes.paper}>
         <Stack gap="lg">
-          <ScrollArea>
-            <Table miw={800} verticalSpacing="sm" className={classes.table}>
+          <ScrollArea className={classes.scrollArea}>
+            <Table verticalSpacing="sm" className={classes.table}>
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Position</Table.Th>

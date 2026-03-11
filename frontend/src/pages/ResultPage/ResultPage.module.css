@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .title {
@@ -13,12 +13,22 @@
 
 .paper {
   width: 100%;
-  max-width: 1000px;
   margin: 0 auto;
+  overflow: hidden;
+}
+
+.scrollArea {
+  width: 100%;
+  border-radius: 12px;
 }
 
 .table {
   width: 100%;
+  min-width: 600px;
+}
+
+.topRank {
+  background-color: rgba(99, 97, 94, 0.28);
 }
 
 @media (max-width: 768px) {
