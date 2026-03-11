@@ -4,6 +4,7 @@ import { NotFoundPage } from '@pages/NotFoundPage/NotFoundPage';
 import { WidgetConsole } from '@/components/features/widgets/WidgetConsole/WidgetConsole';
 import { ROUTE_PATHS } from './routePaths';
 import { lazy } from 'react';
+import { ResultPage } from '@/pages/ResultPage/ResultPage';
 
 const LoginPage = lazy(() => import('@components/features/auth/LoginPage'));
 
@@ -17,6 +18,7 @@ export const appRoutes = [
       { path: ROUTE_PATHS.ABOUT, element: <About /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
+      { path: ROUTE_PATHS.RESULT_PAGE, element: <ResultPage /> },
     ],
   },
 ];

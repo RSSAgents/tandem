@@ -4,4 +4,5 @@ export const ROUTE_PATHS = {
   ABOUT: '/about',
   NOT_FOUND: '*',
   WIDGET_CONSOLE: '/widget-console',
+  RESULT_PAGE: '/result-page',
 } as const;
