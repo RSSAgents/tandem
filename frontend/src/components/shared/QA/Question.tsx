@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Checkbox, Radio, Stack } from '@mantine/core';
 import type { QuestionProps } from './types';
 import styles from './Question.module.css';
@@ -14,17 +14,17 @@ export const Question = ({
 }: QuestionProps) => {
   const [internalValue, setInternalValue] = useState<string[]>([]);
 
-  const selected = valueList ?? internalValue;
+  const selected = useMemo(() => { return valueList ?? internalValue; }, [valueList, internalValue]);
 
-  const updateValue = (newValue: string[]) => {
+  const updateValue = useCallback((newValue: string[]) => {
     if (valueList === undefined) {
       setInternalValue(newValue);
     }
 
     onChange?.(newValue);
-  };
+  }, [valueList, onChange]);
 
-  const handleSelect = (optionId: string) => {
+  const handleSelect = useCallback((optionId: string) => {
     if (isMultiple) {
       if (selected.includes(optionId)) {
         updateValue(selected.filter((id) => id !== optionId));
@@ -34,7 +34,7 @@ export const Question = ({
     } else {
       updateValue([optionId]);
     }
-  };
+  }, [isMultiple, selected, updateValue]);
 
   return (
     <fieldset className={styles.question}>
