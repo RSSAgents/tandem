@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Avatar, Group, ScrollArea, Table, Text, Paper, Stack, Container } from '@mantine/core';
 import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
 import { Winner } from '@/types/winner.types';
-import classes from './ResultPage.module.css';
+import classes from './LeaderboardPage.module.css';
 import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
 
 const data: Winner[] = [
@@ -52,7 +52,7 @@ const getRankDisplay = (rank: number) => {
   return `#${rank}`;
 };
 
-export const ResultPage = () => {
+export const LeaderboardPage = () => {
   const { t } = useTranslation('leaderboard');
 
   const rows = sortedByScoreData.map((item, index) => {

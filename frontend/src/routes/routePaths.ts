@@ -7,5 +7,5 @@ export const ROUTE_PATHS = {
   LIBRARY: '/library',
   ACHIEVEMENTS: '/achievements',
   WIDGET_CONSOLE: '/widget-console',
-  RESULT_PAGE: '/result-page',
+  LEADERBOARD_PAGE: '/leaderboard',
 } as const;

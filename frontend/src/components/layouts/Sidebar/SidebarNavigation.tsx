@@ -8,7 +8,7 @@ const SIDEBAR_NAV_ITEMS = [
   { label: 'About', path: ROUTE_PATHS.ABOUT },
   { label: 'Library', path: ROUTE_PATHS.LIBRARY },
   { label: 'Achievements', path: ROUTE_PATHS.ACHIEVEMENTS },
-  { label: 'Result Page', path: ROUTE_PATHS.RESULT_PAGE },
+  { label: 'Leaderboard', path: ROUTE_PATHS.LEADERBOARD_PAGE },
 ] as const;
 
 export const SidebarNavigation = () => {
