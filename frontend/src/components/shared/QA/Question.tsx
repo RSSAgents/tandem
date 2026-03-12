@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Checkbox, Radio, Stack } from '@mantine/core';
-import type { QAProps } from './types';
-import styles from './QA.module.css';
+import type { QuestionProps } from './types';
+import styles from './Question.module.css';
 
-export const QA = ({
+export const Question = ({
   id,
   question,
   options,
@@ -11,7 +11,7 @@ export const QA = ({
   value,
   onChange,
   disabled = false,
-}: QAProps) => {
+}: QuestionProps) => {
   const [internalValue, setInternalValue] = useState<string[]>([]);
 
   const selected = value ?? internalValue;

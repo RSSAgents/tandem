@@ -1,27 +1,27 @@
-export type QAOption = {
+export type QuestionOption = {
   id: string;
   label: string;
 };
 
-export type QAQuestion = {
+export type QuestionItem = {
   id: string;
   question: string;
-  options: QAOption[];
+  options: QuestionOption[];
   multiple?: boolean;
 };
 
-export type QAProps = {
+export type QuestionProps = {
   id: string;
   question: string;
-  options: QAOption[];
+  options: QuestionOption[];
   multiple?: boolean;
   value?: string[];
   onChange?: (value: string[]) => void;
   disabled?: boolean;
 };
 
-export type QAGroupProps = {
-  questions: QAQuestion[];
+export type QuestionGroupProps = {
+  questions: QuestionItem[];
   value?: Record<string, string[]>;
   onChange?: (value: Record<string, string[]>) => void;
 };

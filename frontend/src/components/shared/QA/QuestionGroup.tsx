@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Stack } from '@mantine/core';
-import { QA } from './QA';
-import type { QAGroupProps } from './types';
+import { Question } from './Question';
+import type { QuestionGroupProps } from './types';
 
-export const QAGroup = ({ questions, value, onChange }: QAGroupProps) => {
+export const QuestionGroup = ({ questions, value, onChange }: QuestionGroupProps) => {
   const [internalValue, setInternalValue] = useState<Record<string, string[]>>({});
 
   const answers = value ?? internalValue;
@@ -21,7 +21,7 @@ export const QAGroup = ({ questions, value, onChange }: QAGroupProps) => {
   return (
     <Stack gap="lg">
       {questions.map((q) => (
-        <QA
+        <Question
           key={q.id}
           id={q.id}
           question={q.question}

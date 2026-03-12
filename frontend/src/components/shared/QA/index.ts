@@ -1,4 +1,4 @@
-export { QA } from './QA';
-export { QAGroup } from './QAGroup';
+export { Question } from './Question';
+export { QuestionGroup } from './QuestionGroup';
 
-export type { QAOption, QAProps, QAQuestion, QAGroupProps } from './types';
+export type { QuestionOption, QuestionProps, QuestionItem, QuestionGroupProps } from './types';
