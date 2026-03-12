@@ -5,7 +5,6 @@ import classes from './ResultPage.module.css';
 
 const data: Winner[] = [
   {
-    rank: 1,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
     name: 'Ivan Ivanov',
@@ -13,7 +12,6 @@ const data: Winner[] = [
     widgetsAmount: { completed: 2, notCompleted: 3 },
   },
   {
-    rank: 2,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',
     name: 'Marge',
@@ -21,7 +19,6 @@ const data: Winner[] = [
     widgetsAmount: { completed: 3, notCompleted: 2 },
   },
   {
-    rank: 3,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',
     name: 'Liza',
@@ -29,7 +26,6 @@ const data: Winner[] = [
     widgetsAmount: { completed: 4, notCompleted: 1 },
   },
   {
-    rank: 4,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
     name: 'Bart',
@@ -37,7 +33,6 @@ const data: Winner[] = [
     widgetsAmount: { completed: 5, notCompleted: 0 },
   },
   {
-    rank: 5,
     avatar:
       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png',
     name: 'Homer',
@@ -45,6 +40,8 @@ const data: Winner[] = [
     widgetsAmount: { completed: 2, notCompleted: 3 },
   },
 ];
+
+const sortedByScoreData = [...data].sort((a, b) => b.score - a.score);
 
 const getRankDisplay = (rank: number) => {
   if (rank === 1) return '🥇 1';
@@ -54,15 +51,16 @@ const getRankDisplay = (rank: number) => {
 };
 
 export const ResultPage = () => {
-  const rows = data.map((item) => {
+  const rows = sortedByScoreData.map((item, index) => {
+    const rank = index + 1;
     const totalAmountOfWidgets = item.widgetsAmount.completed + item.widgetsAmount.notCompleted;
     const completedWidgets = (item.widgetsAmount.completed / totalAmountOfWidgets) * 100;
 
     return (
-      <Table.Tr key={item.rank} className={item.rank <= 3 ? classes.topRank : ''}>
+      <Table.Tr key={index} className={rank <= 3 ? classes.topRank : ''}>
         <Table.Td>
           <Text size="sm" fw={500}>
-            {getRankDisplay(item.rank)}
+            {getRankDisplay(rank)}
           </Text>
         </Table.Td>
         <Table.Td>

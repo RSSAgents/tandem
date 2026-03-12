@@ -1,5 +1,4 @@
 export interface Winner {
-  rank: number;
   avatar: string;
   name: string;
   score: number;
