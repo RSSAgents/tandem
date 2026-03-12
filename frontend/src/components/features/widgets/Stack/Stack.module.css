@@ -3,58 +3,77 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  gap: 50px;
+  gap: 30px;
+  padding: 20px;
 }
 
 .title {
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  text-align: center;
 }
 
 .block {
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: 30px;
-  max-height: 400px;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.lifo {
+.stack {
   display: flex;
-  justify-content: space-between;
-  max-width: 600px;
-  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  min-width: 350px;
 }
 
-.fifo {
+.content {
   display: flex;
-  justify-content: space-between;
-  flex-direction: row-reverse;
-  max-width: 600px;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 20px;
   width: 100%;
+  justify-content: center;
+}
+
+.glass {
+  border-left: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  border-right: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  border-bottom: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  width: 250px;
+  height: 350px;
+  position: relative;
+  border-radius: 0 0 15px 15px;
 }
 
 .books {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 120px;
-  width: 100%;
-  justify-content: end;
+  width: 170px;
 }
 
 .book {
-  background-color: var(--mantine-color-blue-8);
-  max-width: 120px;
-  width: 100%;
+  background-color: var(--mantine-color-blue-6);
   text-align: center;
-  border-radius: var(--mantine-radius-sm);
+  padding: 12px 0;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
 }
 
-.cup {
-  border-left: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  border-right: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  border-bottom: 3px solid light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  max-width: 300px;
-  width: 100%;
-  min-height: 400px;
+.fifoBook {
+  background-color: var(--mantine-color-green-6);
+}
+
+.inGlass {
+  position: absolute;
+  left: 5%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 220px;
+  margin: 0;
 }
