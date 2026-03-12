@@ -3,15 +3,15 @@ import { Stack } from '@mantine/core';
 import { Question } from './Question';
 import type { QuestionGroupProps } from './types';
 
-export const QuestionGroup = ({ questions, value, onChange }: QuestionGroupProps) => {
+export const QuestionGroup = ({ questions, valueList, onChange }: QuestionGroupProps) => {
   const [internalValue, setInternalValue] = useState<Record<string, string[]>>({});
 
-  const answers = value ?? internalValue;
+  const answers = valueList ?? internalValue;
 
   const updateAnswer = (id: string, newValue: string[]) => {
     const updated = { ...answers, [id]: newValue };
 
-    if (value === undefined) {
+    if (valueList === undefined) {
       setInternalValue(updated);
     }
 
@@ -26,8 +26,8 @@ export const QuestionGroup = ({ questions, value, onChange }: QuestionGroupProps
           id={q.id}
           question={q.question}
           options={q.options}
-          multiple={q.multiple}
-          value={answers[q.id] ?? []}
+          isMultiple={q.isMultiple}
+          valueList={answers[q.id] ?? []}
           onChange={(val) => updateAnswer(q.id, val)}
         />
       ))}

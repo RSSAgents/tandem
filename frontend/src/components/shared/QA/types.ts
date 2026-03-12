@@ -7,21 +7,21 @@ export type QuestionItem = {
   id: string;
   question: string;
   options: QuestionOption[];
-  multiple?: boolean;
+  isMultiple?: boolean;
 };
 
 export type QuestionProps = {
   id: string;
   question: string;
   options: QuestionOption[];
-  multiple?: boolean;
-  value?: string[];
+  isMultiple?: boolean;
+  valueList?: string[];
   onChange?: (value: string[]) => void;
   disabled?: boolean;
 };
 
 export type QuestionGroupProps = {
   questions: QuestionItem[];
-  value?: Record<string, string[]>;
+  valueList?: Record<string, string[]>;
   onChange?: (value: Record<string, string[]>) => void;
 };

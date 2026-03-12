@@ -7,17 +7,17 @@ export const Question = ({
   id,
   question,
   options,
-  multiple = false,
-  value,
+  isMultiple = false,
+  valueList,
   onChange,
   disabled = false,
 }: QuestionProps) => {
   const [internalValue, setInternalValue] = useState<string[]>([]);
 
-  const selected = value ?? internalValue;
+  const selected = valueList ?? internalValue;
 
   const updateValue = (newValue: string[]) => {
-    if (value === undefined) {
+    if (valueList === undefined) {
       setInternalValue(newValue);
     }
 
@@ -25,7 +25,7 @@ export const Question = ({
   };
 
   const handleSelect = (optionId: string) => {
-    if (multiple) {
+    if (isMultiple) {
       if (selected.includes(optionId)) {
         updateValue(selected.filter((id) => id !== optionId));
       } else {
@@ -41,7 +41,7 @@ export const Question = ({
       <legend className={styles.legend}>{question}</legend>
 
       <Stack gap="sm">
-        {multiple ? (
+        {isMultiple ? (
           options.map((option) => (
             <Checkbox
               key={option.id}
