@@ -2,6 +2,7 @@ import { Avatar, Group, ScrollArea, Table, Text, Paper, Stack, Container } from 
 import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
 import { Winner } from '@/types/winner.types';
 import classes from './ResultPage.module.css';
+import { WINNERS_TABLE_HEADERS } from '../../constants/winnerTableHeaders';
 
 const data: Winner[] = [
   {
@@ -97,10 +98,9 @@ export const ResultPage = () => {
             <Table verticalSpacing="sm" className={classes.table}>
               <Table.Thead>
                 <Table.Tr>
-                  <Table.Th>Position</Table.Th>
-                  <Table.Th>User</Table.Th>
-                  <Table.Th>Score</Table.Th>
-                  <Table.Th>Progress</Table.Th>
+                  {WINNERS_TABLE_HEADERS.map((header) => (
+                    <Table.Th key={header.key}>{header.label}</Table.Th>
+                  ))}
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>{rows}</Table.Tbody>
