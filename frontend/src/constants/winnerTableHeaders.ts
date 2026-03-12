@@ -1,6 +1,6 @@
 export const WINNERS_TABLE_HEADERS = [
-  { key: 'position', label: 'Position' },
-  { key: 'user', label: 'User' },
-  { key: 'score', label: 'Score' },
-  { key: 'progress', label: 'Progress' },
+  { key: 'position', label: 'leaderboard.position' },
+  { key: 'user', label: 'leaderboard.user' },
+  { key: 'score', label: 'leaderboard.score' },
+  { key: 'progress', label: 'leaderboard.progress' },
 ] as const;

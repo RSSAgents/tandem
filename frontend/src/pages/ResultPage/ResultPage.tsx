@@ -1,8 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { Avatar, Group, ScrollArea, Table, Text, Paper, Stack, Container } from '@mantine/core';
 import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
 import { Winner } from '@/types/winner.types';
 import classes from './ResultPage.module.css';
-import { WINNERS_TABLE_HEADERS } from '../../constants/winnerTableHeaders';
+import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
 
 const data: Winner[] = [
   {
@@ -52,6 +53,8 @@ const getRankDisplay = (rank: number) => {
 };
 
 export const ResultPage = () => {
+  const { t } = useTranslation('leaderboard');
+
   const rows = sortedByScoreData.map((item, index) => {
     const rank = index + 1;
     const totalAmountOfWidgets = item.widgetsAmount.completed + item.widgetsAmount.notCompleted;
@@ -99,7 +102,7 @@ export const ResultPage = () => {
               <Table.Thead>
                 <Table.Tr>
                   {WINNERS_TABLE_HEADERS.map((header) => (
-                    <Table.Th key={header.key}>{header.label}</Table.Th>
+                    <Table.Th key={header.key}>{t(header.label)}</Table.Th>
                   ))}
                 </Table.Tr>
               </Table.Thead>
