@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { Checkbox, Radio, Stack } from '@mantine/core';
 import type { QuestionProps } from './types';
 import styles from './Question.module.css';
+import { updateControlledState } from './utils';
 
 export const Question = ({
   id,
@@ -14,27 +15,33 @@ export const Question = ({
 }: QuestionProps) => {
   const [internalValue, setInternalValue] = useState<string[]>([]);
 
-  const selected = useMemo(() => { return valueList ?? internalValue; }, [valueList, internalValue]);
+  const selected = useMemo(() => {
+    return valueList ?? internalValue;
+  }, [valueList, internalValue]);
 
-  const updateValue = useCallback((newValue: string[]) => {
-    if (valueList === undefined) {
-      setInternalValue(newValue);
-    }
+  const updateValue = useCallback(
+    (newValue: string[]) => {
+      updateControlledState(valueList, setInternalValue, newValue);
 
-    onChange?.(newValue);
-  }, [valueList, onChange]);
+      onChange?.(newValue);
+    },
+    [valueList, onChange],
+  );
 
-  const handleSelect = useCallback((optionId: string) => {
-    if (isMultiple) {
-      if (selected.includes(optionId)) {
-        updateValue(selected.filter((id) => id !== optionId));
+  const handleSelect = useCallback(
+    (optionId: string) => {
+      if (isMultiple) {
+        if (selected.includes(optionId)) {
+          updateValue(selected.filter((id) => id !== optionId));
+        } else {
+          updateValue([...selected, optionId]);
+        }
       } else {
-        updateValue([...selected, optionId]);
+        updateValue([optionId]);
       }
-    } else {
-      updateValue([optionId]);
-    }
-  }, [isMultiple, selected, updateValue]);
+    },
+    [isMultiple, selected, updateValue],
+  );
 
   return (
     <fieldset className={styles.question}>

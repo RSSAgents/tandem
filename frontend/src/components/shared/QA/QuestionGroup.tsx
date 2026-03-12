@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Stack } from '@mantine/core';
 import { Question } from './Question';
 import type { QuestionGroupProps } from './types';
+import { updateControlledState } from './utils';
 
 export const QuestionGroup = ({ questions, valueList, onChange }: QuestionGroupProps) => {
   const [internalValue, setInternalValue] = useState<Record<string, string[]>>({});
@@ -11,9 +12,7 @@ export const QuestionGroup = ({ questions, valueList, onChange }: QuestionGroupP
   const updateAnswer = (id: string, newValue: string[]) => {
     const updated = { ...answers, [id]: newValue };
 
-    if (valueList === undefined) {
-      setInternalValue(updated);
-    }
+    updateControlledState(valueList, setInternalValue, updated);
 
     onChange?.(updated);
   };
