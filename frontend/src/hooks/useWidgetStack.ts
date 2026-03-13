@@ -1,5 +1,9 @@
+import {
+  ANIMATION_DELAY,
+  ITEMS_COUNT,
+  PAUSE_DELAY,
+} from '@/components/features/widgets/Stack/Stack.constants';
 import { useState } from 'react';
-import { ANIMATION_DELAY, PAUSE_DELAY, ITEMS_COUNT } from './Stack.constants';
 
 export type QuizState =
   | 'lifo-question'

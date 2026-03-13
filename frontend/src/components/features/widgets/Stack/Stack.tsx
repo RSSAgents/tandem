@@ -1,3 +1,4 @@
+import { useStackAnimation } from '@/hooks/useWidgetStack';
 import {
   Box,
   Button,
@@ -10,15 +11,14 @@ import {
 } from '@mantine/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import classes from './Stack.module.css';
 import {
-  QUIZ_QUESTIONS,
-  FEEDBACK_MESSAGES,
   ANIMATION_CONFIG,
-  QUEUE_ANIMATION_CONFIG,
   FEEDBACK_DELAY,
+  FEEDBACK_MESSAGES,
+  QUEUE_ANIMATION_CONFIG,
+  QUIZ_QUESTIONS,
 } from './Stack.constants';
-import { useStackAnimation } from './Stack.hooks';
+import classes from './Stack.module.css';
 
 const StackWidget = () => {
   const { stack, queue, quizState, setQuizState, runLifoDemo, runFifoDemo } = useStackAnimation();
