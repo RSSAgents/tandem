@@ -77,10 +77,16 @@ const StackWidget = () => {
                   selectedLifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
                 }`}
               >
-                {selectedLifo === 'correct' ? FEEDBACK_MESSAGES.correct : FEEDBACK_MESSAGES.incorrect}
+                {selectedLifo === 'correct'
+                  ? FEEDBACK_MESSAGES.correct
+                  : FEEDBACK_MESSAGES.incorrect}
               </Text>
             )}
-            <Button className={classes.submitButton} disabled={!selectedLifo} onClick={handleLifoAnswer}>
+            <Button
+              className={classes.submitButton}
+              disabled={!selectedLifo}
+              onClick={handleLifoAnswer}
+            >
               Submit Answer
             </Button>
           </Box>
@@ -109,10 +115,16 @@ const StackWidget = () => {
                   selectedFifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
                 }`}
               >
-                {selectedFifo === 'correct' ? FEEDBACK_MESSAGES.correct : FEEDBACK_MESSAGES.incorrect}
+                {selectedFifo === 'correct'
+                  ? FEEDBACK_MESSAGES.correct
+                  : FEEDBACK_MESSAGES.incorrect}
               </Text>
             )}
-            <Button className={classes.submitButton} disabled={!selectedFifo} onClick={handleFifoAnswer}>
+            <Button
+              className={classes.submitButton}
+              disabled={!selectedFifo}
+              onClick={handleFifoAnswer}
+            >
               Submit Answer
             </Button>
           </Box>
