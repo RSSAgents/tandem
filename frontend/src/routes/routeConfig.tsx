@@ -5,7 +5,7 @@ import { lazy } from 'react';
 import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
 import { ROUTE_PATHS } from './routePaths';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
-import { LeaderboardPage } from '../pages/LeaderboardPage/LeaderboardPage';
+import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 
