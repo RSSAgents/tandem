@@ -1,182 +1,183 @@
-import { Box, Button, Container, Group, Text, Title } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Container,
+  Group,
+  Stack as MantineStack,
+  Radio,
+  Text,
+  Title,
+} from '@mantine/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import classes from './Stack.module.css';
-
-const MotionDiv = motion.div;
+import {
+  QUIZ_QUESTIONS,
+  FEEDBACK_MESSAGES,
+  ANIMATION_CONFIG,
+  QUEUE_ANIMATION_CONFIG,
+  FEEDBACK_DELAY,
+} from './Stack.constants';
+import { useStackAnimation } from './Stack.hooks';
 
 const StackWidget = () => {
-  const [lifoBooks, setLifoBooks] = useState<number[]>([1, 2, 3, 4, 5]);
-  const [fifoBooks, setFifoBooks] = useState<number[]>([1, 2, 3, 4, 5]);
-  const [lifoInGlass, setLifoInGlass] = useState<number[]>([]);
-  const [fifoInGlass, setFifoInGlass] = useState<number[]>([]);
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const { stack, queue, quizState, setQuizState, runLifoDemo, runFifoDemo } = useStackAnimation();
+  const [selectedLifo, setSelectedLifo] = useState<string>('');
+  const [selectedFifo, setSelectedFifo] = useState<string>('');
+  const [showLifoFeedback, setShowLifoFeedback] = useState(false);
+  const [showFifoFeedback, setShowFifoFeedback] = useState(false);
 
-  const resetAll = () => {
-    setLifoBooks([1, 2, 3, 4, 5]);
-    setFifoBooks([1, 2, 3, 4, 5]);
-    setLifoInGlass([]);
-    setFifoInGlass([]);
-    setIsAnimating(false);
+  const handleLifoAnswer = () => {
+    setShowLifoFeedback(true);
+    if (selectedLifo === 'correct') {
+      setTimeout(() => {
+        setQuizState('lifo-animation');
+        setShowLifoFeedback(false);
+        runLifoDemo();
+      }, FEEDBACK_DELAY);
+    }
   };
 
-  const runLifoAnimation = async () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-
-    const books = [...lifoBooks];
-    setLifoBooks([]);
-    setLifoInGlass([]);
-
-    for (let i = books.length - 1; i >= 0; i--) {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      setLifoInGlass((prev: number[]) => [books[i], ...prev]);
+  const handleFifoAnswer = () => {
+    setShowFifoFeedback(true);
+    if (selectedFifo === 'correct') {
+      setTimeout(() => {
+        setQuizState('fifo-animation');
+        setShowFifoFeedback(false);
+        runFifoDemo();
+      }, FEEDBACK_DELAY);
     }
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    for (let i = 0; i < books.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      setLifoInGlass((prev: number[]) => prev.slice(0, -1));
-    }
-
-    resetAll();
-  };
-
-  const runFifoAnimation = async () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-
-    const books = [...fifoBooks];
-    setFifoBooks([]);
-    setFifoInGlass([]);
-
-    for (let i = 0; i < books.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      setFifoInGlass((prev: number[]) => [...prev, books[i]]);
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    for (let i = 0; i < books.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      setFifoInGlass((prev: number[]) => prev.slice(1));
-    }
-
-    resetAll();
   };
 
   return (
     <Container className={classes.container}>
-      <Title order={1} className={classes.title}>
-        STACK
-      </Title>
+      <Title className={classes.title}>STACK</Title>
 
-      <Group justify="center" gap="xl" mb={50}>
-        <Button onClick={runLifoAnimation} size="lg" color="blue" disabled={isAnimating}>
-          LIFO
-        </Button>
-        <Button onClick={runFifoAnimation} size="lg" color="green" disabled={isAnimating}>
-          FIFO
-        </Button>
+      <Group className={classes.controls}>
+        {quizState === 'lifo-question' && (
+          <Box className={classes.quizBox}>
+            <Text className={classes.questionText}>{QUIZ_QUESTIONS.lifo.question}</Text>
+            <MantineStack className={classes.radioGroup}>
+              <Radio
+                value="correct"
+                label={QUIZ_QUESTIONS.lifo.correctAnswer}
+                checked={selectedLifo === 'correct'}
+                onChange={(e) => setSelectedLifo(e.currentTarget.value)}
+              />
+              <Radio
+                value="wrong"
+                label={QUIZ_QUESTIONS.lifo.wrongAnswer}
+                checked={selectedLifo === 'wrong'}
+                onChange={(e) => setSelectedLifo(e.currentTarget.value)}
+              />
+            </MantineStack>
+            {showLifoFeedback && (
+              <Text
+                className={`${classes.feedbackText} ${
+                  selectedLifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
+                }`}
+              >
+                {selectedLifo === 'correct' ? FEEDBACK_MESSAGES.correct : FEEDBACK_MESSAGES.incorrect}
+              </Text>
+            )}
+            <Button className={classes.submitButton} disabled={!selectedLifo} onClick={handleLifoAnswer}>
+              Submit Answer
+            </Button>
+          </Box>
+        )}
+
+        {quizState === 'fifo-question' && (
+          <Box className={classes.quizBox}>
+            <Text className={classes.questionText}>{QUIZ_QUESTIONS.fifo.question}</Text>
+            <MantineStack className={classes.radioGroup}>
+              <Radio
+                value="wrong"
+                label={QUIZ_QUESTIONS.fifo.wrongAnswer}
+                checked={selectedFifo === 'wrong'}
+                onChange={(e) => setSelectedFifo(e.currentTarget.value)}
+              />
+              <Radio
+                value="correct"
+                label={QUIZ_QUESTIONS.fifo.correctAnswer}
+                checked={selectedFifo === 'correct'}
+                onChange={(e) => setSelectedFifo(e.currentTarget.value)}
+              />
+            </MantineStack>
+            {showFifoFeedback && (
+              <Text
+                className={`${classes.feedbackText} ${
+                  selectedFifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
+                }`}
+              >
+                {selectedFifo === 'correct' ? FEEDBACK_MESSAGES.correct : FEEDBACK_MESSAGES.incorrect}
+              </Text>
+            )}
+            <Button className={classes.submitButton} disabled={!selectedFifo} onClick={handleFifoAnswer}>
+              Submit Answer
+            </Button>
+          </Box>
+        )}
+
+        {quizState === 'completed' && (
+          <Box className={classes.quizBox}>
+            <Text className={classes.completedText}>{FEEDBACK_MESSAGES.completed}</Text>
+          </Box>
+        )}
       </Group>
 
-      <Box className={classes.block}>
-        <Box className={classes.stack}>
-          <Text size="xl" fw={700} mb="md">
-            LIFO
-          </Text>
-          <Box className={classes.content}>
-            <Box className={classes.glass}>
-              <AnimatePresence>
-                {lifoInGlass.map((book, index) => (
-                  <MotionDiv
-                    key={book}
-                    className={`${classes.book} ${classes.inGlass}`}
-                    initial={{ opacity: 0, x: 50, y: -30 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      y: 0,
-                      transition: { type: 'spring', damping: 15 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      x: 50,
-                      y: -30,
-                      transition: { duration: 0.3 },
-                    }}
-                    style={{ bottom: `${index * 55 + 10}px` }}
+      <Box className={classes.visualizations}>
+        {(quizState === 'lifo-animation' ||
+          quizState === 'fifo-question' ||
+          quizState === 'fifo-animation' ||
+          quizState === 'completed') && (
+          <Box className={classes.section}>
+            <Text className={classes.sectionTitle}>LIFO</Text>
+            <Box className={classes.stackContainer}>
+              <AnimatePresence mode="popLayout">
+                {stack.map((item) => (
+                  <motion.div
+                    key={`stack-${item}`}
+                    className={classes.stackItem}
+                    initial={ANIMATION_CONFIG.initial}
+                    animate={ANIMATION_CONFIG.animate}
+                    exit={ANIMATION_CONFIG.exit}
+                    layout
                   >
-                    <Text>{book}</Text>
-                  </MotionDiv>
+                    <Text className={classes.itemText}>{item}</Text>
+                  </motion.div>
                 ))}
               </AnimatePresence>
-            </Box>
-
-            <Box className={classes.books}>
-              <AnimatePresence>
-                {lifoBooks.map((book) => (
-                  <MotionDiv
-                    key={book}
-                    className={classes.book}
-                    exit={{ opacity: 0, x: 50, transition: { duration: 0.3 } }}
-                  >
-                    <Text>{book}</Text>
-                  </MotionDiv>
-                ))}
-              </AnimatePresence>
+              {stack.length === 0 && quizState !== 'lifo-animation' && (
+                <Text className={classes.emptyText}>Stack is empty</Text>
+              )}
             </Box>
           </Box>
-        </Box>
+        )}
 
-        <Box className={classes.stack}>
-          <Text size="xl" fw={700} mb="md">
-            FIFO
-          </Text>
-          <Box className={classes.content}>
-            <Box className={classes.books}>
-              <AnimatePresence>
-                {fifoBooks.map((book) => (
-                  <MotionDiv
-                    key={book}
-                    className={`${classes.book} ${classes.fifoBook}`}
-                    exit={{ opacity: 0, x: -50, transition: { duration: 0.3 } }}
+        {(quizState === 'fifo-animation' || quizState === 'completed') && (
+          <Box className={classes.section}>
+            <Text className={classes.sectionTitle}>FIFO</Text>
+            <Box className={classes.queueContainer}>
+              <AnimatePresence mode="popLayout">
+                {queue.map((item) => (
+                  <motion.div
+                    key={`queue-${item}`}
+                    className={classes.queueItem}
+                    initial={QUEUE_ANIMATION_CONFIG.initial}
+                    animate={QUEUE_ANIMATION_CONFIG.animate}
+                    exit={QUEUE_ANIMATION_CONFIG.exit}
+                    layout
                   >
-                    <Text>{book}</Text>
-                  </MotionDiv>
+                    <Text className={classes.itemText}>{item}</Text>
+                  </motion.div>
                 ))}
               </AnimatePresence>
-            </Box>
-
-            <Box className={classes.glass}>
-              <AnimatePresence>
-                {fifoInGlass.map((book, index) => (
-                  <MotionDiv
-                    key={book}
-                    className={`${classes.book} ${classes.inGlass} ${classes.fifoBook}`}
-                    initial={{ opacity: 0, x: -50, y: -30 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      y: 0,
-                      transition: { type: 'spring', damping: 15 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      x: -50,
-                      y: -30,
-                      transition: { duration: 0.3 },
-                    }}
-                    style={{ bottom: `${index * 55 + 10}px` }}
-                  >
-                    <Text>{book}</Text>
-                  </MotionDiv>
-                ))}
-              </AnimatePresence>
+              {queue.length === 0 && quizState !== 'fifo-animation' && (
+                <Text className={classes.emptyText}>Queue is empty</Text>
+              )}
             </Box>
           </Box>
-        </Box>
+        )}
       </Box>
     </Container>
   );
