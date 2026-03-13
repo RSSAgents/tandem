@@ -19,7 +19,7 @@ export const QUIZ_QUESTIONS = {
 export const FEEDBACK_MESSAGES = {
   correct: 'Correct! Watch the animation...',
   incorrect: 'Incorrect. Try again!',
-  completed: `Great job! You've completed the Stack!`,
+  completed: "Great job! You've completed the Stack!",
 } as const;
 
 export const ANIMATION_CONFIG = {
