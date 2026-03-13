@@ -8,6 +8,7 @@ import { ROUTE_PATHS } from './routePaths';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
+const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 
 export const appRoutes = [
   {
@@ -17,6 +18,7 @@ export const appRoutes = [
       { index: true, element: <p>HomePage</p> },
       { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
       { path: ROUTE_PATHS.ABOUT, element: <About /> },
+      { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
     ],
