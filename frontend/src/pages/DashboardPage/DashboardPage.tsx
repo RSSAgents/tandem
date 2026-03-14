@@ -1,9 +1,9 @@
-import { ModuleCard } from '@/components/ui/Card/WidgetCard';
 import { ROUTE_PATHS } from '@/routes/routePaths';
 import { Box, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import classes from './DashboardPage.module.css';
+import { WidgetCard } from '@components/ui/Card/WidgetCard';
 
 const completedIds: string[] = [];
 
@@ -48,7 +48,7 @@ export const DashboardPage = () => {
 
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing={28}>
         {widgets.map((widget) => (
-          <ModuleCard
+          <WidgetCard
             key={widget.id}
             title={t(widget.title)}
             description={t(widget.description)}

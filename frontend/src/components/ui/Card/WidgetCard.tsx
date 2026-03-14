@@ -1,16 +1,15 @@
-// components/ModuleCard.tsx
 import { Box, Stack, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import classes from './WidgetCard.module.css';
 
-interface ModuleCardProps {
+interface WidgetCardProps {
   title: string;
   description: string;
   status?: string;
   path: string;
 }
 
-export const ModuleCard = ({ title, description, status, path }: ModuleCardProps) => {
+export const WidgetCard = ({ title, description, status, path }: WidgetCardProps) => {
   return (
     <Box component={Link} to={path} className={classes.card}>
       <Stack justify="space-between" h="100%">
