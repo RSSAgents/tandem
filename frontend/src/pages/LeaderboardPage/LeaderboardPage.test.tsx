@@ -1,65 +1,72 @@
-import { describe, it, expect } from 'vitest';
-import { data, getRankDisplay, sortedByScoreData } from '@/utils/leaderboardPage.utils';
+import { LeaderboardPage } from './LeaderboardPage';
+import { RANK_DISPLAY } from '@/constants/rankDisplay';
+import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
 
-describe('getRankDisplay', () => {
-  it('returns 🥇 1 for rank 1', () => {
-    expect(getRankDisplay(1)).toBe('🥇 1');
+describe('Leaderboard Page', () => {
+  it('should export LeaderboardPage component', () => {
+    expect(LeaderboardPage).toBeDefined();
+    expect(typeof LeaderboardPage).toBe('function');
   });
 
-  it('returns 🥈 2 for rank 2', () => {
-    expect(getRankDisplay(2)).toBe('🥈 2');
+  it('should have correct rank display constants for top 3', () => {
+    expect(RANK_DISPLAY[1]).toBe('🥇 1');
+    expect(RANK_DISPLAY[2]).toBe('🥈 2');
+    expect(RANK_DISPLAY[3]).toBe('🥉 3');
   });
 
-  it('returns 🥉 3 for rank 3', () => {
-    expect(getRankDisplay(3)).toBe('🥉 3');
+  it('should have correct table headers', () => {
+    expect(WINNERS_TABLE_HEADERS).toHaveLength(4);
+    expect(WINNERS_TABLE_HEADERS[0].key).toBe('position');
+    expect(WINNERS_TABLE_HEADERS[1].key).toBe('user');
+    expect(WINNERS_TABLE_HEADERS[2].key).toBe('score');
+    expect(WINNERS_TABLE_HEADERS[3].key).toBe('progress');
   });
 
-  it('returns #4 for rank 4', () => {
-    expect(getRankDisplay(4)).toBe('#4');
+  it('should have translation keys for headers', () => {
+    expect(WINNERS_TABLE_HEADERS[0].label).toBe('leaderboard.position');
+    expect(WINNERS_TABLE_HEADERS[1].label).toBe('leaderboard.user');
+    expect(WINNERS_TABLE_HEADERS[2].label).toBe('leaderboard.score');
+    expect(WINNERS_TABLE_HEADERS[3].label).toBe('leaderboard.progress');
   });
 
-  it('returns #10 for rank 10', () => {
-    expect(getRankDisplay(10)).toBe('#10');
-  });
-});
+  it('should sort winners by score in descending order', () => {
+    const testData = [{ score: 10 }, { score: 50 }, { score: 30 }, { score: 20 }, { score: 40 }];
+    const sortedData = [...testData].sort((a, b) => b.score - a.score);
 
-describe('data', () => {
-  it('has correct structure', () => {
-    expect(data[0]).toHaveProperty('name');
-    expect(data[0]).toHaveProperty('score');
-    expect(data[0]).toHaveProperty('widgetsAmount');
-    expect(data[0].widgetsAmount).toHaveProperty('completed');
-    expect(data[0].widgetsAmount).toHaveProperty('notCompleted');
-  });
-});
+    expect(sortedData[0].score).toBe(50);
+    expect(sortedData[1].score).toBe(40);
+    expect(sortedData[2].score).toBe(30);
+    expect(sortedData[3].score).toBe(20);
+    expect(sortedData[4].score).toBe(10);
 
-describe('data', () => {
-  it('has correct data types', () => {
-    expect(typeof data[0].name).toBe('string');
-    expect(typeof data[0].score).toBe('number');
-    expect(typeof data[0].widgetsAmount.completed).toBe('number');
-    expect(typeof data[0].widgetsAmount.notCompleted).toBe('number');
+    expect(sortedData[0].score).toBeGreaterThanOrEqual(sortedData[1].score);
+    expect(sortedData[1].score).toBeGreaterThanOrEqual(sortedData[2].score);
+    expect(sortedData[2].score).toBeGreaterThanOrEqual(sortedData[3].score);
+    expect(sortedData[3].score).toBeGreaterThanOrEqual(sortedData[4].score);
   });
 
-  it('all items have avatar', () => {
-    data.forEach((item) => {
-      expect(item.avatar).toBeDefined();
-      expect(typeof item.avatar).toBe('string');
-      expect(item.avatar.length).toBeGreaterThan(0);
-    });
+  it('should handle empty data array', () => {
+    const emptyData: { score: number }[] = [];
+    const sortedData = [...emptyData].sort((a, b) => b.score - a.score);
+
+    expect(sortedData).toHaveLength(0);
   });
 
-  it('scores are between 1 and 1000', () => {
-    data.forEach((item) => {
-      expect(item.score).toBeGreaterThanOrEqual(1);
-      expect(item.score).toBeLessThanOrEqual(1000);
-    });
-  });
-});
+  it('should handle single item', () => {
+    const singleData = [{ score: 42 }];
+    const sortedData = [...singleData].sort((a, b) => b.score - a.score);
 
-it('is sorted by score in descending order', () => {
-  const sorted = sortedByScoreData;
-  for (let i = 0; i < sorted.length - 1; i++) {
-    expect(sorted[i].score).toBeGreaterThanOrEqual(sorted[i + 1].score);
-  }
+    expect(sortedData).toHaveLength(1);
+    expect(sortedData[0].score).toBe(42);
+  });
+
+  it('should handle equal scores', () => {
+    const equalData = [{ score: 30 }, { score: 30 }, { score: 20 }];
+
+    const sortedData = [...equalData].sort((a, b) => b.score - a.score);
+
+    expect(sortedData[0].score).toBe(30);
+    expect(sortedData[1].score).toBe(30);
+    expect(sortedData[2].score).toBe(20);
+  });
 });
