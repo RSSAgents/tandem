@@ -1,0 +1,48 @@
+{
+  // --- Editor: Indentation ---
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  // --- Editor: Formatting ---
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // --- Editor: Display ---
+  "editor.wordWrap": "on",
+  "editor.renderWhitespace": "boundary",
+  "editor.minimap.enabled": true,
+
+  // --- Editor: Code Quality ---
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.linkedEditing": true,
+  "editor.suggest.preview": true,
+
+  // --- Files ---
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": false,
+
+  // --- TypeScript ---
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
+  // --- React / JSX ---
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // --- Workbench ---
+  "workbench.editor.enablePreview": false
+}
