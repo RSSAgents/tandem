@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { Avatar, Group, ScrollArea, Table, Text, Paper, Stack, Container } from '@mantine/core';
-import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
+import { ScrollArea, Table, Paper, Stack, Container } from '@mantine/core';
 import classes from './LeaderboardPage.module.css';
 import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
-import { RANK_DISPLAY } from '@/constants/rankDisplay';
 import { Winner } from '@/types/winner.types';
+import { LeaderboardRow } from './LeaderboardRow';
 
 const data: Winner[] = [
   {
@@ -49,45 +48,6 @@ const sortedByScoreData = [...data].sort((a, b) => b.score - a.score);
 export const LeaderboardPage = () => {
   const { t } = useTranslation('leaderboard');
 
-  const rows = sortedByScoreData.map((item, index) => {
-    const rank = index + 1;
-    const totalAmountOfWidgets = item.widgetsAmount.completed + item.widgetsAmount.notCompleted;
-    const completedWidgets = (item.widgetsAmount.completed / totalAmountOfWidgets) * 100;
-    const rankDisplay = RANK_DISPLAY[rank as keyof typeof RANK_DISPLAY] || `#${rank}`;
-
-    return (
-      <Table.Tr key={index} className={rank <= 3 ? classes.topRank : ''}>
-        <Table.Td>
-          <Text size="sm" fw={500}>
-            {rankDisplay}
-          </Text>
-        </Table.Td>
-        <Table.Td>
-          <Group gap="sm">
-            <Avatar size={26} src={item.avatar} radius={26} alt="" />
-            <Text size="sm" fw={500}>
-              {item.name}
-            </Text>
-          </Group>
-        </Table.Td>
-        <Table.Td>
-          <Group gap={4}>
-            <span>⭐</span>
-            {item.score}
-          </Group>
-        </Table.Td>
-        <Table.Td>
-          <Group justify="space-between">
-            <Text fz="xs" c="teal" fw={700}>
-              {completedWidgets.toFixed(0)}%
-            </Text>
-          </Group>
-          <ProgressBar current={item.widgetsAmount.completed} total={totalAmountOfWidgets} />
-        </Table.Td>
-      </Table.Tr>
-    );
-  });
-
   return (
     <Container size="xl" className={classes.wrapper}>
       <Paper withBorder p="md" radius="lg" className={classes.paper}>
@@ -101,7 +61,11 @@ export const LeaderboardPage = () => {
                   ))}
                 </Table.Tr>
               </Table.Thead>
-              <Table.Tbody>{rows}</Table.Tbody>
+              <Table.Tbody>
+                {sortedByScoreData.map((item, index) => (
+                  <LeaderboardRow key={index} item={item} rank={index + 1} />
+                ))}
+              </Table.Tbody>
             </Table>
           </ScrollArea>
         </Stack>
