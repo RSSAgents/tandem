@@ -1,7 +1,7 @@
 import { ISortableItemProps } from '@/types/dnd.types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Text } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import styles from './WidgetConsole.module.css';
 
 export function SortableItem({ value }: ISortableItemProps) {
@@ -15,7 +15,7 @@ export function SortableItem({ value }: ISortableItemProps) {
   };
 
   return (
-    <div
+    <Box
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -23,6 +23,6 @@ export function SortableItem({ value }: ISortableItemProps) {
       className={styles.dndItemWrapper}
     >
       <Text className={styles.dndItem}>{value}</Text>
-    </div>
+    </Box>
   );
 }
