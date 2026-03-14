@@ -1,1 +1,16 @@
-{}
+{
+  "welcome": "Привет, {{name}}!",
+  "progress_zero": "Твой путь начинается здесь. Выбери первый модуль!",
+  "progress_started": "Пройдено {{percent}}% пути. Отличный темп!",
+  "progress_finished": "Путь завершен! Ты легенда.",
+  "widgets": {
+    "js_execution": {
+      "title": "Drag & Drop JS Execution",
+      "description": "Интерактивный обучающий компонент, который проверяет понимание порядка выполнения кода в JavaScript через механизм drag-and-drop."
+    }
+  },
+  "status": {
+    "todo": "Начать",
+    "completed": "Завершен"
+  }
+}
