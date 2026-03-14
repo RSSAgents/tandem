@@ -15,7 +15,13 @@ export function SortableItem({ value }: ISortableItemProps) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={styles.dndItemWrapper}
+    >
       <Text className={styles.dndItem}>{value}</Text>
     </div>
   );

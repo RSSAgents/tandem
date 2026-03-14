@@ -85,6 +85,18 @@
   cursor: pointer;
 }
 
+.dndItemWrapper {
+  width: 100%;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dndItemWrapper:active {
+  cursor: grabbing;
+}
+
 .btn {
   width: 100%;
   flex: 1;
@@ -168,6 +180,15 @@
     padding: 14px;
     gap: 8px;
   }
+
+  .dndItemWrapper {
+    touch-action: none;
+  }
+
+  .dndItemWrapper:active {
+    transform: scale(1.02);
+    transition: transform 0.1s ease;
+  }
 }
 
 @media (max-width: 480px) {
@@ -196,23 +217,12 @@
     min-height: 52px;
   }
 
+  .dndItemWrapper {
+    touch-action: none;
+  }
+
   .btn {
     height: 48px;
     font-size: 15px;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .dndItem {
-    cursor: grab;
-  }
-
-  .dndItem:active {
-    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-4));
-    transform: scale(1.01);
-  }
-
-  .btn:active {
-    transform: scale(0.98);
   }
 }
