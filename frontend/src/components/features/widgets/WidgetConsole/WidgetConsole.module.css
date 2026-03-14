@@ -85,6 +85,18 @@
   cursor: pointer;
 }
 
+.dndItemWrapper {
+  width: 100%;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dndItemWrapper:active {
+  cursor: grabbing;
+}
+
 .btn {
   width: 100%;
   flex: 1;
@@ -96,6 +108,14 @@
 .actionButtons {
   gap: 12px;
   margin-top: 24px;
+}
+
+.questionCounter {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-gray-4));
 }
 
 @keyframes fadeIn {
@@ -117,5 +137,105 @@
 
   .btn {
     width: 100%;
+    padding: 15px;
+  }
+
+  .widgetContainer {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .sortableStack {
+    width: 100%;
+  }
+
+  .mainContainer {
+    width: 100%;
+    margin-top: 20px;
+    padding: 0 12px;
+  }
+
+  .questionTitle {
+    font-size: 20px;
+    line-height: 1.4;
+    padding: 0 10px;
+  }
+
+  .questionCounter {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .pre {
+    padding: 12px;
+    font-size: 13px;
+    max-height: 300px;
+  }
+
+  .dndItem {
+    padding: 16px 16px;
+    font-size: 15px;
+    min-height: 56px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .widgetPaper {
+    border-radius: 16px;
+  }
+
+  .sortableStack {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .dndItemWrapper {
+    touch-action: none;
+  }
+
+  .dndItemWrapper:active {
+    transform: scale(1.02);
+    transition: transform 0.1s ease;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContainer {
+    padding: 0 10px;
+    margin-top: 15px;
+  }
+
+  .questionTitle {
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .pre {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .dndItem {
+    padding: 14px 14px;
+    font-size: 14px;
+    min-height: 52px;
+  }
+
+  .dndItemWrapper {
+    touch-action: none;
+  }
+
+  .btn {
+    height: 48px;
+    font-size: 15px;
   }
 }

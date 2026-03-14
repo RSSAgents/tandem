@@ -47,6 +47,9 @@ export const WidgetConsole = () => {
         Drag the items into the correct order
       </Text>
 
+      <Text className={styles.questionCounter}>
+        Question {currentIndex + 1} of {tasks.length}
+      </Text>
       <Stack className={styles.widgetContainer}>
         <Paper className={styles.widgetPaper}>
           <pre className={styles.pre}>{currentTask.payload.code}</pre>
