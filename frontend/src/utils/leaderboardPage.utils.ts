@@ -38,11 +38,4 @@ export const data: Winner[] = [
   },
 ];
 
-export const getRankDisplay = (rank: number) => {
-  if (rank === 1) return '🥇 1';
-  if (rank === 2) return '🥈 2';
-  if (rank === 3) return '🥉 3';
-  return `#${rank}`;
-};
-
 export const sortedByScoreData = [...data].sort((a, b) => b.score - a.score);

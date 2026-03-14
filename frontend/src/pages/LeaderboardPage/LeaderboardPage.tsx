@@ -3,7 +3,8 @@ import { Avatar, Group, ScrollArea, Table, Text, Paper, Stack, Container } from 
 import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
 import classes from './LeaderboardPage.module.css';
 import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
-import { getRankDisplay, sortedByScoreData } from '@/utils/leaderboardPage.utils';
+import { sortedByScoreData } from '@/utils/leaderboardPage.utils';
+import { RANK_DISPLAY } from '../../constants/rankDisplay';
 
 export const LeaderboardPage = () => {
   const { t } = useTranslation('leaderboard');
@@ -12,12 +13,13 @@ export const LeaderboardPage = () => {
     const rank = index + 1;
     const totalAmountOfWidgets = item.widgetsAmount.completed + item.widgetsAmount.notCompleted;
     const completedWidgets = (item.widgetsAmount.completed / totalAmountOfWidgets) * 100;
+    const rankDisplay = RANK_DISPLAY[rank as keyof typeof RANK_DISPLAY] || `#${rank}`;
 
     return (
       <Table.Tr key={index} className={rank <= 3 ? classes.topRank : ''}>
         <Table.Td>
           <Text size="sm" fw={500}>
-            {getRankDisplay(rank)}
+            {rankDisplay}
           </Text>
         </Table.Td>
         <Table.Td>
