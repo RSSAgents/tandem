@@ -2,10 +2,11 @@ import { WidgetConsole } from '@/components/features/widgets/WidgetConsole/Widge
 import { About } from '@/pages/About/About';
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
 
-import { lazy } from 'react';
-import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
-import { ROUTE_PATHS } from './routePaths';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
+import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
+import { lazy } from 'react';
+import { ROUTE_PATHS } from './routePaths';
+import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 
@@ -23,7 +24,7 @@ export const appRoutes = [
   {
     element: <MainLayout />,
     children: [
-      { path: ROUTE_PATHS.DASHBOARD, element: <p>Dashboard</p> },
+      { path: ROUTE_PATHS.DASHBOARD, element: <DashboardPage /> },
       { path: ROUTE_PATHS.LIBRARY, element: <p>Library Page</p> },
       { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
