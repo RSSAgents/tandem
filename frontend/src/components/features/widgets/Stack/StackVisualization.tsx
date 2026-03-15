@@ -1,8 +1,8 @@
+import { ANIMATION_CONFIG, QUEUE_ANIMATION_CONFIG } from '@/constants/stack';
+import type { QuizState } from '@/hooks/useWidgetStack';
 import { Box, Text } from '@mantine/core';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ANIMATION_CONFIG, QUEUE_ANIMATION_CONFIG } from './Stack.constants';
 import classes from './Stack.module.css';
-import type { QuizState } from '@/hooks/useWidgetStack';
 
 interface StackVisualizationProps {
   stack: number[];

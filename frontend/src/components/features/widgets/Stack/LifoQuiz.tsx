@@ -1,5 +1,5 @@
+import { FEEDBACK_MESSAGES, QUIZ_QUESTIONS } from '@/constants/stack';
 import { Box, Button, Stack as MantineStack, Radio, Text } from '@mantine/core';
-import { FEEDBACK_MESSAGES, QUIZ_QUESTIONS } from './Stack.constants';
 import classes from './Stack.module.css';
 
 interface LifoQuizProps {

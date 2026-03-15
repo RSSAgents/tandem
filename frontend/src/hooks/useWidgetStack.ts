@@ -1,8 +1,4 @@
-import {
-  ANIMATION_DELAY,
-  ITEMS_COUNT,
-  PAUSE_DELAY,
-} from '@/components/features/widgets/Stack/Stack.constants';
+import { ANIMATION_DELAY, ITEMS_COUNT, PAUSE_DELAY } from '@/constants/stack';
 import { useState } from 'react';
 
 export type QuizState =

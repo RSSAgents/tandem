@@ -1,8 +1,8 @@
-import { screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { FEEDBACK_MESSAGES, QUIZ_QUESTIONS } from '@/constants/stack';
 import { renderWithProviders, setupUserEvent } from '@/utils/test-util';
+import { screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import StackWidget from './Stack';
-import { QUIZ_QUESTIONS, FEEDBACK_MESSAGES } from './Stack.constants';
 
 describe('StackWidget', () => {
   it('renders the component with title', () => {

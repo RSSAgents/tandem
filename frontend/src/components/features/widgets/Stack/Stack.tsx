@@ -1,10 +1,10 @@
+import { FEEDBACK_DELAY, FEEDBACK_MESSAGES } from '@/constants/stack';
 import { useStackAnimation } from '@/hooks/useWidgetStack';
 import { Box, Container, Group, Text, Title } from '@mantine/core';
 import { useState } from 'react';
-import { FEEDBACK_DELAY, FEEDBACK_MESSAGES } from './Stack.constants';
-import classes from './Stack.module.css';
 import FifoQuiz from './FifoQuiz';
 import LifoQuiz from './LifoQuiz';
+import classes from './Stack.module.css';
 import StackVisualization from './StackVisualization';
 
 const StackWidget = () => {
