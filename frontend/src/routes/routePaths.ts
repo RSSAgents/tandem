@@ -2,6 +2,7 @@ export const ROUTE_PATHS = {
   HOME: '/',
   LOGIN: '/login',
   ABOUT: '/about',
+  STACK_WIDGET: '/stack',
   NOT_FOUND: '*',
   DASHBOARD: '/dashboard',
   LIBRARY: '/library',

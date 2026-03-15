@@ -9,6 +9,7 @@ import { ROUTE_PATHS } from './routePaths';
 import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
+const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 
 export const appRoutes = [
   {
@@ -28,6 +29,7 @@ export const appRoutes = [
       { path: ROUTE_PATHS.LIBRARY, element: <p>Library Page</p> },
       { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
+      { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
     ],
   },
 ];
