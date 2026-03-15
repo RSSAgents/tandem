@@ -9,7 +9,12 @@ interface FifoQuizProps {
   handleFifoAnswer: () => void;
 }
 
-const FifoQuiz = ({ selectedFifo, setSelectedFifo, showFifoFeedback, handleFifoAnswer }: FifoQuizProps) => (
+const FifoQuiz = ({
+  selectedFifo,
+  setSelectedFifo,
+  showFifoFeedback,
+  handleFifoAnswer,
+}: FifoQuizProps) => (
   <Box className={classes.quizBox}>
     <Text className={classes.questionText}>{QUIZ_QUESTIONS.fifo.question}</Text>
     <MantineStack className={classes.radioGroup}>
@@ -35,11 +40,7 @@ const FifoQuiz = ({ selectedFifo, setSelectedFifo, showFifoFeedback, handleFifoA
         {selectedFifo === 'correct' ? FEEDBACK_MESSAGES.correct : FEEDBACK_MESSAGES.incorrect}
       </Text>
     )}
-    <Button
-      className={classes.submitButton}
-      disabled={!selectedFifo}
-      onClick={handleFifoAnswer}
-    >
+    <Button className={classes.submitButton} disabled={!selectedFifo} onClick={handleFifoAnswer}>
       Submit Answer
     </Button>
   </Box>

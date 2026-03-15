@@ -9,7 +9,12 @@ interface LifoQuizProps {
   handleLifoAnswer: () => void;
 }
 
-const LifoQuiz = ({ selectedLifo, setSelectedLifo, showLifoFeedback, handleLifoAnswer }: LifoQuizProps) => (
+const LifoQuiz = ({
+  selectedLifo,
+  setSelectedLifo,
+  showLifoFeedback,
+  handleLifoAnswer,
+}: LifoQuizProps) => (
   <Box className={classes.quizBox}>
     <Text className={classes.questionText}>{QUIZ_QUESTIONS.lifo.question}</Text>
     <MantineStack className={classes.radioGroup}>
@@ -35,11 +40,7 @@ const LifoQuiz = ({ selectedLifo, setSelectedLifo, showLifoFeedback, handleLifoA
         {selectedLifo === 'correct' ? FEEDBACK_MESSAGES.correct : FEEDBACK_MESSAGES.incorrect}
       </Text>
     )}
-    <Button
-      className={classes.submitButton}
-      disabled={!selectedLifo}
-      onClick={handleLifoAnswer}
-    >
+    <Button className={classes.submitButton} disabled={!selectedLifo} onClick={handleLifoAnswer}>
       Submit Answer
     </Button>
   </Box>
