@@ -1,72 +1,73 @@
+import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { screen } from '@testing-library/react';
+import { renderWithProviders } from '@/utils/test-util';
 import { LeaderboardPage } from './LeaderboardPage';
-import { RANK_DISPLAY } from '@/constants/rankDisplay';
-import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
 
-describe('Leaderboard Page', () => {
-  it('should export LeaderboardPage component', () => {
-    expect(LeaderboardPage).toBeDefined();
-    expect(typeof LeaderboardPage).toBe('function');
+beforeAll(() => {
+  window.ResizeObserver = class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+});
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+  }),
+}));
+
+describe('LeaderboardPage', () => {
+  it('displays table headers', () => {
+    renderWithProviders(<LeaderboardPage />);
+
+    const headers = document.querySelectorAll('thead th');
+    expect(headers.length).toBeGreaterThan(0);
   });
 
-  it('should have correct rank display constants for top 3', () => {
-    expect(RANK_DISPLAY[1]).toBe('🥇 1');
-    expect(RANK_DISPLAY[2]).toBe('🥈 2');
-    expect(RANK_DISPLAY[3]).toBe('🥉 3');
+  it('displays all participants', () => {
+    renderWithProviders(<LeaderboardPage />);
+
+    expect(screen.getByText('Homer')).toBeDefined();
+    expect(screen.getByText('Bart')).toBeDefined();
+    expect(screen.getByText('Liza')).toBeDefined();
+    expect(screen.getByText('Marge')).toBeDefined();
+    expect(screen.getByText('Ivan Ivanov')).toBeDefined();
   });
 
-  it('should have correct table headers', () => {
-    expect(WINNERS_TABLE_HEADERS).toHaveLength(4);
-    expect(WINNERS_TABLE_HEADERS[0].key).toBe('position');
-    expect(WINNERS_TABLE_HEADERS[1].key).toBe('user');
-    expect(WINNERS_TABLE_HEADERS[2].key).toBe('score');
-    expect(WINNERS_TABLE_HEADERS[3].key).toBe('progress');
+  it('displays avatars for all participants', () => {
+    renderWithProviders(<LeaderboardPage />);
+
+    const avatars = document.querySelectorAll('img');
+    expect(avatars.length).toBe(5);
   });
 
-  it('should have translation keys for headers', () => {
-    expect(WINNERS_TABLE_HEADERS[0].label).toBe('leaderboard.position');
-    expect(WINNERS_TABLE_HEADERS[1].label).toBe('leaderboard.user');
-    expect(WINNERS_TABLE_HEADERS[2].label).toBe('leaderboard.score');
-    expect(WINNERS_TABLE_HEADERS[3].label).toBe('leaderboard.progress');
+  it('displays Homer as first place', () => {
+    renderWithProviders(<LeaderboardPage />);
+
+    const homerElement = screen.getByText('Homer');
+    const parentRow = homerElement.closest('tr');
+    expect(parentRow?.textContent).toContain('50');
+    expect(parentRow?.textContent).toContain('1');
   });
 
-  it('should sort winners by score in descending order', () => {
-    const testData = [{ score: 10 }, { score: 50 }, { score: 30 }, { score: 20 }, { score: 40 }];
-    const sortedData = [...testData].sort((a, b) => b.score - a.score);
+  it('displays Ivan Ivanov with 10 points', () => {
+    renderWithProviders(<LeaderboardPage />);
 
-    expect(sortedData[0].score).toBe(50);
-    expect(sortedData[1].score).toBe(40);
-    expect(sortedData[2].score).toBe(30);
-    expect(sortedData[3].score).toBe(20);
-    expect(sortedData[4].score).toBe(10);
-
-    expect(sortedData[0].score).toBeGreaterThanOrEqual(sortedData[1].score);
-    expect(sortedData[1].score).toBeGreaterThanOrEqual(sortedData[2].score);
-    expect(sortedData[2].score).toBeGreaterThanOrEqual(sortedData[3].score);
-    expect(sortedData[3].score).toBeGreaterThanOrEqual(sortedData[4].score);
+    const ivanElement = screen.getByText('Ivan Ivanov');
+    const parentRow = ivanElement.closest('tr');
+    expect(parentRow?.textContent).toContain('10');
   });
 
-  it('should handle empty data array', () => {
-    const emptyData: { score: number }[] = [];
-    const sortedData = [...emptyData].sort((a, b) => b.score - a.score);
+  it('sorts participants by score in descending order', () => {
+    renderWithProviders(<LeaderboardPage />);
 
-    expect(sortedData).toHaveLength(0);
-  });
+    const rows = document.querySelectorAll('tbody tr');
 
-  it('should handle single item', () => {
-    const singleData = [{ score: 42 }];
-    const sortedData = [...singleData].sort((a, b) => b.score - a.score);
-
-    expect(sortedData).toHaveLength(1);
-    expect(sortedData[0].score).toBe(42);
-  });
-
-  it('should handle equal scores', () => {
-    const equalData = [{ score: 30 }, { score: 30 }, { score: 20 }];
-
-    const sortedData = [...equalData].sort((a, b) => b.score - a.score);
-
-    expect(sortedData[0].score).toBe(30);
-    expect(sortedData[1].score).toBe(30);
-    expect(sortedData[2].score).toBe(20);
+    expect(rows[0]?.textContent).toContain('Homer');
+    expect(rows[1]?.textContent).toContain('Bart');
+    expect(rows[2]?.textContent).toContain('Liza');
+    expect(rows[3]?.textContent).toContain('Marge');
+    expect(rows[4]?.textContent).toContain('Ivan Ivanov');
   });
 });
