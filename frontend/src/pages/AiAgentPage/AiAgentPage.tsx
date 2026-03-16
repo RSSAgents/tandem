@@ -1,248 +1,90 @@
-import {
-  ActionIcon,
-  Badge,
-  Box,
-  Button,
-  Center,
-  Drawer,
-  Grid,
-  Group,
-  Paper,
-  ScrollArea,
-  SegmentedControl,
-  Stack,
-  Text,
-  TextInput,
-} from '@mantine/core';
+import { Box, Button, Drawer, Grid, Group, Modal, Stack, Text } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { IconMicrophone, IconTerminal2 } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { InterviewerSection } from '../../components/AiAgentPage/InterviewerSection';
+import { MessageRenderer } from '../../components/AiAgentPage/MessageRenderer';
+import { SettingsPanel } from '../../components/AiAgentPage/SettingsPanel';
+import { TeacherSection } from '../../components/AiAgentPage/TeacherSection';
+import { TopicsPanel } from '../../components/AiAgentPage/TopicsPanel';
+import { useAiAgentState } from '../../hooks/useAiAgentState';
+import { useAiInterviewLogic } from '../../hooks/useAiInterviewLogic';
+import { DrawerType, ThreadType } from '../../types/aiAgentTypes';
 import classes from './AiAgentPage.module.css';
-
-export type ThreadType = 'interviewer' | 'teacher' | 'battle';
-
-export interface Message {
-  id: string;
-  sender: 'user' | 'ai';
-  text: string;
-  timestamp: number;
-}
-
-export interface Thread {
-  id: string;
-  topic: string;
-  type: ThreadType;
-  messages: Message[];
-}
-
-const TOPICS = [
-  'Computer Science Fundamentals',
-  'HTML & CSS Basics',
-  'JavaScript Essentials',
-  'Execution Context & Memory Management',
-  'Functions & Patterns',
-  'Context (this)',
-  'Advanced Objects & Collections',
-  'OOP & Classes',
-  'Async JS',
-  'DOM Events',
-  'Browser Environment & Web API',
-  'Network & Security',
-  'TypeScript',
-  'Architecture & Design Patterns',
-  'SDLC & Testing',
-];
-
-type InputsState = Record<string, Partial<Record<ThreadType, string>>>;
 
 export const AiAgentPage = () => {
   const isMobile = useMediaQuery('(max-width: 992px)');
   const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [drawerType, setDrawerType] = useState<'menu' | 'topics'>('menu');
+  const [drawerType, setDrawerType] = useState<DrawerType>('menu');
 
-  const [activeTopic, setActiveTopic] = useState<string | null>(null);
-  const [threads, setThreads] = useState<Thread[]>([]);
-  const [inputs, setInputs] = useState<InputsState>({});
+  const state = useAiAgentState();
+  const { handleSend, startAiInterviewSimulation, getStartMessageForType } =
+    useAiInterviewLogic(state);
 
-  const [role, setRole] = useState('strict');
-  const [teacherMode, setTeacherMode] = useState<'teacher' | 'battle'>('teacher');
-  const [mobileActiveView, setMobileActiveView] = useState<'interviewer' | 'teacher'>(
-    'interviewer',
-  );
-  const [stressMode, setStressMode] = useState('normal');
-  const [audioMode, setAudioMode] = useState(false);
-
-  const simulateAiReply = (threadId: string, userText: string) => {
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: crypto.randomUUID(),
-        sender: 'ai',
-        text: `AI reply for message: "${userText.substring(0, 20)}..."`,
-        timestamp: Date.now(),
-      };
-      setThreads((current) =>
-        current.map((thread) =>
-          thread.id === threadId ? { ...thread, messages: [...thread.messages, aiMessage] } : thread,
-        ),
-      );
-    }, 1000);
-  };
-
-  const handleSend = (type: ThreadType) => {
-    if (!activeTopic) return;
-    const text = inputs[activeTopic]?.[type]?.trim() ?? '';
-    if (!text) return;
-
-    const userMessage: Message = {
-      id: crypto.randomUUID(),
-      sender: 'user',
-      text,
-      timestamp: Date.now(),
-    };
-
-    let targetThreadId = '';
-
-    setThreads((current) => {
-      const idx = current.findIndex((thread) => thread.topic === activeTopic && thread.type === type);
-      if (idx !== -1) {
-        targetThreadId = current[idx].id;
-        const updated = [...current];
-        updated[idx] = { ...updated[idx], messages: [...updated[idx].messages, userMessage] };
-        return updated;
-      }
-      const newThread: Thread = {
-        id: crypto.randomUUID(),
-        topic: activeTopic,
-        type,
-        messages: [userMessage],
-      };
-      targetThreadId = newThread.id;
-      return [...current, newThread];
-    });
-
-    setInputs((prev) => ({ ...prev, [activeTopic]: { ...prev[activeTopic], [type]: '' } }));
-    simulateAiReply(targetThreadId, text);
-  };
-
-  const getInput = (type: ThreadType) => (activeTopic ? (inputs[activeTopic]?.[type] ?? '') : '');
-  const setInput = (type: ThreadType, val: string) => {
-    if (!activeTopic) return;
-    setInputs((prev) => ({ ...prev, [activeTopic]: { ...prev[activeTopic], [type]: val } }));
-  };
-
-  const renderMessages = (type: ThreadType) => {
-    if (!activeTopic) {
-      return (
-        <Center h="100%">
-          <Text c="dimmed" size="sm">
-            Please select a topic to start conversation
-          </Text>
-        </Center>
-      );
+  useEffect(() => {
+    if (state.timer === 0) {
+      handleSend('interviewer', "Time's up! I couldn't answer in 90 seconds.");
+      state.setTimer(null);
     }
-    const thread = threads.find((thread) => thread.topic === activeTopic && thread.type === type);
+  }, [state, handleSend]);
+
+  const renderMessagesWrapper = (type: ThreadType) => {
+    const startMsg = getStartMessageForType(type, state.activeTopic);
+    const thread = state.threads.find((t) => t.topic === state.activeTopic && t.type === type);
+    const messages = thread?.messages || [];
+
     return (
-      <Stack gap="md">
-        {thread?.messages.map((msg) => (
-          <Box
-            key={msg.id}
-            className={msg.sender === 'ai' ? classes.messageAi : classes.messageUser}
-          >
-            <Text size="sm">{msg.text}</Text>
-          </Box>
-        ))}
-      </Stack>
+      <MessageRenderer
+        messages={messages}
+        startMessage={startMsg}
+        hasActiveTopic={state.activeTopic !== null}
+      />
     );
   };
 
-  const TopicsList = (
-    <Stack gap="xs">
-      <Text fw={700} size="xs" c="dimmed" tt="uppercase" mt="md">
-        Learning Topics
-      </Text>
-      <ScrollArea h={isMobile ? 'auto' : 'calc(100vh - 400px)'} offsetScrollbars>
-        <Stack gap="xs">
-          {TOPICS.map((topic) => (
-            <Button
-              key={topic}
-              variant={activeTopic === topic ? 'filled' : 'light'}
-              fullWidth
-              onClick={() => {
-                setActiveTopic(topic);
-                if (isMobile) {
-                  closeDrawer();
-                }
-              }}
-              styles={{ inner: { justifyContent: 'space-between' } }}
-              rightSection={
-                <Center className={classes.historyIcon} data-type="i">
-                  0
-                </Center>
-              }
-            >
-              <Text size="sm" truncate fw={500}>
-                {topic}
-              </Text>
-            </Button>
-          ))}
-        </Stack>
-      </ScrollArea>
-    </Stack>
-  );
-
-  const SettingsPanel = (
-    <Paper className={classes.glassPanel} p="sm" radius="md">
-      <Group gap="xs" align="stretch" wrap="nowrap">
-        <Stack className={classes.statsDivider}>
-          <Text fw={700} size="10px" c="dimmed" tt="uppercase">Ready</Text>
-          <Text fw={900} size="24px" c="cyan">0%</Text>
-        </Stack>
-        <Stack gap={4} flex={1}>
-          <SegmentedControl
-            fullWidth
-            size="xs"
-            value={role}
-            onChange={setRole}
-            data={[
-              { label: 'STRICT', value: 'strict' },
-              { label: 'GENTLE', value: 'gentle' },
-            ]}
-            classNames={{
-              root: classes.roleSwitcher,
-              indicator: role === 'strict' ? classes.gradientPink : classes.gradientCyan,
-            }}
-          />
-          <SegmentedControl
-            fullWidth
-            size="xs"
-            value={stressMode}
-            onChange={setStressMode}
-            data={[
-              { label: 'NORMAL', value: 'normal' },
-              { label: 'STRESS', value: 'stress' },
-            ]}
-            classNames={{
-              root: classes.roleSwitcher,
-              indicator: stressMode === 'stress' ? classes.gradientPink : classes.gradientCyan,
-            }}
-          />
-          <Button
-            variant="light"
-            color="indigo"
-            leftSection={<IconTerminal2 size={14} />}
-            radius="md"
-            size="xs"
-            fullWidth
-          >
-            CODE RUNNER
-          </Button>
-        </Stack>
-      </Group>
-    </Paper>
-  );
-
   return (
     <div className={classes.mainContent}>
+      <Modal
+        opened={state.resetInterviewerModalOpen}
+        onClose={state.closeResetInterviewer}
+        title="Start New Interview"
+        centered
+      >
+        <Text size="sm" mb="md">
+          Are you sure you want to start a new interview? The current message history for this topic
+          will be deleted.
+        </Text>
+        <Group justify="flex-end">
+          <Button variant="default" onClick={state.closeResetInterviewer}>
+            Cancel
+          </Button>
+          <Button
+            color="red"
+            onClick={() => state.clearHistory(state.interviewerMode as ThreadType)}
+          >
+            Confirm & Start
+          </Button>
+        </Group>
+      </Modal>
+
+      <Modal
+        opened={state.resetTeacherModalOpen}
+        onClose={state.closeResetTeacher}
+        title="Clear Teacher History"
+        centered
+      >
+        <Text size="sm" mb="md">
+          Are you sure you want to clear the conversation history with the Teacher for this topic?
+        </Text>
+        <Group justify="flex-end">
+          <Button variant="default" onClick={state.closeResetTeacher}>
+            Cancel
+          </Button>
+          <Button color="red" onClick={() => state.clearHistory('teacher')}>
+            Clear History
+          </Button>
+        </Group>
+      </Modal>
+
       {isMobile && (
         <>
           <Button
@@ -276,24 +118,6 @@ export const AiAgentPage = () => {
         </>
       )}
 
-      {isMobile && (
-        <Center mb="md">
-          <SegmentedControl
-            size="sm"
-            value={mobileActiveView}
-            onChange={(val) => {
-              if (val === 'interviewer' || val === 'teacher') {
-                setMobileActiveView(val);
-              }
-            }}
-            data={[
-              { label: 'Interviewer', value: 'interviewer' },
-              { label: 'Teacher', value: 'teacher' },
-            ]}
-          />
-        </Center>
-      )}
-
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
@@ -301,122 +125,81 @@ export const AiAgentPage = () => {
         size="xs"
         padding="md"
       >
-        <ScrollArea h="calc(100vh - 80px)" offsetScrollbars>
-          {drawerType === 'menu' ? SettingsPanel : TopicsList}
-        </ScrollArea>
+        <Box>
+          {drawerType === 'menu' ? (
+            <SettingsPanel
+              role={state.role}
+              stressMode={state.stressMode}
+              readinessPercentage={state.readinessPercentage}
+              onRoleChange={state.setRole}
+              onStressModeChange={state.setStressMode}
+            />
+          ) : (
+            <TopicsPanel
+              activeTopic={state.activeTopic}
+              scores={state.scores}
+              onTopicSelect={state.setActiveTopic}
+              isMobile={true}
+              onClose={closeDrawer}
+            />
+          )}
+        </Box>
       </Drawer>
 
       <Grid gutter="md" align="stretch">
         {!isMobile && (
           <Grid.Col span={3}>
             <Stack gap="md">
-              {SettingsPanel}
-              {TopicsList}
+              <SettingsPanel
+                role={state.role}
+                stressMode={state.stressMode}
+                readinessPercentage={state.readinessPercentage}
+                onRoleChange={state.setRole}
+                onStressModeChange={state.setStressMode}
+              />
+              <TopicsPanel
+                activeTopic={state.activeTopic}
+                scores={state.scores}
+                onTopicSelect={state.setActiveTopic}
+              />
             </Stack>
           </Grid.Col>
         )}
 
-        {(!isMobile || mobileActiveView === 'interviewer') && (
-          <Grid.Col span={isMobile ? 12 : 4.5}>
-            <Paper
-              className={`${classes.glassPanel} ${classes.borderStrict}`}
-              p="md"
-              radius="md"
-              h={isMobile ? '70vh' : 'calc(100vh - 250px)'}
-              display="flex"
-              style={{ flexDirection: 'column' }}
-            >
-              <Group justify="space-between" mb="md">
-                <Badge variant="outline" color="pink" size="lg">
-                  INTERVIEWER
-                </Badge>
-                <ActionIcon
-                  variant={audioMode ? 'filled' : 'light'}
-                  color="red"
-                  onClick={() => setAudioMode(!audioMode)}
-                >
-                  <IconMicrophone size={18} />
-                </ActionIcon>
-              </Group>
-              <ScrollArea flex={1} p="xs">
-                {renderMessages('interviewer')}
-              </ScrollArea>
-              <Box mt="md">
-                <Group gap="xs">
-                  <TextInput
-                    flex={1}
-                    placeholder="Type your answer..."
-                    disabled={!activeTopic}
-                    value={getInput('interviewer')}
-                    onChange={(e) => setInput('interviewer', e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSend('interviewer')}
-                  />
-                  <Button
-                    variant="outline"
-                    onClick={() => handleSend('interviewer')}
-                    disabled={!activeTopic}
-                  >
-                    Send
-                  </Button>
-                </Group>
-              </Box>
-            </Paper>
-          </Grid.Col>
+        {(!isMobile || state.mobileActiveView === 'interviewer') && (
+          <InterviewerSection
+            interviewerMode={state.interviewerMode}
+            onInterviewerModeChange={state.setInterviewerMode}
+            activeTopic={state.activeTopic}
+            onResetClick={state.openResetInterviewer}
+            questionCount={state.questionCount}
+            timer={state.timer}
+            isMobile={isMobile}
+            renderMessages={renderMessagesWrapper}
+            inputValue={state.getInput('interviewer')}
+            onInputChange={(val) => state.setInput('interviewer', val)}
+            onSend={() => handleSend('interviewer')}
+            onGenerateAi={startAiInterviewSimulation}
+            isWaitingForAnswer={state.isWaitingForAnswer}
+            aiInterviewLevel={state.aiInterviewLevel}
+            onAiLevelChange={state.setAiInterviewLevel}
+          />
         )}
 
-        {(!isMobile || mobileActiveView === 'teacher') && (
-          <Grid.Col span={isMobile ? 12 : 4.5}>
-            <Paper
-              className={`${classes.glassPanel} ${classes.borderGentle}`}
-              p="md"
-              radius="md"
-              h={isMobile ? '70vh' : 'calc(100vh - 250px)'}
-              display="flex"
-              style={{ flexDirection: 'column' }}
-            >
-              <SegmentedControl
-                fullWidth
-                mb="md"
-                value={teacherMode}
-                onChange={(val) => {
-                  if (val === 'teacher' || val === 'battle') {
-                    setTeacherMode(val);
-                  }
-                }}
-                data={[
-                  { label: 'TEACHER', value: 'teacher' },
-                  { label: 'BATTLE', value: 'battle' },
-                ]}
-                classNames={{
-                  root: classes.modeSwitcher,
-                  indicator:
-                    teacherMode === 'teacher' ? classes.gradientCyan : classes.gradientOrange,
-                }}
-              />
-              <ScrollArea flex={1} p="xs">
-                {renderMessages(teacherMode)}
-              </ScrollArea>
-              <Box mt="md">
-                <Group gap="xs">
-                  <TextInput
-                    flex={1}
-                    placeholder={teacherMode === 'teacher' ? 'Ask something...' : 'Battle input...'}
-                    disabled={!activeTopic}
-                    value={getInput(teacherMode)}
-                    onChange={(e) => setInput(teacherMode, e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSend(teacherMode)}
-                  />
-                  <Button
-                    variant="outline"
-                    onClick={() => handleSend(teacherMode)}
-                    disabled={!activeTopic}
-                  >
-                    Send
-                  </Button>
-                </Group>
-              </Box>
-            </Paper>
-          </Grid.Col>
+        {(!isMobile || state.mobileActiveView === 'teacher') && (
+          <TeacherSection
+            activeTopic={state.activeTopic}
+            onResetClick={state.openResetTeacher}
+            isMobile={isMobile}
+            renderMessages={() => renderMessagesWrapper('teacher')}
+            stressMode={state.stressMode}
+            inputValue={state.getInput('teacher')}
+            onInputChange={(val) => state.setInput('teacher', val)}
+            onSend={() => handleSend('teacher')}
+            isWaitingForAnswer={state.isWaitingForAnswer}
+            isInterviewerWaitingForUser={state.isInterviewerWaitingForUser}
+            interviewerMode={state.interviewerMode}
+          />
         )}
       </Grid>
     </div>
