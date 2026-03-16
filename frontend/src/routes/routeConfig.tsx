@@ -6,7 +6,8 @@ import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
 import { ROUTE_PATHS } from './routePaths';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
-import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
+import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
+import { HomePage } from '@/pages/HomePage/HomePage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
@@ -16,7 +17,7 @@ export const appRoutes = [
     path: '/',
     element: <MinimalLayout />,
     children: [
-      { index: true, element: <p>HomePage</p> },
+      { index: true, element: <HomePage /> },
       { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
       { path: ROUTE_PATHS.ABOUT, element: <About /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
