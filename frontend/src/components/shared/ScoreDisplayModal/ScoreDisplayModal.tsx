@@ -1,5 +1,5 @@
 import { Button, Flex, Modal, Paper, Text, Title } from '@mantine/core';
-import styles from './ScoreDisplay.module.css';
+import styles from './ScoreDisplayModal.module.css';
 import { IScoreDisplayProps } from '@/types/scoreDisplay.types';
 
 interface IScoreDisplayModalProps extends IScoreDisplayProps {
@@ -8,7 +8,7 @@ interface IScoreDisplayModalProps extends IScoreDisplayProps {
   onTryAgain: () => void;
 }
 
-export const ScoreDisplay = ({
+export const ScoreDisplayModal = ({
   score,
   total,
   opened,

@@ -8,6 +8,7 @@ import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
 import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
 import { useWidgetConsole } from '@/hooks/useWidgetConsole';
+import { useCallback, useState } from 'react';
 
 export const WidgetConsole = () => {
   const {
@@ -25,7 +26,25 @@ export const WidgetConsole = () => {
     handleDragEnd,
     handleCheckResult,
     handleNextQuestion,
+    resetWidget,
   } = useWidgetConsole();
+
+  const [modalOpened, setModalOpened] = useState(false);
+
+  const onCheckClick = useCallback(() => {
+    handleCheckResult();
+
+    if (currentIndex === tasks.length - 1) {
+      setTimeout(() => {
+        setModalOpened(true);
+      }, 2000);
+    }
+  }, [handleCheckResult, currentIndex, tasks.length]);
+
+  const handleTryAgain = () => {
+    resetWidget();
+    setModalOpened(false);
+  };
 
   if (loading) return <PageLoader />;
   if (error) return <ErrorDisplay error={error} />;
@@ -67,7 +86,7 @@ export const WidgetConsole = () => {
       </Stack>
 
       <Flex className={styles.actionButtons}>
-        <Button className={styles.btn} disabled={showResult} onClick={() => handleCheckResult()}>
+        <Button className={styles.btn} disabled={showResult} onClick={onCheckClick}>
           Check result
         </Button>
         <Button
@@ -80,9 +99,13 @@ export const WidgetConsole = () => {
       </Flex>
       {showResult && <ResultDisplay isCorrect={isCorrect} explanation={explanation} />}
 
-      {currentIndex === tasks.length - 1 && showResult && (
-        <ScoreDisplay score={score} total={tasks.length} />
-      )}
+      <ScoreDisplay
+        score={score}
+        total={tasks.length}
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        onTryAgain={handleTryAgain}
+      />
     </Container>
   );
 };
