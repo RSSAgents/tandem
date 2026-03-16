@@ -1,20 +1,24 @@
-import { useState } from 'react';
 import { Stack } from '@mantine/core';
 import { Question } from './Question';
 import type { QuestionGroupProps } from './types';
-import { updateControlledState } from './utils';
+import { useControlledValue } from './useControlledValue';
 
-export const QuestionGroup = ({ questions, valueList, onChange }: QuestionGroupProps) => {
-  const [internalValue, setInternalValue] = useState<Record<string, string[]>>({});
-
-  const answers = valueList ?? internalValue;
+export const QuestionGroup = ({
+  questions,
+  selectedOptionsByQuestionId,
+  onChange,
+}: QuestionGroupProps) => {
+  const [answers, updateAnswers] = useControlledValue<Record<string, string[]>>(
+    selectedOptionsByQuestionId,
+    onChange,
+    {},
+  );
 
   const updateAnswer = (id: string, newValue: string[]) => {
-    const updated = { ...answers, [id]: newValue };
-
-    updateControlledState(valueList, setInternalValue, updated);
-
-    onChange?.(updated);
+    updateAnswers({
+      ...answers,
+      [id]: newValue,
+    });
   };
 
   return (
@@ -23,10 +27,10 @@ export const QuestionGroup = ({ questions, valueList, onChange }: QuestionGroupP
         <Question
           key={q.id}
           id={q.id}
-          question={q.question}
-          options={q.options}
+          questionText={q.questionText}
+          answerOptions={q.answerOptions}
           isMultiple={q.isMultiple}
-          valueList={answers[q.id] ?? []}
+          selectedOptionIds={answers[q.id] ?? []}
           onChange={(val) => updateAnswer(q.id, val)}
         />
       ))}

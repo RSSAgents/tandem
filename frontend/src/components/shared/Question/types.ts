@@ -1,27 +1,32 @@
-export type QuestionOption = {
-  id: string;
+export type QuestionId = string;
+export type AnswerOptionId = string;
+export type SelectedOptionIds = AnswerOptionId[];
+export type AnswersByQuestionId = Record<QuestionId, SelectedOptionIds>;
+
+export type AnswerOption = {
+  id: AnswerOptionId;
   label: string;
 };
 
-export type QuestionItem = {
-  id: string;
-  question: string;
-  options: QuestionOption[];
+export type QuestionData = {
+  id: QuestionId;
+  questionText: string;
+  answerOptions: AnswerOption[];
   isMultiple?: boolean;
 };
 
 export type QuestionProps = {
-  id: string;
-  question: string;
-  options: QuestionOption[];
+  id: QuestionId;
+  questionText: string;
+  answerOptions: AnswerOption[];
   isMultiple?: boolean;
-  valueList?: string[];
-  onChange?: (value: string[]) => void;
+  selectedOptionIds?: SelectedOptionIds;
+  onChange?: (selectedOptionIds: SelectedOptionIds) => void;
   disabled?: boolean;
 };
 
 export type QuestionGroupProps = {
-  questions: QuestionItem[];
-  valueList?: Record<string, string[]>;
-  onChange?: (value: Record<string, string[]>) => void;
+  questions: QuestionData[];
+  selectedOptionsByQuestionId?: AnswersByQuestionId;
+  onChange?: (answersByQuestionId: AnswersByQuestionId) => void;
 };
