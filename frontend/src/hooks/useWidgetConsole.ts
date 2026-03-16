@@ -86,6 +86,18 @@ export const useWidgetConsole = () => {
     }
   }, [currentIndex, tasks.length]);
 
+  const resetWidget = useCallback(() => {
+    setCurrentIndex(0);
+    setScore(0);
+    setShowResult(false);
+    setIsCorrect(false);
+    setExplanation('');
+
+    if (tasks.length > 0 && tasks[0]) {
+      resetUserOrder(tasks[0].payload.options);
+    }
+  }, [tasks, resetUserOrder]);
+
   return {
     tasks,
     loading,
@@ -100,6 +112,7 @@ export const useWidgetConsole = () => {
 
     handleCheckResult,
     handleNextQuestion,
+    resetWidget,
 
     sensors,
     handleDragEnd,
