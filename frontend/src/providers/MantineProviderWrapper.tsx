@@ -94,7 +94,7 @@ const resolver: CSSVariablesResolver = () => ({
     '--panel-soft': '#f1f3f6',
     '--border': 'rgba(0, 0, 0, 0.08)',
     '--text-main': '#0f172a',
-    '--text-dim': '#64748b',
+    '--text-dim': '#57606a',
     '--accent': '#2563eb',
     '--accent-hover': '#0a7ae0',
     '--mantine-color-body': '#f5f7fa',

@@ -6,8 +6,10 @@ import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
 import { ROUTE_PATHS } from './routePaths';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
+import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
+const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 
 export const appRoutes = [
   {
@@ -23,11 +25,12 @@ export const appRoutes = [
   {
     element: <MainLayout />,
     children: [
-      { path: ROUTE_PATHS.DASHBOARD, element: <p>Dashboard</p> },
+      { path: ROUTE_PATHS.DASHBOARD, element: <DashboardPage /> },
       { path: ROUTE_PATHS.LIBRARY, element: <p>Library Page</p> },
       { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
       { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
+      { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
     ],
   },
 ];
