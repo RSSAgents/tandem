@@ -3,7 +3,7 @@ import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/cor
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableItem } from './SortableItem';
-import { ScoreDisplay } from '@/components/shared/ScoreDisplay/ScoreDisplay';
+import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
 import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
@@ -99,7 +99,7 @@ export const WidgetConsole = () => {
       </Flex>
       {showResult && <ResultDisplay isCorrect={isCorrect} explanation={explanation} />}
 
-      <ScoreDisplay
+      <ScoreDisplayModal
         score={score}
         total={tasks.length}
         opened={modalOpened}
