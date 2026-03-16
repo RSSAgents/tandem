@@ -2,9 +2,9 @@ import { useTheme } from '@hooks/useTheme';
 import { ActionIcon, Box, Button, Group, Text } from '@mantine/core';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
 import classes from './Header.module.css';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
   const location = useLocation();
@@ -14,7 +14,7 @@ export const Header = () => {
 
   return (
     <Box component="header" className={classes.header}>
-      <Text component="a" href="/" className={classes.logo}>
+      <Text component={Link} to="/" className={classes.logo}>
         Tandem
       </Text>
       <Group className={classes.group}>

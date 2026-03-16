@@ -1,5 +1,6 @@
 import { createTheme, CSSVariablesResolver, MantineProvider } from '@mantine/core';
 import { ReactNode } from 'react';
+import { LAYOUT_CONFIG } from '../constants/layout';
 
 interface MantineProviderWrapperProps {
   children: ReactNode;
@@ -73,6 +74,11 @@ const theme = createTheme({
 
 const resolver: CSSVariablesResolver = () => ({
   variables: {
+    '--app-max-width': `${LAYOUT_CONFIG.CONTAINER_WIDTH}px`,
+    '--header-height': `${LAYOUT_CONFIG.HEADER_HEIGHT}px`,
+    '--app-side-padding': `${LAYOUT_CONFIG.SIDE_PADDING}px`,
+    '--board-max-height': `${LAYOUT_CONFIG.BOARD_MAX_HEIGHT}px`,
+
     '--z-header': '100',
     '--z-dropdown': '150',
     '--z-modal': '200',
@@ -88,7 +94,7 @@ const resolver: CSSVariablesResolver = () => ({
     '--panel-soft': '#f1f3f6',
     '--border': 'rgba(0, 0, 0, 0.08)',
     '--text-main': '#0f172a',
-    '--text-dim': '#64748b',
+    '--text-dim': '#57606a',
     '--accent': '#2563eb',
     '--accent-hover': '#0a7ae0',
     '--mantine-color-body': '#f5f7fa',
