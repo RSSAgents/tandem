@@ -1,0 +1,11 @@
+.question {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legend {
+  font-weight: 600;
+  margin-bottom: var(--mantine-spacing-sm);
+  font-size: var(--mantine-font-size-md);
+}
