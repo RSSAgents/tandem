@@ -26,8 +26,8 @@ export const LoginPage = () => {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.card}>
-        <Text size="2xl" fw={600} ta="center" mb="xl" c="brand.5">
-          Tandem
+        <Text size="2xl" fw={500} ta="center" mb="xl">
+          {t('login')}
         </Text>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,8 +54,11 @@ export const LoginPage = () => {
           </Button>
         </form>
 
-        <Text size="sm" mt="lg" className={classes.forgot}>
-          {t('forgotPassword')}
+        <Text size="sm" mt="lg" ta="center">
+          {t('noAccount')}{' '}
+          <Text className={classes.signup} component="span" onClick={() => navigate('/register')}>
+            {t('signup')}
+          </Text>
         </Text>
       </Paper>
     </div>

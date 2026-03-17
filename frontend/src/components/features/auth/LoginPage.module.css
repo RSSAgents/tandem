@@ -17,12 +17,12 @@
   position: relative;
 }
 
-.forgot {
+.signup {
   text-align: center;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
-.forgot:hover {
+.signup:hover {
   color: var(--accent);
 }
