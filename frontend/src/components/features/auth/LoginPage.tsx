@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormValues, LoginErrorKeys } from './login.schema';
 import classes from './LoginPage.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export const LoginPage = () => {
@@ -56,7 +56,7 @@ export const LoginPage = () => {
 
         <Text size="sm" mt="lg" ta="center">
           {t('noAccount')}{' '}
-          <Text className={classes.signup} component="span" onClick={() => navigate('/register')}>
+          <Text className={classes.signupLink} component={Link} to="/register">
             {t('signup')}
           </Text>
         </Text>
