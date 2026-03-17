@@ -47,10 +47,10 @@ export function HowItWorksSection() {
         </Text>
         <feature.icon size={50} stroke={1.5} color={iconColors[index]} />
       </Group>
-      <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
+      <Text className={classes.cardTitle} mt="md">
         {feature.title}
       </Text>
-      <Text fz="sm" c="dimmed" mt="sm">
+      <Text className={classes.cardSubTitle} c="dimmed" mt="sm">
         {feature.description}
       </Text>
     </Card>
@@ -67,7 +67,7 @@ export function HowItWorksSection() {
         journey starts here.
       </Text>
 
-      <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="xl" mt={50}>
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" mt={50}>
         {features}
       </SimpleGrid>
     </Container>
