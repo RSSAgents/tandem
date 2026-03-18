@@ -1,0 +1,47 @@
+.myAccordion {
+  width: 900px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+}
+
+.item {
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.2s ease;
+}
+
+.item:hover {
+  border-left-color: var(--accent);
+}
+
+.control {
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 1rem;
+  color: var(--text-main);
+}
+
+.control:hover {
+  background: var(--panel-soft);
+}
+
+:global(.mantine-Accordion-item[data-active]) {
+  border-left-color: var(--accent);
+}
+
+:global(.mantine-Accordion-item[data-active]) .control {
+  color: var(--accent);
+  background: var(--panel-soft);
+}
+
+:global(.mantine-Accordion-root) {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-light);
+}
