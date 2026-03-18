@@ -1,9 +1,12 @@
 import { CodeHighlight } from '@mantine/code-highlight';
 import '@mantine/code-highlight/styles.css';
-import { Box, Stack, Text } from '@mantine/core';
-import { useMemo, useState } from 'react';
+import { ActionIcon, Box, Stack, Text } from '@mantine/core';
+import { IconPlayerPlay } from '@tabler/icons-react';
+import { useCallback, useMemo, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 import { InterviewerMode, Message } from '../../types/aiAgentTypes';
+import { CodeRunnerModal } from './CodeRunnerModal';
 
 interface MessageRendererProps {
   messages: Message[];
@@ -19,6 +22,15 @@ export const MessageRenderer = ({
   mode,
 }: MessageRendererProps) => {
   const [initialTimestamp] = useState(() => Date.now());
+  const [runnerCode, setRunnerCode] = useState('');
+  const [runnerLang, setRunnerLang] = useState('javascript');
+  const [runnerOpened, setRunnerOpened] = useState(false);
+
+  const openRunner = useCallback((code: string, language: string) => {
+    setRunnerCode(code);
+    setRunnerLang(language);
+    setRunnerOpened(true);
+  }, []);
 
   const messagesToShow = useMemo(() => {
     if (!hasActiveTopic) {
@@ -43,51 +55,68 @@ export const MessageRenderer = ({
         ];
   }, [messages, startMessage, hasActiveTopic, initialTimestamp]);
 
-  const renderTextWithCode = (text: string, sender: 'user' | 'ai' | 'candidate') => {
-    const parts = text.split(/(```\w*\n[\s\S]*?```|`[^`]+`)/);
-    return parts.map((part, index) => {
-      if (part.startsWith('```') && part.endsWith('```')) {
-        const match = part.match(/^```(\w*)\n([\s\S]*?)```$/);
-        if (match) {
-          const lang = match[1] || 'javascript';
-          const code = match[2];
-          const blockClass =
-            sender === 'ai'
-              ? classes.codeBlockAi
-              : sender === 'candidate'
-                ? classes.codeBlockCandidate
-                : classes.codeBlockUser;
-          return <CodeHighlight key={index} code={code} language={lang} className={blockClass} />;
-        }
-      }
-      if (part.startsWith('`') && part.endsWith('`')) {
-        const codeClass =
-          sender === 'ai'
-            ? classes.codeAi
-            : sender === 'candidate'
-              ? classes.codeCandidate
-              : classes.codeUser;
-        return (
-          <code key={index} className={codeClass}>
-            {part.slice(1, -1)}
-          </code>
-        );
-      }
-      return <span key={index}>{part}</span>;
-    });
-  };
+  const renderMarkdown = useCallback((text: string, sender: 'user' | 'ai' | 'candidate') => {
+    const blockClass =
+      sender === 'ai'
+        ? classes.codeBlockAi
+        : sender === 'candidate'
+          ? classes.codeBlockCandidate
+          : classes.codeBlockUser;
+    const inlineClass =
+      sender === 'ai'
+        ? classes.codeAi
+        : sender === 'candidate'
+          ? classes.codeCandidate
+          : classes.codeUser;
+
+    return (
+      <ReactMarkdown
+        components={{
+          code({ className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || '');
+            const codeStr = String(children).replace(/\n$/, '');
+            if (match) {
+              const lang = match[1];
+              return (
+                <Box style={{ position: 'relative' }}>
+                  <CodeHighlight code={codeStr} language={lang} className={blockClass} withCopyButton={false} />
+                  <ActionIcon
+                    size="sm"
+                    variant="subtle"
+                    color="gray"
+                    className={classes.runButton}
+                    onClick={() => openRunner(codeStr, lang)}
+                    title="Run code"
+                  >
+                    <IconPlayerPlay size={14} />
+                  </ActionIcon>
+                </Box>
+              );
+            }
+            return <code className={inlineClass} {...props}>{children}</code>;
+          },
+          pre({ children }) {
+            return <>{children}</>;
+          },
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    );
+  }, [openRunner]);
 
   return (
+    <>
     <Stack gap="md">
       {messagesToShow.map((msg: Message) => {
         const isAiInterview = mode === 'ai-interview' && msg.sender === 'ai';
-        const displayRole = isAiInterview ? msg.aiRole : msg.sender;
+        const displayRole = isAiInterview && msg.aiRole ? msg.aiRole : msg.sender;
 
         return (
           <Box
             key={msg.id}
             className={
-              displayRole === 'interviewer' || (displayRole === 'ai' && !isAiInterview)
+              msg.sender === 'ai' && (!isAiInterview || !msg.aiRole || msg.aiRole === 'interviewer')
                 ? classes.messageAi
                 : displayRole === 'candidate'
                   ? classes.messageCandidate
@@ -105,10 +134,10 @@ export const MessageRenderer = ({
               </Text>
             )}
             <Box
-              className={classes.messageText}
-              style={{ whiteSpace: 'pre-wrap', fontSize: '14px' }}
+              className={`${classes.messageText} ${classes.markdown}`}
+              style={{ fontSize: '14px' }}
             >
-              {renderTextWithCode(
+              {renderMarkdown(
                 msg.text
                   .replace(/FINAL_SCORE:\s*\d+/, '')
                   .replace(/^(Interviewer|INTERVIEWER|Candidate|CANDIDATE):\s*/, '')
@@ -124,5 +153,12 @@ export const MessageRenderer = ({
         );
       })}
     </Stack>
+    <CodeRunnerModal
+      opened={runnerOpened}
+      onClose={() => setRunnerOpened(false)}
+      code={runnerCode}
+      language={runnerLang}
+    />
+    </>
   );
 };
