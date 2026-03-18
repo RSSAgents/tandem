@@ -2,7 +2,11 @@ import { Container, Title, Group, Text } from '@mantine/core';
 import classes from './AudienceSection.module.css';
 
 export function AudienceSection() {
-  const audienceData = [
+  const TITLE = 'Perfect for';
+  const SUB_TITLE = `Whether you're just starting out or you've been coding for years, Tandem meets you where you
+        are. Practice at your own pace, at your own level`;
+
+  const AUDIENCE_DATA = [
     { icon: '🌱', label: 'Junior Devs', color: 'green', row: 1 },
     { icon: '🚀', label: 'Mid-Level', color: 'orange', row: 1 },
     { icon: '⚡', label: 'Seniors', color: 'yellow', row: 1 },
@@ -16,31 +20,27 @@ export function AudienceSection() {
   const rows = [1, 2, 3];
 
   return (
-    <Container size="lg" py={80}>
-      <Title order={2} ta="center" mb={48} className={classes.title}>
-        Perfect for
+    <Container size="lg" py={80} className={classes.section}>
+      <Title order={2} ta="center" className={classes.sectionTitle}>
+        {TITLE}
       </Title>
-      <Text className={classes.description}>
-        Whether you're just starting out or you've been coding for years, Tandem meets you where you
-        are. Practice at your own pace, at your own level.
+      <Text c="dimmed" className={classes.sectionDescription} ta="center" mb={50}>
+        {SUB_TITLE}
       </Text>
-
       <Group justify="center" gap="xl" className={classes.grid}>
         {rows.map((rowNum) => (
           <Group key={`row-${rowNum}`} justify="center" gap="md" className={classes.row}>
-            {audienceData
-              .filter((item) => item.row === rowNum)
-              .map((item, index) => (
-                <Group
-                  key={`${rowNum}-${index}`}
-                  className={classes.sticker}
-                  data-color={item.color}
-                  gap="xs"
-                >
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
-                </Group>
-              ))}
+            {AUDIENCE_DATA.filter((item) => item.row === rowNum).map((item, index) => (
+              <Group
+                key={`${rowNum}-${index}`}
+                className={classes.sticker}
+                data-color={item.color}
+                gap="xs"
+              >
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </Group>
+            ))}
           </Group>
         ))}
       </Group>

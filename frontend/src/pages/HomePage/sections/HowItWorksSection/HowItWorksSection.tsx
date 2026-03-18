@@ -65,10 +65,10 @@ export function HowItWorksSection() {
       <Title order={2} className={classes.sectionTitle} ta="center" mt="sm">
         {TITLE}
       </Title>
-      <Text c="dimmed" className={classes.sectionDescription} ta="center" mt="md">
+      <Text c="dimmed" className={classes.sectionDescription} ta="center" mb={50}>
         {SUB_TITLE}
       </Text>
-      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" mt={50}>
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl">
         {features}
       </SimpleGrid>
     </Container>

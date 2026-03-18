@@ -1,3 +1,7 @@
+.section {
+  padding: var(--mantine-spacing-6xl) 0;
+}
+
 .sectionTitle {
   font-size: 40px;
   font-weight: 800;

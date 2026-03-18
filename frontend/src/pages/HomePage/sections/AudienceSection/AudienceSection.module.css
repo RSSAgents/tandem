@@ -1,3 +1,20 @@
+.section {
+  padding: var(--mantine-spacing-6xl) 0;
+}
+
+.sectionTitle {
+  font-size: 40px;
+  font-weight: 800;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  margin-bottom: 24px;
+}
+
+.sectionDescription {
+  max-width: 600px;
+  font-size: 18px;
+  margin: auto;
+}
+
 .grid {
   display: flex;
   flex-direction: column;
@@ -5,35 +22,14 @@
   align-items: center;
 }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.description {
-  font-size: 1.25rem;
-  line-height: 1.7;
-  color: var(--text-dim);
-  max-width: 700px;
-  margin: 0 auto 3rem auto;
-  text-align: center;
-  font-weight: 400;
-  letter-spacing: 0.2px;
-}
-
 .sticker {
   padding: 15px 30px;
   background: var(--card-bg);
-  border: none;
   border-radius: 4px;
   font-size: 1.2rem;
   font-weight: 500;
   transition: all 0.2s ease;
   transform: rotate(var(--rotate));
-  cursor: default;
-  position: relative;
   box-shadow:
     0 2px 0 rgba(0, 0, 0, 0.1),
     0 4px 8px rgba(0, 0, 0, 0.1);
@@ -85,5 +81,4 @@
 .sticker:hover {
   transform: rotate(0deg) scale(1.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 10;
 }
