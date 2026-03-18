@@ -15,7 +15,7 @@ export const useAiAgentState = () => {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const [threads, setThreads] = useState<Thread[]>([]);
   const [inputs, setInputs] = useState<InputsState>({});
-  const [role, setRole] = useState<RoleType>('strict');
+  const [role, setRole] = useState<RoleType>('gentle');
   const [stressMode, setStressMode] = useState<StressModeType>('normal');
   const [mobileActiveView, setMobileActiveView] = useState<'interviewer' | 'teacher'>(
     'interviewer',

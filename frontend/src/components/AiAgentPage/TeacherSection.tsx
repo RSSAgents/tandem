@@ -14,7 +14,7 @@ import {
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef } from 'react';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
-import { InterviewerMode, StressModeType } from '../../types/aiAgentTypes';
+import { StressModeType } from '../../types/aiAgentTypes';
 
 interface TeacherSectionProps {
   activeTopic: string | null;
@@ -27,8 +27,6 @@ interface TeacherSectionProps {
   onInputChange: (value: string) => void;
   onSend: () => void;
   isWaitingForAnswer: boolean;
-  isInterviewerWaitingForUser: boolean;
-  interviewerMode: InterviewerMode;
 }
 
 export const TeacherSection = ({
@@ -42,14 +40,8 @@ export const TeacherSection = ({
   onInputChange,
   onSend,
   isWaitingForAnswer,
-  isInterviewerWaitingForUser,
-  interviewerMode,
 }: TeacherSectionProps) => {
-  const isDisabled =
-    !activeTopic ||
-    stressMode === 'stress' ||
-    isWaitingForAnswer ||
-    (interviewerMode === 'interviewer' && isInterviewerWaitingForUser);
+  const isDisabled = !activeTopic || stressMode === 'stress' || isWaitingForAnswer;
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -89,8 +81,6 @@ export const TeacherSection = ({
               fontSize: 11,
               fontWeight: 600,
               letterSpacing: '0.05em',
-              color: '#74c0fc',
-              borderColor: '#1971c2',
               textTransform: 'uppercase',
             }}
           >

@@ -1,7 +1,7 @@
 .mainContent {
-  padding-top: 100px;
-  padding-bottom: 100px;
-  min-height: calc(100vh - 120px);
+  padding-top: 70px;
+  padding-bottom: 60px;
+  min-height: calc(100vh - 130px);
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -18,15 +18,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 4px 0 15px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
   border-left: none;
 }
 
 .glassPanel {
-  background-color: #1a1b1e;
-  border: 1px solid #2c2e33;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  background-color: light-dark(#ffffff, #1a1b1e);
+  border: 1px solid light-dark(#dee2e6, #2c2e33);
+  box-shadow: 0 4px 24px light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.5));
   transition: border-color 0.3s ease;
 }
 
@@ -34,22 +34,22 @@
   border: 1px solid rgba(51, 154, 240, 0.4);
   box-shadow:
     0 0 0 1px rgba(51, 154, 240, 0.1),
-    0 4px 24px rgba(0, 0, 0, 0.5);
+    0 4px 24px light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.5));
 }
 
 .neonInput input {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(0, 255, 255, 0.2);
-  color: white;
+  background: light-dark(rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.05));
+  border-color: light-dark(rgba(0, 150, 150, 0.3), rgba(0, 255, 255, 0.2));
+  color: light-dark(#0f172a, white);
 }
 
 .chatInput {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: light-dark(rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.3));
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
 }
 
 .roleSwitcher {
-  background: #141517;
+  background: light-dark(#e9ecef, #141517);
   border-radius: 8px;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .modeSwitcher {
-  background-color: #141517;
+  background-color: light-dark(#e9ecef, #141517);
   border: 1px solid #1971c2;
   border-radius: 20px;
   padding: 1px;
@@ -100,30 +100,31 @@
 }
 
 .modeSwitcher label[data-active] {
-  color: #74c0fc;
+  color: light-dark(#1971c2, #74c0fc);
 }
 
 .modeLabel {
-  color: rgba(255, 255, 255, 0.379);
+  color: light-dark(rgba(0, 0, 0, 0.45), rgba(255, 255, 255, 0.379));
 }
 
 .messageAi {
   align-self: flex-start;
-  background-color: #1e2030;
+  background-color: light-dark(#f0f4ff, #1e2030);
   border-radius: 4px 16px 16px 16px;
   padding: 12px 16px;
   max-width: 85%;
-  border: 1px solid #2c2e33;
+  border: 1px solid light-dark(#d0d5dd, #2c2e33);
   border-left: 3px solid #339af0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px light-dark(rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.3));
 }
 
 .messageUser {
   align-self: flex-end;
-  background: linear-gradient(135deg, #1971c2, #1864ab);
+  background: linear-gradient(135deg, light-dark(#339af0, #1971c2), light-dark(#228be6, #1864ab));
   border-radius: 16px 4px 16px 16px;
   padding: 12px 16px;
   max-width: 85%;
+  color: white;
   box-shadow: 0 2px 8px rgba(25, 113, 194, 0.3);
 }
 
@@ -140,7 +141,7 @@
   gap: 0;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid #2c2e33;
+  border-right: 1px solid light-dark(#dee2e6, #2c2e33);
   padding-right: 12px;
 }
 
@@ -150,13 +151,13 @@
 
 .messageCandidate {
   align-self: flex-end;
-  background-color: #1e1e26;
+  background-color: light-dark(#fff8f0, #1e1e26);
   border-radius: 16px 4px 16px 16px;
   padding: 12px 16px;
   max-width: 85%;
-  border: 1px solid #2c2e33;
+  border: 1px solid light-dark(#d0d5dd, #2c2e33);
   border-right: 3px solid #ff922b;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px light-dark(rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.3));
 }
 
 .candidateLabel {
@@ -196,7 +197,7 @@
 }
 
 .trashIconBtn {
-  color: rgba(255, 255, 255, 0.2);
+  color: light-dark(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.2));
   border: 1px solid transparent;
   border-radius: 6px;
   transition: all 0.2s ease;
@@ -215,8 +216,8 @@
 }
 
 .progressBlock {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid #2c2e33;
+  background: light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.03));
+  border: 1px solid light-dark(#dee2e6, #2c2e33);
   border-radius: 10px;
   padding: 10px 12px;
 }
@@ -226,7 +227,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
+  color: light-dark(rgba(0, 0, 0, 0.45), rgba(255, 255, 255, 0.35));
 }
 
 .progressCount {
@@ -238,7 +239,7 @@
 }
 
 .progressRoot {
-  background: rgba(255, 255, 255, 0.06);
+  background: light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
 }
 
 .progressSection {
@@ -291,7 +292,7 @@
 
 .codeBlockAi code {
   border-radius: 6px;
-  background: rgba(51, 154, 240, 0.15) !important;
+  background: rgba(51, 154, 240, 0.15);
 }
 
 .codeBlockCandidate code {
@@ -321,9 +322,9 @@
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  border: 1px solid #555;
-  background: #2e2e2e;
-  color: #999;
+  border: 1px solid light-dark(#ccc, #555);
+  background: light-dark(#f1f3f5, #2e2e2e);
+  color: light-dark(#666, #999);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -332,7 +333,7 @@
 }
 
 .consoleRunButton:hover {
-  color: #fff;
+  color: light-dark(#000, #fff);
 }
 
 .readOnlyEditor {
@@ -340,15 +341,15 @@
   user-select: text;
 }
 
-.sandpackConsole [class*="console"] {
-  line-height: 1.2 !important;
-  overflow-y: auto !important;
+.sandpackConsole [class*='console'] {
+  line-height: 1.2;
+  overflow-y: auto;
 }
 
-.sandpackConsole [class*="console"] > div {
-  padding-top: 1px !important;
-  padding-bottom: 1px !important;
-  margin: 0 !important;
+.sandpackConsole [class*='console'] > div {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin: 0;
 }
 
 .markdown p {
@@ -357,12 +358,16 @@
 
 .markdown ul,
 .markdown ol {
-  margin: 0.4em 0;
+  margin: 1em 0;
   padding-left: 1.5em;
 }
 
 .markdown li {
-  margin: 0.2em 0;
+  margin: 0.6em 0;
+}
+
+.markdown li > p {
+  margin: 0;
 }
 
 .markdown h1,
@@ -375,13 +380,13 @@
 .markdown blockquote {
   margin: 0.4em 0;
   padding-left: 1em;
-  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  border-left: 3px solid light-dark(rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0.2));
   opacity: 0.85;
 }
 
 .markdown hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.15));
   margin: 0.6em 0;
 }
 
@@ -392,6 +397,6 @@
 
 .markdown th,
 .markdown td {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.15));
   padding: 4px 8px;
 }

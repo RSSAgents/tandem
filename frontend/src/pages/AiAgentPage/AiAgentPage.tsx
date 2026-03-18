@@ -1,6 +1,7 @@
 import { Box, Button, Drawer, Grid, Group, Modal, Stack, Text } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
+import { CodeRunnerModal } from '../../components/AiAgentPage/CodeRunnerModal';
 import { InterviewerSection } from '../../components/AiAgentPage/InterviewerSection';
 import { MessageRenderer } from '../../components/AiAgentPage/MessageRenderer';
 import { SettingsPanel } from '../../components/AiAgentPage/SettingsPanel';
@@ -16,6 +17,7 @@ export const AiAgentPage = () => {
   const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false);
   const [drawerType, setDrawerType] = useState<DrawerType>('menu');
 
+  const [codeRunnerOpened, setCodeRunnerOpened] = useState(false);
   const state = useAiAgentState();
   const { handleSend, startAiInterviewSimulation, getStartMessageForType } =
     useAiInterviewLogic(state);
@@ -99,12 +101,12 @@ export const AiAgentPage = () => {
               openDrawer();
             }}
             variant="filled"
-            color="pink"
+            color="#ae3ec9"
             className={classes.tabButton}
             style={{ top: '150px' }}
           >
             <Text size="9px" fw={700} style={{ transform: 'rotate(-90deg)', whiteSpace: 'nowrap' }}>
-              MENU
+              SETTINGS
             </Text>
           </Button>
           <Button
@@ -113,7 +115,7 @@ export const AiAgentPage = () => {
               openDrawer();
             }}
             variant="filled"
-            color="cyan"
+            color="#22b8cf"
             className={classes.tabButton}
             style={{ top: '260px' }}
           >
@@ -139,6 +141,7 @@ export const AiAgentPage = () => {
               readinessPercentage={state.readinessPercentage}
               onRoleChange={state.setRole}
               onStressModeChange={state.setStressMode}
+              onOpenCodeRunner={() => setCodeRunnerOpened(true)}
             />
           ) : (
             <TopicsPanel
@@ -162,6 +165,7 @@ export const AiAgentPage = () => {
                 readinessPercentage={state.readinessPercentage}
                 onRoleChange={state.setRole}
                 onStressModeChange={state.setStressMode}
+                onOpenCodeRunner={() => setCodeRunnerOpened(true)}
               />
               <TopicsPanel
                 activeTopic={state.activeTopic}
@@ -205,11 +209,15 @@ export const AiAgentPage = () => {
             onInputChange={(val) => state.setInput('teacher', val)}
             onSend={() => handleSend('teacher')}
             isWaitingForAnswer={state.isWaitingForAnswer}
-            isInterviewerWaitingForUser={state.isInterviewerWaitingForUser}
-            interviewerMode={state.interviewerMode}
           />
         )}
       </Grid>
+      <CodeRunnerModal
+        opened={codeRunnerOpened}
+        onClose={() => setCodeRunnerOpened(false)}
+        code={'// Write your code here\nconsole.log("Hello, world!");'}
+        language="javascript"
+      />
     </div>
   );
 };

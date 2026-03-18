@@ -55,110 +55,123 @@ export const MessageRenderer = ({
         ];
   }, [messages, startMessage, hasActiveTopic, initialTimestamp]);
 
-  const renderMarkdown = useCallback((text: string, sender: 'user' | 'ai' | 'candidate') => {
-    const blockClass =
-      sender === 'ai'
-        ? classes.codeBlockAi
-        : sender === 'candidate'
-          ? classes.codeBlockCandidate
-          : classes.codeBlockUser;
-    const inlineClass =
-      sender === 'ai'
-        ? classes.codeAi
-        : sender === 'candidate'
-          ? classes.codeCandidate
-          : classes.codeUser;
+  const renderMarkdown = useCallback(
+    (text: string, sender: 'user' | 'ai' | 'candidate') => {
+      const blockClass =
+        sender === 'ai'
+          ? classes.codeBlockAi
+          : sender === 'candidate'
+            ? classes.codeBlockCandidate
+            : classes.codeBlockUser;
+      const inlineClass =
+        sender === 'ai'
+          ? classes.codeAi
+          : sender === 'candidate'
+            ? classes.codeCandidate
+            : classes.codeUser;
 
-    return (
-      <ReactMarkdown
-        components={{
-          code({ className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || '');
-            const codeStr = String(children).replace(/\n$/, '');
-            if (match) {
-              const lang = match[1];
+      return (
+        <ReactMarkdown
+          components={{
+            code({ className, children, ...props }) {
+              const match = /language-(\w+)/.exec(className || '');
+              const codeStr = String(children).replace(/\n$/, '');
+              if (match) {
+                const lang = match[1];
+                return (
+                  <Box style={{ position: 'relative' }}>
+                    <CodeHighlight
+                      code={codeStr}
+                      language={lang}
+                      className={blockClass}
+                      withCopyButton={false}
+                    />
+                    <ActionIcon
+                      size="sm"
+                      variant="subtle"
+                      color="gray"
+                      className={classes.runButton}
+                      onClick={() => openRunner(codeStr, lang)}
+                      title="Run code"
+                    >
+                      <IconPlayerPlay size={14} />
+                    </ActionIcon>
+                  </Box>
+                );
+              }
               return (
-                <Box style={{ position: 'relative' }}>
-                  <CodeHighlight code={codeStr} language={lang} className={blockClass} withCopyButton={false} />
-                  <ActionIcon
-                    size="sm"
-                    variant="subtle"
-                    color="gray"
-                    className={classes.runButton}
-                    onClick={() => openRunner(codeStr, lang)}
-                    title="Run code"
-                  >
-                    <IconPlayerPlay size={14} />
-                  </ActionIcon>
-                </Box>
+                <code className={inlineClass} {...props}>
+                  {children}
+                </code>
               );
-            }
-            return <code className={inlineClass} {...props}>{children}</code>;
-          },
-          pre({ children }) {
-            return <>{children}</>;
-          },
-        }}
-      >
-        {text}
-      </ReactMarkdown>
-    );
-  }, [openRunner]);
+            },
+            pre({ children }) {
+              return <>{children}</>;
+            },
+          }}
+        >
+          {text}
+        </ReactMarkdown>
+      );
+    },
+    [openRunner],
+  );
 
   return (
     <>
-    <Stack gap="md">
-      {messagesToShow.map((msg: Message) => {
-        const isAiInterview = mode === 'ai-interview' && msg.sender === 'ai';
-        const displayRole = isAiInterview && msg.aiRole ? msg.aiRole : msg.sender;
+      <Stack gap="md">
+        {messagesToShow.map((msg: Message) => {
+          const isAiInterview = mode === 'ai-interview' && msg.sender === 'ai';
+          const displayRole = isAiInterview && msg.aiRole ? msg.aiRole : msg.sender;
 
-        return (
-          <Box
-            key={msg.id}
-            className={
-              msg.sender === 'ai' && (!isAiInterview || !msg.aiRole || msg.aiRole === 'interviewer')
-                ? classes.messageAi
-                : displayRole === 'candidate'
-                  ? classes.messageCandidate
-                  : classes.messageUser
-            }
-          >
-            {isAiInterview && msg.aiRole === 'interviewer' && (
-              <Text size="xs" fw={700} className={classes.interviewerLabel} mb={4}>
-                INTERVIEWER
-              </Text>
-            )}
-            {(msg.sender === 'candidate' || (isAiInterview && msg.aiRole === 'candidate')) && (
-              <Text size="xs" fw={700} className={classes.candidateLabel} mb={4}>
-                CANDIDATE
-              </Text>
-            )}
+          return (
             <Box
-              className={`${classes.messageText} ${classes.markdown}`}
-              style={{ fontSize: '14px' }}
-            >
-              {renderMarkdown(
-                msg.text
-                  .replace(/FINAL_SCORE:\s*\d+/, '')
-                  .replace(/^(Interviewer|INTERVIEWER|Candidate|CANDIDATE):\s*/, '')
-                  .trim(),
-                displayRole === 'interviewer' || (displayRole === 'ai' && !isAiInterview)
-                  ? 'ai'
+              key={msg.id}
+              className={
+                msg.sender === 'ai' &&
+                (!isAiInterview || !msg.aiRole || msg.aiRole === 'interviewer')
+                  ? classes.messageAi
                   : displayRole === 'candidate'
-                    ? 'candidate'
-                    : 'user',
+                    ? classes.messageCandidate
+                    : classes.messageUser
+              }
+            >
+              {isAiInterview && msg.aiRole === 'interviewer' && (
+                <Text size="xs" fw={700} className={classes.interviewerLabel} mb={4}>
+                  INTERVIEWER
+                </Text>
               )}
+              {(msg.sender === 'candidate' || (isAiInterview && msg.aiRole === 'candidate')) && (
+                <Text size="xs" fw={700} className={classes.candidateLabel} mb={4}>
+                  CANDIDATE
+                </Text>
+              )}
+              <Box
+                className={`${classes.messageText} ${classes.markdown}`}
+                style={{ fontSize: '14px', whiteSpace: 'normal' }}
+              >
+                {renderMarkdown(
+                  msg.text
+                    .replace(/FINAL_SCORE:\s*\d+/, '')
+                    .replace(/^(Interviewer|INTERVIEWER|Candidate|CANDIDATE):\s*/, '')
+                    .trim(),
+                  displayRole === 'interviewer' || (displayRole === 'ai' && !isAiInterview)
+                    ? 'ai'
+                    : displayRole === 'candidate'
+                      ? 'candidate'
+                      : 'user',
+                )}
+              </Box>
             </Box>
-          </Box>
-        );
-      })}
-    </Stack>
-    <CodeRunnerModal
-      opened={runnerOpened}
-      onClose={() => setRunnerOpened(false)}
-      code={runnerCode}
-      language={runnerLang}
-    />
+          );
+        })}
+      </Stack>
+      <CodeRunnerModal
+        opened={runnerOpened}
+        onClose={() => setRunnerOpened(false)}
+        code={runnerCode}
+        language={runnerLang}
+      />
     </>
   );
 };

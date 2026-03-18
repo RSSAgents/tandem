@@ -68,7 +68,7 @@ const ConsolePanel = () => {
         style={{
           height: 150,
           overflow: 'auto',
-          background: '#1a1a2e',
+          background: 'var(--mantine-color-dark-8, #1a1a2e)',
           borderRadius: 8,
           padding: '8px 12px',
           fontFamily: 'monospace',
@@ -112,7 +112,8 @@ export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerM
     }
     if (language === 'css') {
       return {
-        '/index.html': '<!DOCTYPE html>\n<html><head><link rel=\'stylesheet\' href=\'/styles.css\'></head><body>\n<div class=\'demo\'>Styled element</div>\n</body></html>',
+        '/index.html':
+          "<!DOCTYPE html>\n<html><head><link rel='stylesheet' href='/styles.css'></head><body>\n<div class='demo'>Styled element</div>\n</body></html>",
         '/styles.css': code,
       };
     }

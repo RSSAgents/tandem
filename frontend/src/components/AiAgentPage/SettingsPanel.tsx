@@ -9,6 +9,7 @@ interface SettingsPanelProps {
   readinessPercentage: number;
   onRoleChange: (role: RoleType) => void;
   onStressModeChange: (mode: StressModeType) => void;
+  onOpenCodeRunner: () => void;
 }
 
 export const SettingsPanel = ({
@@ -17,6 +18,7 @@ export const SettingsPanel = ({
   readinessPercentage,
   onRoleChange,
   onStressModeChange,
+  onOpenCodeRunner,
 }: SettingsPanelProps) => {
   return (
     <Paper className={classes.glassPanel} p="sm" radius="md">
@@ -65,6 +67,7 @@ export const SettingsPanel = ({
             radius="md"
             size="xs"
             fullWidth
+            onClick={onOpenCodeRunner}
           >
             CODE RUNNER
           </Button>

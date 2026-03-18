@@ -41,9 +41,11 @@ export const TopicsPanel = ({
               onClick={() => handleTopicClick(topic)}
               styles={{ inner: { justifyContent: 'space-between' } }}
               rightSection={
-                <Center className={classes.historyIcon} data-type="i">
-                  {scores[topic] || 0}
-                </Center>
+                scores[topic] ? (
+                  <Center className={classes.historyIcon} data-type="i">
+                    {scores[topic]}
+                  </Center>
+                ) : null
               }
             >
               <Text size="sm" truncate fw={500}>
