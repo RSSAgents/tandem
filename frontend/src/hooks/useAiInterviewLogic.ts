@@ -12,7 +12,8 @@ import {
 import { callGroqAPI, callGroqAPIStream } from '../utils/groqApiService';
 
 export const useAiInterviewLogic = (state: AgentState) => {
-  const { t } = useTranslation('aiAgent');
+  const { t, i18n } = useTranslation('aiAgent');
+  const isRu = i18n.language === 'ru';
 
   const getStartMessageForType = (type: ThreadType, topic: string | null) => {
     const params = {
@@ -70,11 +71,12 @@ export const useAiInterviewLogic = (state: AgentState) => {
     type: ThreadType,
     manualActiveTopic: string,
   ) => {
-    if (/[а-яё]/i.test(userText)) {
+    const wrongLang = isRu ? /[a-z]/i.test(userText) : /[а-яё]/i.test(userText);
+    if (wrongLang) {
       const langMessage: Message = {
         id: crypto.randomUUID(),
         sender: 'ai',
-        text: t('errors.speakEnglish'),
+        text: t('errors.speakLanguage'),
         timestamp: Date.now(),
       };
       state.setThreads((threads: Thread[]) =>
@@ -89,32 +91,25 @@ export const useAiInterviewLogic = (state: AgentState) => {
     }
 
     const currentThread = state.threads.find((t) => t.id === threadId) || { messages: [] };
-    const refusalWord = state.role === 'strict' ? 'strictly' : 'politely';
+    const refusalWord = state.role === 'strict'
+      ? t('prompts.refusalStrict')
+      : t('prompts.refusalGentle');
 
     let systemPrompt = '';
 
     if (type === 'interviewer') {
-      systemPrompt = `You are an expert technical interviewer for a Junior Frontend Developer position. Topic: ${manualActiveTopic}. Vanilla JS.
-      STRICT RULES:
-      1. Ask exactly ${MAX_QUESTIONS} questions total, but ONLY ONE question per response.
-      2. DO NOT include question numbers in your output.
-      3. Use '|||' to separate your feedback/comment about the user's previous answer and the next question. Example: "Great answer! ||| What is a closure?"
-      4. If user doesn't answer, says "I don't know", or gives a vague answer:
-         - In GENTLE mode: suggest "Skip this question" or offer a hint before proceeding.
-         - In STRICT mode: make a snarky comment and move immediately to the next question.
-      5. Only answer clarifying questions about the current interview question. Refuse all other questions ${refusalWord}.
-      6. Tone: ${state.role.toUpperCase()}.
-      7. On the 20th answer: Analyze everything and include 'FINAL_SCORE: X' (X=1-${MAX_SCORE}).`;
+      systemPrompt = t('prompts.interviewer', {
+        topic: manualActiveTopic,
+        maxQuestions: MAX_QUESTIONS,
+        maxScore: MAX_SCORE,
+        refusalWord,
+        tone: state.role.toUpperCase(),
+      });
     } else if (type === 'teacher') {
-      systemPrompt = `Mentor for frontend: ${manualActiveTopic}.
-      You are an experienced IT mentor and teacher. Your main goal is to help the candidate arrive at the correct answer independently using the Socratic method.
-      Your strict rules:
-      1. **Never give a direct, ready-made answer immediately.**
-      2. Ask guiding questions to nudge the user toward correct reasoning and a deeper understanding of the topic.
-      3. **Maintain focus:** only answer questions related to the current topic ${manualActiveTopic}. Vanilla JS. If the request goes beyond frontend topics, politely decline and steer the conversation back to the interview.
-      4. Be patient, supportive, and constructive.
-      5. If the candidate is clearly stuck after several attempts, provide a conceptual hint or explain a complex term, but leave the final conclusion to them.
-      6. Tone: ${state.role.toUpperCase()}.`;
+      systemPrompt = t('prompts.teacher', {
+        topic: manualActiveTopic,
+        tone: state.role.toUpperCase(),
+      });
     }
 
     const apiMessages = [
@@ -135,7 +130,9 @@ export const useAiInterviewLogic = (state: AgentState) => {
         let revealed = 0;
         const tick = () => {
           const target = targetTexts[partIndex] || '';
-          const end = streamDone ? target.length : Math.min(revealed + TYPING_CHARS_PER_FRAME, target.length);
+          const end = streamDone
+            ? target.length
+            : Math.min(revealed + TYPING_CHARS_PER_FRAME, target.length);
           revealed = end;
           const visibleText = target.slice(0, revealed);
           const stillTyping = !streamDone || revealed < target.length;
@@ -308,16 +305,24 @@ export const useAiInterviewLogic = (state: AgentState) => {
       state.setThreads((prev: Thread[]) => [...prev, newThread]);
     }
 
-    const systemPrompt = `You are both a professional Interviewer and a capable Candidate. Your task is to simulate a realistic interview experience. Topic: ${state.activeTopic} JavaScript. Play BOTH Interviewer and Candidate. Level: ${state.aiInterviewLevel}. Write only one part from the interviewer and one part from the candidate. Separate Interviewer and Candidate with "|||". No question numbers. If it's the 20th, add improvement tips.`;
+    const systemPrompt = t('prompts.aiInterview', {
+      topic: state.activeTopic,
+      level: state.aiInterviewLevel,
+    });
 
     const aiResponseText = await callGroqAPI([
       { role: 'system', content: systemPrompt },
-      { role: 'user', content: 'Next exchange.' },
+      { role: 'user', content: t('prompts.aiInterviewNextExchange') },
     ]);
 
-    const parts = aiResponseText.split('|||');
-    const interviewerText = parts[0]?.trim();
-    const candidateText = parts[1]?.trim();
+    const candidateIdx = aiResponseText.search(/\bCandidate\s*:/i);
+    const interviewerText = (candidateIdx > 0
+      ? aiResponseText.slice(0, candidateIdx)
+      : aiResponseText
+    ).replace(/^\s*Interviewer\s*:\s*/i, '').trim();
+    const candidateText = candidateIdx > 0
+      ? aiResponseText.slice(candidateIdx).replace(/^\s*Candidate\s*:\s*/i, '').trim()
+      : '';
 
     if (interviewerText) {
       const qMsg: Message = {
