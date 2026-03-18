@@ -1,0 +1,74 @@
+.wrapper {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 800;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  margin-bottom: 24px;
+}
+
+.highlight {
+  color: light-dark(var(--mantine-color-yellow-6), var(--mantine-color-yellow-4));
+}
+
+.description {
+  max-width: 700px;
+  margin: 0 auto 30px;
+  font-size: 20px;
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-4));
+}
+
+.imagePaper {
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.imagePaper:hover {
+  transform: scale(1.02);
+  box-shadow: 0 30px 50px -10px rgba(0, 0, 0, 0.3);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: filter 0.3s ease;
+  border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 42px;
+  }
+
+  .description {
+    font-size: 18px;
+    padding: 0 16px;
+    margin-bottom: 40px;
+  }
+
+  .wrapper {
+    padding: 40px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .description {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  .highlight::after {
+    height: 8px;
+    bottom: 6px;
+  }
+}
