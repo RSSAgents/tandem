@@ -13,8 +13,10 @@ import {
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 import { StressModeType } from '../../types/aiAgentTypes';
+import { PANEL_HEIGHT_OFFSET } from '../../utils/aiAgentConstants';
 
 interface TeacherSectionProps {
   activeTopic: string | null;
@@ -41,6 +43,7 @@ export const TeacherSection = ({
   onSend,
   isWaitingForAnswer,
 }: TeacherSectionProps) => {
+  const { t } = useTranslation('aiAgent');
   const isDisabled = !activeTopic || stressMode === 'stress' || isWaitingForAnswer;
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -67,7 +70,7 @@ export const TeacherSection = ({
         className={`${classes.glassPanel} ${classes.border}`}
         p="md"
         radius="md"
-        h={isMobile ? '70vh' : 'calc(100vh - 250px)'}
+        h={isMobile ? '70vh' : `calc(100vh - ${PANEL_HEIGHT_OFFSET}px)`}
         display="flex"
         style={{ flexDirection: 'column' }}
       >
@@ -84,7 +87,7 @@ export const TeacherSection = ({
               textTransform: 'uppercase',
             }}
           >
-            TEACHER
+            {t('teacher.label')}
           </Badge>
           <ActionIcon
             className={classes.trashIconBtn}
@@ -101,7 +104,7 @@ export const TeacherSection = ({
           {stressMode === 'stress' ? (
             <Center h="100%">
               <Text c="dimmed" fw={700}>
-                Teacher help is unavailable in Stress mode.
+                {t('teacher.stressUnavailable')}
               </Text>
             </Center>
           ) : (
@@ -113,7 +116,7 @@ export const TeacherSection = ({
           <Group gap="xs" align="flex-end">
             <Textarea
               flex={1}
-              placeholder="Ask teacher..."
+              placeholder={t('teacher.placeholder')}
               autosize
               minRows={1}
               maxRows={5}
@@ -128,7 +131,7 @@ export const TeacherSection = ({
               }}
             />
             <Button variant="outline" onClick={onSend} disabled={isDisabled}>
-              Ask
+              {t('teacher.ask')}
             </Button>
           </Group>
         </Box>

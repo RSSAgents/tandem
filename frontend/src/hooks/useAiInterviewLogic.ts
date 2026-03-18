@@ -1,48 +1,65 @@
+import { useTranslation } from 'react-i18next';
 import { AgentState, Message, Thread, ThreadType } from '../types/aiAgentTypes';
+import {
+  AI_INTERVIEW_DELAY_MS,
+  CANDIDATE_DELAY_MS,
+  MAX_QUESTIONS,
+  MAX_SCORE,
+  THREAD_TIMESTAMP_OFFSET_MS,
+  TIMER_SECONDS,
+} from '../utils/aiAgentConstants';
 import { callGroqAPI } from '../utils/groqApiService';
 
 export const useAiInterviewLogic = (state: AgentState) => {
+  const { t } = useTranslation('aiAgent');
+
   const getStartMessageForType = (type: ThreadType, topic: string | null) => {
+    const params = {
+      maxQuestions: MAX_QUESTIONS,
+      maxScore: MAX_SCORE,
+      timerSeconds: TIMER_SECONDS,
+    };
+
     const getInterviewerStartMessage = () => {
       if (state.role === 'gentle' && state.stressMode === 'normal') {
-        return 'In this window, you can practice taking an interview for a Junior Frontend Developer position. Choose one of the topics on the left side of the screen, and I will ask you 20 questions. At the end, I will evaluate your knowledge level on a 10-point scale.';
+        return t('startMessages.interviewer.gentleNormal', params);
       }
       if (state.role === 'strict' && state.stressMode === 'normal') {
-        return 'This is a strict interview simulation for a Junior Frontend Developer role. Select a topic on the left. You will face 20 hard questions without pleasantries. At the end, you will receive an evaluation from 1 to 10.';
+        return t('startMessages.interviewer.strictNormal', params);
       }
       if (state.role === 'gentle' && state.stressMode === 'stress') {
-        return 'Welcome to the stress interview. Choose one of the topics on the left side of the screen, and I will ask you 20 questions. You will have only 90 seconds to answer each question. At the end, I will evaluate your knowledge level on a 10-point scale.';
+        return t('startMessages.interviewer.gentleStress', params);
       }
-      return 'Welcome to the stress interview. Select a topic. Be prepared for 20 tough, high-pressure questions and criticism. I will challenge your answers. Final evaluation from 1 to 10 at the end.';
+      return t('startMessages.interviewer.strictStress', params);
     };
 
     const getTeacherStartMessage = () => {
-      if (state.stressMode === 'stress') return 'Teacher help is unavailable in Stress mode.';
+      if (state.stressMode === 'stress') return t('teacher.stressUnavailable');
       if (state.role === 'strict') {
-        return 'I am your strict mentor. Ask your questions on the selected topic, but be ready to think. I am here to deepen your understanding, not to spoon-feed you direct answers.';
+        return t('startMessages.teacher.strict');
       }
-      return 'In this window, you can ask any questions regarding the selected topic. I am ready to help you get to the core of the subject and deepen your understanding!';
+      return t('startMessages.teacher.gentle');
     };
 
     const getAiInterviewStartMessage = () => {
+      const level = state.aiInterviewLevel.toUpperCase();
       if (state.role === 'gentle' && state.stressMode === 'normal')
-        return `Welcome to the AI Simulation. You will observe a gentle, step-by-step interview for a ${state.aiInterviewLevel.toUpperCase()} position.`;
+        return t('startMessages.aiInterview.gentleNormal', { level });
       if (state.role === 'strict' && state.stressMode === 'normal')
-        return `Welcome to the strict AI Simulation. Watch a realistic, tough interview for a ${state.aiInterviewLevel.toUpperCase()} position.`;
+        return t('startMessages.aiInterview.strictNormal', { level });
       if (state.role === 'gentle' && state.stressMode === 'stress')
-        return `Stress AI Simulation loaded. You will see a fast-paced, timed interview for a ${state.aiInterviewLevel.toUpperCase()} developer.`;
-      return `Intense Stress AI Simulation. Observe a high-pressure interview scenario for a ${state.aiInterviewLevel.toUpperCase()} candidate.`;
+        return t('startMessages.aiInterview.gentleStress', { level });
+      return t('startMessages.aiInterview.strictStress', { level });
     };
 
     if (type === 'teacher') return getTeacherStartMessage();
     if (type === 'ai-interview') {
       let msg = getAiInterviewStartMessage();
-      if (topic)
-        msg += `\n\nSimulation topic selected: ${topic}. Press the button below to generate the first question and answer.`;
+      if (topic) msg += t('startMessages.aiInterview.topicSelected', { topic });
       return msg;
     }
     let msg = getInterviewerStartMessage();
-    if (topic) msg += `\n\nAre you ready to start the interview on the topic of ${topic}?`;
+    if (topic) msg += t('startMessages.interviewer.readyPrompt', { topic });
     return msg;
   };
 
@@ -56,7 +73,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
       const langMessage: Message = {
         id: crypto.randomUUID(),
         sender: 'ai',
-        text: 'Please communicate in English.',
+        text: t('errors.speakEnglish'),
         timestamp: Date.now(),
       };
       state.setThreads((threads: Thread[]) =>
@@ -78,7 +95,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
     if (type === 'interviewer') {
       systemPrompt = `You are an expert technical interviewer for a Junior Frontend Developer position. Topic: ${manualActiveTopic}. Vanilla JS.
       STRICT RULES:
-      1. Ask exactly 20 questions total, but ONLY ONE question per response.
+      1. Ask exactly ${MAX_QUESTIONS} questions total, but ONLY ONE question per response.
       2. DO NOT include question numbers in your output.
       3. Use '|||' to separate your feedback/comment about the user's previous answer and the next question. Example: "Great answer! ||| What is a closure?"
       4. If user doesn't answer, says "I don't know", or gives a vague answer:
@@ -86,7 +103,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
          - In STRICT mode: make a snarky comment and move immediately to the next question.
       5. Only answer clarifying questions about the current interview question. Refuse all other questions ${refusalWord}.
       6. Tone: ${state.role.toUpperCase()}.
-      7. On the 20th answer: Analyze everything and include 'FINAL_SCORE: X' (X=1-10).`;
+      7. On the 20th answer: Analyze everything and include 'FINAL_SCORE: X' (X=1-${MAX_SCORE}).`;
     } else if (type === 'teacher') {
       systemPrompt = `Mentor for frontend: ${manualActiveTopic}.
       You are an experienced IT mentor and teacher. Your main goal is to help the candidate arrive at the correct answer independently using the Socratic method.
@@ -136,7 +153,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
 
     state.setIsWaitingForAnswer(false);
     if (type === 'interviewer' && state.stressMode === 'stress') {
-      state.setTimer(90);
+      state.setTimer(TIMER_SECONDS);
     }
   };
 
@@ -177,7 +194,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
             id: crypto.randomUUID(),
             sender: 'ai',
             text: getStartMessageForType(type, state.activeTopic),
-            timestamp: Date.now() - 1000,
+            timestamp: Date.now() - THREAD_TIMESTAMP_OFFSET_MS,
           },
           userMessage,
         ],
@@ -254,7 +271,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
           id: crypto.randomUUID(),
           sender: 'ai',
           text: candidateText,
-          timestamp: Date.now() + 500,
+          timestamp: Date.now() + CANDIDATE_DELAY_MS,
           aiRole: 'candidate',
         };
         state.setThreads((curr: Thread[]) =>
@@ -262,7 +279,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
             t.id === targetThreadId ? { ...t, messages: [...t.messages, aMsg] } : t,
           ),
         );
-      }, 1000);
+      }, AI_INTERVIEW_DELAY_MS);
     }
   };
 

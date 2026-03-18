@@ -9,7 +9,7 @@ import {
   Thread,
   ThreadType,
 } from '../types/aiAgentTypes';
-import { TOPICS } from '../utils/aiAgentConstants';
+import { MAX_SCORE, TIMER_INTERVAL_MS, TOPICS } from '../utils/aiAgentConstants';
 
 export const useAiAgentState = () => {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
@@ -36,7 +36,7 @@ export const useAiAgentState = () => {
   const closeResetTeacher = () => setResetTeacherModalOpen(false);
 
   const totalScore = Object.values(scores).reduce((acc, curr) => acc + curr, 0);
-  const readinessPercentage = Math.ceil((totalScore / (TOPICS.length * 10)) * 100);
+  const readinessPercentage = Math.ceil((totalScore / (TOPICS.length * MAX_SCORE)) * 100);
 
   useEffect(() => {
     if (stressMode !== 'normal') return;
@@ -49,7 +49,7 @@ export const useAiAgentState = () => {
     if (timer !== null && timer > 0) {
       timerRef.current = window.setInterval(() => {
         setTimer((prev) => (prev && prev > 0 ? prev - 1 : 0));
-      }, 1000);
+      }, TIMER_INTERVAL_MS);
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -80,10 +80,7 @@ export const useAiAgentState = () => {
 
   const questionCount = currentModeThread
     ? currentModeThread.messages.filter(
-        (message) =>
-          message.sender === 'ai' &&
-          message.text.includes('?') &&
-          !message.text.includes('Are you ready'),
+        (message, index) => message.sender === 'ai' && message.text.includes('?') && index > 0,
       ).length
     : 0;
 

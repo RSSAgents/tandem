@@ -1,3 +1,4 @@
+import aiAgent from './aiAgent.json';
 import auth from './auth.json';
 import dashboard from './dashboard.json';
 import header from './header.json';
@@ -5,6 +6,7 @@ import notFound from './notFound.json';
 import shared from './shared.json';
 
 export const ru = {
+  aiAgent,
   auth,
   dashboard,
   header,

@@ -26,7 +26,7 @@ i18n
       lookupLocalStorage: 'app_lang',
       caches: ['localStorage'],
     },
-    ns: ['shared', 'header', 'notFound', 'auth', 'dashboard'],
+    ns: ['shared', 'header', 'notFound', 'auth', 'dashboard', 'aiAgent'],
     defaultNS: 'shared',
     interpolation: {
       escapeValue: false,

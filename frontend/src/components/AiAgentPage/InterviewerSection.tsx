@@ -13,8 +13,14 @@ import {
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 import { AiLevelType, InterviewerMode, ThreadType } from '../../types/aiAgentTypes';
+import {
+  MAX_QUESTIONS,
+  PANEL_HEIGHT_OFFSET,
+  TIMER_WARNING_THRESHOLD,
+} from '../../utils/aiAgentConstants';
 
 interface InterviewerSectionProps {
   interviewerMode: InterviewerMode;
@@ -53,7 +59,8 @@ export const InterviewerSection = ({
   aiInterviewLevel,
   onAiLevelChange,
 }: InterviewerSectionProps) => {
-  const timerColor = timer !== null && timer < 15 ? 'red' : undefined;
+  const { t } = useTranslation('aiAgent');
+  const timerColor = timer !== null && timer < TIMER_WARNING_THRESHOLD ? 'red' : undefined;
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -78,7 +85,7 @@ export const InterviewerSection = ({
         className={`${classes.glassPanel} ${classes.border}`}
         p="md"
         radius="md"
-        h={isMobile ? '70vh' : 'calc(100vh - 250px)'}
+        h={isMobile ? '70vh' : `calc(100vh - ${PANEL_HEIGHT_OFFSET}px)`}
         display="flex"
         style={{ flexDirection: 'column' }}
       >
@@ -88,8 +95,8 @@ export const InterviewerSection = ({
               value={interviewerMode}
               onChange={(value) => onInterviewerModeChange(value as InterviewerMode)}
               data={[
-                { label: 'INTERVIEWER', value: 'interviewer' },
-                { label: 'AI INTERVIEW', value: 'ai-interview' },
+                { label: t('interviewer.label'), value: 'interviewer' },
+                { label: t('interviewer.aiInterview'), value: 'ai-interview' },
               ]}
               classNames={{
                 root: classes.modeSwitcher,
@@ -109,18 +116,23 @@ export const InterviewerSection = ({
           {activeTopic && (
             <Box className={classes.progressBlock} mt="md">
               <Group justify="space-between" mb={6}>
-                <Text className={classes.progressLabel}>INTERVIEW PROGRESS</Text>
-                <Text className={classes.progressCount}>{Math.min(questionCount, 20)} / 20</Text>
+                <Text className={classes.progressLabel}>{t('interviewer.progress')}</Text>
+                <Text className={classes.progressCount}>
+                  {t('interviewer.progressCount', {
+                    current: Math.min(questionCount, MAX_QUESTIONS),
+                    max: MAX_QUESTIONS,
+                  })}
+                </Text>
               </Group>
               <Progress
-                value={(Math.min(questionCount, 20) / 20) * 100}
+                value={(Math.min(questionCount, MAX_QUESTIONS) / MAX_QUESTIONS) * 100}
                 classNames={{ root: classes.progressRoot, section: classes.progressSection }}
                 size="xs"
                 radius="xl"
               />
               {interviewerMode === 'interviewer' && timer !== null && (
                 <Text className={classes.timerText} c={timerColor}>
-                  Time left: {timer}s
+                  {t('interviewer.timeLeft', { seconds: timer })}
                 </Text>
               )}
             </Box>
@@ -135,9 +147,9 @@ export const InterviewerSection = ({
               onChange={(value) => onAiLevelChange(value as AiLevelType)}
               disabled={questionCount > 0}
               data={[
-                { label: 'Junior', value: 'junior' },
-                { label: 'Middle', value: 'middle' },
-                { label: 'Senior', value: 'senior' },
+                { label: t('interviewer.junior'), value: 'junior' },
+                { label: t('interviewer.middle'), value: 'middle' },
+                { label: t('interviewer.senior'), value: 'senior' },
               ]}
             />
           </Group>
@@ -156,13 +168,13 @@ export const InterviewerSection = ({
               onClick={onGenerateAi}
               disabled={!activeTopic || isWaitingForAnswer}
             >
-              Generate Next Question & Answer
+              {t('interviewer.generateNext')}
             </Button>
           ) : (
             <Group gap="xs" align="flex-end">
               <Textarea
                 flex={1}
-                placeholder="Type your answer..."
+                placeholder={t('interviewer.placeholder')}
                 autosize
                 minRows={1}
                 maxRows={5}
@@ -181,7 +193,7 @@ export const InterviewerSection = ({
                 onClick={onSend}
                 disabled={!activeTopic || (timer !== null && timer === 0) || isWaitingForAnswer}
               >
-                Send
+                {t('interviewer.send')}
               </Button>
             </Group>
           )}

@@ -1,6 +1,7 @@
 import { Button, Center, ScrollArea, Stack, Text } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
-import { TOPICS } from '../../utils/aiAgentConstants';
+import { SCROLL_AREA_HEIGHT_OFFSET, TOPICS } from '../../utils/aiAgentConstants';
 
 interface TopicsPanelProps {
   activeTopic: string | null;
@@ -17,6 +18,8 @@ export const TopicsPanel = ({
   isMobile = false,
   onClose,
 }: TopicsPanelProps) => {
+  const { t } = useTranslation('aiAgent');
+
   const handleTopicClick = (topic: string) => {
     onTopicSelect(topic);
     if (isMobile && onClose) {
@@ -27,9 +30,12 @@ export const TopicsPanel = ({
   return (
     <Stack gap="xs">
       <Text fw={700} size="xs" c="dimmed" tt="uppercase" mt="md">
-        Learning Topics
+        {t('topics.title')}
       </Text>
-      <ScrollArea h={isMobile ? 'auto' : 'calc(100vh - 400px)'} offsetScrollbars>
+      <ScrollArea
+        h={isMobile ? 'auto' : `calc(100vh - ${SCROLL_AREA_HEIGHT_OFFSET}px)`}
+        offsetScrollbars
+      >
         <Stack gap="xs">
           {TOPICS.map((topic) => (
             <Button

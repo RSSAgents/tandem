@@ -3,6 +3,7 @@ import '@mantine/code-highlight/styles.css';
 import { ActionIcon, Box, Stack, Text } from '@mantine/core';
 import { IconPlayerPlay } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 import { InterviewerMode, Message } from '../../types/aiAgentTypes';
@@ -25,6 +26,7 @@ export const MessageRenderer = ({
   const [runnerCode, setRunnerCode] = useState('');
   const [runnerLang, setRunnerLang] = useState('javascript');
   const [runnerOpened, setRunnerOpened] = useState(false);
+  const { t } = useTranslation('aiAgent');
 
   const openRunner = useCallback((code: string, language: string) => {
     setRunnerCode(code);
@@ -92,7 +94,7 @@ export const MessageRenderer = ({
                       color="gray"
                       className={classes.runButton}
                       onClick={() => openRunner(codeStr, lang)}
-                      title="Run code"
+                      title={t('messages.runCode')}
                     >
                       <IconPlayerPlay size={14} />
                     </ActionIcon>
@@ -114,7 +116,7 @@ export const MessageRenderer = ({
         </ReactMarkdown>
       );
     },
-    [openRunner],
+    [openRunner, t],
   );
 
   return (
@@ -138,12 +140,12 @@ export const MessageRenderer = ({
             >
               {isAiInterview && msg.aiRole === 'interviewer' && (
                 <Text size="xs" fw={700} className={classes.interviewerLabel} mb={4}>
-                  INTERVIEWER
+                  {t('messages.interviewer')}
                 </Text>
               )}
               {(msg.sender === 'candidate' || (isAiInterview && msg.aiRole === 'candidate')) && (
                 <Text size="xs" fw={700} className={classes.candidateLabel} mb={4}>
-                  CANDIDATE
+                  {t('messages.candidate')}
                 </Text>
               )}
               <Box

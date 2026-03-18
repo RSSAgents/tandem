@@ -1,5 +1,6 @@
 import { Button, Group, Paper, SegmentedControl, Stack, Text } from '@mantine/core';
 import { IconTerminal2 } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 import { RoleType, StressModeType } from '../../types/aiAgentTypes';
 
@@ -20,12 +21,14 @@ export const SettingsPanel = ({
   onStressModeChange,
   onOpenCodeRunner,
 }: SettingsPanelProps) => {
+  const { t } = useTranslation('aiAgent');
+
   return (
     <Paper className={classes.glassPanel} p="sm" radius="md">
       <Group gap="xs" align="stretch" wrap="nowrap">
         <Stack className={classes.statsDivider}>
           <Text fw={700} size="10px" c="dimmed" tt="uppercase">
-            Ready
+            {t('settings.ready')}
           </Text>
           <Text fw={900} size="24px" c="cyan">
             {readinessPercentage}%
@@ -38,8 +41,8 @@ export const SettingsPanel = ({
             value={role}
             onChange={(value) => onRoleChange(value as RoleType)}
             data={[
-              { label: 'GENTLE', value: 'gentle' },
-              { label: 'STRICT', value: 'strict' },
+              { label: t('settings.gentle'), value: 'gentle' },
+              { label: t('settings.strict'), value: 'strict' },
             ]}
             classNames={{
               root: classes.roleSwitcher,
@@ -52,8 +55,8 @@ export const SettingsPanel = ({
             value={stressMode}
             onChange={(value) => onStressModeChange(value as StressModeType)}
             data={[
-              { label: 'NORMAL', value: 'normal' },
-              { label: 'STRESS', value: 'stress' },
+              { label: t('settings.normal'), value: 'normal' },
+              { label: t('settings.stress'), value: 'stress' },
             ]}
             classNames={{
               root: classes.roleSwitcher,
@@ -69,7 +72,7 @@ export const SettingsPanel = ({
             fullWidth
             onClick={onOpenCodeRunner}
           >
-            CODE RUNNER
+            {t('settings.codeRunner')}
           </Button>
         </Stack>
       </Group>

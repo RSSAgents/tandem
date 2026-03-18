@@ -1,6 +1,7 @@
 import { Box, Button, Drawer, Grid, Group, Modal, Stack, Text } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeRunnerModal } from '../../components/AiAgentPage/CodeRunnerModal';
 import { InterviewerSection } from '../../components/AiAgentPage/InterviewerSection';
 import { MessageRenderer } from '../../components/AiAgentPage/MessageRenderer';
@@ -10,10 +11,17 @@ import { TopicsPanel } from '../../components/AiAgentPage/TopicsPanel';
 import { useAiAgentState } from '../../hooks/useAiAgentState';
 import { useAiInterviewLogic } from '../../hooks/useAiInterviewLogic';
 import { DrawerType, ThreadType } from '../../types/aiAgentTypes';
+import {
+  MOBILE_BREAKPOINT,
+  MOBILE_SETTINGS_TAB_TOP,
+  MOBILE_TOPICS_TAB_TOP,
+  TIMER_SECONDS,
+} from '../../utils/aiAgentConstants';
 import classes from './AiAgentPage.module.css';
 
 export const AiAgentPage = () => {
-  const isMobile = useMediaQuery('(max-width: 992px)');
+  const { t } = useTranslation('aiAgent');
+  const isMobile = useMediaQuery(`(max-width: ${MOBILE_BREAKPOINT}px)`);
   const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false);
   const [drawerType, setDrawerType] = useState<DrawerType>('menu');
 
@@ -24,10 +32,10 @@ export const AiAgentPage = () => {
 
   useEffect(() => {
     if (state.timer === 0) {
-      handleSend('interviewer', "Time's up! I couldn't answer in 90 seconds.");
+      handleSend('interviewer', t('errors.timesUp', { timerSeconds: TIMER_SECONDS }));
       state.setTimer(null);
     }
-  }, [state, handleSend]);
+  }, [state, handleSend, t]);
 
   const renderMessagesWrapper = (type: ThreadType, mode?: 'interviewer' | 'ai-interview') => {
     const startMsg = getStartMessageForType(type, state.activeTopic);
@@ -54,22 +62,21 @@ export const AiAgentPage = () => {
       <Modal
         opened={state.resetInterviewerModalOpen}
         onClose={state.closeResetInterviewer}
-        title="Start New Interview"
+        title={t('modals.resetInterview.title')}
         centered
       >
         <Text size="sm" mb="md">
-          Are you sure you want to start a new interview? The current message history for this topic
-          will be deleted.
+          {t('modals.resetInterview.body')}
         </Text>
         <Group justify="flex-end">
           <Button variant="default" onClick={state.closeResetInterviewer}>
-            Cancel
+            {t('modals.cancel')}
           </Button>
           <Button
             color="red"
             onClick={() => state.clearHistory(state.interviewerMode as ThreadType)}
           >
-            Confirm & Start
+            {t('modals.resetInterview.confirm')}
           </Button>
         </Group>
       </Modal>
@@ -77,18 +84,18 @@ export const AiAgentPage = () => {
       <Modal
         opened={state.resetTeacherModalOpen}
         onClose={state.closeResetTeacher}
-        title="Clear Teacher History"
+        title={t('modals.resetTeacher.title')}
         centered
       >
         <Text size="sm" mb="md">
-          Are you sure you want to clear the conversation history with the Teacher for this topic?
+          {t('modals.resetTeacher.body')}
         </Text>
         <Group justify="flex-end">
           <Button variant="default" onClick={state.closeResetTeacher}>
-            Cancel
+            {t('modals.cancel')}
           </Button>
           <Button color="red" onClick={() => state.clearHistory('teacher')}>
-            Clear History
+            {t('modals.resetTeacher.confirm')}
           </Button>
         </Group>
       </Modal>
@@ -103,10 +110,10 @@ export const AiAgentPage = () => {
             variant="filled"
             color="#ae3ec9"
             className={classes.tabButton}
-            style={{ top: '150px' }}
+            style={{ top: `${MOBILE_SETTINGS_TAB_TOP}px` }}
           >
             <Text size="9px" fw={700} style={{ transform: 'rotate(-90deg)', whiteSpace: 'nowrap' }}>
-              SETTINGS
+              {t('mobile.settings')}
             </Text>
           </Button>
           <Button
@@ -117,10 +124,10 @@ export const AiAgentPage = () => {
             variant="filled"
             color="#22b8cf"
             className={classes.tabButton}
-            style={{ top: '260px' }}
+            style={{ top: `${MOBILE_TOPICS_TAB_TOP}px` }}
           >
             <Text size="9px" fw={700} style={{ transform: 'rotate(-90deg)', whiteSpace: 'nowrap' }}>
-              TOPICS
+              {t('mobile.topics')}
             </Text>
           </Button>
         </>
@@ -129,7 +136,7 @@ export const AiAgentPage = () => {
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
-        title={drawerType === 'menu' ? 'Settings' : 'Topics'}
+        title={drawerType === 'menu' ? t('mobile.drawerSettings') : t('mobile.drawerTopics')}
         size="xs"
         padding="md"
       >
@@ -215,7 +222,7 @@ export const AiAgentPage = () => {
       <CodeRunnerModal
         opened={codeRunnerOpened}
         onClose={() => setCodeRunnerOpened(false)}
-        code={'// Write your code here\nconsole.log("Hello, world!");'}
+        code={t('codeRunnerModal.defaultCode')}
         language="javascript"
       />
     </div>

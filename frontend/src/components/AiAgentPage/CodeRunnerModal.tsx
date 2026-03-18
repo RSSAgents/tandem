@@ -2,6 +2,7 @@ import { SandpackCodeEditor, SandpackProvider, useSandpack } from '@codesandbox/
 import { Modal } from '@mantine/core';
 import { IconPlayerPlay, IconTrash } from '@tabler/icons-react';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 
 interface CodeRunnerModalProps {
@@ -20,6 +21,7 @@ const ConsolePanel = () => {
   const { sandpack } = useSandpack();
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const { t } = useTranslation('aiAgent');
 
   const handleRun = () => {
     const activeFile = Object.keys(sandpack.files).find(
@@ -76,7 +78,7 @@ const ConsolePanel = () => {
         }}
       >
         {logs.length === 0 ? (
-          <span style={{ color: '#555' }}>Press ▶ to run code...</span>
+          <span style={{ color: '#555' }}>{t('codeRunnerModal.placeholder')}</span>
         ) : (
           logs.map((entry, i) => (
             <div
@@ -94,10 +96,18 @@ const ConsolePanel = () => {
         )}
       </div>
       <div style={{ position: 'absolute', bottom: 8, right: 8, display: 'flex', gap: 6 }}>
-        <button onClick={() => setLogs([])} title="Clear" className={classes.consoleRunButton}>
+        <button
+          onClick={() => setLogs([])}
+          title={t('codeRunnerModal.clear')}
+          className={classes.consoleRunButton}
+        >
           <IconTrash size={14} />
         </button>
-        <button onClick={handleRun} title="Run" className={classes.consoleRunButton}>
+        <button
+          onClick={handleRun}
+          title={t('codeRunnerModal.run')}
+          className={classes.consoleRunButton}
+        >
           <IconPlayerPlay size={14} />
         </button>
       </div>
@@ -106,6 +116,8 @@ const ConsolePanel = () => {
 };
 
 export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerModalProps) => {
+  const { t } = useTranslation('aiAgent');
+
   const getFiles = (): Record<string, string> => {
     if (language === 'html') {
       return { '/index.html': code };
@@ -113,7 +125,7 @@ export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerM
     if (language === 'css') {
       return {
         '/index.html':
-          "<!DOCTYPE html>\n<html><head><link rel='stylesheet' href='/styles.css'></head><body>\n<div class='demo'>Styled element</div>\n</body></html>",
+          `<!DOCTYPE html>\n<html><head><link rel='stylesheet' href='/styles.css'></head><body>\n<div class='demo'>${t('codeRunnerModal.styledElement')}</div>\n</body></html>`,
         '/styles.css': code,
       };
     }
@@ -121,7 +133,7 @@ export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerM
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Code Runner" size="xl" centered>
+    <Modal opened={opened} onClose={onClose} title={t('codeRunnerModal.title')} size="xl" centered>
       {opened && (
         <SandpackProvider template="vanilla" files={getFiles()} theme="dark">
           <SandpackCodeEditor style={{ height: 300 }} showLineNumbers />
