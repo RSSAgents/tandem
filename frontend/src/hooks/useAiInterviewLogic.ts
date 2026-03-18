@@ -91,9 +91,8 @@ export const useAiInterviewLogic = (state: AgentState) => {
     }
 
     const currentThread = state.threads.find((t) => t.id === threadId) || { messages: [] };
-    const refusalWord = state.role === 'strict'
-      ? t('prompts.refusalStrict')
-      : t('prompts.refusalGentle');
+    const refusalWord =
+      state.role === 'strict' ? t('prompts.refusalStrict') : t('prompts.refusalGentle');
 
     let systemPrompt = '';
 
@@ -316,13 +315,18 @@ export const useAiInterviewLogic = (state: AgentState) => {
     ]);
 
     const candidateIdx = aiResponseText.search(/\bCandidate\s*:/i);
-    const interviewerText = (candidateIdx > 0
-      ? aiResponseText.slice(0, candidateIdx)
-      : aiResponseText
-    ).replace(/^\s*Interviewer\s*:\s*/i, '').trim();
-    const candidateText = candidateIdx > 0
-      ? aiResponseText.slice(candidateIdx).replace(/^\s*Candidate\s*:\s*/i, '').trim()
-      : '';
+    const interviewerText = (
+      candidateIdx > 0 ? aiResponseText.slice(0, candidateIdx) : aiResponseText
+    )
+      .replace(/^\s*Interviewer\s*:\s*/i, '')
+      .trim();
+    const candidateText =
+      candidateIdx > 0
+        ? aiResponseText
+            .slice(candidateIdx)
+            .replace(/^\s*Candidate\s*:\s*/i, '')
+            .trim()
+        : '';
 
     if (interviewerText) {
       const qMsg: Message = {

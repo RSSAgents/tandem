@@ -32,12 +32,14 @@ const ConsolePanel = () => {
 
     setLogs([]);
 
+    const encoded = btoa(unescape(encodeURIComponent(currentCode)));
+
     const html = `<!DOCTYPE html><html><head><script>
       const captured = [];
       console.log = (...args) => captured.push({ text: args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' '), type: 'log' });
       console.error = (...args) => captured.push({ text: args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' '), type: 'error' });
       console.warn = (...args) => captured.push({ text: args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' '), type: 'warn' });
-      try { ${currentCode.replace(/<\/script>/gi, '<\\/script>')} } catch(e) { captured.push({ text: e.message, type: 'error' }); }
+      try { eval(decodeURIComponent(escape(atob("${encoded}")))); } catch(e) { captured.push({ text: e.message, type: 'error' }); }
       parent.postMessage({ type: 'sandbox-logs', logs: captured }, '*');
     ${'<'}/script></head><body></body></html>`;
 
