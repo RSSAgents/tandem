@@ -5,11 +5,6 @@ import { describe, expect, it } from 'vitest';
 import LibraryPage from './LibraryPage';
 
 describe('LibraryPage', () => {
-  it('renders the main title', () => {
-    renderWithProviders(<LibraryPage />);
-    expect(screen.getByRole('heading', { name: 'Knowledge Base', level: 1 })).toBeInTheDocument();
-  });
-
   it('renders all category titles', () => {
     renderWithProviders(<LibraryPage />);
     LIBRARY_ACCORDION.forEach((category) => {

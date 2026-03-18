@@ -5,10 +5,6 @@ import classes from './LibraryPage.module.css';
 const LibraryPage = () => {
   return (
     <Container>
-      <Title order={1} className={classes.title}>
-        Knowledge Base
-      </Title>
-
       {LIBRARY_ACCORDION.map((category, categoryIndex) => (
         <Box key={categoryIndex} className={classes.category}>
           <Title order={2} className={classes.subtitle}>
