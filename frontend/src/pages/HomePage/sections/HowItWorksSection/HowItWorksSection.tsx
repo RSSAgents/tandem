@@ -30,6 +30,10 @@ const howItWorksData = [
 ];
 
 export function HowItWorksSection() {
+  const TITLE = 'How it works';
+  const SUB_TITLE = `Follow the steps, master the skills, and compete with developers worldwide. Your interview
+        journey starts here.`;
+
   const theme = useMantineTheme();
 
   const iconColors = [
@@ -57,16 +61,13 @@ export function HowItWorksSection() {
   ));
 
   return (
-    <Container size="lg" py="xl">
-      <Title order={2} className={classes.title} ta="center" mt="sm">
-        How it works
+    <Container size="lg" py="xl" className={classes.section}>
+      <Title order={2} className={classes.sectionTitle} ta="center" mt="sm">
+        {TITLE}
       </Title>
-
-      <Text c="dimmed" className={classes.description} ta="center" mt="md">
-        Follow the steps, master the skills, and compete with developers worldwide. Your interview
-        journey starts here.
+      <Text c="dimmed" className={classes.sectionDescription} ta="center" mt="md">
+        {SUB_TITLE}
       </Text>
-
       <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" mt={50}>
         {features}
       </SimpleGrid>

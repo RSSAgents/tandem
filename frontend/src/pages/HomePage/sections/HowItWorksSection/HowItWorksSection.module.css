@@ -1,9 +1,11 @@
-.title {
-  font-size: 34px;
-  font-weight: 500;
+.sectionTitle {
+  font-size: 40px;
+  font-weight: 800;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  margin-bottom: 24px;
 }
 
-.description {
+.sectionDescription {
   max-width: 600px;
   font-size: 18px;
   margin: auto;
@@ -15,6 +17,9 @@
   flex-direction: column;
   border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  padding: var(--mantine-spacing-xl);
 }
 
 .card::before {
@@ -57,6 +62,7 @@
 
 .cardSubTitle {
   font-size: 18px;
+  line-height: 1.6;
 }
 
 .stepNumber {
@@ -68,4 +74,110 @@
   color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
   transition: all 0.3s ease;
   opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card:hover .stepNumber {
+  opacity: 0.15;
+  transform: scale(1.1);
+}
+
+@media (max-width: 1200px) {
+  .card {
+    padding: var(--mantine-spacing-lg);
+  }
+
+  .stepNumber {
+    font-size: 12rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .cardTitle {
+    font-size: 18px;
+    min-height: auto;
+    padding-right: 60px;
+  }
+
+  .cardSubTitle {
+    font-size: 16px;
+  }
+
+  .stepNumber {
+    font-size: 10rem;
+    top: 5px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--mantine-spacing-4xl) 0;
+  }
+
+  .card {
+    padding: var(--mantine-spacing-md);
+  }
+
+  .cardTitle {
+    font-size: 18px;
+    margin-top: var(--mantine-spacing-sm);
+  }
+
+  .cardSubTitle {
+    font-size: 15px;
+  }
+
+  .stepNumber {
+    font-size: 8rem;
+    opacity: 0.08;
+  }
+
+  .card:hover .stepNumber {
+    opacity: 0.12;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: var(--mantine-spacing-3xl) 0;
+  }
+
+  .card {
+    padding: var(--mantine-spacing-md);
+  }
+
+  .cardTitle {
+    font-size: 16px;
+    padding-right: 50px;
+  }
+
+  .cardSubTitle {
+    font-size: 14px;
+  }
+
+  .stepNumber {
+    font-size: 6rem;
+    top: 10px;
+    right: 10px;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 360px) {
+  .cardTitle {
+    font-size: 15px;
+  }
+
+  .cardSubTitle {
+    font-size: 13px;
+  }
+
+  .stepNumber {
+    font-size: 5rem;
+  }
 }
