@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormValues, LoginErrorKeys } from './login.schema';
 import classes from './LoginPage.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export const LoginPage = () => {
@@ -26,13 +26,13 @@ export const LoginPage = () => {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.card}>
-        <Text size="2xl" fw={600} ta="center" mb="xl" c="brand.5">
-          Tandem
+        <Text size="2xl" fw={500} ta="center" mb="xl">
+          {t('actions.login')}
         </Text>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
-            label={t('email')}
+            label={t('fields.email')}
             placeholder="you@example.com"
             {...register('email')}
             error={errors.email?.message ? t(errors.email.message as LoginErrorKeys) : undefined}
@@ -40,7 +40,7 @@ export const LoginPage = () => {
           />
 
           <PasswordInput
-            label={t('password')}
+            label={t('fields.password')}
             placeholder="••••••"
             {...register('password')}
             error={
@@ -50,12 +50,15 @@ export const LoginPage = () => {
           />
 
           <Button type="submit" fullWidth loading={isSubmitting} color="blue">
-            {t('login')}
+            {t('actions.login')}
           </Button>
         </form>
 
-        <Text size="sm" mt="lg" className={classes.forgot}>
-          {t('forgotPassword')}
+        <Text size="sm" mt="lg" ta="center">
+          {t('links.noAccount')}{' '}
+          <Text className={classes.signupLink} component={Link} to="/register">
+            {t('actions.signup')}
+          </Text>
         </Text>
       </Paper>
     </div>
