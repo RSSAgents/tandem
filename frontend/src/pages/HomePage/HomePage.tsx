@@ -1,5 +1,6 @@
 import { AboutAISection } from './sections/AboutAISection/AboutAISection';
 import { AboutWidgetsSection } from './sections/AboutWidgetsSection/AboutWidgetsSection';
+import { AudienceSection } from './sections/AudienceSection/AudienceSection';
 import { BenefitsSection } from './sections/BenefitsSection/BenefitsSection';
 import { FAQSection } from './sections/FAQSection/FAQSection';
 import { HeroSection } from './sections/HeroSection/HeroSection';
@@ -11,6 +12,7 @@ export function HomePage() {
     <>
       <HeroSection />
       <HowItWorksSection />
+      <AudienceSection />
       <AboutWidgetsSection />
       <AboutAISection />
       <LeaderboardSection />

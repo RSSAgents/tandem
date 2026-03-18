@@ -1,0 +1,89 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.description {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.sticker {
+  padding: 15px 30px;
+  background: var(--card-bg);
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  transform: rotate(var(--rotate));
+  cursor: default;
+  position: relative;
+  box-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, transparent 50%, var(--bg) 50%);
+}
+
+.row:nth-child(1) .sticker:nth-child(1) {
+  --rotate: -2deg;
+  background: #40c05720;
+}
+.row:nth-child(1) .sticker:nth-child(2) {
+  --rotate: 1deg;
+  background: #fd7e1420;
+}
+.row:nth-child(1) .sticker:nth-child(3) {
+  --rotate: -1deg;
+  background: #fab00520;
+}
+.row:nth-child(2) .sticker:nth-child(1) {
+  --rotate: 2deg;
+  background: #7950f220;
+}
+.row:nth-child(2) .sticker:nth-child(2) {
+  --rotate: -2deg;
+  background: #228be620;
+}
+.row:nth-child(3) .sticker:nth-child(1) {
+  --rotate: -1deg;
+  background: #fa525220;
+}
+.row:nth-child(3) .sticker:nth-child(2) {
+  --rotate: 3deg;
+  background: #12b88620;
+}
+.row:nth-child(3) .sticker:nth-child(3) {
+  --rotate: -3deg;
+  background: #be4bdb20;
+}
+
+.sticker:hover {
+  transform: rotate(0deg) scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
