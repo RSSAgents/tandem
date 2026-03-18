@@ -1,1 +1,16 @@
-{}
+{
+  "welcome": "Hello, {{name}}!",
+  "progress_zero": "Your journey starts here. Choose your first module!",
+  "progress_started": "{{percent}}% through the path. Great pace!",
+  "progress_finished": "Path completed! You're a legend.",
+  "widgets": {
+    "js_execution": {
+      "title": "Drag & Drop JS Execution",
+      "description": "An interactive learning component that tests understanding of JavaScript execution order through a drag-and-drop interface."
+    }
+  },
+  "status": {
+    "todo": "Start",
+    "completed": "Finished"
+  }
+}

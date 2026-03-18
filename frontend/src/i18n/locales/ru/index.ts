@@ -3,6 +3,7 @@ import dashboard from './dashboard.json';
 import header from './header.json';
 import notFound from './notFound.json';
 import shared from './shared.json';
+import leaderboard from './leaderboard.json';
 
 export const ru = {
   auth,
@@ -10,4 +11,5 @@ export const ru = {
   header,
   notFound,
   shared,
+  leaderboard,
 };

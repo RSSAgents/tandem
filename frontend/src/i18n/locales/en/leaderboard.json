@@ -1,0 +1,8 @@
+{
+  "leaderboard": {
+    "position": "Position",
+    "user": "User",
+    "score": "Score",
+    "progress": "Progress"
+  }
+}
