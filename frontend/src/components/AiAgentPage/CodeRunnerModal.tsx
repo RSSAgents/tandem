@@ -124,8 +124,7 @@ export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerM
     }
     if (language === 'css') {
       return {
-        '/index.html':
-          `<!DOCTYPE html>\n<html><head><link rel='stylesheet' href='/styles.css'></head><body>\n<div class='demo'>${t('codeRunnerModal.styledElement')}</div>\n</body></html>`,
+        '/index.html': `<!DOCTYPE html>\n<html><head><link rel='stylesheet' href='/styles.css'></head><body>\n<div class='demo'>${t('codeRunnerModal.styledElement')}</div>\n</body></html>`,
         '/styles.css': code,
       };
     }

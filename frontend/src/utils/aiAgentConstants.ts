@@ -11,6 +11,7 @@ export const MOBILE_TOPICS_TAB_TOP = 260;
 export const CANDIDATE_DELAY_MS = 500;
 export const THREAD_TIMESTAMP_OFFSET_MS = 1000;
 export const AI_INTERVIEW_DELAY_MS = 1000;
+export const TYPING_CHARS_PER_FRAME = 3;
 
 export const TOPICS = [
   'Computer Science Fundamentals',

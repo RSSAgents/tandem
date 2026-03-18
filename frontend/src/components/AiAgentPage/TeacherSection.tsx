@@ -23,6 +23,7 @@ interface TeacherSectionProps {
   onResetClick: () => void;
   isMobile: boolean;
   messagesCount: number;
+  lastMessageText: string;
   renderMessages: () => React.ReactNode;
   stressMode: StressModeType;
   inputValue: string;
@@ -36,6 +37,7 @@ export const TeacherSection = ({
   onResetClick,
   isMobile,
   messagesCount,
+  lastMessageText,
   renderMessages,
   stressMode,
   inputValue,
@@ -62,7 +64,7 @@ export const TeacherSection = ({
         }, 0);
       }
     }
-  }, [messagesCount]);
+  }, [messagesCount, lastMessageText]);
 
   return (
     <Grid.Col span={isMobile ? 12 : 4.5}>

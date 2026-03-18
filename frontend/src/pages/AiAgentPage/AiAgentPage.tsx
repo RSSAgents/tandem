@@ -57,6 +57,12 @@ export const AiAgentPage = () => {
     return thread?.messages.length || 0;
   };
 
+  const getLastMessageText = (type: ThreadType): string => {
+    const thread = state.threads.find((t) => t.topic === state.activeTopic && t.type === type);
+    const msgs = thread?.messages;
+    return msgs?.length ? msgs[msgs.length - 1].text : '';
+  };
+
   return (
     <div className={classes.mainContent}>
       <Modal
@@ -191,6 +197,7 @@ export const AiAgentPage = () => {
             onResetClick={state.openResetInterviewer}
             questionCount={state.questionCount}
             messagesCount={getMessagesCount(state.interviewerMode as ThreadType)}
+            lastMessageText={getLastMessageText(state.interviewerMode as ThreadType)}
             timer={state.timer}
             isMobile={isMobile}
             renderMessages={renderMessagesWrapper}
@@ -209,6 +216,7 @@ export const AiAgentPage = () => {
             activeTopic={state.activeTopic}
             onResetClick={state.openResetTeacher}
             messagesCount={getMessagesCount('teacher')}
+            lastMessageText={getLastMessageText('teacher')}
             isMobile={isMobile}
             renderMessages={() => renderMessagesWrapper('teacher')}
             stressMode={state.stressMode}

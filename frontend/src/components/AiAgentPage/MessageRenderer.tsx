@@ -149,7 +149,7 @@ export const MessageRenderer = ({
                 </Text>
               )}
               <Box
-                className={`${classes.messageText} ${classes.markdown}`}
+                className={`${classes.messageText} ${classes.markdown}${msg.streaming ? ` ${classes.streamingCursor}` : ''}`}
                 style={{ fontSize: '14px', whiteSpace: 'normal' }}
               >
                 {renderMarkdown(

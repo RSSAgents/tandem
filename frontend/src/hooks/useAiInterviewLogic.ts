@@ -7,8 +7,9 @@ import {
   MAX_SCORE,
   THREAD_TIMESTAMP_OFFSET_MS,
   TIMER_SECONDS,
+  TYPING_CHARS_PER_FRAME,
 } from '../utils/aiAgentConstants';
-import { callGroqAPI } from '../utils/groqApiService';
+import { callGroqAPI, callGroqAPIStream } from '../utils/groqApiService';
 
 export const useAiInterviewLogic = (state: AgentState) => {
   const { t } = useTranslation('aiAgent');
@@ -125,7 +126,91 @@ export const useAiInterviewLogic = (state: AgentState) => {
       { role: 'user', content: userText },
     ];
 
-    const aiResponseText = await callGroqAPI(apiMessages);
+    const placeholderIds: string[] = [];
+    const targetTexts: string[] = [];
+    let streamDone = false;
+
+    const typeMessage = (partIndex: number): Promise<void> => {
+      return new Promise((resolve) => {
+        let revealed = 0;
+        const tick = () => {
+          const target = targetTexts[partIndex] || '';
+          const end = streamDone ? target.length : Math.min(revealed + TYPING_CHARS_PER_FRAME, target.length);
+          revealed = end;
+          const visibleText = target.slice(0, revealed);
+          const stillTyping = !streamDone || revealed < target.length;
+
+          state.setThreads((current: Thread[]) =>
+            current.map((thread) => {
+              if (thread.id !== threadId) return thread;
+              const msgId = placeholderIds[partIndex];
+              const exists = thread.messages.some((m) => m.id === msgId);
+              if (exists) {
+                return {
+                  ...thread,
+                  messages: thread.messages.map((m) =>
+                    m.id === msgId ? { ...m, text: visibleText, streaming: stillTyping } : m,
+                  ),
+                };
+              }
+              return {
+                ...thread,
+                messages: [
+                  ...thread.messages,
+                  {
+                    id: msgId,
+                    sender: 'ai' as const,
+                    text: visibleText,
+                    timestamp: Date.now(),
+                    streaming: stillTyping,
+                  },
+                ],
+              };
+            }),
+          );
+
+          if (revealed < target.length || (!streamDone && revealed >= target.length)) {
+            requestAnimationFrame(tick);
+          } else {
+            resolve();
+          }
+        };
+        requestAnimationFrame(tick);
+      });
+    };
+
+    let typingStarted = false;
+    let typingPromise: Promise<void> | null = null;
+
+    const aiResponseText = await callGroqAPIStream(apiMessages, (accumulated) => {
+      const parts = accumulated.split('|||');
+      for (let i = 0; i < parts.length; i++) {
+        if (!placeholderIds[i]) {
+          placeholderIds[i] = crypto.randomUUID();
+        }
+        targetTexts[i] = parts[i].trim();
+      }
+      if (!typingStarted) {
+        typingStarted = true;
+        typingPromise = typeMessage(0);
+      }
+    });
+
+    streamDone = true;
+
+    const finalParts = aiResponseText.split('|||');
+    for (let i = 0; i < finalParts.length; i++) {
+      if (!placeholderIds[i]) {
+        placeholderIds[i] = crypto.randomUUID();
+      }
+      targetTexts[i] = finalParts[i].trim();
+    }
+
+    if (typingPromise) await typingPromise;
+
+    for (let i = 1; i < finalParts.length; i++) {
+      await typeMessage(i);
+    }
 
     if (type === 'interviewer' && aiResponseText.includes('FINAL_SCORE:')) {
       const match = aiResponseText.match(/FINAL_SCORE:\s*(\d+)/);
@@ -134,22 +219,6 @@ export const useAiInterviewLogic = (state: AgentState) => {
         state.addScore(manualActiveTopic, score);
       }
     }
-
-    const responseParts = aiResponseText.split('|||');
-    const newMessages: Message[] = responseParts.map((part: string) => ({
-      id: crypto.randomUUID(),
-      sender: 'ai',
-      text: part.trim(),
-      timestamp: Date.now(),
-    }));
-
-    state.setThreads((current: Thread[]) =>
-      current.map((thread) =>
-        thread.id === threadId
-          ? { ...thread, messages: [...thread.messages, ...newMessages] }
-          : thread,
-      ),
-    );
 
     state.setIsWaitingForAnswer(false);
     if (type === 'interviewer' && state.stressMode === 'stress') {

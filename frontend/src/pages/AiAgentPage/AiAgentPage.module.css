@@ -400,3 +400,17 @@
   border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.15));
   padding: 4px 8px;
 }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.streamingCursor::after {
+  content: '▊';
+  display: inline-block;
+  animation: blink 0.7s step-end infinite;
+  color: light-dark(#339af0, #74c0fc);
+  margin-left: 2px;
+  font-size: 0.9em;
+}

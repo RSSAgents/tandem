@@ -29,6 +29,7 @@ interface InterviewerSectionProps {
   onResetClick: () => void;
   questionCount: number;
   messagesCount: number;
+  lastMessageText: string;
   timer: number | null;
   isMobile: boolean;
   renderMessages: (type: ThreadType, mode?: InterviewerMode) => React.ReactNode;
@@ -48,6 +49,7 @@ export const InterviewerSection = ({
   onResetClick,
   questionCount,
   messagesCount,
+  lastMessageText,
   timer,
   isMobile,
   renderMessages,
@@ -77,7 +79,7 @@ export const InterviewerSection = ({
         }, 0);
       }
     }
-  }, [messagesCount]);
+  }, [messagesCount, lastMessageText]);
 
   return (
     <Grid.Col span={isMobile ? 12 : 4.5}>

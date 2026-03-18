@@ -8,6 +8,7 @@ export interface Message {
   text: string;
   timestamp: number;
   aiRole?: 'interviewer' | 'candidate';
+  streaming?: boolean;
 }
 
 export interface Thread {
