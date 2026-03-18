@@ -12,6 +12,7 @@ import {
   Textarea,
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
+import { useEffect, useRef } from 'react';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 import { AiLevelType, InterviewerMode, ThreadType } from '../../types/aiAgentTypes';
 
@@ -21,9 +22,10 @@ interface InterviewerSectionProps {
   activeTopic: string | null;
   onResetClick: () => void;
   questionCount: number;
+  messagesCount: number;
   timer: number | null;
   isMobile: boolean;
-  renderMessages: (type: ThreadType) => React.ReactNode;
+  renderMessages: (type: ThreadType, mode?: InterviewerMode) => React.ReactNode;
   inputValue: string;
   onInputChange: (value: string) => void;
   onSend: () => void;
@@ -39,6 +41,7 @@ export const InterviewerSection = ({
   activeTopic,
   onResetClick,
   questionCount,
+  messagesCount,
   timer,
   isMobile,
   renderMessages,
@@ -51,6 +54,23 @@ export const InterviewerSection = ({
   onAiLevelChange,
 }: InterviewerSectionProps) => {
   const timerColor = timer !== null && timer < 15 ? 'red' : undefined;
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      const scrollContainer = scrollAreaRef.current.querySelector(
+        '[style*="overflow"]',
+      ) as HTMLElement;
+      if (scrollContainer) {
+        setTimeout(() => {
+          scrollContainer.scroll({
+            top: scrollContainer.scrollHeight,
+            behavior: 'smooth',
+          });
+        }, 0);
+      }
+    }
+  }, [messagesCount]);
 
   return (
     <Grid.Col span={isMobile ? 12 : 4.5}>
@@ -123,8 +143,8 @@ export const InterviewerSection = ({
           </Group>
         )}
 
-        <ScrollArea flex={1} p="xs">
-          {renderMessages(interviewerMode as ThreadType)}
+        <ScrollArea ref={scrollAreaRef} flex={1} p="xs" pr="md" className={classes.smoothScroll}>
+          {renderMessages(interviewerMode as ThreadType, interviewerMode)}
         </ScrollArea>
 
         <Box mt="md">

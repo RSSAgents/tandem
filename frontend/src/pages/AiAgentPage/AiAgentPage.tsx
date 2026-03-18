@@ -27,7 +27,7 @@ export const AiAgentPage = () => {
     }
   }, [state, handleSend]);
 
-  const renderMessagesWrapper = (type: ThreadType) => {
+  const renderMessagesWrapper = (type: ThreadType, mode?: 'interviewer' | 'ai-interview') => {
     const startMsg = getStartMessageForType(type, state.activeTopic);
     const thread = state.threads.find((t) => t.topic === state.activeTopic && t.type === type);
     const messages = thread?.messages || [];
@@ -37,8 +37,14 @@ export const AiAgentPage = () => {
         messages={messages}
         startMessage={startMsg}
         hasActiveTopic={state.activeTopic !== null}
+        mode={mode === 'ai-interview' ? 'ai-interview' : undefined}
       />
     );
+  };
+
+  const getMessagesCount = (type: ThreadType): number => {
+    const thread = state.threads.find((t) => t.topic === state.activeTopic && t.type === type);
+    return thread?.messages.length || 0;
   };
 
   return (
@@ -173,6 +179,7 @@ export const AiAgentPage = () => {
             activeTopic={state.activeTopic}
             onResetClick={state.openResetInterviewer}
             questionCount={state.questionCount}
+            messagesCount={getMessagesCount(state.interviewerMode as ThreadType)}
             timer={state.timer}
             isMobile={isMobile}
             renderMessages={renderMessagesWrapper}
@@ -190,6 +197,7 @@ export const AiAgentPage = () => {
           <TeacherSection
             activeTopic={state.activeTopic}
             onResetClick={state.openResetTeacher}
+            messagesCount={getMessagesCount('teacher')}
             isMobile={isMobile}
             renderMessages={() => renderMessagesWrapper('teacher')}
             stressMode={state.stressMode}

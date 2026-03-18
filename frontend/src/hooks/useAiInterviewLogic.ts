@@ -59,8 +59,8 @@ export const useAiInterviewLogic = (state: AgentState) => {
         text: 'Please communicate in English.',
         timestamp: Date.now(),
       };
-      state.setThreads((current: Thread[]) =>
-        current.map((thread) =>
+      state.setThreads((threads: Thread[]) =>
+        threads.map((thread) =>
           thread.id === threadId
             ? { ...thread, messages: [...thread.messages, langMessage] }
             : thread,
@@ -76,7 +76,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
     let systemPrompt = '';
 
     if (type === 'interviewer') {
-      systemPrompt = `You are an expert technical interviewer for a Junior Frontend Developer position. Topic: ${manualActiveTopic}.
+      systemPrompt = `You are an expert technical interviewer for a Junior Frontend Developer position. Topic: ${manualActiveTopic}. Vanilla JS.
       STRICT RULES:
       1. Ask exactly 20 questions total, but ONLY ONE question per response.
       2. DO NOT include question numbers in your output.
@@ -93,7 +93,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
       Your strict rules:
       1. **Never give a direct, ready-made answer immediately.**
       2. Ask guiding questions to nudge the user toward correct reasoning and a deeper understanding of the topic.
-      3. **Maintain focus:** only answer questions related to the current topic ${manualActiveTopic}. If the request goes beyond frontend topics, politely decline and steer the conversation back to the interview.
+      3. **Maintain focus:** only answer questions related to the current topic ${manualActiveTopic}. Vanilla JS. If the request goes beyond frontend topics, politely decline and steer the conversation back to the interview.
       4. Be patient, supportive, and constructive.
       5. If the candidate is clearly stuck after several attempts, provide a conceptual hint or explain a complex term, but leave the final conclusion to them.
       6. Tone: ${state.role.toUpperCase()}.`;
@@ -222,10 +222,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
       state.setThreads((prev: Thread[]) => [...prev, newThread]);
     }
 
-    state.setIsWaitingForAnswer(true);
-
-    const systemPrompt = `Realistic dialogue about ${state.activeTopic}. Play BOTH Interviewer and Candidate. Level: ${state.aiInterviewLevel}.
-    RULES: 1. No question numbers. 2. Separate Interviewer and Candidate with "|||". 3. If it's the 20th, add improvement tips.`;
+    const systemPrompt = `You are both a professional Interviewer and a capable Candidate. Your task is to simulate a realistic interview experience. Topic: ${state.activeTopic} JavaScript. Play BOTH Interviewer and Candidate. Level: ${state.aiInterviewLevel}. Write only one part from the interviewer and one part from the candidate. Separate Interviewer and Candidate with "|||". No question numbers. If it's the 20th, add improvement tips.`;
 
     const aiResponseText = await callGroqAPI([
       { role: 'system', content: systemPrompt },
@@ -242,6 +239,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
         sender: 'ai',
         text: interviewerText,
         timestamp: Date.now(),
+        aiRole: 'interviewer',
       };
       state.setThreads((curr: Thread[]) =>
         curr.map((t: Thread) =>
@@ -254,25 +252,22 @@ export const useAiInterviewLogic = (state: AgentState) => {
       setTimeout(() => {
         const aMsg: Message = {
           id: crypto.randomUUID(),
-          sender: 'candidate',
+          sender: 'ai',
           text: candidateText,
-          timestamp: Date.now(),
+          timestamp: Date.now() + 500,
+          aiRole: 'candidate',
         };
         state.setThreads((curr: Thread[]) =>
           curr.map((t: Thread) =>
             t.id === targetThreadId ? { ...t, messages: [...t.messages, aMsg] } : t,
           ),
         );
-        state.setIsWaitingForAnswer(false);
-      }, 1500);
-    } else {
-      state.setIsWaitingForAnswer(false);
+      }, 1000);
     }
   };
 
   return {
     handleSend,
-    simulateAiReply,
     startAiInterviewSimulation,
     getStartMessageForType,
   };

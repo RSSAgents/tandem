@@ -80,8 +80,10 @@ export const useAiAgentState = () => {
 
   const questionCount = currentModeThread
     ? currentModeThread.messages.filter(
-        (m) =>
-          m.sender === 'ai' && !m.text.includes('Welcome to') && !m.text.includes('Are you ready'),
+        (message) =>
+          message.sender === 'ai' &&
+          message.text.includes('?') &&
+          !message.text.includes('Are you ready'),
       ).length
     : 0;
 

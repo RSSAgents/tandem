@@ -12,6 +12,7 @@ import {
   Textarea,
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
+import { useEffect, useRef } from 'react';
 import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 import { InterviewerMode, StressModeType } from '../../types/aiAgentTypes';
 
@@ -19,6 +20,7 @@ interface TeacherSectionProps {
   activeTopic: string | null;
   onResetClick: () => void;
   isMobile: boolean;
+  messagesCount: number;
   renderMessages: () => React.ReactNode;
   stressMode: StressModeType;
   inputValue: string;
@@ -33,6 +35,7 @@ export const TeacherSection = ({
   activeTopic,
   onResetClick,
   isMobile,
+  messagesCount,
   renderMessages,
   stressMode,
   inputValue,
@@ -47,6 +50,24 @@ export const TeacherSection = ({
     stressMode === 'stress' ||
     isWaitingForAnswer ||
     (interviewerMode === 'interviewer' && isInterviewerWaitingForUser);
+
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      const scrollContainer = scrollAreaRef.current.querySelector(
+        '[style*="overflow"]',
+      ) as HTMLElement;
+      if (scrollContainer) {
+        setTimeout(() => {
+          scrollContainer.scroll({
+            top: scrollContainer.scrollHeight,
+            behavior: 'smooth',
+          });
+        }, 0);
+      }
+    }
+  }, [messagesCount]);
 
   return (
     <Grid.Col span={isMobile ? 12 : 4.5}>
@@ -86,7 +107,7 @@ export const TeacherSection = ({
           </ActionIcon>
         </Group>
 
-        <ScrollArea flex={1} p="xs">
+        <ScrollArea ref={scrollAreaRef} flex={1} p="xs" pr="md" className={classes.smoothScroll}>
           {stressMode === 'stress' ? (
             <Center h="100%">
               <Text c="dimmed" fw={700}>

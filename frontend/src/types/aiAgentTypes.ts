@@ -7,6 +7,7 @@ export interface Message {
   sender: 'user' | 'ai' | 'candidate';
   text: string;
   timestamp: number;
+  aiRole?: 'interviewer' | 'candidate';
 }
 
 export interface Thread {
@@ -17,17 +18,11 @@ export interface Thread {
 }
 
 export type InputsState = Record<string, Partial<Record<ThreadType, string>>>;
-
 export type InterviewerMode = 'interviewer' | 'ai-interview';
-
 export type RoleType = 'gentle' | 'strict';
-
 export type StressModeType = 'normal' | 'stress';
-
 export type AiLevelType = 'junior' | 'middle' | 'senior';
-
 export type MobileViewType = 'interviewer' | 'teacher';
-
 export type DrawerType = 'menu' | 'topics';
 
 export interface AgentState {
