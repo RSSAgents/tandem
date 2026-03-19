@@ -5,6 +5,7 @@ import notFound from './notFound.json';
 import shared from './shared.json';
 import leaderboard from './leaderboard.json';
 import hero from './hero.json';
+import howItWorks from './howItWorks.json';
 
 export const en = {
   auth,
@@ -14,4 +15,5 @@ export const en = {
   shared,
   leaderboard,
   hero,
+  howItWorks,
 };
