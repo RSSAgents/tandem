@@ -21,7 +21,7 @@ const JS_TOPICS = {
 
 export function AboutWidgetsSection() {
   return (
-    <Container className={classes.section} size="lg" py="xl">
+    <Container className={classes.section} size="lg" py="100">
       <Stack className={classes.content} gap="md">
         <Title order={2} className={classes.sectionTitle}>
           {TITLE}
@@ -56,7 +56,7 @@ export function AboutWidgetsSection() {
           <Image src={widget1} className={classes.image} alt="Event Loop widget" />
         </Paper>
         <Paper className={classes.imageWrapper} withBorder={false} radius="md" shadow="xl">
-          <Image src={widget3} className={classes.image} alt="Two Sum widget" />
+          <Image src={widget3} className={classes.image} alt="stack widget" />
         </Paper>
       </Box>
     </Container>

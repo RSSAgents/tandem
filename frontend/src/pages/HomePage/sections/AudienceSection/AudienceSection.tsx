@@ -20,7 +20,7 @@ export function AudienceSection() {
   const rows = [1, 2, 3];
 
   return (
-    <Container size="lg" py={80} className={classes.section}>
+    <Container size="lg" className={classes.section} py="150">
       <Title order={2} ta="center" className={classes.sectionTitle}>
         {TITLE}
       </Title>
