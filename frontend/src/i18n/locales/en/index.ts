@@ -4,6 +4,7 @@ import header from './header.json';
 import notFound from './notFound.json';
 import shared from './shared.json';
 import leaderboard from './leaderboard.json';
+import library from './library.json'
 
 export const en = {
   auth,
@@ -12,4 +13,5 @@ export const en = {
   notFound,
   shared,
   leaderboard,
+  library,
 };
