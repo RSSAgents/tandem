@@ -7,6 +7,7 @@ import leaderboard from './leaderboard.json';
 import hero from './hero.json';
 import howItWorks from './howItWorks.json';
 import audience from './audience.json';
+import aboutWidgets from './aboutWidgets.json';
 
 export const en = {
   auth,
@@ -18,4 +19,5 @@ export const en = {
   hero,
   howItWorks,
   audience,
+  aboutWidgets,
 };
