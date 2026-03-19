@@ -1,20 +1,19 @@
 import { Container, Title, Group, Text } from '@mantine/core';
 import classes from './AudienceSection.module.css';
+import { useTranslation } from 'react-i18next';
 
 export function AudienceSection() {
-  const TITLE = 'Perfect for';
-  const SUB_TITLE = `Whether you're just starting out or you've been coding for years, Tandem meets you where you
-        are. Practice at your own pace, at your own level`;
+  const { t } = useTranslation('audience');
 
   const AUDIENCE_DATA = [
-    { icon: '🌱', label: 'Junior Devs', color: 'green', row: 1 },
-    { icon: '🚀', label: 'Mid-Level', color: 'orange', row: 1 },
-    { icon: '⚡', label: 'Seniors', color: 'yellow', row: 1 },
-    { icon: '🔄', label: 'Career Changers', color: 'purple', row: 2 },
-    { icon: '🎓', label: 'Students', color: 'blue', row: 2 },
-    { icon: '💼', label: 'Job Seekers', color: 'red', row: 3 },
-    { icon: '👨‍💻', label: 'Freelancers', color: 'teal', row: 3 },
-    { icon: '📚', label: 'Self-taught', color: 'lime', row: 3 },
+    { icon: '🌱', label: t('audience.junior'), color: 'green', row: 1 },
+    { icon: '🚀', label: t('audience.mid'), color: 'orange', row: 1 },
+    { icon: '⚡', label: t('audience.senior'), color: 'yellow', row: 1 },
+    { icon: '🔄', label: t('audience.career'), color: 'purple', row: 2 },
+    { icon: '🎓', label: t('audience.student'), color: 'blue', row: 2 },
+    { icon: '💼', label: t('audience.jobSeeker'), color: 'red', row: 3 },
+    { icon: '👨‍💻', label: t('audience.freelancer'), color: 'teal', row: 3 },
+    { icon: '📚', label: t('audience.selftaught'), color: 'lime', row: 3 },
   ];
 
   const rows = [1, 2, 3];
@@ -22,10 +21,10 @@ export function AudienceSection() {
   return (
     <Container size="lg" className={classes.section} py="150">
       <Title order={2} ta="center" className={classes.sectionTitle}>
-        {TITLE}
+        {t('title')}
       </Title>
       <Text c="dimmed" className={classes.sectionDescription} ta="center" mb={50}>
-        {SUB_TITLE}
+        {t('subtitle')}
       </Text>
       <Group justify="center" gap="xl" className={classes.grid}>
         {rows.map((rowNum) => (

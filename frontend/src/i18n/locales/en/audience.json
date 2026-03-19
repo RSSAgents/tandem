@@ -1,0 +1,14 @@
+{
+  "title": "Perfect for",
+  "subtitle": "Whether you're just starting out or you've been coding for years, Tandem meets you where you are. Practice at your own pace, at your own level",
+  "audience": {
+    "junior": "Junior Devs",
+    "mid": "Mid-Level",
+    "senior": "Seniors",
+    "career": "Career Changers",
+    "student": "Students",
+    "jobSeeker": "Job Seekers",
+    "freelancer": "Freelancers",
+    "selftaught": "Self-taught"
+  }
+}

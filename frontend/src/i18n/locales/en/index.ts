@@ -6,6 +6,7 @@ import shared from './shared.json';
 import leaderboard from './leaderboard.json';
 import hero from './hero.json';
 import howItWorks from './howItWorks.json';
+import audience from './audience.json';
 
 export const en = {
   auth,
@@ -16,4 +17,5 @@ export const en = {
   leaderboard,
   hero,
   howItWorks,
+  audience,
 };
