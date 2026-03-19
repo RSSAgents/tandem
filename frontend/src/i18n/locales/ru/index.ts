@@ -11,6 +11,7 @@ import aboutWidgets from './aboutWidgets.json';
 import aboutAI from './aboutAI.json';
 import leadersHomePage from './leadersHomePage.json';
 import benefits from './benefits.json';
+import faq from './faq.json';
 
 export const ru = {
   auth,
@@ -26,4 +27,5 @@ export const ru = {
   aboutAI,
   leadersHomePage,
   benefits,
+  faq,
 };

@@ -1,48 +1,17 @@
 import { Accordion, Title, Container } from '@mantine/core';
 import classes from './FAQSection.module.css';
 import { IconPlus } from '@tabler/icons-react';
-
-const FAQS = [
-  {
-    question: 'Do I need to install anything to start?',
-    answer:
-      'No installation needed! Everything works right in your browser. Just sign up and start solving challenges immediately.',
-  },
-  {
-    question: 'Is Tandem really free?',
-    answer:
-      'Yes! All challenges are completely free, including basic progress tracking and access to the global leaderboard.',
-  },
-  {
-    question: 'What topics are covered?',
-    answer:
-      'We cover JavaScript (closures, event loop, promises) at the moment but new topics added regularly!',
-  },
-  {
-    question: 'How is the AI interviewer different from just practicing questions?',
-    answer:
-      "Our AI doesn't just read questions - it adapts to your answers, asks follow-up questions and gives detailed feedback, just like a real interviewer. You'll face realistic scenarios that prepare you for the real thing.",
-  },
-  {
-    question: 'How does the leaderboard work?',
-    answer:
-      'Every solved widget earns you points. Your total points determine your global ranking. Compete with thousands of developers worldwide and see your name rise as you improve.',
-  },
-  {
-    question: 'How much time do I need per day?',
-    answer:
-      'Just 15 minutes a day is enough to build momentum. Most users do 2-3 sessions per week, but you can go at your own pace.',
-  },
-];
-
-const TITLE = (
-  <>
-    FAQ<span className={classes.highlight}>s</span>
-  </>
-);
+import { Trans, useTranslation } from 'react-i18next';
 
 export function FAQSection() {
-  const items = FAQS.map((item) => (
+  const { t } = useTranslation('faq');
+
+  const questions = t('questions', { returnObjects: true }) as Array<{
+    question: string;
+    answer: string;
+  }>;
+
+  const items = questions.map((item) => (
     <Accordion.Item key={item.question} value={item.question}>
       <Accordion.Control>{item.question}</Accordion.Control>
       <Accordion.Panel>{item.answer}</Accordion.Panel>
@@ -52,7 +21,11 @@ export function FAQSection() {
   return (
     <Container size="md" py={150}>
       <Title order={2} className={classes.sectionTitle}>
-        {TITLE}
+        <Trans
+          i18nKey="title"
+          ns="faq"
+          components={{ 1: <span className={classes.highlight} /> }}
+        />
       </Title>
       <Accordion
         className={classes.myAccordion}
