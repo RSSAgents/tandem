@@ -10,6 +10,7 @@ import audience from './audience.json';
 import aboutWidgets from './aboutWidgets.json';
 import aboutAI from './aboutAI.json';
 import leadersHomePage from './leadersHomePage.json';
+import benefits from './benefits.json';
 
 export const ru = {
   auth,
@@ -24,4 +25,5 @@ export const ru = {
   aboutWidgets,
   aboutAI,
   leadersHomePage,
+  benefits,
 };
