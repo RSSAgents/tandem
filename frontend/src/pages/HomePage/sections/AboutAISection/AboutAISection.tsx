@@ -2,22 +2,16 @@ import { Container, Title, Text, Paper, Image, List, ThemeIcon, Stack } from '@m
 import { IconCheck } from '@tabler/icons-react';
 import aiInterviewImage from './ai.jpg';
 import classes from './AboutAISection.module.css';
-
-const TITLE = (
-  <>
-    Simulate <span className={classes.highlight}>real interviews</span> with our AI assistant
-  </>
-);
-const SUB_TITLE = `Practice with an AI that asks real interview questions, adapts to your answers, and gives instant feedback — just like a real interviewer.
-`;
-
-const AI_FEATURES = {
-  'Real interview questions': '– from junior to staff level, covering JS, TS, and Algorithms',
-  'Adaptive follow-ups': '– AI digs deeper based on your answers',
-  'Instant feedback': '– get detailed scores and explanations',
-};
+import { useTranslation, Trans } from 'react-i18next';
 
 export function AboutAISection() {
+  const { t } = useTranslation('aboutAI');
+
+  const AI_FEATURES = t('features', { returnObjects: true }) as Array<{
+    title: string;
+    description: string;
+  }>;
+
   return (
     <Container className={classes.section} size="lg" py="150">
       <Paper className={classes.imageWrapper} withBorder={false} radius="md" shadow="xl">
@@ -25,10 +19,14 @@ export function AboutAISection() {
       </Paper>
       <Stack>
         <Title order={2} className={classes.sectionTitle}>
-          {TITLE}
+          <Trans
+            i18nKey="title"
+            ns="aboutAI"
+            components={{ 1: <span className={classes.highlight} /> }}
+          />
         </Title>
         <Text c="dimmed" className={classes.sectionDescription}>
-          {SUB_TITLE}
+          {t('subtitle')}
         </Text>
         <List
           mt={30}
@@ -40,12 +38,12 @@ export function AboutAISection() {
             </ThemeIcon>
           }
         >
-          {Object.entries(AI_FEATURES).map(([bold, text], index) => (
+          {AI_FEATURES.map((feature, index) => (
             <List.Item key={index}>
               <Text span fw={700}>
-                {bold}
+                {feature.title}
               </Text>{' '}
-              – {text}
+              – {feature.description}
             </List.Item>
           ))}
         </List>

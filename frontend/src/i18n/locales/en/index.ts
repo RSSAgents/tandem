@@ -8,6 +8,7 @@ import hero from './hero.json';
 import howItWorks from './howItWorks.json';
 import audience from './audience.json';
 import aboutWidgets from './aboutWidgets.json';
+import aboutAI from './aboutAI.json';
 
 export const en = {
   auth,
@@ -20,4 +21,5 @@ export const en = {
   howItWorks,
   audience,
   aboutWidgets,
+  aboutAI,
 };
