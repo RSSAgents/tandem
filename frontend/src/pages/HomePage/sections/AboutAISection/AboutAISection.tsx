@@ -27,7 +27,7 @@ export function AboutAISection() {
         <Title order={2} className={classes.sectionTitle}>
           {TITLE}
         </Title>
-        <Text c="dimmed" size="lg">
+        <Text c="dimmed" className={classes.sectionDescription}>
           {SUB_TITLE}
         </Text>
         <List

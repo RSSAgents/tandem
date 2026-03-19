@@ -12,6 +12,12 @@
   margin-bottom: 24px;
 }
 
+.sectionDescription {
+  max-width: 600px;
+  font-size: 18px;
+  margin: auto;
+}
+
 .highlight {
   color: var(--accent);
 }

@@ -27,7 +27,7 @@ export function AboutWidgetsSection() {
           {TITLE}
         </Title>
 
-        <Text c="dimmed" size="lg">
+        <Text c="dimmed" className={classes.sectionDescription}>
           {SUB_TITLE}
         </Text>
 
