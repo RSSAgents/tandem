@@ -1,5 +1,18 @@
+.sectionTitle {
+  font-size: 40px;
+  font-weight: 800;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  margin-bottom: 34px;
+  text-align: center;
+}
+
+.highlight {
+  color: var(--accent);
+}
+
 .myAccordion {
-  width: 900px;
+  width: 800px;
+  margin: auto;
 }
 
 .icon {
@@ -44,4 +57,33 @@
   padding: 0.5rem;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-light);
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  .myAccordion {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  .control {
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 28px;
+  }
 }

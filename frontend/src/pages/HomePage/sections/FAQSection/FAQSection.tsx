@@ -2,7 +2,7 @@ import { Accordion, Title, Container } from '@mantine/core';
 import classes from './FAQSection.module.css';
 import { IconPlus } from '@tabler/icons-react';
 
-const faqs = [
+const FAQS = [
   {
     question: 'Do I need to install anything to start?',
     answer:
@@ -35,8 +35,14 @@ const faqs = [
   },
 ];
 
+const TITLE = (
+  <>
+    FAQ<span className={classes.highlight}>s</span>
+  </>
+);
+
 export function FAQSection() {
-  const items = faqs.map((item) => (
+  const items = FAQS.map((item) => (
     <Accordion.Item key={item.question} value={item.question}>
       <Accordion.Control>{item.question}</Accordion.Control>
       <Accordion.Panel>{item.answer}</Accordion.Panel>
@@ -44,9 +50,9 @@ export function FAQSection() {
   ));
 
   return (
-    <Container size="md" py={50}>
-      <Title order={2} ta="center" mb={40}>
-        FAQs
+    <Container size="md" py={150}>
+      <Title order={2} className={classes.sectionTitle}>
+        {TITLE}
       </Title>
       <Accordion
         className={classes.myAccordion}
