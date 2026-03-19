@@ -1,0 +1,12 @@
+.subtitle {
+  margin-bottom: 10px;
+  color: var(--mantine-color-blue-7);
+}
+
+.category {
+  margin-bottom: 50px;
+}
+
+.accordion {
+  color: var(--mantine-color-gray-6);
+}
