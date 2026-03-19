@@ -9,6 +9,7 @@ import howItWorks from './howItWorks.json';
 import audience from './audience.json';
 import aboutWidgets from './aboutWidgets.json';
 import aboutAI from './aboutAI.json';
+import leadersHomePage from './leadersHomePage.json';
 
 export const en = {
   auth,
@@ -22,4 +23,5 @@ export const en = {
   audience,
   aboutWidgets,
   aboutAI,
+  leadersHomePage,
 };
