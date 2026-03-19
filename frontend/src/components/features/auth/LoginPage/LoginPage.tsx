@@ -27,7 +27,7 @@ export const LoginPage = () => {
     <div className={classes.wrapper}>
       <Paper className={classes.card}>
         <Text size="2xl" fw={500} ta="center" mb="xl">
-          {t('actions.login')}
+          {t('headers.login')}
         </Text>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -57,7 +57,7 @@ export const LoginPage = () => {
         <Text size="sm" mt="lg" ta="center">
           {t('links.noAccount')}{' '}
           <Text className={classes.signupLink} component={Link} to="/register">
-            {t('actions.signup')}
+            {t('headers.signup')}
           </Text>
         </Text>
       </Paper>

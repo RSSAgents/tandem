@@ -27,12 +27,13 @@ const RegisterPage = () => {
     <div className={classes.wrapper}>
       <Paper className={classes.card}>
         <Text size="2xl" fw={500} ta="center" mb="xl">
-          {t('actions.register')}
+          {t('headers.signup')}
         </Text>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
             label={t('fields.name')}
+            placeholder="Your name"
             {...register('name')}
             error={errors.name?.message ? t(errors.name.message as RegisterErrorKeys) : undefined}
             mb="lg"
@@ -40,6 +41,7 @@ const RegisterPage = () => {
 
           <TextInput
             label={t('fields.email')}
+            placeholder="you@example.com"
             {...register('email')}
             error={errors.email?.message ? t(errors.email.message as RegisterErrorKeys) : undefined}
             mb="lg"
@@ -47,6 +49,7 @@ const RegisterPage = () => {
 
           <PasswordInput
             label={t('fields.password')}
+            placeholder="••••••"
             {...register('password')}
             error={
               errors.password?.message ? t(errors.password.message as RegisterErrorKeys) : undefined
@@ -56,6 +59,7 @@ const RegisterPage = () => {
 
           <PasswordInput
             label={t('fields.confirmPassword')}
+            placeholder="••••••"
             {...register('confirmPassword')}
             error={
               errors.confirmPassword?.message
@@ -66,14 +70,14 @@ const RegisterPage = () => {
           />
 
           <Button type="submit" fullWidth loading={isSubmitting}>
-            {t('actions.register')}
+            {t('actions.signup')}
           </Button>
         </form>
 
         <Text mt="lg" size="sm" ta="center">
           {t('links.alreadyHaveAccount')}{' '}
           <Text className={classes.signinLink} component={Link} to="/login">
-            {t('actions.login')}
+            {t('headers.login')}
           </Text>
         </Text>
       </Paper>
