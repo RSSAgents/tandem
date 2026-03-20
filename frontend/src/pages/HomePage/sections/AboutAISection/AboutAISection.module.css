@@ -31,15 +31,11 @@
 }
 
 .imageWrapper {
-  flex: 1 1 70%;
-  max-width: 70%;
+  flex: 1 1 90%;
+  max-width: 90%;
   align-self: stretch;
   display: flex;
   align-items: stretch;
-}
-
-.imageWrapper:hover .image {
-  transform: scale(1.02);
 }
 
 @media (max-width: 768px) {

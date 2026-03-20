@@ -39,7 +39,7 @@
 }
 
 .imageWrapper {
-  width: 320px;
+  width: 400px;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background: white;
@@ -55,17 +55,12 @@
   margin-left: 50px;
 }
 
-.imageWrapper:hover {
-  transform: translateY(0) rotate(0deg) scale(1.05);
-  z-index: 10;
-  box-shadow: 0 20px 40px rgba(34, 139, 230, 0.2);
-}
-
 .image {
   width: 100%;
   height: auto;
   display: block;
   border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(34, 139, 230, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -108,4 +103,36 @@
   .sectionTitle {
     font-size: 28px;
   }
+}
+
+[data-mantine-color-scheme='dark'] .imageWrapper {
+  background: var(--mantine-color-dark-9);
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+[data-mantine-color-scheme='dark'] .imageWrapper::before,
+[data-mantine-color-scheme='dark'] .imageWrapper::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(90deg, transparent, rgba(34, 139, 230, 0.3), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+[data-mantine-color-scheme='dark'] .imageWrapper::before {
+  top: 0;
+}
+
+[data-mantine-color-scheme='dark'] .imageWrapper::after {
+  bottom: 0;
+}
+
+[data-mantine-color-scheme='dark'] .image {
+  filter: brightness(0.8);
+  transition: filter 0.3s ease;
 }

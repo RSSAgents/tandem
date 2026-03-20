@@ -32,10 +32,6 @@
   transition: transform 0.4s ease;
 }
 
-.imagePaper:hover .image {
-  transform: scale(1.02);
-}
-
 @media (max-width: 768px) {
   .sectionDescription {
     font-size: 16px;
