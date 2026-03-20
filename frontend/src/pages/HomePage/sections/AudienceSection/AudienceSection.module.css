@@ -13,6 +13,7 @@
   max-width: 600px;
   font-size: 18px;
   margin: auto;
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
 }
 
 .grid {
@@ -22,63 +23,116 @@
   align-items: center;
 }
 
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
 .sticker {
-  padding: 15px 30px;
-  background: var(--card-bg);
-  border-radius: 4px;
-  font-size: 1.2rem;
+  padding: 18px 34px;
+  border-radius: 10px;
+  font-size: 20px;
   font-weight: 500;
-  transition: all 0.2s ease;
-  transform: rotate(var(--rotate));
-  box-shadow:
-    0 2px 0 rgba(0, 0, 0, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: light-dark(0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03));
 }
 
-.sticker::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(135deg, transparent 50%, var(--bg) 50%);
+.sticker {
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
 }
 
-.row:nth-child(1) .sticker:nth-child(1) {
-  --rotate: -2deg;
-  background: #40c05720;
+[data-mantine-color-scheme='light'] .sticker[data-color='green'] {
+  background: var(--mantine-color-green-0);
 }
-.row:nth-child(1) .sticker:nth-child(2) {
-  --rotate: 1deg;
-  background: #fd7e1420;
+[data-mantine-color-scheme='light'] .sticker[data-color='orange'] {
+  background: var(--mantine-color-orange-0);
 }
-.row:nth-child(1) .sticker:nth-child(3) {
-  --rotate: -1deg;
-  background: #fab00520;
+[data-mantine-color-scheme='light'] .sticker[data-color='yellow'] {
+  background: var(--mantine-color-yellow-0);
 }
-.row:nth-child(2) .sticker:nth-child(1) {
-  --rotate: 2deg;
-  background: #7950f220;
+[data-mantine-color-scheme='light'] .sticker[data-color='purple'] {
+  background: var(--mantine-color-violet-0);
 }
-.row:nth-child(2) .sticker:nth-child(2) {
-  --rotate: -2deg;
-  background: #228be620;
+[data-mantine-color-scheme='light'] .sticker[data-color='blue'] {
+  background: var(--mantine-color-blue-0);
 }
-.row:nth-child(3) .sticker:nth-child(1) {
-  --rotate: -1deg;
-  background: #fa525220;
+[data-mantine-color-scheme='light'] .sticker[data-color='red'] {
+  background: var(--mantine-color-red-0);
 }
-.row:nth-child(3) .sticker:nth-child(2) {
-  --rotate: 3deg;
-  background: #12b88620;
+[data-mantine-color-scheme='light'] .sticker[data-color='teal'] {
+  background: var(--mantine-color-teal-0);
 }
-.row:nth-child(3) .sticker:nth-child(3) {
-  --rotate: -3deg;
-  background: #be4bdb20;
+[data-mantine-color-scheme='light'] .sticker[data-color='lime'] {
+  background: var(--mantine-color-lime-0);
 }
 
-.sticker:hover {
-  transform: rotate(0deg) scale(1.1);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+[data-mantine-color-scheme='dark'] .sticker {
+  background: var(--mantine-color-dark-6);
+  color: var(--mantine-color-dark-0);
+  border-color: var(--mantine-color-dark-4);
+}
+
+.row:first-child .sticker:nth-child(odd) {
+  transform: rotate(-1deg);
+}
+
+.row:first-child .sticker:nth-child(even) {
+  transform: rotate(1deg);
+}
+
+.row:nth-child(2) .sticker:nth-child(odd) {
+  transform: rotate(2deg);
+}
+
+.row:nth-child(2) .sticker:nth-child(even) {
+  transform: rotate(-1deg);
+}
+
+.row:last-child .sticker:nth-child(odd) {
+  transform: rotate(-2deg);
+}
+
+.row:last-child .sticker:nth-child(even) {
+  transform: rotate(1deg);
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 32px;
+  }
+
+  .sectionDescription {
+    font-size: 16px;
+    padding: 0 16px;
+  }
+
+  .sticker {
+    padding: 8px 18px;
+    font-size: 1rem;
+  }
+
+  .row {
+    gap: 12px;
+  }
+
+  .row:first-child .sticker:nth-child(odd),
+  .row:first-child .sticker:nth-child(even),
+  .row:nth-child(2) .sticker:nth-child(odd),
+  .row:nth-child(2) .sticker:nth-child(even),
+  .row:last-child .sticker:nth-child(odd),
+  .row:last-child .sticker:nth-child(even) {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 28px;
+  }
+
+  .sticker {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+  }
 }

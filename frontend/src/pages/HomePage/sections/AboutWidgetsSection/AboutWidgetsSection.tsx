@@ -37,10 +37,10 @@ export function AboutWidgetsSection() {
         <List
           mt={30}
           spacing="sm"
-          size="sm"
+          size="lg"
           icon={
-            <ThemeIcon size={20} radius="xl" color="blue" variant="light">
-              <IconCheck size={12} stroke={1.5} />
+            <ThemeIcon size={22} radius="xl" color="blue" variant="light">
+              <IconCheck size={15} stroke={1.5} />
             </ThemeIcon>
           }
         >

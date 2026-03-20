@@ -15,6 +15,7 @@
   max-width: 600px;
   font-size: 18px;
   margin: auto;
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
 }
 
 .textBlock {
@@ -26,10 +27,20 @@
   color: var(--accent);
 }
 
+.benefitsGrid {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .benefitCard {
   display: flex;
   align-items: center;
-  height: 100%;
+  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  flex: 1 1 calc(50% - 20px);
+  height: auto;
+  min-height: 80px;
 }
 
 @media (max-width: 768px) {

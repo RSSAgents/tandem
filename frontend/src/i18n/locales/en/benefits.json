@@ -5,12 +5,12 @@
     {
       "key": "feedback",
       "title": "Instant feedback",
-      "description": "Get immediate explanations on every solution"
+      "description": "Get immediate explanations"
     },
     {
       "key": "realQuestions",
       "title": "Real questions",
-      "description": "From FAANG and top tech companies"
+      "description": "From top tech companies"
     },
     {
       "key": "ai",
@@ -20,7 +20,7 @@
     {
       "key": "leaderboard",
       "title": "Leaderboard",
-      "description": "Compete with developers around the world"
+      "description": "Compete globally"
     },
     {
       "key": "progress",
@@ -30,7 +30,7 @@
     {
       "key": "daily",
       "title": "Daily challenges",
-      "description": "Build a streak and stay motivated"
+      "description": "Stay motivated"
     }
   ]
 }

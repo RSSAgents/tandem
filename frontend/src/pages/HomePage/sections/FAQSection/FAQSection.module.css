@@ -18,13 +18,18 @@
 .icon {
   width: 20px;
   height: 20px;
-  color: var(--accent);
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
 }
 
 .item {
+  font-size: 16px;
   border-left: 3px solid transparent;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
   transition: border-color 0.2s ease;
+}
+
+.item:last-child {
+  border-bottom: none;
 }
 
 .item:hover {
@@ -35,11 +40,12 @@
   font-weight: 500;
   font-size: 1.1rem;
   padding: 1rem;
-  color: var(--text-main);
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
 }
 
-.control:hover {
-  background: var(--panel-soft);
+.control:hover,
+.control:focus {
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
 }
 
 :global(.mantine-Accordion-item[data-active]) {
@@ -47,16 +53,15 @@
 }
 
 :global(.mantine-Accordion-item[data-active]) .control {
-  color: var(--accent);
-  background: var(--panel-soft);
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
 }
 
 :global(.mantine-Accordion-root) {
-  background: var(--card-bg);
+  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
   border-radius: 12px;
   padding: 0.5rem;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-light);
+  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
 }
 
 @media (max-width: 768px) {

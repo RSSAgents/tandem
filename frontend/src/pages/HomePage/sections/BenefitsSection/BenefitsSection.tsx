@@ -47,14 +47,14 @@ export function BenefitsSection() {
                 <ThemeIcon size={44} radius="xl" color={color} variant="light">
                   <Icon size={24} stroke={1.5} />
                 </ThemeIcon>
-                <div>
-                  <Text fw={600} size="md">
+                <Box>
+                  <Text fw={700} size="lg">
                     {benefit.title}
                   </Text>
-                  <Text size="xs" c="dimmed">
+                  <Text size="lg" c="dimmed">
                     {benefit.description}
                   </Text>
-                </div>
+                </Box>
               </Group>
             </Paper>
           );
