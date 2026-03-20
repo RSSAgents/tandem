@@ -1,7 +1,7 @@
 import { Button, Container, Text, Title } from '@mantine/core';
 import classes from './HeroSection.module.css';
 import { IconArrowDown } from '@tabler/icons-react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 export function HeroSection() {
   const { t } = useTranslation('hero');
@@ -16,7 +16,11 @@ export function HeroSection() {
   return (
     <Container className={classes.section}>
       <Title order={1} className={classes.title}>
-        {t('title')}
+        <Trans
+          i18nKey="title"
+          ns="hero"
+          components={{ 1: <span className={classes.gradient} /> }}
+        />
       </Title>
       <Container p={0} size={600}>
         <Text size="lg" c="dimmed" className={classes.subtitle}>

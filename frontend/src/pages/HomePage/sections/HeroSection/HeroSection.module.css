@@ -11,26 +11,15 @@
 
 .title {
   font-size: 70px;
-  background: linear-gradient(135deg, #2b32b2 0%, #1488cc 30%, #9d4edd 70%, #2b32b2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  background-size: 300% auto;
-  animation: gradientShift 15s ease infinite;
+  text-shadow: 0 0 10px rgba(34, 139, 230, 0.3);
   line-height: 1.1;
   white-space: pre-line;
+  transition: text-shadow 0.3s ease;
 }
 
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.title span {
+  font-size: 80px;
+  color: var(--accent);
 }
 
 .subtitle {
