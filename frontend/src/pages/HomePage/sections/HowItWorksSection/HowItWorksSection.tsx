@@ -42,7 +42,7 @@ export function HowItWorksSection() {
   });
 
   return (
-    <Container size="lg" py="xl" className={classes.section}>
+    <Container size="lg" py="xl" id="how-it-works" className={classes.section}>
       <Title order={2} className={classes.sectionTitle} ta="center" mt="sm">
         {t('title')}
       </Title>

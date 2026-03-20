@@ -6,6 +6,13 @@ import { useTranslation } from 'react-i18next';
 export function HeroSection() {
   const { t } = useTranslation('hero');
 
+  const scrollToNext = () => {
+    const nextSection = document.getElementById('how-it-works');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <Container className={classes.section}>
       <Title order={1} className={classes.title}>
@@ -22,6 +29,7 @@ export function HeroSection() {
         variant="default"
         color="gray"
         rightSection={<IconArrowDown size={18} />}
+        onClick={scrollToNext}
       >
         {t('learnMore')}
       </Button>
