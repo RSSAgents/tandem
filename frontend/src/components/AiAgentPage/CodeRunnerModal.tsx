@@ -1,5 +1,5 @@
 import { SandpackCodeEditor, SandpackProvider, useSandpack } from '@codesandbox/sandpack-react';
-import { Modal } from '@mantine/core';
+import { Modal, useMantineColorScheme } from '@mantine/core';
 import { IconPlayerPlay, IconTrash } from '@tabler/icons-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +22,8 @@ const ConsolePanel = () => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { t } = useTranslation('aiAgent');
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
 
   const handleRun = () => {
     const activeFile = Object.keys(sandpack.files).find(
@@ -57,7 +59,11 @@ const ConsolePanel = () => {
     iframe.srcdoc = html;
   };
 
-  const colorMap = { log: '#c3c3c3', error: '#ff6b6b', warn: '#ffd43b' };
+  const colorMap = {
+    log: isDark ? '#c3c3c3' : '#333333',
+    error: isDark ? '#ff6b6b' : '#c0392b',
+    warn: isDark ? '#ffd43b' : '#c67a00',
+  };
 
   return (
     <div style={{ position: 'relative', marginTop: 8 }}>
@@ -68,11 +74,10 @@ const ConsolePanel = () => {
         title="code-runner-sandbox"
       />
       <div
-        className={classes.sandpackConsole}
+        className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}
         style={{
           height: 150,
           overflow: 'auto',
-          background: 'var(--mantine-color-dark-8, #1a1a2e)',
           borderRadius: 8,
           padding: '8px 12px',
           fontFamily: 'monospace',
@@ -80,7 +85,7 @@ const ConsolePanel = () => {
         }}
       >
         {logs.length === 0 ? (
-          <span style={{ color: '#555' }}>{t('codeRunnerModal.placeholder')}</span>
+          <span style={{ color: isDark ? '#666' : '#999' }}>{t('codeRunnerModal.placeholder')}</span>
         ) : (
           logs.map((entry, i) => (
             <div
@@ -119,6 +124,7 @@ const ConsolePanel = () => {
 
 export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerModalProps) => {
   const { t } = useTranslation('aiAgent');
+  const { colorScheme } = useMantineColorScheme();
 
   const getFiles = (): Record<string, string> => {
     if (language === 'html') {
@@ -136,7 +142,7 @@ export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerM
   return (
     <Modal opened={opened} onClose={onClose} title={t('codeRunnerModal.title')} size="xl" centered>
       {opened && (
-        <SandpackProvider template="vanilla" files={getFiles()} theme="dark">
+        <SandpackProvider template="vanilla" files={getFiles()} theme={colorScheme === 'dark' ? 'dark' : 'light'}>
           <SandpackCodeEditor style={{ height: 300 }} showLineNumbers />
           <ConsolePanel />
         </SandpackProvider>

@@ -341,6 +341,10 @@
   user-select: text;
 }
 
+.sandpackConsolePane {
+  background: light-dark(#f1f3f5, #1a1a2e);
+}
+
 .sandpackConsole [class*='console'] {
   line-height: 1.2;
   overflow-y: auto;
