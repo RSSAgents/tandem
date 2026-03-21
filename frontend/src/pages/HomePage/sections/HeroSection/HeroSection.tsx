@@ -14,7 +14,7 @@ export function HeroSection() {
   };
 
   return (
-    <Container className={classes.section}>
+    <Container className={classes.section} py={{ base: 60, sm: 80, md: 100 }}>
       <Title order={1} className={classes.title}>
         <Trans
           i18nKey="title"

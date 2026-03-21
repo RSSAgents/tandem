@@ -12,8 +12,13 @@ export function LeaderboardSection() {
 
   const { t } = useTranslation('leadersHomePage');
   return (
-    <Container size="lg" py="150" className={classes.section}>
-      <Title order={2} className={classes.sectionTitle}>
+    <Container size="lg" py={{ base: 60, sm: 80, md: 100 }} className={classes.section}>
+      <Title
+        order={2}
+        className={classes.sectionTitle}
+        fz={{ base: 32, sm: 36, md: 40, lg: 48 }}
+        mb={{ base: 16, sm: 18, md: 20, lg: 24 }}
+      >
         <Trans
           i18nKey="title"
           ns="leadersHomePage"

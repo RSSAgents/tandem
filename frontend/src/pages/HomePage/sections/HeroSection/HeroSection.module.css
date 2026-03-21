@@ -36,13 +36,15 @@
 }
 
 @media (max-width: 1200px) {
-  .title {
+  .title,
+  .title span {
     font-size: 60px;
   }
 }
 
 @media (max-width: 992px) {
-  .title {
+  .title,
+  .title span {
     font-size: 50px;
   }
 
@@ -63,7 +65,8 @@
     padding: 100px 16px 60px;
   }
 
-  .title {
+  .title,
+  .title span {
     font-size: 40px;
   }
 
@@ -79,7 +82,8 @@
 }
 
 @media (max-width: 480px) {
-  .title {
+  .title,
+  .title span {
     font-size: 32px;
   }
 

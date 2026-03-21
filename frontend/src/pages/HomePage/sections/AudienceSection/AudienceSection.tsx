@@ -19,8 +19,14 @@ export function AudienceSection() {
   const rows = [1, 2, 3];
 
   return (
-    <Container size="lg" className={classes.section} py="150">
-      <Title order={2} ta="center" className={classes.sectionTitle}>
+    <Container size="lg" className={classes.section} py={{ base: 60, sm: 80, md: 100 }}>
+      <Title
+        order={2}
+        ta="center"
+        className={classes.sectionTitle}
+        fz={{ base: 32, sm: 36, md: 40, lg: 48 }}
+        mb={{ base: 16, sm: 18, md: 20, lg: 24 }}
+      >
         {t('title')}
       </Title>
       <Text c="dimmed" className={classes.sectionDescription} ta="center" mb={50}>

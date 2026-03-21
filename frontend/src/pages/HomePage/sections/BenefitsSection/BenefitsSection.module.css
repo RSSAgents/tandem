@@ -5,10 +5,8 @@
 }
 
 .sectionTitle {
-  font-size: 40px;
   font-weight: 800;
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  margin-bottom: 24px;
 }
 
 .sectionDescription {
@@ -43,13 +41,18 @@
   min-height: 80px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .section {
     flex-direction: column;
     gap: 40px;
-    padding: 0 20px;
   }
 
+  .textBlock {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
   .textBlock,
   .benefitsGrid {
     flex: 0 0 100%;
@@ -60,28 +63,18 @@
     text-align: center;
   }
 
-  .sectionTitle {
-    font-size: 32px;
-    margin-bottom: 16px;
-  }
-
   .sectionDescription {
     font-size: 16px;
     max-width: 100%;
     margin: 0 auto;
   }
-
-  .benefitsGrid {
-    width: 100%;
-  }
 }
 
-@media (max-width: 480px) {
-  .sectionTitle {
-    font-size: 28px;
-  }
-
+@media (max-width: 576px) {
   .benefitsGrid {
-    gap: 12px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 }

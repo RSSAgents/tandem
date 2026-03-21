@@ -1,9 +1,4 @@
-.section {
-  padding: var(--mantine-spacing-6xl) 0;
-}
-
 .sectionTitle {
-  font-size: 40px;
   font-weight: 800;
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   margin-bottom: 24px;
@@ -98,10 +93,6 @@
 }
 
 @media (max-width: 768px) {
-  .sectionTitle {
-    font-size: 32px;
-  }
-
   .sectionDescription {
     font-size: 16px;
     padding: 0 16px;
@@ -127,10 +118,6 @@
 }
 
 @media (max-width: 480px) {
-  .sectionTitle {
-    font-size: 28px;
-  }
-
   .sticker {
     padding: 6px 14px;
     font-size: 0.9rem;

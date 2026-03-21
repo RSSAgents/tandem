@@ -6,7 +6,6 @@
 }
 
 .sectionTitle {
-  font-size: 40px;
   font-weight: 800;
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   margin-bottom: 24px;
@@ -26,6 +25,7 @@
   width: 100%;
   height: auto;
   display: block;
+  object-fit: fill;
   border-radius: 12px;
   transition: transform 0.4s ease;
 }
@@ -44,6 +44,13 @@
   transform: scale(1.05);
 }
 
+@media (max-width: 992px) {
+  .section {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
 @media (max-width: 768px) {
   .section {
     flex-direction: column;
@@ -58,7 +65,6 @@
   }
 
   .sectionTitle {
-    font-size: 32px;
     text-align: center;
   }
 }

@@ -1,9 +1,4 @@
-.section {
-  padding: var(--mantine-spacing-6xl) 0;
-}
-
 .sectionTitle {
-  font-size: 40px;
   font-weight: 800;
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   margin-bottom: 24px;
@@ -116,10 +111,6 @@
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: var(--mantine-spacing-4xl) 0;
-  }
-
   .card {
     padding: var(--mantine-spacing-md);
   }
@@ -143,11 +134,7 @@
   }
 }
 
-@media (max-width: 480px) {
-  .section {
-    padding: var(--mantine-spacing-3xl) 0;
-  }
-
+@media (max-width: 576px) {
   .card {
     padding: var(--mantine-spacing-md);
   }
