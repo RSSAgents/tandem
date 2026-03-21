@@ -4,8 +4,14 @@ import widget1 from './widget1.jpg';
 import widget3 from './widget3.jpg';
 import classes from './AboutWidgetsSection.module.css';
 import { useTranslation, Trans } from 'react-i18next';
+import { useInView } from 'react-intersection-observer';
 
 export function AboutWidgetsSection() {
+  const { ref, inView } = useInView({
+    threshold: 0.8,
+    triggerOnce: true,
+  });
+
   const { t } = useTranslation('aboutWidgets');
 
   const JS_TOPICS = [
@@ -20,7 +26,7 @@ export function AboutWidgetsSection() {
   ];
 
   return (
-    <Container className={classes.section} size="lg" py="100">
+    <Container ref={ref} className={classes.section} size="lg" py="100">
       <Stack className={classes.content} gap="md">
         <Title order={2} className={classes.sectionTitle}>
           <Trans
@@ -55,10 +61,20 @@ export function AboutWidgetsSection() {
         </List>
       </Stack>
       <Box className={classes.imageContainer}>
-        <Paper className={classes.imageWrapper} withBorder={false} radius="md" shadow="xl">
+        <Paper
+          className={`${classes.imageWrapper} ${inView ? classes.imageZoom : ''}`}
+          withBorder={false}
+          radius="md"
+          shadow="xl"
+        >
           <Image src={widget1} className={classes.image} alt="Event Loop widget" />
         </Paper>
-        <Paper className={classes.imageWrapper} withBorder={false} radius="md" shadow="xl">
+        <Paper
+          className={`${classes.imageWrapper} ${inView ? classes.imageZoom : ''}`}
+          withBorder={false}
+          radius="md"
+          shadow="xl"
+        >
           <Image src={widget3} className={classes.image} alt="stack widget" />
         </Paper>
       </Box>

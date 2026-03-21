@@ -3,8 +3,14 @@ import { IconCheck } from '@tabler/icons-react';
 import aiInterviewImage from './ai.jpg';
 import classes from './AboutAISection.module.css';
 import { useTranslation, Trans } from 'react-i18next';
+import { useInView } from 'react-intersection-observer';
 
 export function AboutAISection() {
+  const { ref, inView } = useInView({
+    threshold: 0.8,
+    triggerOnce: true,
+  });
+
   const { t } = useTranslation('aboutAI');
 
   const AI_FEATURES = t('features', { returnObjects: true }) as Array<{
@@ -14,7 +20,13 @@ export function AboutAISection() {
 
   return (
     <Container className={classes.section} size="lg" py="150">
-      <Paper className={classes.imageWrapper} withBorder={false} radius="md" shadow="xl">
+      <Paper
+        ref={ref}
+        className={`${classes.imageWrapper} ${inView ? classes.imageZoom : ''}`}
+        withBorder={false}
+        radius="md"
+        shadow="xl"
+      >
         <Image src={aiInterviewImage} alt="AI Interviewer interface" className={classes.image} />
       </Paper>
       <Stack>

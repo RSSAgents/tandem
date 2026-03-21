@@ -63,6 +63,10 @@
   box-shadow: 0 20px 40px rgba(34, 139, 230, 0.2);
 }
 
+.imageZoom {
+  transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
   .section {
     flex-direction: column;
