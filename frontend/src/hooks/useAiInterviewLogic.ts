@@ -117,8 +117,9 @@ export const useAiInterviewLogic = (state: AgentState) => {
         role: m.sender === 'ai' ? 'assistant' : 'user',
         content: m.text,
       })),
-      { role: 'user', content: userText },
     ];
+
+    apiMessages.push({ role: 'user', content: userText });
 
     const placeholderIds: string[] = [];
     const targetTexts: string[] = [];
@@ -227,7 +228,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
     const text = forcedText || (state.inputs[state.activeTopic]?.[type]?.trim() ?? '');
     if (!text) return;
 
-    if (type === 'interviewer' && state.timer) {
+    if (type === 'interviewer' && state.timer !== null) {
       state.setTimer(null);
     }
 
@@ -238,20 +239,22 @@ export const useAiInterviewLogic = (state: AgentState) => {
       timestamp: Date.now(),
     };
 
-    let targetThreadId = '';
+    const existingThread = state.threads.find(
+    (thread: Thread) => thread.topic === state.activeTopic && thread.type === type,
+  );
+  const targetThreadId = existingThread?.id ?? crypto.randomUUID();
 
     state.setThreads((current: Thread[]) => {
       const idx = current.findIndex(
         (thread: Thread) => thread.topic === state.activeTopic && thread.type === type,
       );
       if (idx !== -1) {
-        targetThreadId = current[idx].id;
         const updated = [...current];
         updated[idx] = { ...updated[idx], messages: [...updated[idx].messages, userMessage] };
         return updated;
       }
       const newThread: Thread = {
-        id: crypto.randomUUID(),
+        id: targetThreadId,
         topic: state.activeTopic!,
         type,
         messages: [
@@ -264,7 +267,6 @@ export const useAiInterviewLogic = (state: AgentState) => {
           userMessage,
         ],
       };
-      targetThreadId = newThread.id;
       return [...current, newThread];
     });
 
