@@ -84,12 +84,11 @@ export const InterviewerSection = ({
   return (
     <Grid.Col span={isMobile ? 12 : 4.5}>
       <Paper
-        className={`${classes.glassPanel} ${classes.border}`}
+        className={`${classes.glassPanel} ${classes.border} ${classes.panelColumn}`}
         p="md"
         radius="md"
         h={isMobile ? '70vh' : `calc(100vh - ${PANEL_HEIGHT_OFFSET}px)`}
         display="flex"
-        style={{ flexDirection: 'column' }}
       >
         <Box mb="md">
           <Group justify="space-between" align="center" mb="xs">
@@ -180,6 +179,7 @@ export const InterviewerSection = ({
                 autosize
                 minRows={1}
                 maxRows={5}
+                classNames={{ input: classes.chatTextareaInput }}
                 disabled={!activeTopic || (timer !== null && timer === 0) || isWaitingForAnswer}
                 value={inputValue}
                 onChange={(e) => onInputChange(e.target.value)}

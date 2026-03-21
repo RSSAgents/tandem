@@ -81,7 +81,7 @@ export const MessageRenderer = ({
               if (match) {
                 const lang = match[1];
                 return (
-                  <Box style={{ position: 'relative' }}>
+                  <Box className={classes.codeBlockWrapper}>
                     <CodeHighlight
                       code={codeStr}
                       language={lang}
@@ -149,8 +149,7 @@ export const MessageRenderer = ({
                 </Text>
               )}
               <Box
-                className={`${classes.messageText} ${classes.markdown}${msg.streaming ? ` ${classes.streamingCursor}` : ''}`}
-                style={{ fontSize: '14px', whiteSpace: 'normal' }}
+                className={`${classes.messageText} ${classes.markdown} ${classes.messageContent}${msg.streaming ? ` ${classes.streamingCursor}` : ''}`}
               >
                 {renderMarkdown(
                   msg.text

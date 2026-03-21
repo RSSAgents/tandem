@@ -13,8 +13,6 @@ import { useAiInterviewLogic } from '../../hooks/useAiInterviewLogic';
 import { DrawerType, ThreadType } from '../../types/aiAgentTypes';
 import {
   MOBILE_BREAKPOINT,
-  MOBILE_SETTINGS_TAB_TOP,
-  MOBILE_TOPICS_TAB_TOP,
   TIMER_SECONDS,
 } from '../../utils/aiAgentConstants';
 import classes from './AiAgentPage.module.css';
@@ -115,10 +113,9 @@ export const AiAgentPage = () => {
             }}
             variant="filled"
             color="#ae3ec9"
-            className={classes.tabButton}
-            style={{ top: `${MOBILE_SETTINGS_TAB_TOP}px` }}
+            className={`${classes.tabButton} ${classes.tabButtonSettings}`}
           >
-            <Text size="9px" fw={700} style={{ transform: 'rotate(-90deg)', whiteSpace: 'nowrap' }}>
+            <Text size="9px" fw={700} className={classes.tabButtonLabel}>
               {t('mobile.settings')}
             </Text>
           </Button>
@@ -129,10 +126,9 @@ export const AiAgentPage = () => {
             }}
             variant="filled"
             color="#22b8cf"
-            className={classes.tabButton}
-            style={{ top: `${MOBILE_TOPICS_TAB_TOP}px` }}
+            className={`${classes.tabButton} ${classes.tabButtonTopics}`}
           >
-            <Text size="9px" fw={700} style={{ transform: 'rotate(-90deg)', whiteSpace: 'nowrap' }}>
+            <Text size="9px" fw={700} className={classes.tabButtonLabel}>
               {t('mobile.topics')}
             </Text>
           </Button>

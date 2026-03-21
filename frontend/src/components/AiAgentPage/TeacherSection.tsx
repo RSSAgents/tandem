@@ -69,25 +69,17 @@ export const TeacherSection = ({
   return (
     <Grid.Col span={isMobile ? 12 : 4.5}>
       <Paper
-        className={`${classes.glassPanel} ${classes.border}`}
+        className={`${classes.glassPanel} ${classes.border} ${classes.panelColumn}`}
         p="md"
         radius="md"
         h={isMobile ? '70vh' : `calc(100vh - ${PANEL_HEIGHT_OFFSET}px)`}
         display="flex"
-        style={{ flexDirection: 'column' }}
       >
         <Group justify="space-between" align="center" mb="md">
           <Badge
             variant="outline"
             color="#1971c2"
-            style={{
-              height: 30,
-              borderRadius: 20,
-              fontSize: 11,
-              fontWeight: 600,
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
-            }}
+            className={classes.teacherBadge}
           >
             {t('teacher.label')}
           </Badge>
@@ -122,6 +114,7 @@ export const TeacherSection = ({
               autosize
               minRows={1}
               maxRows={5}
+              classNames={{ input: classes.chatTextareaInput }}
               disabled={isDisabled}
               value={inputValue}
               onChange={(e) => onInputChange(e.target.value)}

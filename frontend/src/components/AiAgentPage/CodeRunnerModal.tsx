@@ -22,8 +22,6 @@ const ConsolePanel = () => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { t } = useTranslation('aiAgent');
-  const { colorScheme } = useMantineColorScheme();
-  const isDark = colorScheme === 'dark';
 
   const handleRun = () => {
     const activeFile = Object.keys(sandpack.files).find(
@@ -59,50 +57,31 @@ const ConsolePanel = () => {
     iframe.srcdoc = html;
   };
 
-  const colorMap = {
-    log: isDark ? '#c3c3c3' : '#333333',
-    error: isDark ? '#ff6b6b' : '#c0392b',
-    warn: isDark ? '#ffd43b' : '#c67a00',
-  };
-
   return (
-    <div style={{ position: 'relative', marginTop: 8 }}>
+    <div className={classes.consoleWrapper}>
       <iframe
         ref={iframeRef}
         sandbox="allow-scripts"
-        style={{ width: 0, height: 0, border: 'none', position: 'absolute' }}
+        className={classes.consoleSandboxIframe}
         title="code-runner-sandbox"
       />
-      <div
-        className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}
-        style={{
-          height: 150,
-          overflow: 'auto',
-          borderRadius: 8,
-          padding: '8px 12px',
-          fontFamily: 'monospace',
-          fontSize: 13,
-        }}
-      >
+      <div className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}>
         {logs.length === 0 ? (
-          <span style={{ color: isDark ? '#666' : '#999' }}>{t('codeRunnerModal.placeholder')}</span>
+          <span className={classes.consolePlaceholder}>
+            {t('codeRunnerModal.placeholder')}
+          </span>
         ) : (
           logs.map((entry, i) => (
             <div
               key={i}
-              style={{
-                color: colorMap[entry.type],
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-all',
-                lineHeight: 1.3,
-              }}
+              className={`${classes.consoleLogEntry} ${entry.type === 'error' ? classes.consoleLogEntryError : entry.type === 'warn' ? classes.consoleLogEntryWarn : classes.consoleLogEntryLog}`}
             >
               {entry.text}
             </div>
           ))
         )}
       </div>
-      <div style={{ position: 'absolute', bottom: 8, right: 8, display: 'flex', gap: 6 }}>
+      <div className={classes.consoleActionsBar}>
         <button
           onClick={() => setLogs([])}
           title={t('codeRunnerModal.clear')}
@@ -142,8 +121,12 @@ export const CodeRunnerModal = ({ opened, onClose, code, language }: CodeRunnerM
   return (
     <Modal opened={opened} onClose={onClose} title={t('codeRunnerModal.title')} size="xl" centered>
       {opened && (
-        <SandpackProvider template="vanilla" files={getFiles()} theme={colorScheme === 'dark' ? 'dark' : 'light'}>
-          <SandpackCodeEditor style={{ height: 300 }} showLineNumbers />
+        <SandpackProvider
+          template="vanilla"
+          files={getFiles()}
+          theme={colorScheme === 'dark' ? 'dark' : 'light'}
+        >
+          <SandpackCodeEditor className={classes.sandpackEditor} showLineNumbers />
           <ConsolePanel />
         </SandpackProvider>
       )}
