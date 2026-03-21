@@ -1,7 +1,8 @@
 import { CodeEditor } from '@/components/shared/CodeEditor/CodeEditor';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
 import { Button, Container, Select, Stack, Title } from '@mantine/core';
-import styles from './WidgetFillBlanks.module.css';
+import classes from './WidgetFillBlanks.module.css';
+import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 
 export const WidgetFillBlanks = () => {
   const {
@@ -22,15 +23,18 @@ export const WidgetFillBlanks = () => {
     return answers[id] === correctAnswer ? 'correct' : 'incorrect';
   };
 
+  const allCorrect =
+    currentTask?.payload.statements.every((s) => answers[s.id] === s.correctAnswer) ?? false;
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!currentTask) return null;
 
   return (
-    <Container className={styles.container}>
+    <Container className={classes.container}>
       <Title order={2}>Fill in the blanks</Title>
 
-      <div className={styles.editorWrapper}>
+      <div className={classes.editorWrapper}>
         <CodeEditor />
       </div>
 
@@ -39,7 +43,7 @@ export const WidgetFillBlanks = () => {
           const parts = s.text.split('{{blank}}');
 
           return (
-            <div key={s.id} className={styles.statement}>
+            <div key={s.id} className={classes.statement}>
               <span>{parts[0]}</span>
 
               <Select
@@ -47,7 +51,7 @@ export const WidgetFillBlanks = () => {
                 value={answers[s.id] || null}
                 onChange={(val) => handleChange(s.id, val)}
                 classNames={{
-                  input: `${styles[getSelectStatus(s.id, s.correctAnswer)]}`,
+                  input: `${classes[getSelectStatus(s.id, s.correctAnswer)]}`,
                 }}
                 disabled={showResult}
               />
@@ -58,19 +62,28 @@ export const WidgetFillBlanks = () => {
         })}
       </Stack>
 
-      <div className={styles.actions}>
+      <div className={classes.actions}>
         <Button
-          className={styles.button}
+          className={classes.button}
           disabled={!isAllAnswered || showResult}
           onClick={handleCheckResult}
         >
           Check result
         </Button>
 
-        <Button className={styles.button} disabled={!showResult} onClick={handleNextQuestion}>
+        <Button className={classes.button} disabled={!showResult} onClick={handleNextQuestion}>
           Next
         </Button>
       </div>
+
+      {showResult && (
+        <ResultDisplay
+          isCorrect={allCorrect}
+          explanation={
+            allCorrect ? 'Great job!' : 'Some answers are incorrect. Check highlighted answers.'
+          }
+        />
+      )}
     </Container>
   );
 };
