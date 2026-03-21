@@ -1,10 +1,11 @@
 import { z } from 'zod';
+import { nameSchema, emailSchema, passwordSchema } from '../validation.schema';
 
 export const registerSchema = z
   .object({
-    name: z.string().min(2, 'errors.nameTooShort'),
-    email: z.string().email('errors.invalidEmail'),
-    password: z.string().min(6, 'errors.passwordTooShort'),
+    name: nameSchema,
+    email: emailSchema,
+    password: passwordSchema,
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
