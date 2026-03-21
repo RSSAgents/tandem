@@ -12,6 +12,7 @@ import aboutAI from './aboutAI.json';
 import leadersHomePage from './leadersHomePage.json';
 import benefits from './benefits.json';
 import faq from './faq.json';
+import library from './library.json';
 
 export const ru = {
   auth,
@@ -28,4 +29,5 @@ export const ru = {
   leadersHomePage,
   benefits,
   faq,
+  library,
 };

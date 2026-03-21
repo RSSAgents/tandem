@@ -11,6 +11,7 @@ import { HomePage } from '@/pages/HomePage/HomePage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
+const LibraryPage = lazy(() => import('@pages/LibraryPage/LibraryPage'));
 
 export const appRoutes = [
   {
@@ -27,7 +28,7 @@ export const appRoutes = [
     element: <MainLayout />,
     children: [
       { path: ROUTE_PATHS.DASHBOARD, element: <DashboardPage /> },
-      { path: ROUTE_PATHS.LIBRARY, element: <p>Library Page</p> },
+      { path: ROUTE_PATHS.LIBRARY, element: <LibraryPage /> },
       { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
       { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
