@@ -1,12 +1,13 @@
 import { WidgetConsole } from '@/components/features/widgets/WidgetConsole/WidgetConsole';
 import { About } from '@/pages/About/About';
-import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
-import { lazy } from 'react';
-import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
-import { ROUTE_PATHS } from './routePaths';
-import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
+import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
+import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
+import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
+import { lazy } from 'react';
+import { WidgetFillBlanks } from '../components/features/widgets/FillBlanks/WidgetFillBlanks';
 import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
+import { ROUTE_PATHS } from './routePaths';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
@@ -32,6 +33,7 @@ export const appRoutes = [
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
       { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
       { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
+      { path: ROUTE_PATHS.FILL_BLANKS_WIDGET, element: <WidgetFillBlanks /> },
     ],
   },
 ];
