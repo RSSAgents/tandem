@@ -1,18 +1,34 @@
 import { IconCheck } from '@tabler/icons-react';
-import { Container, Image, List, Text, ThemeIcon, Title, Stack, Box, Paper } from '@mantine/core';
-import widget1 from './widget1.jpg';
-import widget3 from './widget3.jpg';
+import {
+  Container,
+  Image,
+  List,
+  Text,
+  ThemeIcon,
+  Title,
+  Stack,
+  Box,
+  Paper,
+  useMantineColorScheme,
+} from '@mantine/core';
+import consoleImageDark from './console-dark.jpg';
+import consoleImageLight from './console-light.jpg';
+import stackImageDark from './stack-dark.jpg';
+import stackImageLight from './stack-light.jpg';
 import classes from './AboutWidgetsSection.module.css';
 import { useTranslation, Trans } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
 
 export function AboutWidgetsSection() {
+  const { colorScheme } = useMantineColorScheme();
   const { ref, inView } = useInView({
     threshold: 0.8,
     triggerOnce: true,
   });
 
   const { t } = useTranslation('aboutWidgets');
+  const consoleImage = colorScheme === 'dark' ? consoleImageDark : consoleImageLight;
+  const stackImage = colorScheme === 'dark' ? stackImageDark : stackImageLight;
 
   const JS_TOPICS = [
     { key: 'stack', title: t('topics.stack.title'), desc: t('topics.stack.description') },
@@ -72,7 +88,7 @@ export function AboutWidgetsSection() {
           radius="md"
           shadow="xl"
         >
-          <Image src={widget1} className={classes.image} alt="Event Loop widget" />
+          <Image src={consoleImage} className={classes.image} alt="Event Loop widget" />
         </Paper>
         <Paper
           className={`${classes.imageWrapper} ${inView ? classes.imageZoom : ''}`}
@@ -80,7 +96,7 @@ export function AboutWidgetsSection() {
           radius="md"
           shadow="xl"
         >
-          <Image src={widget3} className={classes.image} alt="stack widget" />
+          <Image src={stackImage} className={classes.image} alt="stack widget" />
         </Paper>
       </Box>
     </Container>

@@ -1,16 +1,20 @@
-import { Container, Title, Text, Paper, Image } from '@mantine/core';
-import leaderboardImage from './leaderboard.jpg';
+import { Container, Title, Text, Paper, Image, useMantineColorScheme } from '@mantine/core';
+import leaderboardImageDark from './leaderboard-dark.jpg';
+import leaderboardImageLight from './leaderboard-light.jpg';
 import classes from './LeaderboardSection.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
 
 export function LeaderboardSection() {
+  const { colorScheme } = useMantineColorScheme();
   const { ref, inView } = useInView({
     threshold: 0.7,
     triggerOnce: true,
   });
 
   const { t } = useTranslation('leadersHomePage');
+  const leaderboardImage = colorScheme === 'dark' ? leaderboardImageDark : leaderboardImageLight;
+
   return (
     <Container size="lg" py={{ base: 60, sm: 80, md: 100 }} className={classes.section}>
       <Title
