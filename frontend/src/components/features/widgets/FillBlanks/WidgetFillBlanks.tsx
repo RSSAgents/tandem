@@ -1,6 +1,6 @@
 import { CodeEditor } from '@/components/shared/CodeEditor/CodeEditor';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
-import { Button, Container, Select, Stack, Text, Title } from '@mantine/core';
+import { Button, Container, Select, Stack, Title } from '@mantine/core';
 import styles from './WidgetFillBlanks.module.css';
 
 export const WidgetFillBlanks = () => {
@@ -13,9 +13,14 @@ export const WidgetFillBlanks = () => {
     handleCheckResult,
     handleNextQuestion,
     showResult,
-    isCorrect,
     isAllAnswered,
   } = useWidgetFillBlanks();
+
+  const getSelectStatus = (id: string, correctAnswer: string) => {
+    if (!showResult) return '';
+
+    return answers[id] === correctAnswer ? 'correct' : 'incorrect';
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -41,7 +46,10 @@ export const WidgetFillBlanks = () => {
                 data={s.options}
                 value={answers[s.id] || null}
                 onChange={(val) => handleChange(s.id, val)}
-                className={styles.select}
+                classNames={{
+                  input: `${styles[getSelectStatus(s.id, s.correctAnswer)]}`,
+                }}
+                disabled={showResult}
               />
 
               <span>{parts[1] ?? ''}</span>
@@ -50,19 +58,19 @@ export const WidgetFillBlanks = () => {
         })}
       </Stack>
 
-      <Button m="auto" disabled={!isAllAnswered || showResult} onClick={handleCheckResult}>
-        Check result
-      </Button>
+      <div className={styles.actions}>
+        <Button
+          className={styles.button}
+          disabled={!isAllAnswered || showResult}
+          onClick={handleCheckResult}
+        >
+          Check result
+        </Button>
 
-      {showResult && (
-        <Text mt="md" c={isCorrect ? 'green' : 'red'}>
-          {isCorrect ? 'Correct!' : 'Try again'}
-        </Text>
-      )}
-
-      <Button m="lg" onClick={handleNextQuestion}>
-        Next
-      </Button>
+        <Button className={styles.button} disabled={!showResult} onClick={handleNextQuestion}>
+          Next
+        </Button>
+      </div>
     </Container>
   );
 };
