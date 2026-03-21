@@ -15,6 +15,8 @@ export const WidgetFillBlanks = () => {
     handleNextQuestion,
     showResult,
     isAllAnswered,
+    currentIndex,
+    tasks,
   } = useWidgetFillBlanks();
 
   const getSelectStatus = (id: string, correctAnswer: string) => {
@@ -33,17 +35,21 @@ export const WidgetFillBlanks = () => {
   return (
     <Container className={classes.container}>
       <Title order={2}>Fill in the blanks</Title>
+      <div className={classes.counter}>
+        Question {currentIndex + 1} of {tasks.length}
+      </div>
 
       <div className={classes.editorWrapper}>
         <CodeEditor />
       </div>
 
       <Stack mt="lg">
-        {currentTask.payload.statements.map((s) => {
+        {currentTask.payload.statements.map((s, index) => {
           const parts = s.text.split('{{blank}}');
 
           return (
             <div key={s.id} className={classes.statement}>
+              <span className={classes.index}>{index + 1}.</span>
               <span>{parts[0]}</span>
 
               <Select
