@@ -72,22 +72,22 @@ export const WidgetFillBlanks = () => {
       <div className={classes.actions}>
         <Button
           className={classes.button}
+          disabled={currentIndex === 0}
+          onClick={handlePreviousQuestion}
+        >
+          Previous
+        </Button>
+
+        <Button
+          className={classes.button}
           disabled={!isAllAnswered || showResult}
           onClick={handleCheckResult}
         >
           Check result
         </Button>
 
-        <Button className={classes.button} onClick={handleNextQuestion}>
+        <Button className={classes.button} disabled={showResult} onClick={handleNextQuestion}>
           Next
-        </Button>
-
-        <Button
-          className={classes.button}
-          disabled={currentIndex === 0}
-          onClick={handlePreviousQuestion}
-        >
-          Previous
         </Button>
       </div>
 
