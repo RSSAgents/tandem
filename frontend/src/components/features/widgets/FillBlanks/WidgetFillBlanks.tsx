@@ -13,6 +13,7 @@ export const WidgetFillBlanks = () => {
     handleChange,
     handleCheckResult,
     handleNextQuestion,
+    handlePreviousQuestion,
     showResult,
     isAllAnswered,
     currentIndex,
@@ -77,8 +78,16 @@ export const WidgetFillBlanks = () => {
           Check result
         </Button>
 
-        <Button className={classes.button} disabled={!showResult} onClick={handleNextQuestion}>
+        <Button className={classes.button} onClick={handleNextQuestion}>
           Next
+        </Button>
+
+        <Button
+          className={classes.button}
+          disabled={currentIndex === 0}
+          onClick={handlePreviousQuestion}
+        >
+          Previous
         </Button>
       </div>
 

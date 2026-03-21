@@ -100,6 +100,14 @@ export const useWidgetFillBlanks = () => {
     }
   };
 
+  const handlePreviousQuestion = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+      setShowResult(false);
+      setIsCorrect(false);
+    }
+  };
+
   return {
     tasks,
     loading,
@@ -115,5 +123,6 @@ export const useWidgetFillBlanks = () => {
     score,
     handleCheckResult,
     handleNextQuestion,
+    handlePreviousQuestion,
   };
 };
