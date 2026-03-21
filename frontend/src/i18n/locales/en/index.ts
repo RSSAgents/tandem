@@ -1,3 +1,4 @@
+import aiAgent from './aiAgent.json';
 import auth from './auth.json';
 import dashboard from './dashboard.json';
 import header from './header.json';
@@ -7,6 +8,7 @@ import leaderboard from './leaderboard.json';
 import library from './library.json';
 
 export const en = {
+  aiAgent,
   auth,
   dashboard,
   header,
