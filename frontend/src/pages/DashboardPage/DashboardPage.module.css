@@ -1,0 +1,17 @@
+.wrapper {
+  padding: var(--mantine-spacing-6xl) var(--mantine-spacing-5xl);
+}
+
+.welcomeTitle {
+  font-size: var(--mantine-font-size-2xl) !important;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.progressText {
+  font-size: var(--mantine-font-size-lg);
+  color: var(--text-dim);
+  font-weight: 400;
+}

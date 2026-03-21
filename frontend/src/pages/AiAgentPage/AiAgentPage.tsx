@@ -11,10 +11,7 @@ import { TopicsPanel } from '../../components/AiAgentPage/TopicsPanel';
 import { useAiAgentState } from '../../hooks/useAiAgentState';
 import { useAiInterviewLogic } from '../../hooks/useAiInterviewLogic';
 import { DrawerType, ThreadType } from '../../types/aiAgentTypes';
-import {
-  MOBILE_BREAKPOINT,
-  TIMER_SECONDS,
-} from '../../utils/aiAgentConstants';
+import { MOBILE_BREAKPOINT, TIMER_SECONDS } from '../../utils/aiAgentConstants';
 import classes from './AiAgentPage.module.css';
 
 export const AiAgentPage = () => {

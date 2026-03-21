@@ -1,5 +1,25 @@
-.layout {
+css .main {
+  padding-left: var(--app-shell-navbar-offset, 0px);
+  padding-top: var(--app-shell-header-offset, 0px);
+  padding-bottom: var(--app-shell-footer-offset, 0px);
+  padding-right: var(--app-side-padding);
+  padding-top: calc(var(--app-shell-header-offset) + 20px);
   min-height: 100vh;
+  background: var(--bg);
   display: flex;
   flex-direction: column;
+}
+
+.sidebar {
+  background: var(--panel-soft);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--mantine-color-body);
+  transition: background-color 0.3s ease;
+}
+
+.content {
+  flex: 1;
+  display: flex;
 }

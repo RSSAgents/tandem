@@ -67,9 +67,7 @@ const ConsolePanel = () => {
       />
       <div className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}>
         {logs.length === 0 ? (
-          <span className={classes.consolePlaceholder}>
-            {t('codeRunnerModal.placeholder')}
-          </span>
+          <span className={classes.consolePlaceholder}>{t('codeRunnerModal.placeholder')}</span>
         ) : (
           logs.map((entry, i) => (
             <div

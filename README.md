@@ -69,6 +69,7 @@ We follow a Git Flow-inspired model:
 - `fix/*` – bug fixes from `development` branch (e.g., `fix/header-bug`)
 - `docs/*` – documentation updates only (e.g., `docs/update-readme`)
 - `chore/*` – maintenance tasks, no functionality changes (e.g., `chore/package-updates`)
+- `refactor/*` - code improvements without functional changes or bug fixes (e.g., `refactor/rename-variables`).
 
 All changes are merged into `development` via **Pull Requests**, which require at least 3 team members and 1 mentor and passing CI checks. This ensures code review and collective ownership.
 
@@ -142,19 +143,32 @@ src/
 │       ├── ErrorBoundary.tsx
 │       └── Loading.tsx
 │
+├── i18n/                            # Internationalization
+│   └── locales/                     # Translation files for supported languages
+│       ├── en/
+│       └── ru/
+│
 ├── pages/                           # Pages
 │   ├── DashboardPage/               # Uses MainLayout
 │   │   ├── DashboardPage.tsx
 │   │   └── DashboardPage.module.css
-│   └── LandingPage/                 # Uses MinimalLayout / MainLayout
-│       ├── LandingPage.tsx
-│       └── LandingPage.module.css
+│   ├── LandingPage/                 # Uses MinimalLayout / MainLayout
+│   │   ├── LandingPage.tsx
+│   │   └── LandingPage.module.css
+│   ├── About/                       # Uses MinimalLayout
+│   │   ├── About.tsx
+│   │   ├── About.test.tsx
+│   │   └── About.module.css
+│   └── NotFoundPage/                # Uses MinimalLayout
+│       ├── NotFoundPage.tsx
+│       ├── NotFoundPage.test.tsx
+│       └── NotFoundPage.module.css
 │
 ├── hooks/                           # Custom hooks
 │   ├── useAuth.ts                   # Authentication logic
 │   ├── useDashboard.ts              # Dashboard data loading
 │   └── useChat.ts                   # Chat management
-│
+
 ├── store/                           # RTK store
 │   ├── authStore.ts                 # User state
 │   ├── dashboardStore.ts            # Dashboard cache

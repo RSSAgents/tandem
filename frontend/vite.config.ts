@@ -18,6 +18,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      '@api': path.resolve(__dirname, 'src/api'),
       '@store': path.resolve(__dirname, 'src/store'),
       '@routes': path.resolve(__dirname, 'src/routes'),
       '@components': path.resolve(__dirname, 'src/components'),
@@ -27,6 +28,7 @@ export default defineConfig({
       '@providers': path.resolve(__dirname, 'src/providers'),
       '@i18n': path.resolve(__dirname, 'src/i18n'),
       '@pages': path.resolve(__dirname, 'src/pages'),
+      '@constants': path.resolve(__dirname, 'src/constants'),
     },
   },
 });

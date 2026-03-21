@@ -76,11 +76,7 @@ export const TeacherSection = ({
         display="flex"
       >
         <Group justify="space-between" align="center" mb="md">
-          <Badge
-            variant="outline"
-            color="#1971c2"
-            className={classes.teacherBadge}
-          >
+          <Badge variant="outline" color="#1971c2" className={classes.teacherBadge}>
             {t('teacher.label')}
           </Badge>
           <ActionIcon

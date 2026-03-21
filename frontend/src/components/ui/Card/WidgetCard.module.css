@@ -1,0 +1,56 @@
+.card {
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--mantine-radius-xl);
+  padding: var(--mantine-spacing-xl);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+
+  transition: all 0.35s ease;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 15%, rgba(10, 132, 255, 0.18), transparent 75%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(10, 132, 255, 0.35);
+  text-decoration: none;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.title {
+  font-size: var(--mantine-font-size-xl) !important;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.15;
+  margin-bottom: var(--mantine-spacing-sm);
+}
+
+.description {
+  font-size: var(--mantine-font-size-md);
+  color: var(--text-dim);
+}
+
+.status {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 500;
+  color: var(--accent) !important;
+}

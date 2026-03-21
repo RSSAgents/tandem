@@ -240,9 +240,9 @@ export const useAiInterviewLogic = (state: AgentState) => {
     };
 
     const existingThread = state.threads.find(
-    (thread: Thread) => thread.topic === state.activeTopic && thread.type === type,
-  );
-  const targetThreadId = existingThread?.id ?? crypto.randomUUID();
+      (thread: Thread) => thread.topic === state.activeTopic && thread.type === type,
+    );
+    const targetThreadId = existingThread?.id ?? crypto.randomUUID();
 
     state.setThreads((current: Thread[]) => {
       const idx = current.findIndex(

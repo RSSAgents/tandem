@@ -6,18 +6,19 @@
 
 ---
 
-### PR Checklist
 
-#### Code Quality
+## Definition of Done (DoD)
 
-- [ ] My code follows the team's style guide and conventions
-- [ ] I have removed all debug logs, and commented-out code
-- [ ] No hardcoded secrets, tokens, or environment-specific values
-- [ ] No type assertions are used in the code.
-- [ ] There is no explicit use of the any type in the code.
+Before requesting review, confirm that:
 
-#### Testing
-
-- [ ] I have added or updated unit tests to cover my changes
+- [ ] Acceptance criteria are satisfied
+- [ ] Code follows the team's style guide and conventions
+- [ ] No type assertions are used
+- [ ] No explicit `any` types are used
+- [ ] No debug logs or commented-out code remain
+- [ ] ESLint and formatting checks pass
+- [ ] No console errors or warnings
+- [ ] Tests were added or updated if necessary
 - [ ] All existing tests pass locally
-- [ ] Edge cases and error states have been considered and handled
+- [ ] Edge cases and error states are handled
+- [ ] Pull request is linked to an issue
