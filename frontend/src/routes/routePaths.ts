@@ -9,4 +9,5 @@ export const ROUTE_PATHS = {
   ACHIEVEMENTS: '/achievements',
   WIDGET_CONSOLE: '/widget-console',
   LEADERBOARD_PAGE: '/leaderboard',
+  REGISTER: '/register',
 } as const;

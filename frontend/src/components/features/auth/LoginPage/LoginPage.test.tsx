@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, it, beforeEach, vi } from 'vitest';
-import { mockNavigate } from '../../../../vitest.setup';
+import { mockNavigate } from '../../../../../vitest.setup';
 import { LoginPage } from './LoginPage';
 import { setupUserEvent } from '@/utils/test-util';
 

@@ -17,12 +17,12 @@
   position: relative;
 }
 
-.forgot {
+.signinLink {
   text-align: center;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
-.forgot:hover {
+.signinLink:hover {
   color: var(--accent);
 }

@@ -9,6 +9,7 @@ import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
+const RegisterPage = lazy(() => import('@/components/features/auth/RegisterPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 
 export const appRoutes = [
@@ -20,6 +21,7 @@ export const appRoutes = [
       { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
       { path: ROUTE_PATHS.ABOUT, element: <About /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
+      { path: ROUTE_PATHS.REGISTER, element: <RegisterPage /> },
     ],
   },
   {
