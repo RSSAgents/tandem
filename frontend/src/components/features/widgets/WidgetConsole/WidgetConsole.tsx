@@ -37,11 +37,11 @@ export const WidgetConsole = () => {
 
     if (currentIndex === tasks.length - 1) {
       setTimeout(async () => {
-      await saveResult();
-      setModalOpened(true);
-    }, 2000);
-  }
-}, [handleCheckResult, saveResult, currentIndex, tasks.length]);
+        await saveResult();
+        setModalOpened(true);
+      }, 2000);
+    }
+  }, [handleCheckResult, saveResult, currentIndex, tasks.length]);
 
   const handleTryAgain = () => {
     resetWidget();

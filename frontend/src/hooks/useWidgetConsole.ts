@@ -77,7 +77,7 @@ export const useWidgetConsole = () => {
     }
   }, [currentTask, userOrder]);
 
-const handleNextQuestion = useCallback(() => {
+  const handleNextQuestion = useCallback(() => {
     if (currentIndex < tasks.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setShowResult(false);

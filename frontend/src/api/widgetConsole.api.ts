@@ -51,7 +51,7 @@ export const getWidgetTasks = async (options?: RequestInit): Promise<IConsoleTas
     .from('questions_public')
     .select('*')
     .eq('type', 'console')
-    .order('id')
+    .order('id');
 
   if (error) throw new Error(error.message);
   return data;
@@ -86,11 +86,10 @@ export const checkWidgetAnswer = async (
     };
   }
 
-  const { data, error } = await supabase
-    .rpc('check_console_answer', {
-      question_id: answer.taskId,
-      user_answer: answer.userSequence,
-    })
+  const { data, error } = await supabase.rpc('check_console_answer', {
+    question_id: answer.taskId,
+    user_answer: answer.userSequence,
+  });
 
   if (error) throw new Error(error.message);
 
@@ -101,20 +100,23 @@ export const checkWidgetAnswer = async (
 };
 
 export const saveConsoleScore = async (score: number) => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return;
 
-  const { error } = await supabase
-    .from('widget_scores')
-    .upsert({
+  const { error } = await supabase.from('widget_scores').upsert(
+    {
       user_id: user.id,
       widget_type: 'console',
       score,
       max_score: 100,
-      updated_at: new Date().toISOString()
-    }, {
-      onConflict: 'user_id,widget_type'
-    });
+      updated_at: new Date().toISOString(),
+    },
+    {
+      onConflict: 'user_id,widget_type',
+    },
+  );
 
   if (error) throw new Error(error.message);
 };

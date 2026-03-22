@@ -1,8 +1,12 @@
+import { setupUserEvent } from '@/utils/test-util';
 import { screen } from '@testing-library/react';
-import { describe, expect, it, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { mockNavigate } from '../../../../vitest.setup';
 import { LoginPage } from './LoginPage';
-import { setupUserEvent } from '@/utils/test-util';
+
+vi.mock('@/api/auth.api', () => ({
+  signIn: vi.fn().mockResolvedValue({})
+}))
 
 describe('LoginPage', () => {
   beforeEach(() => {
@@ -29,9 +33,7 @@ describe('LoginPage', () => {
     const { user } = setupUserEvent(<LoginPage />);
 
     await user.type(screen.getByRole('textbox', { name: /email/i }), 'test@test.com');
-
     await user.type(screen.getByLabelText(/password/i), '123456');
-
     await user.click(screen.getByRole('button', { name: /login/i }));
 
     expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
