@@ -7,8 +7,6 @@ import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
 import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
 import { lazy } from 'react';
 import { ROUTE_PATHS } from './routePaths';
-import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
-import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
 import { HomePage } from '@/pages/HomePage/HomePage';
 
