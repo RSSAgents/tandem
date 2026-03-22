@@ -1,9 +1,8 @@
 import { IConsoleAnswer, IConsoleTask } from '@/types/widgetConsole.types';
 import { delay } from '@/utils/delay';
+import { supabase } from '../utils/supabase';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
-const API_URL = import.meta.env.VITE_API_URL;
-const endpointUrl = `${API_URL}/tasks`; // should be changed later
 
 const MOCK_TASKS: IConsoleTask[] = [
   {
@@ -48,16 +47,13 @@ export const getWidgetTasks = async (options?: RequestInit): Promise<IConsoleTas
     return MOCK_TASKS;
   }
 
-  const response = await fetch(endpointUrl, {
-    signal: options?.signal,
-  });
+  const { data, error } = await supabase
+    .from('questions_public')
+    .select('*')
+    .eq('type', 'console')
+    .order('id')
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch tasks: ${response.status}`);
-  }
-
-  const data = await response.json();
-
+  if (error) throw new Error(error.message);
   return data;
 };
 
@@ -78,7 +74,7 @@ export const checkWidgetAnswer = async (
 
       return {
         isCorrect,
-        score: isCorrect ? 1 : 0,
+        score: isCorrect ? 10 : 0,
         explanation: isCorrect ? 'Correct! Great job!' : 'Not quite right. Try again!',
       };
     }
@@ -90,16 +86,35 @@ export const checkWidgetAnswer = async (
     };
   }
 
-  // Real API request
-  const response = await fetch(`${API_URL}/tasks/check`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(answer),
-  });
+  const { data, error } = await supabase
+    .rpc('check_console_answer', {
+      question_id: answer.taskId,
+      user_answer: answer.userSequence,
+    })
 
-  if (!response.ok) {
-    throw new Error('Failed to check answer');
-  }
+  if (error) throw new Error(error.message);
 
-  return response.json();
+  return {
+    isCorrect: data as boolean,
+    score: data ? 10 : 0,
+  };
+};
+
+export const saveConsoleScore = async (score: number) => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { error } = await supabase
+    .from('widget_scores')
+    .upsert({
+      user_id: user.id,
+      widget_type: 'console',
+      score,
+      max_score: 100,
+      updated_at: new Date().toISOString()
+    }, {
+      onConflict: 'user_id,widget_type'
+    });
+
+  if (error) throw new Error(error.message);
 };
