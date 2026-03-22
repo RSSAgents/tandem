@@ -5,8 +5,8 @@ import { mockNavigate } from '../../../../vitest.setup';
 import { LoginPage } from './LoginPage';
 
 vi.mock('@/api/auth.api', () => ({
-  signIn: vi.fn().mockResolvedValue({})
-}))
+  signIn: vi.fn().mockResolvedValue({}),
+}));
 
 describe('LoginPage', () => {
   beforeEach(() => {
