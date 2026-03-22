@@ -7,6 +7,10 @@
     "js_execution": {
       "title": "Drag & Drop JS Execution",
       "description": "An interactive learning component that tests understanding of JavaScript execution order through a drag-and-drop interface."
+    },
+    "this_quiz": {
+      "title": "Guess `this`",
+      "description": "Test your understanding of JavaScript `this`"
     }
   },
   "status": {

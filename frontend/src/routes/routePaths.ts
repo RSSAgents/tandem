@@ -8,5 +8,6 @@ export const ROUTE_PATHS = {
   LIBRARY: '/library',
   ACHIEVEMENTS: '/achievements',
   WIDGET_CONSOLE: '/widget-console',
+  WIDGET_THIS_QUIZ: '/widget-this',
   LEADERBOARD_PAGE: '/leaderboard',
 } as const;
