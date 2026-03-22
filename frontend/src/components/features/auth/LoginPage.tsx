@@ -5,6 +5,7 @@ import { loginSchema, LoginFormValues, LoginErrorKeys } from './login.schema';
 import classes from './LoginPage.module.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { delay } from '@/utils/delay';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export const LoginPage = () => {
   });
 
   const onSubmit = async () => {
+    await delay(2000);
     navigate('/dashboard');
   };
 

@@ -4,6 +4,14 @@ import { mockNavigate } from '../../../../vitest.setup';
 import { LoginPage } from './LoginPage';
 import { setupUserEvent } from '@/utils/test-util';
 
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: vi.fn(),
+  };
+});
+
 describe('LoginPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
