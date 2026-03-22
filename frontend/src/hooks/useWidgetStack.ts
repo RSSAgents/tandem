@@ -1,5 +1,5 @@
 import { ANIMATION_DELAY, ITEMS_COUNT, PAUSE_DELAY } from '@/constants/stack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export type QuizState =
   | 'lifo-question'
@@ -9,10 +9,27 @@ export type QuizState =
   | 'completed';
 
 export const useStackAnimation = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [stack, setStack] = useState<number[]>([]);
   const [queue, setQueue] = useState<number[]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [quizState, setQuizState] = useState<QuizState>('lifo-question');
+
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        setLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to initialize');
+        setLoading(false);
+      }
+    };
+
+    initialize();
+  }, []);
 
   const runLifoDemo = () => {
     if (isAnimating) return;
@@ -75,6 +92,8 @@ export const useStackAnimation = () => {
   };
 
   return {
+    loading,
+    error,
     stack,
     queue,
     isAnimating,
