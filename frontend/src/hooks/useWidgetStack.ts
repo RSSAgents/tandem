@@ -1,5 +1,6 @@
 import { ANIMATION_DELAY, ITEMS_COUNT, PAUSE_DELAY } from '@/constants/stack';
 import { useEffect, useState } from 'react';
+import { delay } from '@/utils/delay';
 
 export type QuizState =
   | 'lifo-question'
@@ -20,7 +21,7 @@ export const useStackAnimation = () => {
     const initialize = async () => {
       try {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await delay(500);
         setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to initialize');
