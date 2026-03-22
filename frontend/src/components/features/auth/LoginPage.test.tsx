@@ -1,14 +1,15 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, beforeEach, vi } from 'vitest';
-import { mockNavigate } from '../../../../vitest.setup';
 import { LoginPage } from './LoginPage';
 import { setupUserEvent } from '@/utils/test-util';
+
+const mockNavigate = vi.fn();
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
-    useNavigate: vi.fn(),
+    useNavigate: () => mockNavigate,
   };
 });
 
@@ -42,6 +43,11 @@ describe('LoginPage', () => {
 
     await user.click(screen.getByRole('button', { name: /login/i }));
 
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+    await waitFor(
+      () => {
+        expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+      },
+      { timeout: 3000 },
+    );
   });
 });
