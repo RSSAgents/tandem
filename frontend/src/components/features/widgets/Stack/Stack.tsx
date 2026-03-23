@@ -7,9 +7,12 @@ import FifoQuiz from './FifoQuiz';
 import LifoQuiz from './LifoQuiz';
 import classes from './Stack.module.css';
 import StackVisualization from './StackVisualization';
+import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
+import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
 
 const StackWidget = () => {
-  const { stack, queue, quizState, setQuizState, runLifoDemo, runFifoDemo } = useStackAnimation();
+  const { stack, queue, quizState, setQuizState, runLifoDemo, runFifoDemo, loading, error } =
+    useStackAnimation();
   const [selectedLifo, setSelectedLifo] = useState<string>('');
   const [selectedFifo, setSelectedFifo] = useState<string>('');
   const [showLifoFeedback, setShowLifoFeedback] = useState(false);
@@ -45,6 +48,9 @@ const StackWidget = () => {
       }, FEEDBACK_DELAY);
     }
   };
+
+  if (loading) return <PageLoader />;
+  if (error) return <ErrorDisplay error={error} />;
 
   return (
     <Container className={classes.container}>

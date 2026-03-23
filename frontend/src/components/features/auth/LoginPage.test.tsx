@@ -1,12 +1,20 @@
-import { setupUserEvent } from '@/utils/test-util';
-import { screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { mockNavigate } from '../../../../vitest.setup';
+import { screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, beforeEach, vi } from 'vitest';
 import { LoginPage } from './LoginPage';
 
 vi.mock('@/api/auth.api', () => ({
   signIn: vi.fn().mockResolvedValue({}),
 }));
+
+const mockNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
 
 describe('LoginPage', () => {
   beforeEach(() => {
@@ -36,6 +44,11 @@ describe('LoginPage', () => {
     await user.type(screen.getByLabelText(/password/i), '123456');
     await user.click(screen.getByRole('button', { name: /login/i }));
 
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+    await waitFor(
+      () => {
+        expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+      },
+      { timeout: 3000 },
+    );
   });
 });

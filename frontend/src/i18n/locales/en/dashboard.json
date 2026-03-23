@@ -7,6 +7,10 @@
     "js_execution": {
       "title": "Drag & Drop JS Execution",
       "description": "An interactive learning component that tests understanding of JavaScript execution order through a drag-and-drop interface."
+    },
+    "js_stack": {
+      "title": "Stack",
+      "description": "An interactive widget that demonstrates two fundamental data structures: Stack (LIFO - Last In, First Out) and Queue (FIFO - First In, First Out)ю"
     }
   },
   "status": {

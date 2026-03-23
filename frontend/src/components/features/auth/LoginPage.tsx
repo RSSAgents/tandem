@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginErrorKeys, LoginFormValues, loginSchema } from './login.schema';
 import classes from './LoginPage.module.css';
+import { delay } from '@/utils/delay';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
