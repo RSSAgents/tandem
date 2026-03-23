@@ -1,14 +1,14 @@
-import styles from './WidgetConsole.module.css';
-import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { DndContext, closestCenter } from '@dnd-kit/core';
-import { SortableItem } from './SortableItem';
-import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
-import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
-import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
 import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
+import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
+import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
+import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
 import { useWidgetConsole } from '@/hooks/useWidgetConsole';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { Button, Container, Flex, Paper, Stack, Text, Title } from '@mantine/core';
 import { useCallback, useState } from 'react';
+import { SortableItem } from './SortableItem';
+import styles from './WidgetConsole.module.css';
 
 export const WidgetConsole = () => {
   const {
@@ -27,6 +27,7 @@ export const WidgetConsole = () => {
     handleCheckResult,
     handleNextQuestion,
     resetWidget,
+    saveResult,
   } = useWidgetConsole();
 
   const [modalOpened, setModalOpened] = useState(false);
@@ -35,11 +36,12 @@ export const WidgetConsole = () => {
     handleCheckResult();
 
     if (currentIndex === tasks.length - 1) {
-      setTimeout(() => {
+      setTimeout(async () => {
+        await saveResult();
         setModalOpened(true);
       }, 2000);
     }
-  }, [handleCheckResult, currentIndex, tasks.length]);
+  }, [handleCheckResult, saveResult, currentIndex, tasks.length]);
 
   const handleTryAgain = () => {
     resetWidget();
