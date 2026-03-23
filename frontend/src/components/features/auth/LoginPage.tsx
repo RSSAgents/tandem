@@ -1,14 +1,17 @@
-import { Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
-import { useForm } from 'react-hook-form';
+import { signIn } from '@/api/auth.api';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, LoginFormValues, LoginErrorKeys } from './login.schema';
-import classes from './LoginPage.module.css';
-import { useNavigate, Link } from 'react-router-dom';
+import { Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import { LoginErrorKeys, LoginFormValues, loginSchema } from './login.schema';
+import classes from './LoginPage.module.css';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('auth');
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
@@ -19,8 +22,14 @@ export const LoginPage = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = async () => {
-    navigate('/dashboard');
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      setServerError(null);
+      await signIn(data.email, data.password);
+      navigate('/dashboard');
+    } catch (err) {
+      setServerError(err instanceof Error ? err.message : 'Login failed');
+    }
   };
 
   return (
@@ -48,6 +57,12 @@ export const LoginPage = () => {
             }
             mb="xl"
           />
+
+          {serverError && (
+            <Text c="red" size="sm" mb="sm" ta="center">
+              {serverError}
+            </Text>
+          )}
 
           <Button type="submit" fullWidth loading={isSubmitting} color="blue">
             {t('login')}

@@ -1,0 +1,22 @@
+{
+  "title": "Master <1>JavaScript</1> internals - one widget at a time",
+  "subtitle": "Master JavaScript internals with hands-on widgets. No more guessing how things work. Solve real problems and see immediate results",
+  "topics": {
+    "stack": {
+      "title": "Stack. Queue. Done.",
+      "description": "LIFO/FIFO with visual simulations"
+    },
+    "eventLoop": {
+      "title": "Event Loop questions",
+      "description": "predict setTimeout, Promise, and async order"
+    },
+    "this": {
+      "title": "'this' keyword",
+      "description": "from global context to arrow functions"
+    },
+    "garbage": {
+      "title": "Garbage Collection",
+      "description": "how memory management works and how to avoid leaks"
+    }
+  }
+}
