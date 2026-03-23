@@ -1,0 +1,36 @@
+{
+  "title": "<1>Why</1> developers love <2>Tandem</2>",
+  "subtitle": "Everything you need to ace your interview — from real questions to AI-powered practice and global competition",
+  "benefits": [
+    {
+      "key": "feedback",
+      "title": "Instant feedback",
+      "description": "Get immediate explanations"
+    },
+    {
+      "key": "realQuestions",
+      "title": "Real questions",
+      "description": "From top tech companies"
+    },
+    {
+      "key": "ai",
+      "title": "AI interviewer",
+      "description": "Adaptive mock interviews"
+    },
+    {
+      "key": "leaderboard",
+      "title": "Leaderboard",
+      "description": "Compete globally"
+    },
+    {
+      "key": "progress",
+      "title": "Track progress",
+      "description": "See your growth over time"
+    },
+    {
+      "key": "daily",
+      "title": "Daily challenges",
+      "description": "Stay motivated"
+    }
+  ]
+}
