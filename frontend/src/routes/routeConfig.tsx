@@ -1,18 +1,21 @@
 import { WidgetConsole } from '@/components/features/widgets/WidgetConsole/WidgetConsole';
 import ProtectedRoute from '@/components/shared/ProtectedRoute/ProtectedRoute';
 import { About } from '@/pages/About/About';
+import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
+import { HomePage } from '@/pages/HomePage/HomePage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
 import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
 import { lazy } from 'react';
 import { ROUTE_PATHS } from './routePaths';
-import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
-import { HomePage } from '@/pages/HomePage/HomePage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 const LibraryPage = lazy(() => import('@pages/LibraryPage/LibraryPage'));
+const FillBlanksWidget = lazy(
+  () => import('@components/features/widgets/FillBlanks/WidgetFillBlanks'),
+);
 
 export const appRoutes = [
   {
@@ -57,6 +60,14 @@ export const appRoutes = [
         element: (
           <ProtectedRoute>
             <StackWidget />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.FILL_BLANKS_WIDGET,
+        element: (
+          <ProtectedRoute>
+            <FillBlanksWidget />
           </ProtectedRoute>
         ),
       },
