@@ -1,5 +1,6 @@
+import { setupUserEvent } from '@/utils/test-util';
 import { screen, waitFor } from '@testing-library/react';
-import { describe, expect, it, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LoginPage } from './LoginPage';
 
 vi.mock('@/api/auth.api', () => ({
