@@ -6,8 +6,14 @@ import { DashboardPage } from './DashboardPage';
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key: string, options?: { name?: string }) =>
-      key === 'welcome' ? `Welcome, ${options?.name}` : key,
+    t: (key: string, options?: { name?: string; percent?: number }) => {
+      if (key === 'welcome') return `Hello, ${options?.name}!`;
+      if (key === 'progress_zero') return 'Your journey starts here. Choose your first module!';
+      if (key === 'progress_finished') return "Path completed! You're a legend.";
+      if (key === 'status.completed') return 'Finished';
+      if (key === 'status.todo') return 'Start';
+      return key;
+    },
   }),
 }));
 
@@ -15,22 +21,29 @@ describe('DashboardPage', () => {
   const renderDashboard = () => renderWithProviders(<DashboardPage />);
 
   it('should render correctly for a new user', () => {
-    vi.spyOn(Utils, 'getCompletedIds').mockReturnValue([]);
-    vi.spyOn(Utils, 'getUserName').mockReturnValue('Alex');
+    vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => []);
+    vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');
 
     renderDashboard();
 
-    expect(screen.getByText(/Welcome, Alex/i)).toBeInTheDocument();
-    expect(screen.getByText('progress_zero')).toBeInTheDocument();
-    expect(screen.getByText('status.todo')).toBeInTheDocument();
+    expect(screen.getByText(/Hello, Alex!/i)).toBeInTheDocument();
+    expect(
+      screen.getByText('Your journey starts here. Choose your first module!'),
+    ).toBeInTheDocument();
+    const startButtons = screen.getAllByText('Start');
+    expect(startButtons).toHaveLength(2);
   });
 
   it('should render correctly when modules are completed', () => {
-    vi.spyOn(Utils, 'getCompletedIds').mockReturnValue(['js-exec']);
+    vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => ['js-exec', 'js_stack']);
+    vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');
 
     renderDashboard();
 
-    expect(screen.getByText('progress_finished')).toBeInTheDocument();
-    expect(screen.getByText('status.completed')).toBeInTheDocument();
+    expect(screen.getByText(/Hello, Alex!/i)).toBeInTheDocument();
+    expect(screen.getByText("Path completed! You're a legend.")).toBeInTheDocument();
+
+    const finishedButtons = screen.getAllByText('Finished');
+    expect(finishedButtons).toHaveLength(2);
   });
 });
