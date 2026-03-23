@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (loading) return <PageLoader />;
   if (!user) return <Navigate to={ROUTE_PATHS.HOME} replace />;
 
-  return <>{children}</>;
+  return children;
 };
 
 export default ProtectedRoute;
