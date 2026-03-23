@@ -1,4 +1,8 @@
-import { getFillBlanksTasks } from '@/components/features/widgets/FillBlanks/fillBlanks.api';
+import {
+  checkFillBlanksAnswer,
+  getFillBlanksTasks,
+  saveFillBlanksScore,
+} from '@/api/widgetFillBlanks.api';
 import { setCodeEditor } from '@/components/shared/CodeEditor/slice/editorSlice';
 import { IFillBlanksTask } from '@/types/fillBlanks.types';
 import { useCallback, useEffect, useState } from 'react';
@@ -12,14 +16,16 @@ export const useWidgetFillBlanks = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [resultMap, setResultMap] = useState<Record<string, boolean>>({});
 
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
 
   const currentTask = tasks[currentIndex];
-  const isAllAnswered = Object.values(answers).every(Boolean);
+  const isAllAnswered =
+    currentTask?.payload.statements.every((s) => answers[s.id] !== undefined) ?? false;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -28,9 +34,7 @@ export const useWidgetFillBlanks = () => {
       try {
         setLoading(true);
 
-        const data = await getFillBlanksTasks({
-          signal: controller.signal,
-        });
+        const data = await getFillBlanksTasks(controller.signal);
 
         setTasks(data);
         setError(null);
@@ -64,39 +68,55 @@ export const useWidgetFillBlanks = () => {
 
   useEffect(() => {
     if (currentTask) {
-      const initial: Record<string, string> = {};
-      currentTask.payload.statements.forEach((s) => {
-        initial[s.id] = '';
-      });
-      setAnswers(initial);
+      setAnswers({});
     }
   }, [currentTask]);
 
   const handleChange = (id: string, value: string | null) => {
+    if (!value) return;
+
     setAnswers((prev) => ({
       ...prev,
-      [id]: value || '',
+      [id]: Number(value),
     }));
   };
 
-  const handleCheckResult = useCallback(() => {
+  const handleCheckResult = useCallback(async () => {
     if (!currentTask) return;
 
-    const correct = currentTask.payload.statements.every((s) => answers[s.id] === s.correctAnswer);
+    const results: Record<string, boolean> = {};
+    let correctCount = 0;
 
-    setIsCorrect(correct);
-    setShowResult(true);
+    for (const s of currentTask.payload.statements) {
+      const answerIndex = answers[s.id];
+      if (answerIndex === undefined) continue;
 
-    if (correct) {
-      setScore((prev) => prev + 1);
+      const isCorrect = await checkFillBlanksAnswer(currentTask.id, s.id, answerIndex);
+
+      results[s.id] = isCorrect;
+
+      if (isCorrect) {
+        correctCount++;
+      }
     }
+
+    setResultMap(results);
+    setShowResult(true);
+    setIsCorrect(correctCount === currentTask.payload.statements.length);
+    setScore((prev) => prev + correctCount * 10);
   }, [answers, currentTask]);
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = async () => {
     if (currentIndex < tasks.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setShowResult(false);
       setIsCorrect(false);
+    } else {
+      try {
+        await saveFillBlanksScore(score);
+      } catch {
+        setError('Failed to save score');
+      }
     }
   };
 
@@ -116,6 +136,7 @@ export const useWidgetFillBlanks = () => {
     currentIndex,
     answers,
     handleChange,
+    resultMap,
 
     showResult,
     isCorrect,

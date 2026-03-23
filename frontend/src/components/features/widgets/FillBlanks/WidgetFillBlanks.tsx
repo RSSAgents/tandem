@@ -1,8 +1,8 @@
 import { CodeEditor } from '@/components/shared/CodeEditor/CodeEditor';
+import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
 import { Button, Container, Select, Stack, Title } from '@mantine/core';
 import classes from './WidgetFillBlanks.module.css';
-import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 
 export const WidgetFillBlanks = () => {
   const {
@@ -18,16 +18,17 @@ export const WidgetFillBlanks = () => {
     isAllAnswered,
     currentIndex,
     tasks,
+    resultMap,
   } = useWidgetFillBlanks();
 
-  const getSelectStatus = (id: string, correctAnswer: string) => {
+  const getSelectStatus = (id: string) => {
     if (!showResult) return '';
+    if (resultMap[id] === undefined) return '';
 
-    return answers[id] === correctAnswer ? 'correct' : 'incorrect';
+    return resultMap[id] ? 'correct' : 'incorrect';
   };
 
-  const allCorrect =
-    currentTask?.payload.statements.every((s) => answers[s.id] === s.correctAnswer) ?? false;
+  const allCorrect = currentTask?.payload.statements.every((s) => resultMap[s.id]) ?? false;
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -46,7 +47,8 @@ export const WidgetFillBlanks = () => {
 
       <Stack mt="lg">
         {currentTask.payload.statements.map((s, index) => {
-          const parts = s.text.split('{{blank}}');
+          const text = s.text.ru;
+          const parts = text.split('{{blank}}');
 
           return (
             <div key={s.id} className={classes.statement}>
@@ -54,11 +56,14 @@ export const WidgetFillBlanks = () => {
               <span>{parts[0]}</span>
 
               <Select
-                data={s.options}
-                value={answers[s.id] || null}
+                data={s.options.ru.map((opt, index) => ({
+                  value: String(index),
+                  label: opt,
+                }))}
+                value={answers[s.id] !== undefined ? String(answers[s.id]) : null}
                 onChange={(val) => handleChange(s.id, val)}
                 classNames={{
-                  input: `${classes[getSelectStatus(s.id, s.correctAnswer)]}`,
+                  input: classes[getSelectStatus(s.id)],
                 }}
                 disabled={showResult}
               />
@@ -102,3 +107,5 @@ export const WidgetFillBlanks = () => {
     </Container>
   );
 };
+
+export default WidgetFillBlanks;
