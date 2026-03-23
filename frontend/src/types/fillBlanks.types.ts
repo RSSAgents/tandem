@@ -1,8 +1,7 @@
 export interface IFillBlankStatement {
   id: string;
-  text: string;
-  options: string[];
-  correctAnswer: string;
+  text: { ru: string; en: string };
+  options: { ru: string[]; en: string[] };
 }
 
 export interface IFillBlanksTask {
