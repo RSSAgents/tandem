@@ -323,23 +323,6 @@
   padding-bottom: calc((var(--input-height) - var(--mantine-line-height) * 1em) / 2);
 }
 
-.consoleRunButton {
-  width: 27px;
-  height: 27px;
-  border-radius: 50%;
-  border: 1px solid light-dark(#ccc, #555);
-  background: light-dark(#f1f3f5, #2e2e2e);
-  color: light-dark(#666, #999);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.consoleRunButton:hover {
-  color: light-dark(#000, #fff);
-}
 
 .readOnlyEditor {
   pointer-events: none;

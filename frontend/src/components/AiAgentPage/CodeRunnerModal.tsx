@@ -1,5 +1,5 @@
 import { SandpackCodeEditor, SandpackProvider, useSandpack } from '@codesandbox/sandpack-react';
-import { Modal, useMantineColorScheme } from '@mantine/core';
+import { ActionIcon, Box, Group, Modal, Paper, ScrollArea, useMantineColorScheme } from '@mantine/core';
 import { IconPlayerPlay, IconTrash } from '@tabler/icons-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -58,44 +58,46 @@ const ConsolePanel = () => {
   };
 
   return (
-    <div className={classes.consoleWrapper}>
-      <iframe
-        ref={iframeRef}
-        sandbox="allow-scripts"
-        className={classes.consoleSandboxIframe}
-        title="code-runner-sandbox"
-      />
-      <div className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}>
+    <Paper radius="md" p="sm" className={classes.consoleWrapper}>
+      <Box mb="xs">
+        <iframe
+          ref={iframeRef}
+          sandbox="allow-scripts"
+          className={classes.consoleSandboxIframe}
+          title="code-runner-sandbox"
+        />
+      </Box>
+      <ScrollArea style={{ height: 220 }} className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}>
         {logs.length === 0 ? (
-          <span className={classes.consolePlaceholder}>{t('codeRunnerModal.placeholder')}</span>
+          <Box className={classes.consolePlaceholder}>{t('codeRunnerModal.placeholder')}</Box>
         ) : (
           logs.map((entry, i) => (
-            <div
+            <Box
               key={i}
               className={`${classes.consoleLogEntry} ${entry.type === 'error' ? classes.consoleLogEntryError : entry.type === 'warn' ? classes.consoleLogEntryWarn : classes.consoleLogEntryLog}`}
             >
               {entry.text}
-            </div>
+            </Box>
           ))
         )}
-      </div>
-      <div className={classes.consoleActionsBar}>
-        <button
+      </ScrollArea>
+      <Group justify="flex-end" gap="xs" className={classes.consoleActionsBar} mt="xs">
+        <ActionIcon
           onClick={() => setLogs([])}
           title={t('codeRunnerModal.clear')}
-          className={classes.consoleRunButton}
+          aria-label={t('codeRunnerModal.clear')}
         >
           <IconTrash size={14} />
-        </button>
-        <button
+        </ActionIcon>
+        <ActionIcon
           onClick={handleRun}
           title={t('codeRunnerModal.run')}
-          className={classes.consoleRunButton}
+          aria-label={t('codeRunnerModal.run')}
         >
           <IconPlayerPlay size={14} />
-        </button>
-      </div>
-    </div>
+        </ActionIcon>
+      </Group>
+    </Paper>
   );
 };
 
