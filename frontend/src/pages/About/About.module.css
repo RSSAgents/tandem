@@ -1,10 +1,9 @@
 .title {
   color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-5));
-  letter-spacing: -0.03em;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
 }
 
 .teamGrid {
@@ -13,13 +12,10 @@
 
 .memberCard {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
   border-top: 3px solid var(--mantine-color-blue-6);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
   border-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-4));
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-  text-decoration: none;
-  color: inherit;
 }
 
 .memberCard:hover {
@@ -44,11 +40,9 @@
   outline-offset: 4px;
   background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
   transition: transform 0.3s ease;
-  pointer-events: none;
 }
 
 .memberName {
-  letter-spacing: 0.03em;
   margin-top: 10px;
 }
 
@@ -66,7 +60,6 @@
 
 .bioText {
   font-style: italic;
-  line-height: 1.6;
   opacity: 0.8;
   text-align: center;
 }
