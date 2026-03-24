@@ -1,5 +1,7 @@
 import { WidgetConsole } from '@/components/features/widgets/WidgetConsole/WidgetConsole';
+import ProtectedRoute from '@/components/shared/ProtectedRoute/ProtectedRoute';
 import { About } from '@/pages/About/About';
+import { HomePage } from '@/pages/HomePage/HomePage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
@@ -18,7 +20,7 @@ export const appRoutes = [
     path: '/',
     element: <MinimalLayout />,
     children: [
-      { index: true, element: <p>HomePage</p> },
+      { index: true, element: <HomePage /> },
       { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
       { path: ROUTE_PATHS.ABOUT, element: <About /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
@@ -27,13 +29,62 @@ export const appRoutes = [
   {
     element: <MainLayout />,
     children: [
-      { path: ROUTE_PATHS.DASHBOARD, element: <DashboardPage /> },
-      { path: ROUTE_PATHS.LIBRARY, element: <LibraryPage /> },
-      { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
-      { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
-      { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
-      { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
-      { path: ROUTE_PATHS.AI_TANDEM, element: <AiAgentPage /> },
+      {
+        path: ROUTE_PATHS.DASHBOARD,
+        element: (
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.LIBRARY,
+        element: (
+          <ProtectedRoute>
+            <LibraryPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.WIDGET_CONSOLE,
+        element: (
+          <ProtectedRoute>
+            <WidgetConsole />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.STACK_WIDGET,
+        element: (
+          <ProtectedRoute>
+            <StackWidget />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.AI_TANDEM,
+        element: (
+          <ProtectedRoute>
+            <AiAgentPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.LEADERBOARD_PAGE,
+        element: (
+          <ProtectedRoute>
+            <LeaderboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.ACHIEVEMENTS,
+        element: (
+          <ProtectedRoute>
+            <p>Achievements Page</p>
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ];
