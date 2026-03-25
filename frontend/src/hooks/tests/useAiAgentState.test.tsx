@@ -12,8 +12,16 @@ vi.mock('@api/aiAgent.api', () => ({
 
 import * as aiAgentApi from '@api/aiAgent.api';
 
+async function setupHook() {
+  const hookRender = renderHook(() => useAiAgentState());
+  await act(async () => {
+    await vi.runAllTicks();
+  });
+  return hookRender;
+}
+
 describe('useAiAgentState', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
     vi.mocked(aiAgentApi.loadAllScores).mockResolvedValue({});
     vi.useFakeTimers();
@@ -23,8 +31,8 @@ describe('useAiAgentState', () => {
     vi.useRealTimers();
   });
 
-  it('has correct initial values', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('has correct initial values', async () => {
+    const { result } = await setupHook();
 
     expect(result.current.activeTopic).toBeNull();
     expect(result.current.threads).toEqual([]);
@@ -55,8 +63,8 @@ describe('useAiAgentState', () => {
     expect(result.current.scores).toEqual({ TypeScript: 7 });
   });
 
-  it('setActiveTopic updates topic and clears isWaitingForRestartConfirm', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('setActiveTopic updates topic and clears isWaitingForRestartConfirm', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setIsWaitingForRestartConfirm(true);
@@ -67,8 +75,8 @@ describe('useAiAgentState', () => {
     expect(result.current.isWaitingForRestartConfirm).toBe(false);
   });
 
-  it('setStressMode("normal") clears the timer', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('setStressMode("normal") clears the timer', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setTimer(30);
@@ -81,8 +89,8 @@ describe('useAiAgentState', () => {
     expect(result.current.timer).toBeNull();
   });
 
-  it('setStressMode("stress") sets stress mode without touching the timer', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('setStressMode("stress") sets stress mode without touching the timer', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setStressMode('stress');
@@ -91,8 +99,8 @@ describe('useAiAgentState', () => {
     expect(result.current.stressMode).toBe('stress');
   });
 
-  it('timer counts down every second', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('timer counts down every second', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setTimer(3);
@@ -114,8 +122,8 @@ describe('useAiAgentState', () => {
     expect(result.current.timer).toBe(0);
   });
 
-  it('timer stops at 0 and does not go negative', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('timer stops at 0 and does not go negative', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setTimer(1);
@@ -127,14 +135,14 @@ describe('useAiAgentState', () => {
     expect(result.current.timer).toBe(0);
   });
 
-  it('getInput returns empty string before topic is set', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('getInput returns empty string before topic is set', async () => {
+    const { result } = await setupHook();
 
     expect(result.current.getInput('interviewer')).toBe('');
   });
 
-  it('setInput and getInput work per topic and thread type', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('setInput and getInput work per topic and thread type', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setActiveTopic('TypeScript');
@@ -147,8 +155,8 @@ describe('useAiAgentState', () => {
     expect(result.current.getInput('interviewer')).toBe('');
   });
 
-  it('setInput does nothing when activeTopic is null', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('setInput does nothing when activeTopic is null', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setInput('teacher', 'ignored');
@@ -157,8 +165,8 @@ describe('useAiAgentState', () => {
     expect(result.current.inputs).toEqual({});
   });
 
-  it('addMessage appends a message to the correct thread', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('addMessage appends a message to the correct thread', async () => {
+    const { result } = await setupHook();
     const thread: Thread = { id: 't1', topic: 'TS', type: 'teacher', messages: [] };
 
     act(() => {
@@ -177,8 +185,8 @@ describe('useAiAgentState', () => {
     expect(result.current.threads[0].messages[0].text).toBe('Hi');
   });
 
-  it('addMessages appends multiple messages', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('addMessages appends multiple messages', async () => {
+    const { result } = await setupHook();
     const thread: Thread = { id: 't2', topic: 'TS', type: 'teacher', messages: [] };
 
     act(() => {
@@ -194,8 +202,8 @@ describe('useAiAgentState', () => {
     expect(result.current.threads[0].messages).toHaveLength(2);
   });
 
-  it('createOrUpdateThread adds a new thread', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('createOrUpdateThread adds a new thread', async () => {
+    const { result } = await setupHook();
     const thread: Thread = { id: 'new', topic: 'TS', type: 'teacher', messages: [] };
 
     act(() => {
@@ -206,8 +214,8 @@ describe('useAiAgentState', () => {
     expect(result.current.threads[0].id).toBe('new');
   });
 
-  it('createOrUpdateThread replaces an existing thread with same topic+type', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('createOrUpdateThread replaces an existing thread with same topic+type', async () => {
+    const { result } = await setupHook();
     const thread1: Thread = { id: 'old', topic: 'TS', type: 'teacher', messages: [] };
     const thread2: Thread = {
       id: 'new',
@@ -228,7 +236,7 @@ describe('useAiAgentState', () => {
   });
 
   it('clearHistory removes thread and calls clearThreadHistory API', async () => {
-    const { result } = renderHook(() => useAiAgentState());
+    const { result } = await setupHook();
     const thread: Thread = {
       id: 'tid',
       topic: 'TypeScript',
@@ -251,8 +259,8 @@ describe('useAiAgentState', () => {
     expect(aiAgentApi.clearThreadHistory).toHaveBeenCalledWith('TypeScript', 'interviewer');
   });
 
-  it('clearHistory does nothing when activeTopic is null', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('clearHistory does nothing when activeTopic is null', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.clearHistory('teacher');
@@ -262,11 +270,7 @@ describe('useAiAgentState', () => {
   });
 
   it('addScore updates local scores and calls both API functions', async () => {
-    const { result } = renderHook(() => useAiAgentState());
-
-    await act(async () => {
-      await vi.runAllTicks();
-    });
+    const { result } = await setupHook();
 
     act(() => {
       result.current.addScore('TypeScript', 8);
@@ -283,18 +287,14 @@ describe('useAiAgentState', () => {
 
   it('readinessPercentage calculates correctly', async () => {
     vi.mocked(aiAgentApi.loadAllScores).mockResolvedValue({ TypeScript: 10, 'Async JS': 5 });
-    const { result } = renderHook(() => useAiAgentState());
-
-    await act(async () => {
-      await vi.runAllTicks();
-    });
+    const { result } = await setupHook();
 
     expect(result.current.totalScore).toBe(15);
     expect(result.current.readinessPercentage).toBe(10);
   });
 
-  it('questionCount counts AI messages with "?" after index 0', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('questionCount counts AI messages with "?" after index 0', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setActiveTopic('TypeScript');
@@ -314,8 +314,8 @@ describe('useAiAgentState', () => {
     expect(result.current.questionCount).toBe(2);
   });
 
-  it('openResetInterviewer / closeResetInterviewer toggle modal', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('openResetInterviewer / closeResetInterviewer toggle modal', async () => {
+    const { result } = await setupHook();
 
     act(() => result.current.openResetInterviewer());
     expect(result.current.resetInterviewerModalOpen).toBe(true);
@@ -324,8 +324,8 @@ describe('useAiAgentState', () => {
     expect(result.current.resetInterviewerModalOpen).toBe(false);
   });
 
-  it('openResetTeacher / closeResetTeacher toggle modal', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('openResetTeacher / closeResetTeacher toggle modal', async () => {
+    const { result } = await setupHook();
 
     act(() => result.current.openResetTeacher());
     expect(result.current.resetTeacherModalOpen).toBe(true);
@@ -334,8 +334,8 @@ describe('useAiAgentState', () => {
     expect(result.current.resetTeacherModalOpen).toBe(false);
   });
 
-  it('isInterviewerWaitingForUser is true when last interviewer message is from AI', () => {
-    const { result } = renderHook(() => useAiAgentState());
+  it('isInterviewerWaitingForUser is true when last interviewer message is from AI', async () => {
+    const { result } = await setupHook();
 
     act(() => {
       result.current.setActiveTopic('TypeScript');

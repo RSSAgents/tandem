@@ -62,12 +62,12 @@ export const TeacherSection = ({
         setTimeout(() => {
           scrollContainer.scroll({
             top: scrollContainer.scrollHeight,
-            behavior: 'smooth',
+            behavior: isLoadingHistory ? 'instant' : 'smooth',
           });
         }, 0);
       }
     }
-  }, [messagesCount, lastMessageText]);
+  }, [messagesCount, lastMessageText, isLoadingHistory]);
 
   return (
     <Grid.Col span={isMobile ? 12 : 4.5}>
