@@ -36,7 +36,10 @@ export const saveTopicScore = async (topic: string, score: number): Promise<void
   if (error) throw new Error(error.message);
 };
 
-export const saveAiAgentWidgetScore = async (totalScore: number, maxScore: number): Promise<void> => {
+export const saveAiAgentWidgetScore = async (
+  totalScore: number,
+  maxScore: number,
+): Promise<void> => {
   const {
     data: { user },
   } = await supabase.auth.getUser();

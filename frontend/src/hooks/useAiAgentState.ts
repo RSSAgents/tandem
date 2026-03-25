@@ -8,7 +8,12 @@ import {
   Thread,
   ThreadType,
 } from '@/types/aiAgentTypes';
-import { clearThreadHistory, loadAllScores, saveAiAgentWidgetScore, saveTopicScore } from '@api/aiAgent.api';
+import {
+  clearThreadHistory,
+  loadAllScores,
+  saveAiAgentWidgetScore,
+  saveTopicScore,
+} from '@api/aiAgent.api';
 import { MAX_SCORE, TIMER_INTERVAL_MS, TOPICS } from '@constants/aiAgentConstants';
 import { useCallback, useEffect, useRef, useState } from 'react';
 

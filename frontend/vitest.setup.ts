@@ -15,6 +15,22 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+class MockResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(globalThis, 'ResizeObserver', {
+  writable: true,
+  value: MockResizeObserver,
+});
+
+Object.defineProperty(Element.prototype, 'scroll', {
+  writable: true,
+  value: () => {},
+});
+
 export const mockNavigate = vi.fn();
 
 vi.mock('react-router-dom', async () => {

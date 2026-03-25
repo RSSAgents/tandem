@@ -89,7 +89,7 @@ export const callGroqAPIStream = async (
               onChunk(fullText);
             }
           } catch {
-            /* not a valid JSON SSE line, skip */
+            throw new Error(`Failed to parse SSE chunk: ${payload}`);
           }
         }
       }
