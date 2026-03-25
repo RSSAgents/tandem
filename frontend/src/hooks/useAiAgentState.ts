@@ -8,7 +8,7 @@ import {
   Thread,
   ThreadType,
 } from '@/types/aiAgentTypes';
-import { clearThreadHistory, loadAllScores, saveTopicScore } from '@api/aiAgent.api';
+import { clearThreadHistory, loadAllScores, saveAiAgentWidgetScore, saveTopicScore } from '@api/aiAgent.api';
 import { MAX_SCORE, TIMER_INTERVAL_MS, TOPICS } from '@constants/aiAgentConstants';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -137,8 +137,12 @@ export const useAiAgentState = () => {
   }, []);
 
   const addScore = (topic: string, score: number) => {
-    setScores((prev) => ({ ...prev, [topic]: score }));
+    const newScores = { ...scores, [topic]: score };
+    setScores(newScores);
+    const newTotal = Object.values(newScores).reduce((acc, curr) => acc + curr, 0);
+    const maxScore = TOPICS.length * MAX_SCORE;
     saveTopicScore(topic, score).catch(() => {});
+    saveAiAgentWidgetScore(newTotal, maxScore).catch(() => {});
   };
 
   const handleSetActiveTopic = (topic: string | null) => {
