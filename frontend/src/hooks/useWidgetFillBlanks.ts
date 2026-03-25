@@ -22,13 +22,18 @@ export const useWidgetFillBlanks = () => {
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
-  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   const currentTask = tasks[currentIndex];
   const isLastQuestion = currentIndex === tasks.length - 1;
   const isAllAnswered =
     currentTask?.payload.statements.every((s) => answers[currentTask.id]?.[s.id] !== undefined) ??
     false;
+
+  const totalStatements = tasks.reduce(
+    (acc, t) => acc + t.payload.statements.length,
+    0
+  );
 
   useEffect(() => {
     const controller = new AbortController();
@@ -92,30 +97,22 @@ export const useWidgetFillBlanks = () => {
       if (answerIndex === undefined) continue;
 
       const isCorrect = await checkFillBlanksAnswer(currentTask.id, s.id, answerIndex);
-
-      results[s.id] = isCorrect;
+      const key = `${currentTask.id}_${s.id}`;
+      results[key] = isCorrect;
 
       if (isCorrect) {
         correctCount++;
       }
     }
 
-    setResultMap(results);
     setShowResult(true);
     setIsCorrect(correctCount === currentTask.payload.statements.length);
 
-    if (!answeredQuestions.has(currentTask.id)) {
-      const questionScore = correctCount === currentTask.payload.statements.length ? 10 : 0;
-
-      setScore((prev) => prev + questionScore);
-
-      setAnsweredQuestions((prev) => {
-        const updated = new Set(prev);
-        updated.add(currentTask.id);
-        return updated;
-      });
-    }
-  }, [answers, currentTask, answeredQuestions]);
+    setResultMap((prev) => {
+      const updated = { ...prev, ...results };
+      return updated;
+    });
+  }, [answers, currentTask, totalStatements]);
 
   const handleNextQuestion = async () => {
     if (!isLastQuestion) {
@@ -124,6 +121,12 @@ export const useWidgetFillBlanks = () => {
       setIsCorrect(false);
     } else {
       try {
+      const correctCountAll = Object.values(resultMap).filter(Boolean).length;
+      setCorrectAnswersCount(correctCountAll);
+
+      const finalScore = Math.round((correctCountAll / totalStatements) * 80);
+      setScore(finalScore);
+
         await saveFillBlanksScore(score);
       } catch {
         setError('Failed to save score');
@@ -157,5 +160,8 @@ export const useWidgetFillBlanks = () => {
     handleCheckResult,
     handleNextQuestion,
     handlePreviousQuestion,
+
+    totalStatements,
+    correctAnswersCount,
   };
 };

@@ -12,7 +12,6 @@ export const WidgetFillBlanks = () => {
     error,
     currentTask,
     answers,
-    score,
     handleChange,
     handleCheckResult,
     handleNextQuestion,
@@ -23,6 +22,9 @@ export const WidgetFillBlanks = () => {
     currentIndex,
     tasks,
     resultMap,
+
+    correctAnswersCount,
+    totalStatements,
   } = useWidgetFillBlanks();
 
   const getSelectStatus = (id: string) => {
@@ -114,7 +116,7 @@ export const WidgetFillBlanks = () => {
 
         <Button
           className={classes.button}
-          disabled={showResult || isLastQuestion}
+          disabled={!showResult || isLastQuestion}
           onClick={handleNextQuestion}
         >
           Next
@@ -131,8 +133,8 @@ export const WidgetFillBlanks = () => {
       )}
 
       <ScoreDisplayModal
-        score={score}
-        total={tasks.length}
+        score={correctAnswersCount}
+        total={totalStatements}
         opened={modalOpened}
         onClose={() => setModalOpened(false)}
         onTryAgain={() => {
