@@ -8,7 +8,7 @@ export const ResultDisplay = ({ isCorrect, explanation }: IResultDisplayProps) =
       <Text className={isCorrect ? styles.resultCorrect : styles.resultIncorrect}>
         {isCorrect ? '✅ Correct! Well done!' : '❌ Error!'}
       </Text>
-      <Text mt="sm" size="sm">
+      <Text mt="sm" size="sm" className={styles.explanation}>
         {explanation}
       </Text>
     </Paper>
