@@ -8,8 +8,10 @@ import {
   ActionIcon,
   Box,
   Button,
+  Center,
   Grid,
   Group,
+  Loader,
   Paper,
   Progress,
   ScrollArea,
@@ -40,6 +42,7 @@ interface InterviewerSectionProps {
   isWaitingForAnswer: boolean;
   aiInterviewLevel: AiLevelType;
   onAiLevelChange: (level: AiLevelType) => void;
+  isLoadingHistory?: boolean;
 }
 
 export const InterviewerSection = ({
@@ -60,6 +63,7 @@ export const InterviewerSection = ({
   isWaitingForAnswer,
   aiInterviewLevel,
   onAiLevelChange,
+  isLoadingHistory,
 }: InterviewerSectionProps) => {
   const { t } = useTranslation('aiAgent');
   const timerColor = timer !== null && timer < TIMER_WARNING_THRESHOLD ? 'red' : undefined;
@@ -157,7 +161,13 @@ export const InterviewerSection = ({
         )}
 
         <ScrollArea ref={scrollAreaRef} flex={1} p="xs" pr="md" className={classes.smoothScroll}>
-          {renderMessages(interviewerMode as ThreadType, interviewerMode)}
+          {isLoadingHistory ? (
+            <Center h="100%">
+              <Loader size="sm" />
+            </Center>
+          ) : (
+            renderMessages(interviewerMode as ThreadType, interviewerMode)
+          )}
         </ScrollArea>
 
         <Box mt="md">

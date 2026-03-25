@@ -28,6 +28,7 @@ export const useAiAgentState = () => {
   );
   const [scores, setScores] = useState<Record<string, number>>({});
   const [isWaitingForAnswer, setIsWaitingForAnswer] = useState(false);
+  const [waitingForType, setWaitingForType] = useState<ThreadType | null>(null);
   const [timer, setTimer] = useState<number | null>(null);
   const [interviewerMode, setInterviewerMode] = useState<InterviewerMode>('interviewer');
   const [aiInterviewLevel, setAiInterviewLevel] = useState<AiLevelType>('junior');
@@ -172,6 +173,8 @@ export const useAiAgentState = () => {
     setScores,
     isWaitingForAnswer,
     setIsWaitingForAnswer,
+    waitingForType,
+    setWaitingForType,
     timer,
     setTimer,
     interviewerMode,

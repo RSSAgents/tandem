@@ -1,7 +1,7 @@
 import { InterviewerMode, Message } from '@/types/aiAgentTypes';
 import { CodeHighlight } from '@mantine/code-highlight';
 import '@mantine/code-highlight/styles.css';
-import { ActionIcon, Box, Stack, Text } from '@mantine/core';
+import { ActionIcon, Box, Loader, Stack, Text } from '@mantine/core';
 import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { IconPlayerPlay } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
@@ -14,6 +14,7 @@ interface MessageRendererProps {
   startMessage: string;
   hasActiveTopic: boolean;
   mode?: InterviewerMode;
+  isWaitingForAnswer?: boolean;
 }
 
 export const MessageRenderer = ({
@@ -21,6 +22,7 @@ export const MessageRenderer = ({
   startMessage,
   hasActiveTopic,
   mode,
+  isWaitingForAnswer,
 }: MessageRendererProps) => {
   const [initialTimestamp] = useState(() => Date.now());
   const [runnerCode, setRunnerCode] = useState('');
@@ -166,6 +168,11 @@ export const MessageRenderer = ({
             </Box>
           );
         })}
+        {isWaitingForAnswer && (
+          <Box className={classes.messageAi}>
+            <Loader type="dots" size="sm" color="gray" />
+          </Box>
+        )}
       </Stack>
       <CodeRunnerModal
         opened={runnerOpened}

@@ -60,6 +60,8 @@ function makeMockState(overrides: Partial<AgentState> = {}): AgentState {
     setScores: vi.fn(),
     isWaitingForAnswer: false,
     setIsWaitingForAnswer: vi.fn(),
+    waitingForType: null,
+    setWaitingForType: vi.fn(),
     timer: null,
     setTimer: vi.fn(),
     interviewerMode: 'interviewer',
@@ -275,11 +277,9 @@ describe('useAiInterviewLogic', () => {
 
   describe('handleSend – normal flow', () => {
     beforeEach(() => {
-      vi.mocked(groqApiService.callGroqAPIStream).mockImplementation(
-        async () => {
-          return 'AI response text';
-        },
-      );
+      vi.mocked(groqApiService.callGroqAPIStream).mockImplementation(async () => {
+        return 'AI response text';
+      });
     });
 
     it('does nothing when text is empty', async () => {
@@ -328,11 +328,9 @@ describe('useAiInterviewLogic', () => {
     });
 
     it('calls addScore when response contains FINAL_SCORE', async () => {
-      vi.mocked(groqApiService.callGroqAPIStream).mockImplementation(
-        async () => {
-          return 'Great job! FINAL_SCORE: 8';
-        },
-      );
+      vi.mocked(groqApiService.callGroqAPIStream).mockImplementation(async () => {
+        return 'Great job! FINAL_SCORE: 8';
+      });
 
       const state = makeMockState({ inputs: { TypeScript: { interviewer: 'done' } } });
       const { result } = renderHook(() => useAiInterviewLogic(state));
@@ -346,9 +344,7 @@ describe('useAiInterviewLogic', () => {
     });
 
     it('sets timer when in stress mode after AI reply without FINAL_SCORE', async () => {
-      vi.mocked(groqApiService.callGroqAPIStream).mockImplementation(
-        async () => 'Next question?',
-      );
+      vi.mocked(groqApiService.callGroqAPIStream).mockImplementation(async () => 'Next question?');
 
       const state = makeMockState({
         stressMode: 'stress',

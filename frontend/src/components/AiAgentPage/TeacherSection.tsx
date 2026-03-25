@@ -8,6 +8,7 @@ import {
   Center,
   Grid,
   Group,
+  Loader,
   Paper,
   ScrollArea,
   Text,
@@ -30,6 +31,7 @@ interface TeacherSectionProps {
   onInputChange: (value: string) => void;
   onSend: () => void;
   isWaitingForAnswer: boolean;
+  isLoadingHistory?: boolean;
 }
 
 export const TeacherSection = ({
@@ -44,6 +46,7 @@ export const TeacherSection = ({
   onInputChange,
   onSend,
   isWaitingForAnswer,
+  isLoadingHistory,
 }: TeacherSectionProps) => {
   const { t } = useTranslation('aiAgent');
   const isDisabled = !activeTopic || stressMode === 'stress' || isWaitingForAnswer;
@@ -91,7 +94,11 @@ export const TeacherSection = ({
         </Group>
 
         <ScrollArea ref={scrollAreaRef} flex={1} p="xs" pr="md" className={classes.smoothScroll}>
-          {stressMode === 'stress' ? (
+          {isLoadingHistory ? (
+            <Center h="100%">
+              <Loader size="sm" />
+            </Center>
+          ) : stressMode === 'stress' ? (
             <Center h="100%">
               <Text c="dimmed" fw={700}>
                 {t('teacher.stressUnavailable')}

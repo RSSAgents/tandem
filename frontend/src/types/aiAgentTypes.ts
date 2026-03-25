@@ -45,6 +45,8 @@ export interface AgentState {
   ) => void;
   isWaitingForAnswer: boolean;
   setIsWaitingForAnswer: (waiting: boolean) => void;
+  waitingForType: ThreadType | null;
+  setWaitingForType: (type: ThreadType | null) => void;
   timer: number | null;
   setTimer: (timer: number | null) => void;
   interviewerMode: InterviewerMode;

@@ -239,6 +239,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
     }
 
     state.setIsWaitingForAnswer(false);
+    state.setWaitingForType(null);
   };
 
   const handleSend = async (type: ThreadType, forcedText?: string) => {
@@ -386,11 +387,15 @@ export const useAiInterviewLogic = (state: AgentState) => {
     }
 
     state.setIsWaitingForAnswer(true);
+    state.setWaitingForType(type);
     await simulateAiReply(targetThreadId, text, type, state.activeTopic);
   };
 
   const startAiInterviewSimulation = async () => {
     if (!state.activeTopic) return;
+
+    state.setIsWaitingForAnswer(true);
+    state.setWaitingForType('ai-interview');
 
     let targetThreadId = state.threads.find(
       (t) => t.topic === state.activeTopic && t.type === 'ai-interview',
@@ -423,6 +428,9 @@ export const useAiInterviewLogic = (state: AgentState) => {
       { role: 'system', content: systemPrompt },
       { role: 'user', content: t('prompts.aiInterviewNextExchange') },
     ]);
+
+    state.setIsWaitingForAnswer(false);
+    state.setWaitingForType(null);
 
     const candidateIdx = aiResponseText.search(/\bCandidate\s*:/i);
     const interviewerText = (

@@ -22,6 +22,7 @@ export const AiAgentPage = () => {
   const [drawerType, setDrawerType] = useState<DrawerType>('menu');
 
   const [codeRunnerOpened, setCodeRunnerOpened] = useState(false);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const state = useAiAgentState();
   const { handleSend, startAiInterviewSimulation, getStartMessageForType } =
     useAiInterviewLogic(state);
@@ -47,24 +48,34 @@ export const AiAgentPage = () => {
       { dbType: 'ai-interview-senior', type: 'ai-interview' },
     ];
 
-    threadTypes.forEach(async ({ dbType, type }) => {
-      const messages = await loadThreadHistory(topic, dbType).catch(() => []);
-      if (messages.length === 0) return;
+    Promise.resolve()
+      .then(() => {
+        setIsLoadingHistory(true);
+        return Promise.all(
+          threadTypes.map(async ({ dbType, type }) => {
+            const messages = await loadThreadHistory(topic, dbType).catch(() => []);
+            if (messages.length === 0) return;
 
-      const thread: Thread = {
-        id: crypto.randomUUID(),
-        topic,
-        type,
-        messages,
-      };
-      createOrUpdateThread(thread);
-    });
+            const thread: Thread = {
+              id: crypto.randomUUID(),
+              topic,
+              type,
+              messages,
+            };
+            createOrUpdateThread(thread);
+          }),
+        );
+      })
+      .finally(() => {
+        setIsLoadingHistory(false);
+      });
   }, [stateActiveTopic, createOrUpdateThread]);
 
   const renderMessagesWrapper = (type: ThreadType, mode?: 'interviewer' | 'ai-interview') => {
     const startMsg = getStartMessageForType(type, state.activeTopic);
     const thread = state.threads.find((t) => t.topic === state.activeTopic && t.type === type);
     const messages = thread?.messages || [];
+    const isThinking = state.isWaitingForAnswer && state.waitingForType === type;
 
     return (
       <MessageRenderer
@@ -72,6 +83,7 @@ export const AiAgentPage = () => {
         startMessage={startMsg}
         hasActiveTopic={state.activeTopic !== null}
         mode={mode === 'ai-interview' ? 'ai-interview' : undefined}
+        isWaitingForAnswer={isThinking}
       />
     );
   };
@@ -230,6 +242,7 @@ export const AiAgentPage = () => {
             isWaitingForAnswer={state.isWaitingForAnswer}
             aiInterviewLevel={state.aiInterviewLevel}
             onAiLevelChange={state.setAiInterviewLevel}
+            isLoadingHistory={isLoadingHistory}
           />
         )}
 
@@ -246,6 +259,7 @@ export const AiAgentPage = () => {
             onInputChange={(val) => state.setInput('teacher', val)}
             onSend={() => handleSend('teacher')}
             isWaitingForAnswer={state.isWaitingForAnswer}
+            isLoadingHistory={isLoadingHistory}
           />
         )}
       </Grid>
