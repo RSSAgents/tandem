@@ -23,17 +23,13 @@ describe('Login Page', () => {
     cy.get('input[name="password"]').type('12345');
     cy.get('button[type="submit"]').click();
 
-    cy.contains(
-      /Password must be at least 6 characters|Пароль должен содержать минимум 6 символов/i,
-    ).should('be.visible');
+    cy.contains(/Password is too short|Пароль слишком короткий/i).should('be.visible');
   });
 
   it('should show validation errors when fields are empty', () => {
     cy.get('button[type="submit"]').click();
 
     cy.contains(/Invalid email|Неверный формат email/i).should('be.visible');
-    cy.contains(
-      /Password must be at least 6 characters|Пароль должен содержать минимум 6 символов/i,
-    ).should('be.visible');
+    cy.contains(/Password is too short|Пароль слишком короткий/i).should('be.visible');
   });
 });
