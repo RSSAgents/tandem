@@ -1,0 +1,18 @@
+{
+  "title": "Simulate <1>real interviews</1> with our AI assistant",
+  "subtitle": "Practice with an AI that asks real interview questions, adapts to your answers, and gives instant feedback - just like a real interviewer",
+  "features": [
+    {
+      "title": "Real interview questions",
+      "description": "from junior to staff level, covering JS, TS, and Algorithms"
+    },
+    {
+      "title": "Adaptive follow-ups",
+      "description": "AI digs deeper based on your answers"
+    },
+    {
+      "title": "Instant feedback",
+      "description": "get detailed scores and explanations"
+    }
+  ]
+}

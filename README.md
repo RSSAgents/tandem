@@ -202,3 +202,7 @@ src/
 For deployment, the project will use Vercel.
 
 🔗 **Ссылка на проект:** [Tandem](https://tandem-three.vercel.app/)
+
+## 🚀 Checkpoint week 5🔗
+
+**Ссылка на видео:** [checkpoint-5](https://youtu.be/Wa8RyWGipxc)
