@@ -1,0 +1,28 @@
+.wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 380px;
+  padding: var(--mantine-spacing-xl) var(--mantine-spacing-2xl);
+
+  border-radius: var(--mantine-radius-2xl);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+
+  box-shadow: var(--shadow-light);
+  position: relative;
+}
+
+.signinLink {
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.signinLink:hover {
+  color: var(--accent);
+}

@@ -11,6 +11,7 @@ import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
 import { HomePage } from '@/pages/HomePage/HomePage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
+const RegisterPage = lazy(() => import('@/components/features/auth/RegisterPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 const LibraryPage = lazy(() => import('@pages/LibraryPage/LibraryPage'));
 
@@ -23,6 +24,7 @@ export const appRoutes = [
       { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
       { path: ROUTE_PATHS.ABOUT, element: <About /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
+      { path: ROUTE_PATHS.REGISTER, element: <RegisterPage /> },
     ],
   },
   {
