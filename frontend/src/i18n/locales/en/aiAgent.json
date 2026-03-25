@@ -21,7 +21,12 @@
     "senior": "Senior",
     "generateNext": "Generate Next Question & Answer",
     "placeholder": "Type your answer...",
-    "send": "Send"
+    "send": "Send",
+    "finalScoreLabel": "Final score",
+    "newInterviewPrompt": "Would you like to start a new interview?",
+    "newInterviewDecline": "OK, you can come back later. The current interview history will be saved. To delete it, click the trash icon in the top right corner of this chat.",
+    "newInterviewUnknown": "Please type yes or no.",
+    "alreadyDeclined": "To start a new interview, you need to clear the message history. Click the trash icon in the top right corner of this chat."
   },
   "teacher": {
     "label": "TEACHER",

@@ -52,6 +52,9 @@ export interface AgentState {
   aiInterviewLevel: AiLevelType;
   setAiInterviewLevel: (level: AiLevelType) => void;
   timerRef: MutableRefObject<number | null>;
+  threadsRef: MutableRefObject<Thread[]>;
+  isWaitingForRestartConfirm: boolean;
+  setIsWaitingForRestartConfirm: (v: boolean) => void;
   resetInterviewerModalOpen: boolean;
   resetTeacherModalOpen: boolean;
   openResetInterviewer: () => void;

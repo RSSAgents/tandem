@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
 import {
   AiLevelType,
   InputsState,
@@ -8,8 +7,10 @@ import {
   StressModeType,
   Thread,
   ThreadType,
-} from '../types/aiAgentTypes';
-import { MAX_SCORE, TIMER_INTERVAL_MS, TOPICS } from '../utils/aiAgentConstants';
+} from '@/types/aiAgentTypes';
+import { clearThreadHistory, loadAllScores, saveTopicScore } from '@api/aiAgent.api';
+import { MAX_SCORE, TIMER_INTERVAL_MS, TOPICS } from '@constants/aiAgentConstants';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useAiAgentState = () => {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
@@ -25,7 +26,12 @@ export const useAiAgentState = () => {
   const [timer, setTimer] = useState<number | null>(null);
   const [interviewerMode, setInterviewerMode] = useState<InterviewerMode>('interviewer');
   const [aiInterviewLevel, setAiInterviewLevel] = useState<AiLevelType>('junior');
+  const [isWaitingForRestartConfirm, setIsWaitingForRestartConfirm] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const threadsRef = useRef<Thread[]>([]);
+  useEffect(() => {
+    threadsRef.current = threads;
+  });
 
   const [resetInterviewerModalOpen, setResetInterviewerModalOpen] = useState(false);
   const [resetTeacherModalOpen, setResetTeacherModalOpen] = useState(false);
@@ -39,11 +45,18 @@ export const useAiAgentState = () => {
   const readinessPercentage = Math.ceil((totalScore / (TOPICS.length * MAX_SCORE)) * 100);
 
   useEffect(() => {
-    if (stressMode !== 'normal') return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTimer(null);
-    if (timerRef.current) clearInterval(timerRef.current);
-  }, [stressMode]);
+    loadAllScores()
+      .then(setScores)
+      .catch(() => {});
+  }, []);
+
+  const handleSetStressMode = (mode: StressModeType) => {
+    setStressMode(mode);
+    if (mode === 'normal') {
+      setTimer(null);
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+  };
 
   useEffect(() => {
     if (timer !== null && timer > 0) {
@@ -66,6 +79,8 @@ export const useAiAgentState = () => {
     if (!activeTopic) return;
     setThreads((prev) => prev.filter((t) => !(t.topic === activeTopic && t.type === type)));
     setTimer(null);
+    const threadType = type === 'ai-interview' ? `ai-interview-${aiInterviewLevel}` : type;
+    clearThreadHistory(activeTopic, threadType).catch(() => {});
     if (type === 'interviewer' || type === 'ai-interview') {
       setIsWaitingForAnswer(false);
       closeResetInterviewer();
@@ -107,7 +122,7 @@ export const useAiAgentState = () => {
     );
   };
 
-  const createOrUpdateThread = (thread: Thread) => {
+  const createOrUpdateThread = useCallback((thread: Thread) => {
     setThreads((prevThreads) => {
       const existingIndex = prevThreads.findIndex(
         (t) => t.topic === thread.topic && t.type === thread.type,
@@ -119,15 +134,21 @@ export const useAiAgentState = () => {
       }
       return [...prevThreads, thread];
     });
-  };
+  }, []);
 
   const addScore = (topic: string, score: number) => {
     setScores((prev) => ({ ...prev, [topic]: score }));
+    saveTopicScore(topic, score).catch(() => {});
+  };
+
+  const handleSetActiveTopic = (topic: string | null) => {
+    setActiveTopic(topic);
+    setIsWaitingForRestartConfirm(false);
   };
 
   return {
     activeTopic,
-    setActiveTopic,
+    setActiveTopic: handleSetActiveTopic,
     threads,
     setThreads,
     inputs,
@@ -135,7 +156,7 @@ export const useAiAgentState = () => {
     role,
     setRole,
     stressMode,
-    setStressMode,
+    setStressMode: handleSetStressMode,
     mobileActiveView,
     setMobileActiveView,
     scores,
@@ -168,5 +189,8 @@ export const useAiAgentState = () => {
     addMessages,
     createOrUpdateThread,
     addScore,
+    threadsRef,
+    isWaitingForRestartConfirm,
+    setIsWaitingForRestartConfirm,
   };
 };

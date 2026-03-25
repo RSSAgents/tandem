@@ -1,3 +1,9 @@
+import { AiLevelType, InterviewerMode, ThreadType } from '@/types/aiAgentTypes';
+import {
+  MAX_QUESTIONS,
+  PANEL_HEIGHT_OFFSET,
+  TIMER_WARNING_THRESHOLD,
+} from '@constants/aiAgentConstants';
 import {
   ActionIcon,
   Box,
@@ -11,16 +17,10 @@ import {
   Text,
   Textarea,
 } from '@mantine/core';
+import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
-import { AiLevelType, InterviewerMode, ThreadType } from '../../types/aiAgentTypes';
-import {
-  MAX_QUESTIONS,
-  PANEL_HEIGHT_OFFSET,
-  TIMER_WARNING_THRESHOLD,
-} from '../../utils/aiAgentConstants';
 
 interface InterviewerSectionProps {
   interviewerMode: InterviewerMode;

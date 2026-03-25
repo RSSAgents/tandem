@@ -1,8 +1,8 @@
+import { RoleType, StressModeType } from '@/types/aiAgentTypes';
 import { Button, Group, Paper, SegmentedControl, Stack, Text } from '@mantine/core';
+import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { IconTerminal2 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
-import { RoleType, StressModeType } from '../../types/aiAgentTypes';
 
 interface SettingsPanelProps {
   role: RoleType;

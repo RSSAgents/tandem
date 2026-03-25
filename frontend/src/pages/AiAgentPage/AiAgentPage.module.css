@@ -323,7 +323,6 @@
   padding-bottom: calc((var(--input-height) - var(--mantine-line-height) * 1em) / 2);
 }
 
-
 .readOnlyEditor {
   pointer-events: none;
   user-select: text;

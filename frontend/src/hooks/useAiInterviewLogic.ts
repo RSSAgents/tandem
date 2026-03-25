@@ -1,5 +1,6 @@
-import { useTranslation } from 'react-i18next';
-import { AgentState, Message, Thread, ThreadType } from '../types/aiAgentTypes';
+import { AgentState, Message, Thread, ThreadType } from '@/types/aiAgentTypes';
+import { saveThreadHistory } from '@api/aiAgent.api';
+import { callGroqAPI, callGroqAPIStream } from '@api/groqApiService';
 import {
   AI_INTERVIEW_DELAY_MS,
   CANDIDATE_DELAY_MS,
@@ -8,12 +9,11 @@ import {
   THREAD_TIMESTAMP_OFFSET_MS,
   TIMER_SECONDS,
   TYPING_CHARS_PER_FRAME,
-} from '../utils/aiAgentConstants';
-import { callGroqAPI, callGroqAPIStream } from '../utils/groqApiService';
+} from '@constants/aiAgentConstants';
+import { useTranslation } from 'react-i18next';
 
 export const useAiInterviewLogic = (state: AgentState) => {
-  const { t, i18n } = useTranslation('aiAgent');
-  const isRu = i18n.language === 'ru';
+  const { t } = useTranslation('aiAgent');
 
   const getStartMessageForType = (type: ThreadType, topic: string | null) => {
     const params = {
@@ -71,24 +71,11 @@ export const useAiInterviewLogic = (state: AgentState) => {
     type: ThreadType,
     manualActiveTopic: string,
   ) => {
-    const wrongLang = isRu ? /[a-z]/i.test(userText) : /[а-яё]/i.test(userText);
-    if (wrongLang) {
-      const langMessage: Message = {
-        id: crypto.randomUUID(),
-        sender: 'ai',
-        text: t('errors.speakLanguage'),
-        timestamp: Date.now(),
-      };
-      state.setThreads((threads: Thread[]) =>
-        threads.map((thread) =>
-          thread.id === threadId
-            ? { ...thread, messages: [...thread.messages, langMessage] }
-            : thread,
-        ),
+    const formatDisplayText = (text: string) =>
+      text.replace(
+        /FINAL_SCORE:\s*(\d+)/gi,
+        (_, score) => `${t('interviewer.finalScoreLabel')}: ${score}`,
       );
-      if (type === 'interviewer' || type === 'teacher') state.setIsWaitingForAnswer(false);
-      return;
-    }
 
     const currentThread = state.threads.find((t) => t.id === threadId) || { messages: [] };
     const refusalWord =
@@ -200,7 +187,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
       if (!placeholderIds[i]) {
         placeholderIds[i] = crypto.randomUUID();
       }
-      targetTexts[i] = finalParts[i].trim();
+      targetTexts[i] = formatDisplayText(finalParts[i].trim());
     }
 
     if (typingPromise) await typingPromise;
@@ -209,22 +196,143 @@ export const useAiInterviewLogic = (state: AgentState) => {
       await typeMessage(i);
     }
 
-    if (type === 'interviewer' && aiResponseText.includes('FINAL_SCORE:')) {
+    const hasFinalScore = type === 'interviewer' && aiResponseText.includes('FINAL_SCORE:');
+
+    if (hasFinalScore) {
       const match = aiResponseText.match(/FINAL_SCORE:\s*(\d+)/);
       if (match) {
-        const score = parseInt(match[1], 10);
-        state.addScore(manualActiveTopic, score);
+        state.addScore(manualActiveTopic, parseInt(match[1], 10));
       }
+      state.setTimer(null);
+      state.setIsWaitingForRestartConfirm(true);
+
+      const promptMsg: Message = {
+        id: crypto.randomUUID(),
+        sender: 'ai',
+        text: t('interviewer.newInterviewPrompt'),
+        timestamp: Date.now(),
+      };
+      state.setThreads((current: Thread[]) =>
+        current.map((thread) =>
+          thread.id === threadId
+            ? { ...thread, messages: [...thread.messages, promptMsg] }
+            : thread,
+        ),
+      );
+
+      setTimeout(() => {
+        const savedThread = state.threadsRef.current.find((t) => t.id === threadId);
+        if (savedThread) {
+          saveThreadHistory(manualActiveTopic, type, savedThread.messages).catch(() => {});
+        }
+      }, 0);
+    } else {
+      if (type === 'interviewer' && state.stressMode === 'stress') {
+        state.setTimer(TIMER_SECONDS);
+      }
+      setTimeout(() => {
+        const savedThread = state.threadsRef.current.find((t) => t.id === threadId);
+        if (savedThread) {
+          saveThreadHistory(manualActiveTopic, type, savedThread.messages).catch(() => {});
+        }
+      }, 0);
     }
 
     state.setIsWaitingForAnswer(false);
-    if (type === 'interviewer' && state.stressMode === 'stress') {
-      state.setTimer(TIMER_SECONDS);
-    }
   };
 
   const handleSend = async (type: ThreadType, forcedText?: string) => {
     if (!state.activeTopic) return;
+
+    if (type === 'interviewer' && state.isWaitingForRestartConfirm) {
+      const text = (forcedText || state.inputs[state.activeTopic]?.[type]?.trim()) ?? '';
+      if (!text) return;
+
+      if (!forcedText) {
+        state.setInputs((prev: Record<string, Partial<Record<ThreadType, string>>>) => ({
+          ...prev,
+          [state.activeTopic!]: { ...prev[state.activeTopic!], [type]: '' },
+        }));
+      }
+
+      const userMsg: Message = {
+        id: crypto.randomUUID(),
+        sender: 'user',
+        text,
+        timestamp: Date.now(),
+      };
+      const existingThread = state.threads.find(
+        (t: Thread) => t.topic === state.activeTopic && t.type === 'interviewer',
+      );
+      if (existingThread) {
+        state.addMessage(existingThread.id, userMsg);
+      }
+
+      const trimmed = text.trim().toLowerCase();
+      const isYes =
+        /^(да|давай|хочу|конечно|ок|окей|yes|sure|of course|let's|let s|yeah|yep|ok|okay|absolutely|want)$/i.test(
+          trimmed,
+        );
+      const isNo = /^(нет|не хочу|no|don't want|dont want|nope|not now|no thanks)$/i.test(trimmed);
+
+      if (isYes) {
+        state.setIsWaitingForRestartConfirm(false);
+        state.clearHistory('interviewer');
+      } else if (isNo) {
+        state.setIsWaitingForRestartConfirm(false);
+        const aiReply: Message = {
+          id: crypto.randomUUID(),
+          sender: 'ai',
+          text: t('interviewer.newInterviewDecline'),
+          timestamp: Date.now(),
+        };
+        if (existingThread) state.addMessage(existingThread.id, aiReply);
+      } else {
+        const aiReply: Message = {
+          id: crypto.randomUUID(),
+          sender: 'ai',
+          text: t('interviewer.newInterviewUnknown'),
+          timestamp: Date.now(),
+        };
+        if (existingThread) state.addMessage(existingThread.id, aiReply);
+      }
+      return;
+    }
+    if (type === 'interviewer') {
+      const thread = state.threads.find(
+        (thr: Thread) => thr.topic === state.activeTopic && thr.type === 'interviewer',
+      );
+      const lastMsg = thread?.messages.slice(-1)[0];
+      if (lastMsg?.text === t('interviewer.newInterviewDecline')) {
+        const text = forcedText || (state.inputs[state.activeTopic]?.[type]?.trim() ?? '');
+        if (text) {
+          if (!forcedText) {
+            state.setInputs((prev: Record<string, Partial<Record<ThreadType, string>>>) => ({
+              ...prev,
+              [state.activeTopic!]: { ...prev[state.activeTopic!], [type]: '' },
+            }));
+          }
+          const userMsg: Message = {
+            id: crypto.randomUUID(),
+            sender: 'user',
+            text,
+            timestamp: Date.now(),
+          };
+          const aiReply: Message = {
+            id: crypto.randomUUID(),
+            sender: 'ai',
+            text: t('interviewer.alreadyDeclined'),
+            timestamp: Date.now(),
+          };
+          if (thread) {
+            state.addMessage(thread.id, userMsg);
+            state.addMessage(thread.id, aiReply);
+          }
+          return;
+        }
+      }
+    }
+
     const text = forcedText || (state.inputs[state.activeTopic]?.[type]?.trim() ?? '');
     if (!text) return;
 
@@ -359,7 +467,30 @@ export const useAiInterviewLogic = (state: AgentState) => {
             t.id === targetThreadId ? { ...t, messages: [...t.messages, aMsg] } : t,
           ),
         );
+        const threadType = `ai-interview-${state.aiInterviewLevel}`;
+        const thread = state.threadsRef.current.find((t) => t.id === targetThreadId);
+        if (thread && state.activeTopic) {
+          const allMsgs = candidateText
+            ? [
+                ...thread.messages,
+                {
+                  id: crypto.randomUUID(),
+                  sender: 'ai' as const,
+                  text: candidateText,
+                  timestamp: Date.now() + CANDIDATE_DELAY_MS,
+                  aiRole: 'candidate' as const,
+                },
+              ]
+            : thread.messages;
+          saveThreadHistory(state.activeTopic, threadType, allMsgs).catch(() => {});
+        }
       }, AI_INTERVIEW_DELAY_MS);
+    } else if (state.activeTopic) {
+      const threadType = `ai-interview-${state.aiInterviewLevel}`;
+      const thread = state.threadsRef.current.find((t) => t.id === targetThreadId);
+      if (thread) {
+        saveThreadHistory(state.activeTopic, threadType, thread.messages).catch(() => {});
+      }
     }
   };
 

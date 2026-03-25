@@ -1,12 +1,12 @@
+import { InterviewerMode, Message } from '@/types/aiAgentTypes';
 import { CodeHighlight } from '@mantine/code-highlight';
 import '@mantine/code-highlight/styles.css';
 import { ActionIcon, Box, Stack, Text } from '@mantine/core';
+import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { IconPlayerPlay } from '@tabler/icons-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
-import { InterviewerMode, Message } from '../../types/aiAgentTypes';
 import { CodeRunnerModal } from './CodeRunnerModal';
 
 interface MessageRendererProps {

@@ -1,3 +1,5 @@
+import { StressModeType } from '@/types/aiAgentTypes';
+import { PANEL_HEIGHT_OFFSET } from '@constants/aiAgentConstants';
 import {
   ActionIcon,
   Badge,
@@ -11,12 +13,10 @@ import {
   Text,
   Textarea,
 } from '@mantine/core';
+import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
-import { StressModeType } from '../../types/aiAgentTypes';
-import { PANEL_HEIGHT_OFFSET } from '../../utils/aiAgentConstants';
 
 interface TeacherSectionProps {
   activeTopic: string | null;

@@ -1,7 +1,7 @@
+import { SCROLL_AREA_HEIGHT_OFFSET, TOPICS } from '@constants/aiAgentConstants';
 import { Button, Center, ScrollArea, Stack, Text } from '@mantine/core';
+import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { useTranslation } from 'react-i18next';
-import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
-import { SCROLL_AREA_HEIGHT_OFFSET, TOPICS } from '../../utils/aiAgentConstants';
 
 interface TopicsPanelProps {
   activeTopic: string | null;

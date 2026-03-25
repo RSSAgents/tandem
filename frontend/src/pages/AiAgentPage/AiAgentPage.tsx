@@ -1,17 +1,18 @@
+import { DrawerType, Thread, ThreadType } from '@/types/aiAgentTypes';
+import { loadThreadHistory } from '@api/aiAgent.api';
+import { CodeRunnerModal } from '@components/AiAgentPage/CodeRunnerModal';
+import { InterviewerSection } from '@components/AiAgentPage/InterviewerSection';
+import { MessageRenderer } from '@components/AiAgentPage/MessageRenderer';
+import { SettingsPanel } from '@components/AiAgentPage/SettingsPanel';
+import { TeacherSection } from '@components/AiAgentPage/TeacherSection';
+import { TopicsPanel } from '@components/AiAgentPage/TopicsPanel';
+import { MOBILE_BREAKPOINT, TIMER_SECONDS } from '@constants/aiAgentConstants';
+import { useAiAgentState } from '@hooks/useAiAgentState';
+import { useAiInterviewLogic } from '@hooks/useAiInterviewLogic';
 import { Box, Button, Drawer, Grid, Group, Modal, Stack, Text } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CodeRunnerModal } from '../../components/AiAgentPage/CodeRunnerModal';
-import { InterviewerSection } from '../../components/AiAgentPage/InterviewerSection';
-import { MessageRenderer } from '../../components/AiAgentPage/MessageRenderer';
-import { SettingsPanel } from '../../components/AiAgentPage/SettingsPanel';
-import { TeacherSection } from '../../components/AiAgentPage/TeacherSection';
-import { TopicsPanel } from '../../components/AiAgentPage/TopicsPanel';
-import { useAiAgentState } from '../../hooks/useAiAgentState';
-import { useAiInterviewLogic } from '../../hooks/useAiInterviewLogic';
-import { DrawerType, ThreadType } from '../../types/aiAgentTypes';
-import { MOBILE_BREAKPOINT, TIMER_SECONDS } from '../../utils/aiAgentConstants';
 import classes from './AiAgentPage.module.css';
 
 export const AiAgentPage = () => {
@@ -31,6 +32,34 @@ export const AiAgentPage = () => {
       state.setTimer(null);
     }
   }, [state, handleSend, t]);
+
+  const { activeTopic: stateActiveTopic, createOrUpdateThread } = state;
+
+  useEffect(() => {
+    if (!stateActiveTopic) return;
+    const topic = stateActiveTopic;
+
+    const threadTypes: Array<{ dbType: string; type: ThreadType }> = [
+      { dbType: 'interviewer', type: 'interviewer' },
+      { dbType: 'teacher', type: 'teacher' },
+      { dbType: 'ai-interview-junior', type: 'ai-interview' },
+      { dbType: 'ai-interview-middle', type: 'ai-interview' },
+      { dbType: 'ai-interview-senior', type: 'ai-interview' },
+    ];
+
+    threadTypes.forEach(async ({ dbType, type }) => {
+      const messages = await loadThreadHistory(topic, dbType).catch(() => []);
+      if (messages.length === 0) return;
+
+      const thread: Thread = {
+        id: crypto.randomUUID(),
+        topic,
+        type,
+        messages,
+      };
+      createOrUpdateThread(thread);
+    });
+  }, [stateActiveTopic, createOrUpdateThread]);
 
   const renderMessagesWrapper = (type: ThreadType, mode?: 'interviewer' | 'ai-interview') => {
     const startMsg = getStartMessageForType(type, state.activeTopic);

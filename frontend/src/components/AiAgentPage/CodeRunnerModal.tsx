@@ -1,9 +1,17 @@
 import { SandpackCodeEditor, SandpackProvider, useSandpack } from '@codesandbox/sandpack-react';
-import { ActionIcon, Box, Group, Modal, Paper, ScrollArea, useMantineColorScheme } from '@mantine/core';
+import {
+  ActionIcon,
+  Box,
+  Group,
+  Modal,
+  Paper,
+  ScrollArea,
+  useMantineColorScheme,
+} from '@mantine/core';
+import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { IconPlayerPlay, IconTrash } from '@tabler/icons-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classes from '../../pages/AiAgentPage/AiAgentPage.module.css';
 
 interface CodeRunnerModalProps {
   opened: boolean;
@@ -67,7 +75,10 @@ const ConsolePanel = () => {
           title="code-runner-sandbox"
         />
       </Box>
-      <ScrollArea style={{ height: 220 }} className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}>
+      <ScrollArea
+        style={{ height: 220 }}
+        className={`${classes.sandpackConsole} ${classes.sandpackConsolePane}`}
+      >
         {logs.length === 0 ? (
           <Box className={classes.consolePlaceholder}>{t('codeRunnerModal.placeholder')}</Box>
         ) : (
