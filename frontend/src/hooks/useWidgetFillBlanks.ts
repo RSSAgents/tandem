@@ -16,7 +16,7 @@ export const useWidgetFillBlanks = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [answers, setAnswers] = useState<Record<string, Record<string, number>>>({});
   const [resultMap, setResultMap] = useState<Record<string, boolean>>({});
 
   const [showResult, setShowResult] = useState(false);
@@ -27,7 +27,8 @@ export const useWidgetFillBlanks = () => {
   const currentTask = tasks[currentIndex];
   const isLastQuestion = currentIndex === tasks.length - 1;
   const isAllAnswered =
-    currentTask?.payload.statements.every((s) => answers[s.id] !== undefined) ?? false;
+    currentTask?.payload.statements.every((s) => answers[currentTask.id]?.[s.id] !== undefined) ??
+    false;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -68,18 +69,15 @@ export const useWidgetFillBlanks = () => {
     }
   }, [currentTask, dispatch]);
 
-  useEffect(() => {
-    if (currentTask) {
-      setAnswers({});
-    }
-  }, [currentTask]);
-
   const handleChange = (id: string, value: string | null) => {
-    if (!value) return;
+    if (!value || !currentTask) return;
 
     setAnswers((prev) => ({
       ...prev,
-      [id]: Number(value),
+      [currentTask.id]: {
+        ...prev[currentTask.id],
+        [id]: Number(value),
+      },
     }));
   };
 
@@ -90,7 +88,7 @@ export const useWidgetFillBlanks = () => {
     let correctCount = 0;
 
     for (const s of currentTask.payload.statements) {
-      const answerIndex = answers[s.id];
+      const answerIndex = answers[currentTask.id]?.[s.id];
       if (answerIndex === undefined) continue;
 
       const isCorrect = await checkFillBlanksAnswer(currentTask.id, s.id, answerIndex);

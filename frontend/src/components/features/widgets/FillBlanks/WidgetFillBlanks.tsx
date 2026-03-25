@@ -2,6 +2,8 @@ import { CodeEditor } from '@/components/shared/CodeEditor/CodeEditor';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
 import { Button, Container, Select, Stack, Title } from '@mantine/core';
+import { useCallback, useState } from 'react';
+import { ScoreDisplayModal } from '../../../shared/ScoreDisplayModal/ScoreDisplayModal';
 import classes from './WidgetFillBlanks.module.css';
 
 export const WidgetFillBlanks = () => {
@@ -10,12 +12,14 @@ export const WidgetFillBlanks = () => {
     error,
     currentTask,
     answers,
+    score,
     handleChange,
     handleCheckResult,
     handleNextQuestion,
     handlePreviousQuestion,
     showResult,
     isAllAnswered,
+    isLastQuestion,
     currentIndex,
     tasks,
     resultMap,
@@ -28,7 +32,20 @@ export const WidgetFillBlanks = () => {
     return resultMap[id] ? 'correct' : 'incorrect';
   };
 
-  const allCorrect = currentTask?.payload.statements.every((s) => resultMap[s.id]) ?? false;
+  const allCorrect =
+    currentTask?.payload.statements.every((s) => resultMap[s.id] === true) ?? false;
+  const [modalOpened, setModalOpened] = useState(false);
+
+  const onCheckClick = useCallback(async () => {
+    await handleCheckResult();
+
+    if (isLastQuestion) {
+      setTimeout(async () => {
+        await handleNextQuestion();
+        setModalOpened(true);
+      }, 500);
+    }
+  }, [handleCheckResult, handleNextQuestion, isLastQuestion]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -60,7 +77,11 @@ export const WidgetFillBlanks = () => {
                   value: String(index),
                   label: opt,
                 }))}
-                value={answers[s.id] !== undefined ? String(answers[s.id]) : null}
+                value={
+                  answers[currentTask.id]?.[s.id] !== undefined
+                    ? String(answers[currentTask.id][s.id])
+                    : null
+                }
                 onChange={(val) => handleChange(s.id, val)}
                 classNames={{
                   input: classes[getSelectStatus(s.id)],
@@ -86,12 +107,16 @@ export const WidgetFillBlanks = () => {
         <Button
           className={classes.button}
           disabled={!isAllAnswered || showResult}
-          onClick={handleCheckResult}
+          onClick={onCheckClick}
         >
           Check result
         </Button>
 
-        <Button className={classes.button} disabled={showResult} onClick={handleNextQuestion}>
+        <Button
+          className={classes.button}
+          disabled={showResult || isLastQuestion}
+          onClick={handleNextQuestion}
+        >
           Next
         </Button>
       </div>
@@ -104,6 +129,17 @@ export const WidgetFillBlanks = () => {
           }
         />
       )}
+
+      <ScoreDisplayModal
+        score={score}
+        total={tasks.length}
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        onTryAgain={() => {
+          setModalOpened(false);
+          window.location.reload();
+        }}
+      />
     </Container>
   );
 };
