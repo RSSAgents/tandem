@@ -22,8 +22,10 @@ export const useWidgetFillBlanks = () => {
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
+  const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
 
   const currentTask = tasks[currentIndex];
+  const isLastQuestion = currentIndex === tasks.length - 1;
   const isAllAnswered =
     currentTask?.payload.statements.every((s) => answers[s.id] !== undefined) ?? false;
 
@@ -103,11 +105,22 @@ export const useWidgetFillBlanks = () => {
     setResultMap(results);
     setShowResult(true);
     setIsCorrect(correctCount === currentTask.payload.statements.length);
-    setScore((prev) => prev + correctCount * 10);
-  }, [answers, currentTask]);
+
+    if (!answeredQuestions.has(currentTask.id)) {
+      const questionScore = correctCount === currentTask.payload.statements.length ? 10 : 0;
+
+      setScore((prev) => prev + questionScore);
+
+      setAnsweredQuestions((prev) => {
+        const updated = new Set(prev);
+        updated.add(currentTask.id);
+        return updated;
+      });
+    }
+  }, [answers, currentTask, answeredQuestions]);
 
   const handleNextQuestion = async () => {
-    if (currentIndex < tasks.length - 1) {
+    if (!isLastQuestion) {
       setCurrentIndex((prev) => prev + 1);
       setShowResult(false);
       setIsCorrect(false);
@@ -142,6 +155,7 @@ export const useWidgetFillBlanks = () => {
     isCorrect,
     isAllAnswered,
     score,
+    isLastQuestion,
     handleCheckResult,
     handleNextQuestion,
     handlePreviousQuestion,
