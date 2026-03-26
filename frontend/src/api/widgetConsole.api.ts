@@ -66,6 +66,8 @@ export const checkWidgetAnswer = async (
   score: number;
   explanation?: string;
 }> => {
+  const currentLanguage = i18n.language;
+
   if (USE_MOCK) {
     await delay(300);
 
@@ -95,13 +97,12 @@ export const checkWidgetAnswer = async (
 
   if (error) throw new Error(error.message);
 
-  const currentLanguage = i18n.language || localStorage.getItem('i18nextLng') || 'en';
-
   let explanation = '';
   if (currentTask?.payload.explanation) {
-    const expObj = currentTask.payload.explanation as { ru: string; en: string };
-    explanation = expObj[currentLanguage as 'ru' | 'en'] || expObj.en;
+    const expObj = currentTask.payload.explanation;
+    explanation = expObj[currentLanguage as keyof typeof expObj] || expObj.en;
   }
+
   return {
     isCorrect: data as boolean,
     score: data ? 10 : 0,
