@@ -5,6 +5,7 @@ import classes from './NotFoundPage.module.css';
 
 export const NotFoundPage = () => {
   const { t } = useTranslation('notFound');
+
   return (
     <Container className={classes.container}>
       <Box className={classes.block}>
