@@ -1,5 +1,4 @@
 import { AppShell } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { Outlet } from 'react-router-dom';
 import { LAYOUT_CONFIG } from '../../../constants/layout';
 import { Footer } from '../Footer/Footer';
@@ -8,26 +7,20 @@ import { Sidebar } from '../Sidebar/Sidebar';
 import classes from './MainLayout.module.css';
 
 export const MainLayout = () => {
-  const [mobileOpened, { toggle: toggleMobile, close: closeMobile }] = useDisclosure(false);
-
   return (
     <AppShell
       layout="alt"
       header={{ height: LAYOUT_CONFIG.HEADER_HEIGHT }}
       footer={{ height: LAYOUT_CONFIG.FOOTER_HEIGHT }}
-      navbar={{
-        width: LAYOUT_CONFIG.SIDEBAR_WIDTH,
-        breakpoint: 'sm',
-        collapsed: { mobile: !mobileOpened }
-      }}
+      navbar={{ width: LAYOUT_CONFIG.SIDEBAR_WIDTH, breakpoint: 'sm' }}
       padding={0}
     >
       <AppShell.Navbar withBorder={false}>
-        <Sidebar onClose={closeMobile} />
+        <Sidebar />
       </AppShell.Navbar>
 
       <AppShell.Header withBorder={false} px="var(--app-side-padding)">
-        <Header onBurgerClick={toggleMobile} burgerOpened={mobileOpened} />
+        <Header />
       </AppShell.Header>
 
       <AppShell.Main className={classes.main}>

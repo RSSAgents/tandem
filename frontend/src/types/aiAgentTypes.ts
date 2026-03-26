@@ -19,7 +19,7 @@ export interface Thread {
 }
 
 export type InputsState = Record<string, Partial<Record<ThreadType, string>>>;
-export type InterviewerMode = 'interviewer' | 'ai-interview';
+export type InterviewerMode = 'interviewer' | 'ai-interview' | 'teacher';
 export type RoleType = 'gentle' | 'strict';
 export type StressModeType = 'normal' | 'stress';
 export type AiLevelType = 'junior' | 'middle' | 'senior';

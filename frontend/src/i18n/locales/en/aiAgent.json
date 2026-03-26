@@ -64,7 +64,9 @@
     "settings": "SETTINGS",
     "topics": "TOPICS",
     "drawerSettings": "Settings",
-    "drawerTopics": "Topics"
+    "drawerTopics": "Topics",
+    "interviewer": "Interviewer",
+    "teacher": "Teacher"
   },
   "startMessages": {
     "interviewer": {

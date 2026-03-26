@@ -32,6 +32,7 @@ interface TeacherSectionProps {
   onSend: () => void;
   isWaitingForAnswer: boolean;
   isLoadingHistory?: boolean;
+  colSpan?: number;
 }
 
 export const TeacherSection = ({
@@ -47,6 +48,7 @@ export const TeacherSection = ({
   onSend,
   isWaitingForAnswer,
   isLoadingHistory,
+  colSpan,
 }: TeacherSectionProps) => {
   const { t } = useTranslation('aiAgent');
   const isDisabled = !activeTopic || stressMode === 'stress' || isWaitingForAnswer;
@@ -70,12 +72,12 @@ export const TeacherSection = ({
   }, [messagesCount, lastMessageText, isLoadingHistory]);
 
   return (
-    <Grid.Col span={isMobile ? 12 : 4.5}>
+    <Grid.Col span={colSpan ?? (isMobile ? 12 : 4.5)}>
       <Paper
         className={`${classes.glassPanel} ${classes.border} ${classes.panelColumn}`}
         p="md"
         radius="md"
-        h={isMobile ? '70vh' : `calc(100vh - ${PANEL_HEIGHT_OFFSET}px)`}
+        h={`calc(100vh - ${PANEL_HEIGHT_OFFSET}px)`}
         display="flex"
       >
         <Group justify="space-between" align="center" mb="md">

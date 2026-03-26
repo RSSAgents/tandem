@@ -8,6 +8,18 @@
   margin: 0 auto;
 }
 
+@media (max-width: 1170px) {
+  :global(body.ai-agent-page .mantine-AppShell-navbar) {
+    max-width: 260px;
+  }
+
+  :global(body.ai-agent-page .mantine-Burger-root) {
+    display: flex !important;
+    align-self: center !important;
+    margin-top: 15px !important;
+  }
+}
+
 .tabButton {
   position: fixed;
   left: 0;

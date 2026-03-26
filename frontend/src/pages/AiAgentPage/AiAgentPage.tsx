@@ -1,4 +1,4 @@
-import { DrawerType, Thread, ThreadType } from '@/types/aiAgentTypes';
+import { DrawerType, InterviewerMode, Thread, ThreadType } from '@/types/aiAgentTypes';
 import { loadThreadHistory } from '@api/aiAgent.api';
 import { CodeRunnerModal } from '@components/AiAgentPage/CodeRunnerModal';
 import { InterviewerSection } from '@components/AiAgentPage/InterviewerSection';
@@ -6,25 +6,80 @@ import { MessageRenderer } from '@components/AiAgentPage/MessageRenderer';
 import { SettingsPanel } from '@components/AiAgentPage/SettingsPanel';
 import { TeacherSection } from '@components/AiAgentPage/TeacherSection';
 import { TopicsPanel } from '@components/AiAgentPage/TopicsPanel';
-import { MOBILE_BREAKPOINT, TIMER_SECONDS } from '@constants/aiAgentConstants';
+import { MOBILE_BREAKPOINT, TABLET_BREAKPOINT, TIMER_SECONDS } from '@constants/aiAgentConstants';
 import { useAiAgentState } from '@hooks/useAiAgentState';
 import { useAiInterviewLogic } from '@hooks/useAiInterviewLogic';
-import { Button, Grid, Group, Modal, Paper, Stack, Text, Transition } from '@mantine/core';
-import { useClickOutside, useMediaQuery } from '@mantine/hooks';
-import { useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  Center,
+  Grid,
+  Group,
+  Loader,
+  Modal,
+  Paper,
+  ScrollArea,
+  Stack,
+  Text,
+  Textarea,
+  Transition,
+} from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classes from './AiAgentPage.module.css';
 
 export const AiAgentPage = () => {
   const { t } = useTranslation('aiAgent');
   const isMobile = useMediaQuery(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+  const isTablet = useMediaQuery(`(max-width: ${TABLET_BREAKPOINT}px)`);
   const [openPanel, setOpenPanel] = useState<DrawerType | null>(null);
-  const settingsPanelRef = useClickOutside(() => openPanel === 'menu' && setOpenPanel(null));
-  const topicsPanelRef = useClickOutside(() => openPanel === 'topics' && setOpenPanel(null));
+  const settingsBtnRef = useRef<HTMLButtonElement>(null);
+  const topicsBtnRef = useRef<HTMLButtonElement>(null);
+  const settingsPanelRef = useRef<HTMLDivElement>(null);
+  const topicsPanelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!openPanel) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        openPanel === 'menu' &&
+        settingsPanelRef.current &&
+        !settingsPanelRef.current.contains(target) &&
+        !settingsBtnRef.current?.contains(target)
+      ) {
+        setOpenPanel(null);
+      }
+      if (
+        openPanel === 'topics' &&
+        topicsPanelRef.current &&
+        !topicsPanelRef.current.contains(target) &&
+        !topicsBtnRef.current?.contains(target)
+      ) {
+        setOpenPanel(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [openPanel]);
 
   const [codeRunnerOpened, setCodeRunnerOpened] = useState(false);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.add('ai-agent-page');
+    return () => document.body.classList.remove('ai-agent-page');
+  }, []);
   const state = useAiAgentState();
+
+  useEffect(() => {
+    if (!isMobile && state.interviewerMode === 'teacher') {
+      state.setInterviewerMode('interviewer');
+    }
+  }, [isMobile]);
   const { handleSend, startAiInterviewSimulation, getStartMessageForType } =
     useAiInterviewLogic(state);
 
@@ -72,7 +127,7 @@ export const AiAgentPage = () => {
       });
   }, [stateActiveTopic, createOrUpdateThread]);
 
-  const renderMessagesWrapper = (type: ThreadType, mode?: 'interviewer' | 'ai-interview') => {
+  const renderMessagesWrapper = (type: ThreadType, mode?: InterviewerMode) => {
     const startMsg = getStartMessageForType(type, state.activeTopic);
     const thread = state.threads.find((t) => t.topic === state.activeTopic && t.type === type);
     const messages = thread?.messages || [];
@@ -143,9 +198,10 @@ export const AiAgentPage = () => {
         </Group>
       </Modal>
 
-      {isMobile && (
+      {isTablet && (
         <>
           <Button
+            ref={settingsBtnRef}
             onClick={() => setOpenPanel(openPanel === 'menu' ? null : 'menu')}
             variant="filled"
             color="#ae3ec9"
@@ -178,6 +234,7 @@ export const AiAgentPage = () => {
           </Transition>
 
           <Button
+            ref={topicsBtnRef}
             onClick={() => setOpenPanel(openPanel === 'topics' ? null : 'topics')}
             variant="filled"
             color="#22b8cf"
@@ -211,7 +268,7 @@ export const AiAgentPage = () => {
       )}
 
       <Grid gutter="md" align="stretch">
-        {!isMobile && (
+        {!isTablet && (
           <Grid.Col span={3}>
             <Stack gap="md">
               <SettingsPanel
@@ -231,7 +288,7 @@ export const AiAgentPage = () => {
           </Grid.Col>
         )}
 
-        {(!isMobile || state.mobileActiveView === 'interviewer') && (
+        {(!isMobile || state.interviewerMode !== 'teacher') && (
           <InterviewerSection
             interviewerMode={state.interviewerMode}
             onInterviewerModeChange={state.setInterviewerMode}
@@ -251,10 +308,90 @@ export const AiAgentPage = () => {
             aiInterviewLevel={state.aiInterviewLevel}
             onAiLevelChange={state.setAiInterviewLevel}
             isLoadingHistory={isLoadingHistory}
+            colSpan={isMobile ? 12 : isTablet ? 6 : 4.5}
           />
         )}
 
-        {(!isMobile || state.mobileActiveView === 'teacher') && (
+        {isMobile && state.interviewerMode === 'teacher' && (
+          <InterviewerSection
+            interviewerMode={state.interviewerMode}
+            onInterviewerModeChange={state.setInterviewerMode}
+            activeTopic={state.activeTopic}
+            onResetClick={state.openResetTeacher}
+            questionCount={state.questionCount}
+            messagesCount={getMessagesCount('teacher')}
+            lastMessageText={getLastMessageText('teacher')}
+            timer={state.timer}
+            isMobile={isMobile}
+            renderMessages={renderMessagesWrapper}
+            inputValue={state.getInput('interviewer')}
+            onInputChange={(val) => state.setInput('interviewer', val)}
+            onSend={() => handleSend('interviewer')}
+            onGenerateAi={startAiInterviewSimulation}
+            isWaitingForAnswer={state.isWaitingForAnswer}
+            aiInterviewLevel={state.aiInterviewLevel}
+            onAiLevelChange={state.setAiInterviewLevel}
+            isLoadingHistory={isLoadingHistory}
+            colSpan={12}
+            teacherContent={
+              <>
+                <ScrollArea flex={1} p="xs" pr="md" className={classes.smoothScroll}>
+                  {isLoadingHistory ? (
+                    <Center h="100%">
+                      <Loader size="sm" />
+                    </Center>
+                  ) : state.stressMode === 'stress' ? (
+                    <Center h="100%">
+                      <Text c="dimmed" fw={700}>
+                        {t('teacher.stressUnavailable')}
+                      </Text>
+                    </Center>
+                  ) : (
+                    renderMessagesWrapper('teacher')
+                  )}
+                </ScrollArea>
+                <Box mt="md">
+                  <Group gap="xs" align="flex-end">
+                    <Textarea
+                      flex={1}
+                      placeholder={t('teacher.placeholder')}
+                      autosize
+                      minRows={1}
+                      maxRows={5}
+                      classNames={{ input: classes.chatTextareaInput }}
+                      disabled={
+                        !state.activeTopic ||
+                        state.stressMode === 'stress' ||
+                        state.isWaitingForAnswer
+                      }
+                      value={state.getInput('teacher')}
+                      onChange={(e) => state.setInput('teacher', e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSend('teacher');
+                        }
+                      }}
+                    />
+                    <Button
+                      variant="outline"
+                      onClick={() => handleSend('teacher')}
+                      disabled={
+                        !state.activeTopic ||
+                        state.stressMode === 'stress' ||
+                        state.isWaitingForAnswer
+                      }
+                    >
+                      {t('teacher.ask')}
+                    </Button>
+                  </Group>
+                </Box>
+              </>
+            }
+          />
+        )}
+
+        {!isMobile && (
           <TeacherSection
             activeTopic={state.activeTopic}
             onResetClick={state.openResetTeacher}
@@ -268,6 +405,7 @@ export const AiAgentPage = () => {
             onSend={() => handleSend('teacher')}
             isWaitingForAnswer={state.isWaitingForAnswer}
             isLoadingHistory={isLoadingHistory}
+            colSpan={isMobile ? 12 : isTablet ? 6 : 4.5}
           />
         )}
       </Grid>

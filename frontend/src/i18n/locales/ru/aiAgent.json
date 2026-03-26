@@ -1,6 +1,6 @@
 {
   "settings": {
-    "ready": "Готовность",
+    "ready": "Готов",
     "gentle": "МЯГКИЙ",
     "strict": "СТРОГИЙ",
     "normal": "ОБЫЧНЫЙ",
@@ -64,7 +64,9 @@
     "settings": "НАСТРОЙКИ",
     "topics": "ТЕМЫ",
     "drawerSettings": "Настройки",
-    "drawerTopics": "Темы"
+    "drawerTopics": "Темы",
+    "interviewer": "Интервьюер",
+    "teacher": "Учитель"
   },
   "startMessages": {
     "interviewer": {

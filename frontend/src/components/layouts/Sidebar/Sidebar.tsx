@@ -11,6 +11,7 @@ interface SidebarProps {
   user?: { name: string; rank: string };
   stats?: { current: number; total: number };
   onClose?: () => void;
+  mobileBreakpoint?: string | number;
 }
 
 const DEFAULT_USER = { name: 'Alex', rank: 'Mage' };
@@ -22,8 +23,9 @@ const MOCK_PRIZES = [
   { id: 3, title: ' Gold Trophy', description: 'Complete 6 modules' },
 ];
 
-export const Sidebar = ({ user = DEFAULT_USER, stats = DEFAULT_STATS, onClose }: SidebarProps) => {
-  const isMobile = useMediaQuery('(max-width: 48em)');
+export const Sidebar = ({ user = DEFAULT_USER, stats = DEFAULT_STATS, onClose, mobileBreakpoint }: SidebarProps) => {
+  const bp = typeof mobileBreakpoint === 'number' ? `${mobileBreakpoint}px` : mobileBreakpoint ?? '48em';
+  const isMobile = useMediaQuery(`(max-width: ${bp})`);
 
   return (
     <Stack className={classes.sidebar}>
