@@ -30,10 +30,7 @@ export const useWidgetFillBlanks = () => {
     currentTask?.payload.statements.every((s) => answers[currentTask.id]?.[s.id] !== undefined) ??
     false;
 
-  const totalStatements = tasks.reduce(
-    (acc, t) => acc + t.payload.statements.length,
-    0
-  );
+  const totalStatements = tasks.reduce((acc, t) => acc + t.payload.statements.length, 0);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -121,11 +118,11 @@ export const useWidgetFillBlanks = () => {
       setIsCorrect(false);
     } else {
       try {
-      const correctCountAll = Object.values(resultMap).filter(Boolean).length;
-      setCorrectAnswersCount(correctCountAll);
+        const correctCountAll = Object.values(resultMap).filter(Boolean).length;
+        setCorrectAnswersCount(correctCountAll);
 
-      const finalScore = Math.round((correctCountAll / totalStatements) * 80);
-      setScore(finalScore);
+        const finalScore = Math.round((correctCountAll / totalStatements) * 80);
+        setScore(finalScore);
 
         await saveFillBlanksScore(score);
       } catch {
@@ -140,6 +137,16 @@ export const useWidgetFillBlanks = () => {
       setShowResult(false);
       setIsCorrect(false);
     }
+  };
+
+  const resetWidget = () => {
+    setCurrentIndex(0);
+    setAnswers({});
+    setResultMap({});
+    setShowResult(false);
+    setIsCorrect(false);
+    setScore(0);
+    setCorrectAnswersCount(0);
   };
 
   return {
@@ -163,5 +170,6 @@ export const useWidgetFillBlanks = () => {
 
     totalStatements,
     correctAnswersCount,
+    resetWidget,
   };
 };

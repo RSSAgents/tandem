@@ -25,6 +25,7 @@ export const WidgetFillBlanks = () => {
 
     correctAnswersCount,
     totalStatements,
+    resetWidget,
   } = useWidgetFillBlanks();
 
   const getSelectStatus = (id: string) => {
@@ -139,7 +140,9 @@ export const WidgetFillBlanks = () => {
         onClose={() => setModalOpened(false)}
         onTryAgain={() => {
           setModalOpened(false);
-          window.location.reload();
+          setTimeout(() => {
+            resetWidget();
+          }, 300);
         }}
       />
     </Container>
