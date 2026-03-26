@@ -1,6 +1,7 @@
 .mainContent {
   padding-top: 70px;
   padding-bottom: 60px;
+  padding-left: 30px;
   min-height: calc(100vh - 130px);
   width: 100%;
   max-width: 1400px;

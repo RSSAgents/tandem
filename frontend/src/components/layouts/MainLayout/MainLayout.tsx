@@ -12,7 +12,11 @@ export const MainLayout = () => {
       layout="alt"
       header={{ height: LAYOUT_CONFIG.HEADER_HEIGHT }}
       footer={{ height: LAYOUT_CONFIG.FOOTER_HEIGHT }}
-      navbar={{ width: LAYOUT_CONFIG.SIDEBAR_WIDTH, breakpoint: 'sm' }}
+      navbar={{
+        width: LAYOUT_CONFIG.SIDEBAR_WIDTH,
+        breakpoint: 'sm',
+        collapsed: { mobile: true }
+      }}
       padding={0}
     >
       <AppShell.Navbar withBorder={false}>
