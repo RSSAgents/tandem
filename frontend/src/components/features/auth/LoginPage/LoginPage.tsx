@@ -1,14 +1,17 @@
-import { Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
-import { useForm } from 'react-hook-form';
+import { signIn } from '@/api/auth.api';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, LoginFormValues, LoginErrorKeys } from './login.schema';
-import classes from './LoginPage.module.css';
-import { useNavigate, Link } from 'react-router-dom';
+import { Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import { LoginErrorKeys, LoginFormValues, loginSchema } from './login.schema';
+import classes from './LoginPage.module.css';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('auth');
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
@@ -19,20 +22,26 @@ export const LoginPage = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = async () => {
-    navigate('/dashboard');
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      setServerError(null);
+      await signIn(data.email, data.password);
+      navigate('/dashboard');
+    } catch (err) {
+      setServerError(err instanceof Error ? err.message : 'Login failed');
+    }
   };
 
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.card}>
         <Text size="2xl" fw={500} ta="center" mb="xl">
-          {t('login')}
+          {t('headers.login')}
         </Text>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
-            label={t('email')}
+            label={t('fields.email')}
             placeholder="you@example.com"
             {...register('email')}
             error={errors.email?.message ? t(errors.email.message as LoginErrorKeys) : undefined}
@@ -40,7 +49,7 @@ export const LoginPage = () => {
           />
 
           <PasswordInput
-            label={t('password')}
+            label={t('fields.password')}
             placeholder="••••••"
             {...register('password')}
             error={
@@ -49,15 +58,21 @@ export const LoginPage = () => {
             mb="xl"
           />
 
+          {serverError && (
+            <Text c="red" size="sm" mb="sm" ta="center">
+              {serverError}
+            </Text>
+          )}
+
           <Button type="submit" fullWidth loading={isSubmitting} color="blue">
-            {t('login')}
+            {t('actions.login')}
           </Button>
         </form>
 
         <Text size="sm" mt="lg" ta="center">
-          {t('noAccount')}{' '}
+          {t('links.noAccount')}{' '}
           <Text className={classes.signupLink} component={Link} to="/register">
-            {t('signup')}
+            {t('headers.signup')}
           </Text>
         </Text>
       </Paper>

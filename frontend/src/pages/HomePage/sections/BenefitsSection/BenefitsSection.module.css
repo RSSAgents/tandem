@@ -1,0 +1,80 @@
+.section {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.sectionTitle {
+  font-weight: 800;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}
+
+.sectionDescription {
+  max-width: 600px;
+  font-size: 18px;
+  margin: auto;
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
+}
+
+.textBlock {
+  flex: 0 0 40%;
+  max-width: 40%;
+}
+
+.highlight {
+  color: var(--accent);
+}
+
+.benefitsGrid {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.benefitCard {
+  display: flex;
+  align-items: center;
+  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  flex: 1 1 calc(50% - 20px);
+  height: auto;
+  min-height: 80px;
+}
+
+@media (max-width: 992px) {
+  .section {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .textBlock {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .textBlock,
+  .benefitsGrid {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .textBlock {
+    text-align: center;
+  }
+
+  .sectionDescription {
+    font-size: 16px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .benefitsGrid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

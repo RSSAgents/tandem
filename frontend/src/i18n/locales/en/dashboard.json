@@ -8,13 +8,20 @@
       "title": "Drag & Drop JS Execution",
       "description": "An interactive learning component that tests understanding of JavaScript execution order through a drag-and-drop interface."
     },
+    "js_stack": {
+      "title": "Stack",
+      "description": "An interactive widget that demonstrates two fundamental data structures: Stack (LIFO - Last In, First Out) and Queue (FIFO - First In, First Out)ю"
+    },
     "this_quiz": {
-      "title": "Guess `this`",
-      "description": "Test your understanding of JavaScript `this`"
+      "title": "This in JavaScript",
+      "description": "Test your understanding of JavaScript `this`",
+      "verify": "verify",
+      "finish": "finish",
+      "explanation": "explanation"
+    },
+    "status": {
+      "todo": "Start",
+      "completed": "Finished"
     }
-  },
-  "status": {
-    "todo": "Start",
-    "completed": "Finished"
   }
 }

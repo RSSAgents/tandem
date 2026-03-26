@@ -10,4 +10,5 @@ export const ROUTE_PATHS = {
   WIDGET_CONSOLE: '/widget-console',
   WIDGET_THIS_QUIZ: '/widget-this',
   LEADERBOARD_PAGE: '/leaderboard',
+  REGISTER: '/register',
 } as const;

@@ -7,6 +7,17 @@
     "js_execution": {
       "title": "Drag & Drop JS Execution",
       "description": "Интерактивный обучающий компонент, который проверяет понимание порядка выполнения кода в JavaScript через механизм drag-and-drop."
+    },
+    "js_stack": {
+      "title": "Stack",
+      "description": "Интерактивный виджет, демонстрирующий две фундаментальные структуры данных: стек (LIFO - последним пришёл, первым ушёл) и очередь (FIFO - первым пришёл, первым ушёл)"
+    },
+    "this_quiz": {
+      "title": "This в JavaScript",
+      "description": "Проверьте свои знания о `this` в JavaScript",
+      "verify": "Проверить",
+      "finish": "Завершить",
+      "explanation": "Пояснение"
     }
   },
   "status": {
