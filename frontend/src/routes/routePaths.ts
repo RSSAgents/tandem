@@ -10,4 +10,5 @@ export const ROUTE_PATHS = {
   WIDGET_CONSOLE: '/widget-console',
   LEADERBOARD_PAGE: '/leaderboard',
   REGISTER: '/register',
+  FILL_BLANKS_WIDGET: '/fill-blanks',
 } as const;
