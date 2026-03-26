@@ -22,7 +22,6 @@ export const appRoutes = [
     children: [
       { index: true, element: <HomePage /> },
       { path: ROUTE_PATHS.LOGIN, element: <LoginPage /> },
-      { path: ROUTE_PATHS.ABOUT, element: <About /> },
       { path: ROUTE_PATHS.NOT_FOUND, element: <NotFoundPage /> },
       { path: ROUTE_PATHS.REGISTER, element: <RegisterPage /> },
     ],
@@ -35,6 +34,14 @@ export const appRoutes = [
         element: (
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTE_PATHS.ABOUT,
+        element: (
+          <ProtectedRoute>
+            <About />
           </ProtectedRoute>
         ),
       },

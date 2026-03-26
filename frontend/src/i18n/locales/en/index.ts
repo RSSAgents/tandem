@@ -13,6 +13,8 @@ import leadersHomePage from './leadersHomePage.json';
 import benefits from './benefits.json';
 import faq from './faq.json';
 import library from './library.json';
+import about from './about.json';
+import sidebar from './sidebar.json';
 
 export const en = {
   auth,
@@ -30,4 +32,6 @@ export const en = {
   benefits,
   faq,
   library,
+  about,
+  sidebar,
 };

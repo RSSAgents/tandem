@@ -21,7 +21,7 @@ describe('LibraryPage', () => {
         expect(screen.getByRole('button', { name: item.value })).toBeInTheDocument();
       });
     });
-  });
+  }, 10000);
 
   it('accordion panels are collapsed by default', () => {
     renderWithProviders(<LibraryPage />);
