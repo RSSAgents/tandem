@@ -6,6 +6,12 @@
   flex-direction: column;
 }
 
+@media (max-width: 48em) {
+  :global(.mantine-AppShell-navbar) {
+    max-width: 260px;
+  }
+}
+
 .sidebar {
   background: var(--panel-soft);
   border-right: 1px solid var(--border);
