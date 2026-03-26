@@ -1,6 +1,7 @@
 import { IConsoleAnswer, IConsoleTask } from '@/types/widgetConsole.types';
 import { delay } from '@/utils/delay';
 import { supabase } from '../utils/supabase';
+import i18n from 'i18next';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 
@@ -59,11 +60,14 @@ export const getWidgetTasks = async (options?: RequestInit): Promise<IConsoleTas
 
 export const checkWidgetAnswer = async (
   answer: IConsoleAnswer,
+  currentTask?: IConsoleTask,
 ): Promise<{
   isCorrect: boolean;
   score: number;
   explanation?: string;
 }> => {
+  const currentLanguage = i18n.language;
+
   if (USE_MOCK) {
     await delay(300);
 
@@ -93,9 +97,16 @@ export const checkWidgetAnswer = async (
 
   if (error) throw new Error(error.message);
 
+  let explanation = '';
+  if (currentTask?.payload.explanation) {
+    const expObj = currentTask.payload.explanation;
+    explanation = expObj[currentLanguage as keyof typeof expObj] || expObj.en;
+  }
+
   return {
     isCorrect: data as boolean,
     score: data ? 10 : 0,
+    explanation,
   };
 };
 

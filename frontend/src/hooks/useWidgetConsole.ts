@@ -63,7 +63,7 @@ export const useWidgetConsole = () => {
         timestamp: Date.now(),
       };
 
-      const result = await checkWidgetAnswer(answer);
+      const result = await checkWidgetAnswer(answer, currentTask);
 
       setIsCorrect(result.isCorrect);
       setExplanation(result.explanation || '');
