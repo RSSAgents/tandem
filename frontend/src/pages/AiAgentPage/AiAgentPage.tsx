@@ -9,8 +9,8 @@ import { TopicsPanel } from '@components/AiAgentPage/TopicsPanel';
 import { MOBILE_BREAKPOINT, TIMER_SECONDS } from '@constants/aiAgentConstants';
 import { useAiAgentState } from '@hooks/useAiAgentState';
 import { useAiInterviewLogic } from '@hooks/useAiInterviewLogic';
-import { Box, Button, Drawer, Grid, Group, Modal, Stack, Text } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { Button, Grid, Group, Modal, Paper, Stack, Text, Transition } from '@mantine/core';
+import { useClickOutside, useMediaQuery } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classes from './AiAgentPage.module.css';
@@ -18,8 +18,9 @@ import classes from './AiAgentPage.module.css';
 export const AiAgentPage = () => {
   const { t } = useTranslation('aiAgent');
   const isMobile = useMediaQuery(`(max-width: ${MOBILE_BREAKPOINT}px)`);
-  const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [drawerType, setDrawerType] = useState<DrawerType>('menu');
+  const [openPanel, setOpenPanel] = useState<DrawerType | null>(null);
+  const settingsPanelRef = useClickOutside(() => openPanel === 'menu' && setOpenPanel(null));
+  const topicsPanelRef = useClickOutside(() => openPanel === 'topics' && setOpenPanel(null));
 
   const [codeRunnerOpened, setCodeRunnerOpened] = useState(false);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
@@ -145,10 +146,7 @@ export const AiAgentPage = () => {
       {isMobile && (
         <>
           <Button
-            onClick={() => {
-              setDrawerType('menu');
-              openDrawer();
-            }}
+            onClick={() => setOpenPanel(openPanel === 'menu' ? null : 'menu')}
             variant="filled"
             color="#ae3ec9"
             className={`${classes.tabButton} ${classes.tabButtonSettings}`}
@@ -157,11 +155,30 @@ export const AiAgentPage = () => {
               {t('mobile.settings')}
             </Text>
           </Button>
+          <Transition mounted={openPanel === 'menu'} transition="slide-right" duration={200}>
+            {(style) => (
+              <Paper
+                ref={settingsPanelRef}
+                className={`${classes.slidePanel} ${classes.slidePanelSettings}`}
+                style={style}
+                shadow="lg"
+                p="md"
+                radius="0 md md 0"
+              >
+                <SettingsPanel
+                  role={state.role}
+                  stressMode={state.stressMode}
+                  readinessPercentage={state.readinessPercentage}
+                  onRoleChange={state.setRole}
+                  onStressModeChange={state.setStressMode}
+                  onOpenCodeRunner={() => setCodeRunnerOpened(true)}
+                />
+              </Paper>
+            )}
+          </Transition>
+
           <Button
-            onClick={() => {
-              setDrawerType('topics');
-              openDrawer();
-            }}
+            onClick={() => setOpenPanel(openPanel === 'topics' ? null : 'topics')}
             variant="filled"
             color="#22b8cf"
             className={`${classes.tabButton} ${classes.tabButtonTopics}`}
@@ -170,37 +187,28 @@ export const AiAgentPage = () => {
               {t('mobile.topics')}
             </Text>
           </Button>
+          <Transition mounted={openPanel === 'topics'} transition="slide-right" duration={200}>
+            {(style) => (
+              <Paper
+                ref={topicsPanelRef}
+                className={`${classes.slidePanel} ${classes.slidePanelTopics}`}
+                style={style}
+                shadow="lg"
+                p="md"
+                radius="0 md md 0"
+              >
+                <TopicsPanel
+                  activeTopic={state.activeTopic}
+                  scores={state.scores}
+                  onTopicSelect={state.setActiveTopic}
+                  isMobile={true}
+                  onClose={() => setOpenPanel(null)}
+                />
+              </Paper>
+            )}
+          </Transition>
         </>
       )}
-
-      <Drawer
-        opened={drawerOpened}
-        onClose={closeDrawer}
-        title={drawerType === 'menu' ? t('mobile.drawerSettings') : t('mobile.drawerTopics')}
-        size="xs"
-        padding="md"
-      >
-        <Box>
-          {drawerType === 'menu' ? (
-            <SettingsPanel
-              role={state.role}
-              stressMode={state.stressMode}
-              readinessPercentage={state.readinessPercentage}
-              onRoleChange={state.setRole}
-              onStressModeChange={state.setStressMode}
-              onOpenCodeRunner={() => setCodeRunnerOpened(true)}
-            />
-          ) : (
-            <TopicsPanel
-              activeTopic={state.activeTopic}
-              scores={state.scores}
-              onTopicSelect={state.setActiveTopic}
-              isMobile={true}
-              onClose={closeDrawer}
-            />
-          )}
-        </Box>
-      </Drawer>
 
       <Grid gutter="md" align="stretch">
         {!isMobile && (

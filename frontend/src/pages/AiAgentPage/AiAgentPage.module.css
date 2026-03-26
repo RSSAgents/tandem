@@ -431,6 +431,25 @@
   white-space: nowrap;
 }
 
+.slidePanel {
+  position: fixed;
+  left: 20px;
+  z-index: 99;
+  width: 280px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  background-color: light-dark(#ffffff, #1a1b1e);
+  border: 1px solid light-dark(#dee2e6, #2c2e33);
+}
+
+.slidePanelSettings {
+  top: 140px;
+}
+
+.slidePanelTopics {
+  top: 250px;
+}
+
 .panelColumn {
   flex-direction: column;
 }
