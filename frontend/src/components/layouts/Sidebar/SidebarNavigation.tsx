@@ -17,30 +17,19 @@ export const SidebarNavigation = () => {
   return (
     <Stack gap="sm">
       {SIDEBAR_NAV_ITEMS.map(({ label, path, disabled }) => {
+        const commonProps = {
+          key: path,
+          label,
+          active: pathname === path,
+          className: classes.navLink,
+          variant: 'filled' as const,
+        };
+
         if (disabled) {
-          return (
-            <NavLink
-              key={path}
-              label={label}
-              active={pathname === path}
-              className={classes.navLink}
-              variant="filled"
-              disabled
-            />
-          );
+          return <NavLink {...commonProps} disabled />;
         }
 
-        return (
-          <NavLink
-            key={path}
-            component={Link}
-            to={path}
-            label={label}
-            active={pathname === path}
-            className={classes.navLink}
-            variant="filled"
-          />
-        );
+        return <NavLink {...commonProps} component={Link} to={path} />;
       })}
     </Stack>
   );
