@@ -6,10 +6,48 @@
   animation: fadeIn 0.3s ease;
 }
 
+.explanation {
+  font-size: 1rem;
+}
+
 .resultCorrect {
   color: #27ae60;
+  font-size: 1.5rem;
 }
 
 .resultIncorrect {
   color: #e74c3c;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .resultContainer {
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .explanation {
+    font-size: 0.875rem;
+  }
+
+  .resultCorrect,
+  .resultIncorrect {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .resultContainer {
+    padding: 12px;
+    margin-top: 12px;
+  }
+
+  .explanation {
+    font-size: 0.75rem;
+  }
+
+  .resultCorrect,
+  .resultIncorrect {
+    font-size: 1rem;
+  }
 }

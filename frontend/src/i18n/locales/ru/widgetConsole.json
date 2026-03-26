@@ -1,0 +1,8 @@
+{
+  "title": "В каком порядке появятся console.log?",
+  "subtitle": "Перетащите элементы в правильном порядке",
+  "questionCounter": "Вопрос {{current}} из {{total}}",
+  "checkButton": "Проверить",
+  "nextButton": "Следующий вопрос",
+  "noTasks": "Нет доступных заданий"
+}

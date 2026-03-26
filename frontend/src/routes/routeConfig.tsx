@@ -27,64 +27,19 @@ export const appRoutes = [
     ],
   },
   {
-    element: <MainLayout />,
+    element: (
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
+    ),
     children: [
-      {
-        path: ROUTE_PATHS.DASHBOARD,
-        element: (
-          <ProtectedRoute>
-            <DashboardPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTE_PATHS.ABOUT,
-        element: (
-          <ProtectedRoute>
-            <About />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTE_PATHS.LIBRARY,
-        element: (
-          <ProtectedRoute>
-            <LibraryPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTE_PATHS.WIDGET_CONSOLE,
-        element: (
-          <ProtectedRoute>
-            <WidgetConsole />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTE_PATHS.STACK_WIDGET,
-        element: (
-          <ProtectedRoute>
-            <StackWidget />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTE_PATHS.LEADERBOARD_PAGE,
-        element: (
-          <ProtectedRoute>
-            <LeaderboardPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ROUTE_PATHS.ACHIEVEMENTS,
-        element: (
-          <ProtectedRoute>
-            <p>Achievements Page</p>
-          </ProtectedRoute>
-        ),
-      },
+      { path: ROUTE_PATHS.DASHBOARD, element: <DashboardPage /> },
+      { path: ROUTE_PATHS.ABOUT, element: <About /> },
+      { path: ROUTE_PATHS.LIBRARY, element: <LibraryPage /> },
+      { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
+      { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
+      { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
+      { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
     ],
   },
 ];
