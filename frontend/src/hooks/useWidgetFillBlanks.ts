@@ -33,30 +33,23 @@ export const useWidgetFillBlanks = () => {
   const totalStatements = tasks.reduce((acc, t) => acc + t.payload.statements.length, 0);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const load = async () => {
       try {
         setLoading(true);
-
-        const data = await getFillBlanksTasks(controller.signal);
-
-        setTasks(data);
         setError(null);
-      } catch (err) {
-        if (err instanceof Error && err.name === 'AbortError') {
-          return;
-        }
 
-        setError('Failed to load questions');
+        const data = await getFillBlanksTasks();
+        setTasks(data);
+      } catch (err) {
+        setError(
+          `Failed to load questions: ${err instanceof Error ? err.message : 'Unknown error'}`
+        );
       } finally {
         setLoading(false);
       }
     };
 
     load();
-
-    return () => controller.abort();
   }, []);
 
   useEffect(() => {
@@ -109,7 +102,7 @@ export const useWidgetFillBlanks = () => {
       const updated = { ...prev, ...results };
       return updated;
     });
-  }, [answers, currentTask, totalStatements]);
+  }, [answers, currentTask]);
 
   const handleNextQuestion = async () => {
     if (!isLastQuestion) {
@@ -124,7 +117,7 @@ export const useWidgetFillBlanks = () => {
         const finalScore = Math.round((correctCountAll / totalStatements) * 80);
         setScore(finalScore);
 
-        await saveFillBlanksScore(score);
+        await saveFillBlanksScore(finalScore);
       } catch {
         setError('Failed to save score');
       }

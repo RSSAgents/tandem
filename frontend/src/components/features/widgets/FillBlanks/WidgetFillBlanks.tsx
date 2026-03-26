@@ -1,3 +1,5 @@
+import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
+import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
 import { CodeEditor } from '@/components/shared/CodeEditor/CodeEditor';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
@@ -50,9 +52,8 @@ export const WidgetFillBlanks = () => {
     }
   }, [handleCheckResult, handleNextQuestion, isLastQuestion]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (!currentTask) return null;
+  if (loading) return <PageLoader />;
+  if (error && !currentTask) return <ErrorDisplay error={error} />;
 
   return (
     <Container className={classes.container}>
