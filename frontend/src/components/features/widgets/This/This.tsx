@@ -8,12 +8,15 @@ import { setCodeEditor } from '@/components/shared/CodeEditor/slice/editorSlice'
 import { useWidgetThis } from '@/hooks/useWidgetThis';
 
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import classes from './This.module.css';
 
 export default function WidgetThis() {
   const { t } = useTranslation(['dashboard', 'shared']);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const {
     tasks,
@@ -44,12 +47,13 @@ export default function WidgetThis() {
     } else {
       if (isLastStep) {
         await saveResult();
+        navigate('/dashboard');
       } else {
         setSelected(null);
         handleNext();
       }
     }
-  }, [isAnswered, selected, isLastStep, handleAnswer, handleNext, saveResult]);
+  }, [isAnswered, selected, isLastStep, handleAnswer, handleNext, saveResult, navigate]);
 
   if (loading && tasks.length === 0) {
     return (
