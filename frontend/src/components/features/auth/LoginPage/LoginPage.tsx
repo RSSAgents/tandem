@@ -36,12 +36,12 @@ export const LoginPage = () => {
     <div className={classes.wrapper}>
       <Paper className={classes.card}>
         <Text size="2xl" fw={500} ta="center" mb="xl">
-          {t('login')}
+          {t('headers.login')}
         </Text>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
-            label={t('email')}
+            label={t('fields.email')}
             placeholder="you@example.com"
             {...register('email')}
             error={errors.email?.message ? t(errors.email.message as LoginErrorKeys) : undefined}
@@ -49,7 +49,7 @@ export const LoginPage = () => {
           />
 
           <PasswordInput
-            label={t('password')}
+            label={t('fields.password')}
             placeholder="••••••"
             {...register('password')}
             error={
@@ -65,14 +65,14 @@ export const LoginPage = () => {
           )}
 
           <Button type="submit" fullWidth loading={isSubmitting} color="blue">
-            {t('login')}
+            {t('actions.login')}
           </Button>
         </form>
 
         <Text size="sm" mt="lg" ta="center">
-          {t('noAccount')}{' '}
+          {t('links.noAccount')}{' '}
           <Text className={classes.signupLink} component={Link} to="/register">
-            {t('signup')}
+            {t('headers.signup')}
           </Text>
         </Text>
       </Paper>
