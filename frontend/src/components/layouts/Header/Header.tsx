@@ -20,7 +20,13 @@ export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => 
   return (
     <Box component="header" className={classes.header}>
       <Group gap="xs">
-        <Burger opened={burgerOpened} onClick={onBurgerClick} size="sm" aria-label="Toggle navigation" hiddenFrom="sm" />
+        <Burger
+          opened={burgerOpened}
+          onClick={onBurgerClick}
+          size="sm"
+          aria-label="Toggle navigation"
+          hiddenFrom="sm"
+        />
         <Text component={Link} to="/" className={classes.logo}>
           Tandem
         </Text>

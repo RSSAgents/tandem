@@ -23,8 +23,14 @@ const MOCK_PRIZES = [
   { id: 3, title: ' Gold Trophy', description: 'Complete 6 modules' },
 ];
 
-export const Sidebar = ({ user = DEFAULT_USER, stats = DEFAULT_STATS, onClose, mobileBreakpoint }: SidebarProps) => {
-  const bp = typeof mobileBreakpoint === 'number' ? `${mobileBreakpoint}px` : mobileBreakpoint ?? '48em';
+export const Sidebar = ({
+  user = DEFAULT_USER,
+  stats = DEFAULT_STATS,
+  onClose,
+  mobileBreakpoint,
+}: SidebarProps) => {
+  const bp =
+    typeof mobileBreakpoint === 'number' ? `${mobileBreakpoint}px` : (mobileBreakpoint ?? '48em');
   const isMobile = useMediaQuery(`(max-width: ${bp})`);
 
   return (
@@ -37,7 +43,11 @@ export const Sidebar = ({ user = DEFAULT_USER, stats = DEFAULT_STATS, onClose, m
             size="lg"
             radius="md"
             aria-label="Close navigation"
-            style={{ display: 'block', marginLeft: 'auto', marginBottom: 'var(--mantine-spacing-xs)' }}
+            style={{
+              display: 'block',
+              marginLeft: 'auto',
+              marginBottom: 'var(--mantine-spacing-xs)',
+            }}
           >
             <IconX size={18} />
           </ActionIcon>

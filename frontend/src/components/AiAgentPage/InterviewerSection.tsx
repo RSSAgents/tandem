@@ -176,7 +176,13 @@ export const InterviewerSection = ({
               </Group>
             )}
 
-            <ScrollArea ref={scrollAreaRef} flex={1} p="xs" pr="md" className={classes.smoothScroll}>
+            <ScrollArea
+              ref={scrollAreaRef}
+              flex={1}
+              p="xs"
+              pr="md"
+              className={classes.smoothScroll}
+            >
               {isLoadingHistory ? (
                 <Center h="100%">
                   <Loader size="sm" />
