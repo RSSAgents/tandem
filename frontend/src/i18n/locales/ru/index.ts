@@ -17,6 +17,7 @@ import library from './library.json';
 import widgetConsole from './widgetConsole.json';
 import about from './about.json';
 import sidebar from './sidebar.json';
+import stack from './stack.json';
 
 export const ru = {
   aiAgent,
@@ -38,4 +39,5 @@ export const ru = {
   widgetConsole,
   about,
   sidebar,
+  stack,
 };
