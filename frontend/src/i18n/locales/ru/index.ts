@@ -1,3 +1,4 @@
+import aiAgent from './aiAgent.json';
 import auth from './auth.json';
 import dashboard from './dashboard.json';
 import header from './header.json';
@@ -13,8 +14,13 @@ import leadersHomePage from './leadersHomePage.json';
 import benefits from './benefits.json';
 import faq from './faq.json';
 import library from './library.json';
+import widgetConsole from './widgetConsole.json';
+import about from './about.json';
+import sidebar from './sidebar.json';
+import stack from './stack.json';
 
 export const ru = {
+  aiAgent,
   auth,
   dashboard,
   header,
@@ -30,4 +36,8 @@ export const ru = {
   benefits,
   faq,
   library,
+  widgetConsole,
+  about,
+  sidebar,
+  stack,
 };

@@ -2,6 +2,7 @@ import { ANIMATION_CONFIG, QUEUE_ANIMATION_CONFIG } from '@/constants/stack';
 import type { QuizState } from '@/hooks/useWidgetStack';
 import { Box, Text } from '@mantine/core';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import classes from './Stack.module.css';
 
 interface StackVisualizationProps {
@@ -10,61 +11,65 @@ interface StackVisualizationProps {
   quizState: QuizState;
 }
 
-const StackVisualization = ({ stack, queue, quizState }: StackVisualizationProps) => (
-  <Box className={classes.visualizations}>
-    {(quizState === 'lifo-animation' ||
-      quizState === 'fifo-question' ||
-      quizState === 'fifo-animation' ||
-      quizState === 'completed') && (
-      <Box className={classes.section}>
-        <Text className={classes.sectionTitle}>LIFO</Text>
-        <Box className={classes.stackContainer}>
-          <AnimatePresence mode="popLayout">
-            {stack.map((item) => (
-              <motion.div
-                key={`stack-${item}`}
-                className={classes.stackItem}
-                initial={ANIMATION_CONFIG.initial}
-                animate={ANIMATION_CONFIG.animate}
-                exit={ANIMATION_CONFIG.exit}
-                layout
-              >
-                <Text className={classes.itemText}>{item}</Text>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-          {stack.length === 0 && quizState !== 'lifo-animation' && (
-            <Text className={classes.emptyText}>Stack is empty</Text>
-          )}
-        </Box>
-      </Box>
-    )}
+const StackVisualization = ({ stack, queue, quizState }: StackVisualizationProps) => {
+  const { t } = useTranslation('stack');
 
-    {(quizState === 'fifo-animation' || quizState === 'completed') && (
-      <Box className={classes.section}>
-        <Text className={classes.sectionTitle}>FIFO</Text>
-        <Box className={classes.queueContainer}>
-          <AnimatePresence mode="popLayout">
-            {queue.map((item) => (
-              <motion.div
-                key={`queue-${item}`}
-                className={classes.queueItem}
-                initial={QUEUE_ANIMATION_CONFIG.initial}
-                animate={QUEUE_ANIMATION_CONFIG.animate}
-                exit={QUEUE_ANIMATION_CONFIG.exit}
-                layout
-              >
-                <Text className={classes.itemText}>{item}</Text>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-          {queue.length === 0 && quizState !== 'fifo-animation' && (
-            <Text className={classes.emptyText}>Queue is empty</Text>
-          )}
+  return (
+    <Box className={classes.visualizations}>
+      {(quizState === 'lifo-animation' ||
+        quizState === 'fifo-question' ||
+        quizState === 'fifo-animation' ||
+        quizState === 'completed') && (
+        <Box className={classes.section}>
+          <Text className={classes.sectionTitle}>LIFO</Text>
+          <Box className={classes.stackContainer}>
+            <AnimatePresence mode="popLayout">
+              {stack.map((item) => (
+                <motion.div
+                  key={`stack-${item}`}
+                  className={classes.stackItem}
+                  initial={ANIMATION_CONFIG.initial}
+                  animate={ANIMATION_CONFIG.animate}
+                  exit={ANIMATION_CONFIG.exit}
+                  layout
+                >
+                  <Text className={classes.itemText}>{item}</Text>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {stack.length === 0 && quizState !== 'lifo-animation' && (
+              <Text className={classes.emptyText}>{t('stackQueue.stack.emptyState')}</Text>
+            )}
+          </Box>
         </Box>
-      </Box>
-    )}
-  </Box>
-);
+      )}
+
+      {(quizState === 'fifo-animation' || quizState === 'completed') && (
+        <Box className={classes.section}>
+          <Text className={classes.sectionTitle}>FIFO</Text>
+          <Box className={classes.queueContainer}>
+            <AnimatePresence mode="popLayout">
+              {queue.map((item) => (
+                <motion.div
+                  key={`queue-${item}`}
+                  className={classes.queueItem}
+                  initial={QUEUE_ANIMATION_CONFIG.initial}
+                  animate={QUEUE_ANIMATION_CONFIG.animate}
+                  exit={QUEUE_ANIMATION_CONFIG.exit}
+                  layout
+                >
+                  <Text className={classes.itemText}>{item}</Text>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {queue.length === 0 && quizState !== 'fifo-animation' && (
+              <Text className={classes.emptyText}>{t('stackQueue.queue.emptyState')}</Text>
+            )}
+          </Box>
+        </Box>
+      )}
+    </Box>
+  );
+};
 
 export default StackVisualization;

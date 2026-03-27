@@ -1,13 +1,15 @@
-css .main {
-  padding-left: var(--app-shell-navbar-offset, 0px);
-  padding-top: var(--app-shell-header-offset, 0px);
-  padding-bottom: var(--app-shell-footer-offset, 0px);
+.main {
   padding-right: var(--app-side-padding);
-  padding-top: calc(var(--app-shell-header-offset) + 20px);
   min-height: 100vh;
   background: var(--bg);
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 48em) {
+  :global(.mantine-AppShell-navbar) {
+    max-width: 260px;
+  }
 }
 
 .sidebar {

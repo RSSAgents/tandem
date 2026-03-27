@@ -5,6 +5,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IThisTask } from '../types/widgetThis.types';
 
+const POINTS_PER_CORRECT_ANSWER = 10;
+
 export const useWidgetThis = () => {
   const [tasks, setTasks] = useState<IThisTask[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +52,7 @@ export const useWidgetThis = () => {
         const result = await checkThisAnswer(currentTask.id, answer);
         setIsCorrect(result);
         if (result) {
-          setScore((prev) => prev + 10);
+          setScore((prev) => prev + POINTS_PER_CORRECT_ANSWER);
         }
       } catch {
         setError('Failed to check answer');

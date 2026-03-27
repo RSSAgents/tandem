@@ -42,7 +42,7 @@ describe('RegisterPage', () => {
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
-  it('navigates to dashboard on valid submit', async () => {
+  it('shows confirmation message on valid submit', async () => {
     const { user } = setupUserEvent(<RegisterPage />);
     const [password, confirmPassword] = screen.getAllByLabelText(/password/i);
 
@@ -53,6 +53,7 @@ describe('RegisterPage', () => {
 
     await user.click(screen.getByRole('button', { name: /signup/i }));
 
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+    expect(await screen.findByText(/confirmEmailSent/i)).toBeInTheDocument();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 });

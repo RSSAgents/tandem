@@ -22,6 +22,10 @@
     "status": {
       "todo": "Start",
       "completed": "Finished"
+    },
+    "ai_interviewer": {
+      "title": "AI Interviewer",
+      "description": "Practice technical interviews with an AI-powered interviewer. Get questions, instant feedback, and track your readiness across topics using Teacher and AI Simulation modes."
     }
   }
 }

@@ -119,17 +119,17 @@ export default function WidgetThis() {
           })}
         </Stack>
 
-        <div className={classes.footerArea}>
-          <div className={`${classes.explanation} ${isAnswered ? classes.explanationActive : ''}`}>
+        <Box className={classes.footerArea}>
+          <Box className={`${classes.explanation} ${isAnswered ? classes.explanationActive : ''}`}>
             <Text fw={800} size="xs" c="brand" mb={4} tt="uppercase">
               {t('widgets.this_quiz.explanation')}
             </Text>
-            <div className={classes.explanationScrollArea}>
+            <Box className={classes.explanationScrollArea}>
               <Text size="sm" lh="md">
                 {explanation}
               </Text>
-            </div>
-          </div>
+            </Box>
+          </Box>
 
           <Button
             className={classes.mainAction}
@@ -147,7 +147,7 @@ export default function WidgetThis() {
                 ? t('widgets.this_quiz.finish')
                 : t('shared:continue')}
           </Button>
-        </div>
+        </Box>
       </Stack>
     </Paper>
   );

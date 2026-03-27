@@ -9,8 +9,11 @@ import { Button, Container, Flex, Paper, Stack, Text, Title } from '@mantine/cor
 import { useCallback, useState } from 'react';
 import { SortableItem } from './SortableItem';
 import styles from './WidgetConsole.module.css';
+import { useTranslation } from 'react-i18next';
 
 export const WidgetConsole = () => {
+  const { t } = useTranslation('widgetConsole');
+
   const {
     loading,
     error,
@@ -54,7 +57,7 @@ export const WidgetConsole = () => {
   if (!currentTask) {
     return (
       <Container size={800} className={styles.mainContainer}>
-        <Text ta="center">No tasks available</Text>
+        <Text ta="center">{t('noTasks')}</Text>
       </Container>
     );
   }
@@ -62,14 +65,14 @@ export const WidgetConsole = () => {
   return (
     <Container size={800} className={styles.mainContainer}>
       <Title order={2} className={styles.questionTitle}>
-        In what order will the console.logs appear?
+        {t('title')}
       </Title>
       <Text className={styles.subtitle} c="dimmed">
-        Drag the items into the correct order
+        {t('subtitle')}
       </Text>
 
       <Text className={styles.questionCounter}>
-        Question {currentIndex + 1} of {tasks.length}
+        {t('questionCounter', { current: currentIndex + 1, total: tasks.length })}
       </Text>
       <Stack className={styles.widgetContainer}>
         <Paper className={styles.widgetPaper}>
@@ -89,14 +92,14 @@ export const WidgetConsole = () => {
 
       <Flex className={styles.actionButtons}>
         <Button className={styles.btn} disabled={showResult} onClick={onCheckClick}>
-          Check result
+          {t('checkButton')}
         </Button>
         <Button
           className={styles.btn}
           disabled={!showResult || currentIndex === tasks.length - 1}
           onClick={handleNextQuestion}
         >
-          Next question
+          {t('nextButton')}
         </Button>
       </Flex>
       {showResult && <ResultDisplay isCorrect={isCorrect} explanation={explanation} />}
