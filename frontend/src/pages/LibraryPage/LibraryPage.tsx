@@ -1,11 +1,13 @@
-import { LIBRARY_ACCORDION } from '@constants/library';
 import { Accordion, Box, Container, Title } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 import classes from './LibraryPage.module.css';
 
 const LibraryPage = () => {
+  const { t } = useTranslation('library');
+
   return (
     <Container>
-      {LIBRARY_ACCORDION.map((category, categoryIndex) => (
+      {t('libraryData', { returnObjects: true }).map((category, categoryIndex) => (
         <Box key={categoryIndex} className={classes.category}>
           <Title order={2} className={classes.subtitle}>
             {category.category}
