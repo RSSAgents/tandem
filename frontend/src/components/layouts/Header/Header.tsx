@@ -14,6 +14,7 @@ interface HeaderProps {
 export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
+  const isRegisterPage = location.pathname === '/register';
   const { handleToggleTheme, isDark } = useTheme();
   const { t } = useTranslation('header');
 
@@ -32,12 +33,14 @@ export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => 
         </Text>
       </Group>
       <Group className={classes.group}>
-        {!isLoginPage && (
+        {!isLoginPage && !isRegisterPage && (
           <>
             <Button variant="default" component={Link} to="/login">
               {t('login')}
             </Button>
-            <Button>{t('signup')}</Button>
+            <Button component={Link} to="/register">
+              {t('signup')}
+            </Button>
           </>
         )}
         <ActionIcon

@@ -1,0 +1,8 @@
+{
+  "title": "In what order will the console.logs appear?",
+  "subtitle": "Drag the items into the correct order",
+  "questionCounter": "Question {{current}} of {{total}}",
+  "checkButton": "Check result",
+  "nextButton": "Next question",
+  "noTasks": "No tasks available"
+}

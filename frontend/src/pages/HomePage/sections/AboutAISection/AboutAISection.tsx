@@ -1,17 +1,32 @@
-import { Container, Title, Text, Paper, Image, List, ThemeIcon, Stack } from '@mantine/core';
+import {
+  Container,
+  Title,
+  Text,
+  Paper,
+  Image,
+  List,
+  ThemeIcon,
+  Stack,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
-import aiInterviewImage from './ai.jpg';
 import classes from './AboutAISection.module.css';
 import { useTranslation, Trans } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
+import aiImageDark from './ai-dark.jpg';
+import aiImageLight from './ai-light.jpg';
 
 export function AboutAISection() {
+  const { colorScheme } = useMantineColorScheme();
+
   const { ref, inView } = useInView({
     threshold: 0.8,
     triggerOnce: true,
   });
 
   const { t } = useTranslation('aboutAI');
+
+  const aiImage = colorScheme === 'dark' ? aiImageDark : aiImageLight;
 
   const AI_FEATURES = t('features', { returnObjects: true }) as Array<{
     title: string;
@@ -27,13 +42,13 @@ export function AboutAISection() {
         radius="md"
         shadow="xl"
       >
-        <Image src={aiInterviewImage} alt="AI Interviewer interface" className={classes.image} />
+        <Image src={aiImage} alt="AI Interviewer interface" className={classes.image} />
       </Paper>
       <Stack>
         <Title
           order={2}
           className={classes.sectionTitle}
-          fz={{ base: 32, sm: 36, md: 40, lg: 48 }}
+          fz={{ base: 32, sm: 36, md: 40, lg: 40 }}
           mb={{ base: 16, sm: 18, md: 20, lg: 24 }}
         >
           <Trans

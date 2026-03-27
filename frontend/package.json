@@ -11,6 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:cyopen": "cypress open",
+    "test:cyrun": "cypress run",
     "ci:format": "prettier --check .",
     "format": "prettier --write .",
     "preview": "vite preview",
