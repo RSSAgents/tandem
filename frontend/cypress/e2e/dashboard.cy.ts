@@ -30,4 +30,9 @@ describe('Dashboard Page', () => {
     cy.contains('Stack').click();
     cy.url().should('include', '/stack');
   });
+
+  it('should navigate to fill in the blanks', () => {
+    cy.contains('Fill in the Blanks').click();
+    cy.url().should('include', '/fill-blanks');
+  });
 });

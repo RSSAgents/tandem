@@ -35,7 +35,11 @@ describe('DashboardPage', () => {
   });
 
   it('should render correctly when modules are completed', () => {
-    vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => ['js-exec', 'js_stack', 'fill_blanks']);
+    vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => [
+      'js-exec',
+      'js_stack',
+      'fill_blanks',
+    ]);
     vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');
 
     renderDashboard();
