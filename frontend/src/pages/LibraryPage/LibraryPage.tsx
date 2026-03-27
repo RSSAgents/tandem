@@ -4,10 +4,11 @@ import classes from './LibraryPage.module.css';
 
 const LibraryPage = () => {
   const { t } = useTranslation('library');
+  const libraryData = t('libraryData', { returnObjects: true });
 
   return (
     <Container>
-      {t('libraryData', { returnObjects: true }).map((category, categoryIndex) => (
+      {libraryData.map((category, categoryIndex) => (
         <Box key={categoryIndex} className={classes.category}>
           <Title order={2} className={classes.subtitle}>
             {category.category}
