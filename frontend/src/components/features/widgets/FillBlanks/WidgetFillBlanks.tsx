@@ -30,15 +30,6 @@ export const WidgetFillBlanks = () => {
     resetWidget,
   } = useWidgetFillBlanks();
 
-  const getSelectStatus = (id: string) => {
-    if (!showResult) return '';
-    if (resultMap[id] === undefined) return '';
-
-    return resultMap[id] ? 'correct' : 'incorrect';
-  };
-
-  const allCorrect =
-    currentTask?.payload.statements.every((s) => resultMap[s.id] === true) ?? false;
   const [modalOpened, setModalOpened] = useState(false);
 
   const onCheckClick = useCallback(async () => {
@@ -53,7 +44,22 @@ export const WidgetFillBlanks = () => {
   }, [handleCheckResult, handleNextQuestion, isLastQuestion]);
 
   if (loading) return <PageLoader />;
-  if (error && !currentTask) return <ErrorDisplay error={error} />;
+  if (error) return <ErrorDisplay error={error} />;
+  if (!currentTask) return null;
+
+  const getSelectStatus = (id: string) => {
+    if (!showResult) return '';
+
+    const key = `${currentTask.id}_${id}`;
+    if (resultMap[key] === undefined) return '';
+
+    return resultMap[key] ? 'correct' : 'incorrect';
+  };
+
+  const allCorrect = currentTask.payload.statements.every((s) => {
+    const key = `${currentTask.id}_${s.id}`;
+    return resultMap[key] === true;
+  });
 
   return (
     <Container className={classes.container}>
@@ -118,7 +124,7 @@ export const WidgetFillBlanks = () => {
 
         <Button
           className={classes.button}
-          disabled={!showResult || isLastQuestion}
+          disabled={!showResult}
           onClick={handleNextQuestion}
         >
           Next
@@ -141,9 +147,7 @@ export const WidgetFillBlanks = () => {
         onClose={() => setModalOpened(false)}
         onTryAgain={() => {
           setModalOpened(false);
-          setTimeout(() => {
-            resetWidget();
-          }, 300);
+          resetWidget();
         }}
       />
     </Container>

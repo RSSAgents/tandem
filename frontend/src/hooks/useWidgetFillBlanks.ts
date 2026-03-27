@@ -42,7 +42,7 @@ export const useWidgetFillBlanks = () => {
         setTasks(data);
       } catch (err) {
         setError(
-          `Failed to load questions: ${err instanceof Error ? err.message : 'Unknown error'}`
+          `Failed to load questions: ${err instanceof Error ? err.message : 'Unknown error'}`,
         );
       } finally {
         setLoading(false);
