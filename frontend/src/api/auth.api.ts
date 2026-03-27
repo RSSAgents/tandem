@@ -19,12 +19,12 @@ export const signUp = async (email: string, password: string, username: string) 
     email,
     password,
     options: {
-      data: { username }
-    }
+      data: { username },
+    },
   });
   if (error) throw new Error(error.message);
   return data;
-}
+};
 
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();

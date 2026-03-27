@@ -11,7 +11,10 @@ import classes from './RegisterPage.module.css';
 const RegisterPage = () => {
   const { t } = useTranslation('auth');
   const [errorKey, setErrorKey] = useState<
-    'errors.emailAlreadyExists' | 'errors.usernameAlreadyExists' | 'errors.registrationFailed' | null
+    | 'errors.emailAlreadyExists'
+    | 'errors.usernameAlreadyExists'
+    | 'errors.registrationFailed'
+    | null
   >(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [resetSentTo, setResetSentTo] = useState<string | null>(null);
