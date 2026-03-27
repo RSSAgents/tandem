@@ -11,6 +11,10 @@
     "js_stack": {
       "title": "Stack",
       "description": "An interactive widget that demonstrates two fundamental data structures: Stack (LIFO - Last In, First Out) and Queue (FIFO - First In, First Out)ю"
+    },
+    "ai_interviewer": {
+      "title": "AI Interviewer",
+      "description": "Practice technical interviews with an AI-powered interviewer. Get questions, instant feedback, and track your readiness across topics using Teacher and AI Simulation modes."
     }
   },
   "status": {

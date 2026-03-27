@@ -13,6 +13,12 @@ export const DASHBOARD_WIDGETS = [
     description: 'widgets.js_stack.description',
     path: ROUTE_PATHS.STACK_WIDGET,
   },
+  {
+    id: 'ai-interviewer',
+    title: 'widgets.ai_interviewer.title',
+    description: 'widgets.ai_interviewer.description',
+    path: ROUTE_PATHS.AI_TANDEM,
+  },
 ] as const;
 
 export const getCompletedIds = () => [] as string[];

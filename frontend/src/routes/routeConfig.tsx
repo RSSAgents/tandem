@@ -1,14 +1,15 @@
 import { WidgetConsole } from '@/components/features/widgets/WidgetConsole/WidgetConsole';
 import ProtectedRoute from '@/components/shared/ProtectedRoute/ProtectedRoute';
 import { About } from '@/pages/About/About';
+import { HomePage } from '@/pages/HomePage/HomePage';
 import { LeaderboardPage } from '@/pages/LeaderboardPage/LeaderboardPage';
 import { NotFoundPage } from '@/pages/NotFoundPage/NotFoundPage';
 import { MainLayout } from '@components/layouts/MainLayout/MainLayout';
 import { MinimalLayout } from '@components/layouts/MinimalLayout/MinimalLayout';
 import { lazy } from 'react';
+import { AiAgentPage } from '../pages/AiAgentPage/AiAgentPage';
+import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
 import { ROUTE_PATHS } from './routePaths';
-import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
-import { HomePage } from '@/pages/HomePage/HomePage';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/components/features/auth/RegisterPage'));
@@ -38,8 +39,8 @@ export const appRoutes = [
       { path: ROUTE_PATHS.LIBRARY, element: <LibraryPage /> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
       { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
+      { path: ROUTE_PATHS.AI_TANDEM, element: <AiAgentPage /> },
       { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
-      { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
     ],
   },
 ];
