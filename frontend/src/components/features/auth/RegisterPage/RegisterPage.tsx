@@ -1,14 +1,24 @@
-import { Button, Paper, PasswordInput, Text, TextInput } from '@mantine/core';
-import { useForm } from 'react-hook-form';
+import { signUp, resetPassword } from '@/api/auth.api';
+import { Button, Paper, PasswordInput, Text, TextInput, Anchor } from '@mantine/core';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { registerSchema, RegisterFormValues, RegisterErrorKeys } from './register.schema';
 import classes from './RegisterPage.module.css';
-import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 const RegisterPage = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation('auth');
+  const [errorKey, setErrorKey] = useState<
+    | 'errors.emailAlreadyExists'
+    | 'errors.usernameAlreadyExists'
+    | 'errors.registrationFailed'
+    | null
+  >(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [resetSentTo, setResetSentTo] = useState<string | null>(null);
+  const [lastEmail, setLastEmail] = useState<string>('');
 
   const {
     register,
@@ -19,9 +29,52 @@ const RegisterPage = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = async () => {
-    navigate('/dashboard');
+  const onSubmit = async (data: RegisterFormValues) => {
+    try {
+      setErrorKey(null);
+      setResetSentTo(null);
+      setLastEmail(data.email);
+      await signUp(data.email, data.password, data.name);
+      setIsSuccess(true);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : '';
+      if (message === 'EMAIL_ALREADY_EXISTS') {
+        setErrorKey('errors.emailAlreadyExists');
+      } else if (message === 'USERNAME_ALREADY_EXISTS') {
+        setErrorKey('errors.usernameAlreadyExists');
+      } else {
+        setErrorKey('errors.registrationFailed');
+      }
+    }
   };
+
+  const handleResetPassword = async () => {
+    try {
+      await resetPassword(lastEmail);
+      setResetSentTo(lastEmail);
+      setErrorKey(null);
+    } catch {
+      setErrorKey('errors.registrationFailed');
+    }
+  };
+
+  if (isSuccess) {
+    return (
+      <div className={classes.wrapper}>
+        <Paper className={classes.card}>
+          <Text size="xl" fw={500} ta="center" mb="lg">
+            {t('headers.signup')}
+          </Text>
+          <Text ta="center" mb="xl">
+            {t('messages.confirmEmailSent')}
+          </Text>
+          <Button fullWidth component={Link} to="/login">
+            {t('headers.login')}
+          </Button>
+        </Paper>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -68,6 +121,32 @@ const RegisterPage = () => {
             }
             mb="xl"
           />
+
+          {errorKey && (
+            <Text c="red" size="sm" mb="sm" ta="center">
+              {t(errorKey)}
+            </Text>
+          )}
+
+          {errorKey === 'errors.emailAlreadyExists' && !resetSentTo && (
+            <Anchor
+              component="button"
+              type="button"
+              size="sm"
+              ta="center"
+              display="block"
+              mb="sm"
+              onClick={handleResetPassword}
+            >
+              {t('messages.wantResetPassword')}
+            </Anchor>
+          )}
+
+          {resetSentTo && (
+            <Text c="green" size="sm" mb="sm" ta="center">
+              {t('messages.resetEmailSent', { email: resetSentTo })}
+            </Text>
+          )}
 
           <Button type="submit" fullWidth loading={isSubmitting}>
             {t('actions.signup')}
