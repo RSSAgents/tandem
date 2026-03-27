@@ -81,7 +81,9 @@ vi.mock('@supabase/supabase-js', () => ({
       }),
       resetPasswordForEmail: vi.fn().mockResolvedValue({ error: null }),
     },
-    rpc: vi.fn().mockResolvedValue({ data: { emailTaken: false, usernameTaken: false }, error: null }),
+    rpc: vi
+      .fn()
+      .mockResolvedValue({ data: { emailTaken: false, usernameTaken: false }, error: null }),
     storage: {
       from: vi.fn(() => ({
         upload: vi.fn().mockResolvedValue({ data: null, error: null }),
