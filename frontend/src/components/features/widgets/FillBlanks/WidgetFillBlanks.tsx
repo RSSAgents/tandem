@@ -122,11 +122,7 @@ export const WidgetFillBlanks = () => {
           Check result
         </Button>
 
-        <Button
-          className={classes.button}
-          disabled={!showResult}
-          onClick={handleNextQuestion}
-        >
+        <Button className={classes.button} disabled={!showResult} onClick={handleNextQuestion}>
           Next
         </Button>
       </div>

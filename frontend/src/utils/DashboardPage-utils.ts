@@ -13,6 +13,12 @@ export const DASHBOARD_WIDGETS = [
     description: 'widgets.js_stack.description',
     path: ROUTE_PATHS.STACK_WIDGET,
   },
+  {
+    id: 'fill_blanks',
+    title: 'widgets.fill_blanks.title',
+    description: 'widgets.fill_blanks.description',
+    path: ROUTE_PATHS.FILL_BLANKS_WIDGET,
+  },
 ] as const;
 
 export const getCompletedIds = () => [] as string[];
