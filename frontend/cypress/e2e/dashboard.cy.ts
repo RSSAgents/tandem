@@ -30,4 +30,9 @@ describe('Dashboard Page', () => {
     cy.contains('Stack').click();
     cy.url().should('include', '/stack');
   });
+
+  it('should navigate to this', () => {
+    cy.contains('This in JavaScript').click();
+    cy.url().should('include', '/widget-this');
+  });
 });

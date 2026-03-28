@@ -1,4 +1,5 @@
 {
   "loading": "Loading...",
-  "progress": "{{current}} of {{total}} modules completed"
+  "progress": "{{current}} of {{total}} modules completed",
+  "continue": "continue"
 }
