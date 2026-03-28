@@ -15,6 +15,22 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+class MockResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(globalThis, 'ResizeObserver', {
+  writable: true,
+  value: MockResizeObserver,
+});
+
+Object.defineProperty(Element.prototype, 'scroll', {
+  writable: true,
+  value: () => {},
+});
+
 export const mockNavigate = vi.fn();
 
 vi.mock('react-router-dom', async () => {
@@ -63,7 +79,11 @@ vi.mock('@supabase/supabase-js', () => ({
       onAuthStateChange: vi.fn().mockReturnValue({
         data: { subscription: { unsubscribe: vi.fn() } },
       }),
+      resetPasswordForEmail: vi.fn().mockResolvedValue({ error: null }),
     },
+    rpc: vi
+      .fn()
+      .mockResolvedValue({ data: { emailTaken: false, usernameTaken: false }, error: null }),
     storage: {
       from: vi.fn(() => ({
         upload: vi.fn().mockResolvedValue({ data: null, error: null }),

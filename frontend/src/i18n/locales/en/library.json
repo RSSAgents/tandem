@@ -1,1 +1,170 @@
-{}
+{
+  "libraryData": [
+    {
+      "category": "JavaScript Fundamentals",
+      "items": [
+        {
+          "value": "Modules in JavaScript",
+          "description": "Modules provide encapsulation and clean global scope. Types: CommonJS (require/exports), AMD (asynchronous), UMD (universal), ES6 (import/export). Syntax: export default for single export, named exports and aliases with as. Dynamic imports: import() returns a promise, allowing code loading on demand."
+        },
+        {
+          "value": "Functionals Patterns",
+          "description": "Callbacks & IIFE: Callbacks — functions as arguments; IIFE (Immediately Invoked Function Expression) — scope protection. Callback Hell: nesting that makes code hard to read. Currying: transforming f(a, b) into f(a)(b). Partial application: fixing a subset of function arguments."
+        },
+        {
+          "value": "OOP & Patterns",
+          "description": "new: creates an object, links to a prototype. Classes: syntactic sugar over prototypes. super(): calls parent constructor. Access: public fields, private (via #), and static (belong to class)."
+        },
+        {
+          "value": "Prototypal Inheritance",
+          "description": "Inheritance via [[Prototype]]. __proto__ property points to the prototype object, while prototype is used in constructor functions. Object.create(proto) allows creating an object with a given prototype directly."
+        }
+      ]
+    },
+    {
+      "category": "Functional Scope",
+      "items": [
+        {
+          "value": "Global scope vs. functional scope",
+          "description": "Global scope — accessible everywhere, variables become window properties. Function scope — variables declared with var inside a function are only visible inside it. Modern JS also has block scope for let/const."
+        },
+        {
+          "value": "Variable visibility areas",
+          "description": "Variable scopes: global (accessible everywhere), functional (var inside function), block (let/const inside { }). Nested functions have access to outer function variables (closures)."
+        },
+        {
+          "value": "Working with nested scopes",
+          "description": "Nested scopes: inner function has access to outer function variables (lexical environment). Variable lookup goes up the scope chain from inner to outer to global. Closures allow access to outer variables even after the outer function has executed."
+        }
+      ]
+    },
+    {
+      "category": "Functions Parameters / Arguments",
+      "items": [
+        {
+          "value": "Defining function parameters",
+          "description": "Function parameters — variables defined in function declaration. Arguments — values passed when calling. Default parameters can be set. Rest parameters (...args) collect remaining arguments into an array. Parameter destructuring (objects/arrays) allows extracting data directly."
+        },
+        {
+          "value": "Differences in parameters passing by value and by reference",
+          "description": "Pass by value: primitives (numbers, strings, booleans) are copied, changes inside function don't affect original. Pass by reference: objects, arrays, functions are passed as reference, changes mutate the original. For immutability, create copies (spread, Object.assign, structuredClone)."
+        },
+        {
+          "value": "Handling a dynamic amount of function parameters.",
+          "description": "Rest parameters (...args) collect all passed arguments into an array. The arguments object (deprecated) contains all arguments in an array-like object. Rest parameters must be last in the parameter list and give a real array for easy processing."
+        }
+      ]
+    },
+    {
+      "category": "Intermediate Knowledge",
+      "items": [
+        {
+          "value": "KISS",
+          "description": "Keep It Simple, Stupid — a development principle: code should be as simple and understandable as possible. Don't complicate where simple solutions work. Simple code is easier to read, maintain, and has fewer bugs."
+        },
+        {
+          "value": "DRY",
+          "description": "Don't Repeat Yourself — extract common code into a function and reuse it."
+        },
+        {
+          "value": "YAGNI",
+          "description": "You Ain't Gonna Need It — don't write code you might need in the future if it's not in current requirements, because that future likely won't come or will look completely different."
+        }
+      ]
+    },
+    {
+      "category": "Execution Context (this)",
+      "items": [
+        {
+          "value": "What is this",
+          "description": "this — a reference to the object that is calling the function at the moment. The value of this is determined not by where it's declared, but by how the function is called."
+        },
+        {
+          "value": "Losing context",
+          "description": "When a method is passed as a callback or separated from its object, this loses its binding and becomes undefined (in strict mode) or points to the global object."
+        },
+        {
+          "value": "Explicit binding",
+          "description": "bind, call, and apply methods allow explicitly specifying which object this should refer to. bind creates a new function with bound context, call/apply invoke immediately."
+        },
+        {
+          "value": "Arrow functions and this",
+          "description": "Arrow functions don't have their own this; they take it from the outer (lexical) scope. This solves the problem of losing context in callbacks."
+        }
+      ]
+    },
+    {
+      "category": "Data Structures & Algorithms",
+      "items": [
+        {
+          "value": "Stack (LIFO)",
+          "description": "Stack data structure works on LIFO principle (Last In, First Out). Main operations: push (add to end), pop (remove from end). Examples: function call stack, browser history (back), Undo operation in editors."
+        },
+        {
+          "value": "Queue (FIFO)",
+          "description": "Queue data structure works on FIFO principle (First In, First Out). Main operations: enqueue (add to end), dequeue (remove from beginning). Examples: task queue, event processing, print jobs."
+        },
+        {
+          "value": "Deque & Priority Queue",
+          "description": "Deque (double-ended queue) — allows adding and removing elements from both ends. Priority Queue — elements with higher priority are processed first regardless of addition time (implemented via heap)."
+        }
+      ]
+    },
+    {
+      "category": "ECMAScript Advanced",
+      "items": [
+        {
+          "value": "Data Types: Set, Map, WeakSet, WeakMap",
+          "description": "Map/Set support any keys and uniqueness. WeakMap/WeakStore only objects and don't prevent garbage collection (GC), which is important for preventing memory leaks."
+        },
+        {
+          "value": "Error Handling",
+          "description": "try..catch..finally construct for synchronous code. Creating custom errors by inheriting from Error (e.g., class ValidationError extends Error)."
+        },
+        {
+          "value": "Asynchrony & Garbage Collection",
+          "description": "Event Loop: manages Call Stack, Microtasks (Promises), and Macrotasks (Timers). Garbage Collection: Mark-and-Sweep algorithm for removing unreachable objects."
+        }
+      ]
+    },
+    {
+      "category": "JavaScript in Browser",
+      "items": [
+        {
+          "value": "Window Object & Lifecycle",
+          "description": "Window: Location (URL), History (navigation), User Agent (browser data). Lifecycle: DOMContentLoaded (DOM ready), load (all resources loaded). Rendering: Parsing -> Reflow (geometry) -> Repaint -> Composite."
+        },
+        {
+          "value": "Network & Timers",
+          "description": "Requests: Fetch (Promise-based) vs legacy XHR. Timers: setTimeout adds task to macrotask queue; requestAnimationFrame syncs with screen refresh (usually 60fps) for smooth animations."
+        }
+      ]
+    },
+    {
+      "category": "Architecture & Methodology",
+      "items": [
+        {
+          "value": "Design Patterns & SOLID",
+          "description": "Patterns: Creational (Singleton, Factory), Structural (Adapter, Decorator), Behavioral (Observer, Strategy). SOLID: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion."
+        },
+        {
+          "value": "Methodologies & Testing",
+          "description": "Methodologies: Agile (iterative), Scrum (sprints), Kanban (flow), Waterfall (cascade). Testing: Unit (functions), Integration (connections), E2E (user path). TDD — test before code, BDD — tests as behavior specification."
+        }
+      ]
+    },
+    {
+      "category": "Security & Protocols",
+      "items": [
+        {
+          "value": "Web Protocols & REST",
+          "description": "HTTP/HTTPS: HTTPS = HTTP + SSL/TLS. REST: architectural style (Stateless, Cacheable, Methods: GET, POST, PUT, DELETE). Status codes: 2xx (Success), 4xx (Client error), 5xx (Server error)."
+        },
+        {
+          "value": "Security Knowledge",
+          "description": "CORS: browser policy for cross-origin requests. XSS: malicious script injection. OWASP Top 10: list of critical vulnerabilities. Auth: JWT (token in header), OAuth (authorization via third-party services)."
+        }
+      ]
+    }
+  ]
+}

@@ -31,7 +31,7 @@ describe('DashboardPage', () => {
       screen.getByText('Your journey starts here. Choose your first module!'),
     ).toBeInTheDocument();
     const startButtons = screen.getAllByText('Start');
-    expect(startButtons).toHaveLength(3);
+    expect(startButtons).toHaveLength(4);
   });
 
   it('should render correctly when modules are completed', () => {
@@ -39,6 +39,7 @@ describe('DashboardPage', () => {
       'js-exec',
       'js_stack',
       'fill_blanks',
+      'ai-interviewer',
     ]);
     vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');
 
@@ -48,6 +49,6 @@ describe('DashboardPage', () => {
     expect(screen.getByText("Path completed! You're a legend.")).toBeInTheDocument();
 
     const finishedButtons = screen.getAllByText('Finished');
-    expect(finishedButtons).toHaveLength(3);
+    expect(finishedButtons).toHaveLength(4);
   });
 });

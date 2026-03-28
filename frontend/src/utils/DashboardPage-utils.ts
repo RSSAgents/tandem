@@ -14,6 +14,12 @@ export const DASHBOARD_WIDGETS = [
     path: ROUTE_PATHS.STACK_WIDGET,
   },
   {
+    id: 'ai-interviewer',
+    title: 'widgets.ai_interviewer.title',
+    description: 'widgets.ai_interviewer.description',
+    path: ROUTE_PATHS.AI_TANDEM,
+  },
+  {
     id: 'fill_blanks',
     title: 'widgets.fill_blanks.title',
     description: 'widgets.fill_blanks.description',

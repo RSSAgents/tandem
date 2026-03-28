@@ -2,6 +2,7 @@ import { MantineProvider } from '@mantine/core';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
+import { DashboardPage } from '../DashboardPage/DashboardPage';
 import { NotFoundPage } from './NotFoundPage';
 
 const renderNotFound = (route = '/invalid-route') => {
@@ -21,8 +22,8 @@ describe('NotFoundPage', () => {
     renderNotFound();
 
     expect(screen.getByText('404')).toBeInTheDocument();
-    expect(screen.getByText(/wandered off the learning path/i)).toBeInTheDocument();
-    expect(screen.getByText('Back to learning')).toBeInTheDocument();
+    expect(screen.getByText('title')).toBeInTheDocument();
+    expect(screen.getByText('button')).toBeInTheDocument();
   });
 
   it('does not render 404 on existing route', () => {
@@ -30,7 +31,7 @@ describe('NotFoundPage', () => {
       <MantineProvider>
         <MemoryRouter initialEntries={['/']}>
           <Routes>
-            <Route path="/" element={<p>HomePage</p>} />
+            <Route path="/" element={<DashboardPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </MemoryRouter>

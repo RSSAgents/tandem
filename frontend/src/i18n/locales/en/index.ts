@@ -1,3 +1,4 @@
+import aiAgent from './aiAgent.json';
 import auth from './auth.json';
 import dashboard from './dashboard.json';
 import header from './header.json';
@@ -16,8 +17,10 @@ import library from './library.json';
 import widgetConsole from './widgetConsole.json';
 import about from './about.json';
 import sidebar from './sidebar.json';
+import stack from './stack.json';
 
 export const en = {
+  aiAgent,
   auth,
   dashboard,
   header,
@@ -36,4 +39,5 @@ export const en = {
   widgetConsole,
   about,
   sidebar,
+  stack,
 };
