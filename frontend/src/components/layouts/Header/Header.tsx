@@ -32,7 +32,7 @@ export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => 
           aria-label="Toggle navigation"
           hiddenFrom="sm"
         />
-        <Text component={Link} to="/" className={classes.logo}>
+        <Text component={Link} to={user ? '/dashboard' : '/'} className={classes.logo}>
           Tandem
         </Text>
       </Group>
@@ -41,7 +41,7 @@ export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => 
           <>
             {user ? (
               <Button color="red" onClick={logout}>
-                Logout
+                {t('logout')}
               </Button>
             ) : (
               <>
