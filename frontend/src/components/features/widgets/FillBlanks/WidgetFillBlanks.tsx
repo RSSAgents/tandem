@@ -3,7 +3,7 @@ import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
 import { CodeEditor } from '@/components/shared/CodeEditor/CodeEditor';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
-import { Button, Container, Select, Stack, Title } from '@mantine/core';
+import { Button, Container, Select, Stack, Title, Text, Group, Box } from '@mantine/core';
 import { useCallback, useState } from 'react';
 import { ScoreDisplayModal } from '../../../shared/ScoreDisplayModal/ScoreDisplayModal';
 import classes from './WidgetFillBlanks.module.css';
@@ -64,13 +64,13 @@ const WidgetFillBlanks = () => {
   return (
     <Container className={classes.container}>
       <Title order={2}>Fill in the blanks</Title>
-      <div className={classes.counter}>
+      <Text size="sm" c="dimmed">
         Question {currentIndex + 1} of {tasks.length}
-      </div>
+      </Text>
 
-      <div className={classes.editorWrapper}>
+      <Box className={classes.editorWrapper}>
         <CodeEditor />
-      </div>
+      </Box>
 
       <Stack mt="lg">
         {currentTask.payload.statements.map((s, index) => {
@@ -78,9 +78,9 @@ const WidgetFillBlanks = () => {
           const parts = text.split('{{blank}}');
 
           return (
-            <div key={s.id} className={classes.statement}>
-              <span className={classes.index}>{index + 1}.</span>
-              <span>{parts[0]}</span>
+            <Group key={s.id} className={classes.statement}>
+              <Text className={classes.index}>{index + 1}.</Text>
+              <Text span>{parts[0]}</Text>
 
               <Select
                 data={s.options.ru.map((opt, index) => ({
@@ -99,33 +99,25 @@ const WidgetFillBlanks = () => {
                 disabled={showResult}
               />
 
-              <span>{parts[1] ?? ''}</span>
-            </div>
+              <Text span>{parts[1]}</Text>
+            </Group>
           );
         })}
       </Stack>
 
-      <div className={classes.actions}>
-        <Button
-          className={classes.button}
-          disabled={currentIndex === 0}
-          onClick={handlePreviousQuestion}
-        >
+      <Group mt="lg">
+        <Button disabled={currentIndex === 0} onClick={handlePreviousQuestion}>
           Previous
         </Button>
 
-        <Button
-          className={classes.button}
-          disabled={!isAllAnswered || showResult}
-          onClick={onCheckClick}
-        >
+        <Button disabled={!isAllAnswered || showResult} onClick={onCheckClick}>
           Check result
         </Button>
 
-        <Button className={classes.button} disabled={!showResult} onClick={handleNextQuestion}>
+        <Button disabled={!showResult} onClick={handleNextQuestion}>
           Next
         </Button>
-      </div>
+      </Group>
 
       {showResult && (
         <ResultDisplay
