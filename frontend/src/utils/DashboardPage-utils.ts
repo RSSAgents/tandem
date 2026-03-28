@@ -25,6 +25,12 @@ export const DASHBOARD_WIDGETS = [
     description: 'widgets.ai_interviewer.description',
     path: ROUTE_PATHS.AI_TANDEM,
   },
+  {
+    id: 'fill_blanks',
+    title: 'widgets.fill_blanks.title',
+    description: 'widgets.fill_blanks.description',
+    path: ROUTE_PATHS.FILL_BLANKS_WIDGET,
+  },
 ] as const;
 
 export const getCompletedIds = () => [] as string[];

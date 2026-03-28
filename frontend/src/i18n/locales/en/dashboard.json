@@ -10,7 +10,11 @@
     },
     "js_stack": {
       "title": "Stack",
-      "description": "An interactive widget that demonstrates two fundamental data structures: Stack (LIFO - Last In, First Out) and Queue (FIFO - First In, First Out)ю"
+      "description": "An interactive widget that demonstrates two fundamental data structures: Stack (LIFO - Last In, First Out) and Queue (FIFO - First In, First Out)"
+    },
+    "fill_blanks": {
+      "title": "Fill in the Blanks",
+      "description": "Complete statements about the given code by filling in the missing parts."
     },
     "this_quiz": {
       "title": "This in JavaScript",

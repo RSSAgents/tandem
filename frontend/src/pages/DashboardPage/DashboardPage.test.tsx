@@ -40,6 +40,7 @@ describe('DashboardPage', () => {
       'js-exec',
       'js_stack',
       'js-this-quiz',
+      'fill_blanks',
       'ai-interviewer',
     ]);
     vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');

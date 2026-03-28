@@ -11,4 +11,5 @@ export const ROUTE_PATHS = {
   WIDGET_THIS_QUIZ: '/widget-this',
   LEADERBOARD_PAGE: '/leaderboard',
   REGISTER: '/register',
+  FILL_BLANKS_WIDGET: '/fill-blanks',
 } as const;

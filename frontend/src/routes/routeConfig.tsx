@@ -16,6 +16,9 @@ const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/components/features/auth/RegisterPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 const LibraryPage = lazy(() => import('@pages/LibraryPage/LibraryPage'));
+const FillBlanksWidget = lazy(
+  () => import('@components/features/widgets/FillBlanks/WidgetFillBlanks'),
+);
 
 export const appRoutes = [
   {
@@ -41,9 +44,9 @@ export const appRoutes = [
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
       { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
       { path: ROUTE_PATHS.AI_TANDEM, element: <AiAgentPage /> },
-      { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage />},
-      { path: ROUTE_PATHS.WIDGET_THIS_QUIZ, element: <WidgetThis />
-      },
+      { path: ROUTE_PATHS.FILL_BLANKS_WIDGET, element: <FillBlanksWidget /> },
+      { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
+      { path: ROUTE_PATHS.WIDGET_THIS_QUIZ, element: <WidgetThis /> },
     ],
   },
 ];
