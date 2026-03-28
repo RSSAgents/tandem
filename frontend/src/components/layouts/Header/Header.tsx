@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import classes from './Header.module.css';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { useAuth } from '@/hooks/useAuth';
 
 interface HeaderProps {
   onBurgerClick?: () => void;
@@ -17,6 +18,9 @@ export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => 
   const isRegisterPage = location.pathname === '/register';
   const { handleToggleTheme, isDark } = useTheme();
   const { t } = useTranslation('header');
+  const { user, loading, logout } = useAuth();
+
+  if (loading) return null;
 
   return (
     <Box component="header" className={classes.header}>
@@ -35,12 +39,20 @@ export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => 
       <Group className={classes.group}>
         {!isLoginPage && !isRegisterPage && (
           <>
-            <Button variant="default" component={Link} to="/login">
-              {t('login')}
-            </Button>
-            <Button component={Link} to="/register">
-              {t('signup')}
-            </Button>
+            {user ? (
+              <Button color="red" onClick={logout}>
+                Logout
+              </Button>
+            ) : (
+              <>
+                <Button variant="default" component={Link} to="/login">
+                  {t('login')}
+                </Button>
+                <Button component={Link} to="/register">
+                  {t('signup')}
+                </Button>
+              </>
+            )}
           </>
         )}
         <ActionIcon
