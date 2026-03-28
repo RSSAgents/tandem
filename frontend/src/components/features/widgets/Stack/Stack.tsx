@@ -1,8 +1,8 @@
 import { FEEDBACK_DELAY, FEEDBACK_MESSAGES } from '@/constants/stack';
 import { useStackAnimation } from '@/hooks/useWidgetStack';
 import { Box, Container, Group, Text, Title } from '@mantine/core';
-import { useState } from 'react';
-import { saveStackScore } from '../../../../api/widgetStack.api';
+import { useEffect, useState } from 'react';
+import { saveStackScore } from '@/api/widgetStack.api';
 import FifoQuiz from './FifoQuiz';
 import LifoQuiz from './LifoQuiz';
 import classes from './Stack.module.css';
@@ -19,12 +19,18 @@ const StackWidget = () => {
   const [showFifoFeedback, setShowFifoFeedback] = useState(false);
   const [widgetScore, setWidgetScore] = useState(0);
 
+  useEffect(() => {
+    if (quizState === 'completed' && widgetScore > 0) {
+      saveStackScore(widgetScore);
+    }
+  }, [quizState, widgetScore]);
+
   const handleLifoAnswer = () => {
     setShowLifoFeedback(true);
+
     if (selectedLifo === 'correct') {
       const newScore = widgetScore + 10;
       setWidgetScore(newScore);
-      saveStackScore(newScore);
 
       setTimeout(() => {
         setQuizState('lifo-animation');
@@ -39,7 +45,6 @@ const StackWidget = () => {
     if (selectedFifo === 'correct') {
       const newScore = widgetScore + 10;
       setWidgetScore(newScore);
-      saveStackScore(newScore);
 
       setTimeout(() => {
         setQuizState('fifo-animation');
@@ -55,7 +60,6 @@ const StackWidget = () => {
   return (
     <Container className={classes.container}>
       <Title className={classes.title}>STACK</Title>
-
       <Group className={classes.controls}>
         {quizState === 'lifo-question' && (
           <LifoQuiz
