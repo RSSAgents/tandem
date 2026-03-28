@@ -1,7 +1,8 @@
 import { IConsoleAnswer, IConsoleTask } from '@/types/widgetConsole.types';
 import { delay } from '@/utils/delay';
-import { supabase } from '../utils/supabase';
+import { supabase } from '@/utils/supabase';
 import i18n from 'i18next';
+import { scoreEvents } from '@/utils/scoreEvents';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 
@@ -129,5 +130,9 @@ export const saveConsoleScore = async (score: number) => {
     },
   );
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  scoreEvents.emit();
 };
