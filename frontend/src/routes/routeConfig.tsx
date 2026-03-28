@@ -9,12 +9,12 @@ import { lazy } from 'react';
 import { ROUTE_PATHS } from './routePaths';
 import { DashboardPage } from '@/pages/DashboardPage/DashboardPage';
 import { HomePage } from '@/pages/HomePage/HomePage';
-import { WidgetFillBlanks } from '@/components/features/widgets/FillBlanks/WidgetFillBlanks';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/components/features/auth/RegisterPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 const LibraryPage = lazy(() => import('@pages/LibraryPage/LibraryPage'));
+const FillBlanksWidget = lazy(() => import('@components/features/widgets/FillBlanks/WidgetFillBlanks'))
 
 export const appRoutes = [
   {
@@ -39,7 +39,7 @@ export const appRoutes = [
       { path: ROUTE_PATHS.LIBRARY, element: <LibraryPage /> },
       { path: ROUTE_PATHS.WIDGET_CONSOLE, element: <WidgetConsole /> },
       { path: ROUTE_PATHS.STACK_WIDGET, element: <StackWidget /> },
-      { path: ROUTE_PATHS.FILL_BLANKS_WIDGET, element: <WidgetFillBlanks /> },
+      { path: ROUTE_PATHS.FILL_BLANKS_WIDGET, element: <FillBlanksWidget /> },
       { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
       { path: ROUTE_PATHS.ACHIEVEMENTS, element: <p>Achievements Page</p> },
     ],
