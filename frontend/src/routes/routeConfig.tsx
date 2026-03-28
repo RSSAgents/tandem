@@ -10,6 +10,7 @@ import { lazy } from 'react';
 import { AiAgentPage } from '../pages/AiAgentPage/AiAgentPage';
 import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
 import { ROUTE_PATHS } from './routePaths';
+import WidgetThis from '../components/features/widgets/This/This';
 
 const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/components/features/auth/RegisterPage'));
@@ -45,6 +46,7 @@ export const appRoutes = [
       { path: ROUTE_PATHS.AI_TANDEM, element: <AiAgentPage /> },
       { path: ROUTE_PATHS.FILL_BLANKS_WIDGET, element: <FillBlanksWidget /> },
       { path: ROUTE_PATHS.LEADERBOARD_PAGE, element: <LeaderboardPage /> },
+      { path: ROUTE_PATHS.WIDGET_THIS_QUIZ, element: <WidgetThis /> },
     ],
   },
 ];

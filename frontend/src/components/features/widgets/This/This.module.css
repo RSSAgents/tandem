@@ -1,0 +1,76 @@
+.wrapper {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  height: 740px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.contentStack {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editorContainer {
+  height: 240px;
+  width: 100%;
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--border);
+  background-color: var(--panel);
+  margin-bottom: var(--mantine-spacing-md);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.optionsStack {
+  flex-grow: 1;
+}
+
+.footerArea {
+  position: relative;
+  padding-top: 10px;
+  flex-shrink: 0;
+}
+
+.explanation {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(15px);
+  pointer-events: none;
+
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--mantine-color-brand-filled);
+  background: var(--panel-soft);
+  border-radius: var(--mantine-radius-md);
+  box-shadow: var(--mantine-shadow-xl);
+  z-index: 10;
+}
+
+.explanationActive {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.explanationScrollArea {
+  max-height: 90px;
+  overflow-y: auto;
+}
+
+.mainAction {
+  position: relative;
+  z-index: 11;
+  text-transform: uppercase;
+}

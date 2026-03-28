@@ -31,6 +31,11 @@ describe('Dashboard Page', () => {
     cy.url().should('include', '/stack');
   });
 
+  it('should navigate to this', () => {
+    cy.contains('This in JavaScript').click();
+    cy.url().should('include', '/widget-this');
+  });
+
   it('should navigate to fill in the blanks', () => {
     cy.contains('Fill in the Blanks').click();
     cy.url().should('include', '/fill-blanks');
