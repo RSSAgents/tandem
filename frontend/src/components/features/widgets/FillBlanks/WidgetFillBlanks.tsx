@@ -8,7 +8,7 @@ import { useCallback, useState } from 'react';
 import { ScoreDisplayModal } from '../../../shared/ScoreDisplayModal/ScoreDisplayModal';
 import classes from './WidgetFillBlanks.module.css';
 
-export const WidgetFillBlanks = () => {
+const WidgetFillBlanks = () => {
   const {
     loading,
     error,

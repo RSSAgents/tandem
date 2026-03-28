@@ -14,7 +14,9 @@ const LoginPage = lazy(() => import('@/components/features/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@/components/features/auth/RegisterPage'));
 const StackWidget = lazy(() => import('@components/features/widgets/Stack/Stack'));
 const LibraryPage = lazy(() => import('@pages/LibraryPage/LibraryPage'));
-const FillBlanksWidget = lazy(() => import('@components/features/widgets/FillBlanks/WidgetFillBlanks'))
+const FillBlanksWidget = lazy(
+  () => import('@components/features/widgets/FillBlanks/WidgetFillBlanks'),
+);
 
 export const appRoutes = [
   {
