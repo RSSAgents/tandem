@@ -5,6 +5,7 @@ import { UserBlock } from '@components/features/UserBlock/UserBlock';
 import classes from './Sidebar.module.css';
 import { SidebarNavigation } from './SidebarNavigation';
 import { useUserScore } from '@/hooks/useUserScore';
+import { SidebarScoreInfo } from './SidebarScoreInfo';
 
 interface SidebarProps {
   user?: { name: string; score: number };
@@ -44,6 +45,7 @@ export const Sidebar = ({ user = DEFAULT_USER, onClose, mobileBreakpoint }: Side
         <UserBlock name={user.name} score={score ?? 0} />
         <SidebarNavigation />
       </Box>
+      <SidebarScoreInfo />
     </Stack>
   );
 };

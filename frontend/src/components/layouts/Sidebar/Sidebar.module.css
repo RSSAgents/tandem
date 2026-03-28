@@ -19,3 +19,22 @@
   background-color: rgba(10, 132, 255, 0.1);
   color: var(--text-main);
 }
+
+/* SidebarScoreInfo.module.css */
+
+[data-mantine-color-scheme='light'] .infoBlock {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

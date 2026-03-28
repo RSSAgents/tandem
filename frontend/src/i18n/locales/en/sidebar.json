@@ -3,6 +3,12 @@
     "dashboard": "Dashboard",
     "about": "About",
     "library": "Library",
-    "leaderboard": "Leaderboard"
+    "leaderboard": "Leaderboard",
+    "scoreInfo": {
+      "title": "How to earn points?",
+      "passWidget": "Complete a widget - points awarded!",
+      "repeatWidget": "Repeat a widget - new score replaces the old one",
+      "studyMaterials": "Study in the Library - earn bonus points"
+    }
   }
 }
