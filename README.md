@@ -6,7 +6,6 @@
 
 - [Getting Started](docs/getting-started.md)
 - [Development Workflow](docs/workflow.md)
-- [Commit Requirements](docs/commits.md)
 - [Project Structure](docs/structure.md)
 
 
