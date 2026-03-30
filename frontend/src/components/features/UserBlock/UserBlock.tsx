@@ -1,5 +1,6 @@
 import { getRandomAvatar } from '@/images/icons';
 import { Avatar, Group, Stack, Text } from '@mantine/core';
+import { useState } from 'react';
 import classes from './UserBlock.module.css';
 
 interface UserBlockProps {
@@ -9,7 +10,15 @@ interface UserBlockProps {
 }
 
 export const UserBlock = ({ name, score, avatarSize = 44 }: UserBlockProps) => {
-  const avatarUrl = getRandomAvatar();
+  const [avatarUrl] = useState(() => {
+    const savedAvatar = sessionStorage.getItem('sidebarAvatar');
+    if (savedAvatar) {
+      return savedAvatar;
+    }
+    const newAvatar = getRandomAvatar();
+    sessionStorage.setItem('sidebarAvatar', newAvatar);
+    return newAvatar;
+  });
 
   return (
     <Group className={classes.userBlock}>
