@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ScrollArea, Table, Paper, Stack, Container } from '@mantine/core';
+import { ScrollArea, Table, Paper, Stack, Box } from '@mantine/core';
 import classes from './LeaderboardPage.module.css';
 import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
 import { Winner } from '@/types/winner.types';
@@ -49,7 +49,7 @@ export const LeaderboardPage = () => {
   const { t } = useTranslation('leaderboard');
 
   return (
-    <Container size="xl" className={classes.wrapper}>
+    <Box className={classes.wrapper}>
       <Paper withBorder p="md" radius="lg" className={classes.paper}>
         <Stack gap="lg">
           <ScrollArea className={classes.scrollArea}>
@@ -70,6 +70,6 @@ export const LeaderboardPage = () => {
           </ScrollArea>
         </Stack>
       </Paper>
-    </Container>
+    </Box>
   );
 };

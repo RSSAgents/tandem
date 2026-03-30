@@ -1,5 +1,5 @@
 .title {
-  color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-5));
+  color: var(--accent);
   letter-spacing: -0.03em;
 }
 
@@ -13,36 +13,47 @@
 
 .memberCard {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  border-top: 3px solid var(--mantine-color-blue-6);
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
-  border-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-4));
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border);
+  background: var(--panel-soft);
+  box-shadow: var(--shadow-light);
   text-decoration: none;
   color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.memberCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 15%, rgba(10, 132, 255, 0.18), transparent 75%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  border-radius: inherit;
 }
 
 .memberCard:hover {
   transform: translateY(-8px);
-  border-color: light-dark(var(--mantine-color-blue-3), var(--mantine-color-blue-6));
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-heavy);
 }
 
-@media (prefers-color-scheme: dark) {
-  .memberCard {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-  }
+.memberCard:hover::before {
+  opacity: 1;
+}
 
-  .memberCard:hover {
-    box-shadow: 0 0 20px rgba(34, 139, 230, 0.1);
-  }
+[data-mantine-color-scheme='dark'] .memberCard:hover {
+  box-shadow:
+    var(--shadow-heavy),
+    0 0 24px var(--accent-glow);
 }
 
 .avatar {
-  outline: 2px solid var(--mantine-color-blue-5);
-  box-shadow: 0 0 0 4px light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  outline: 2px solid var(--accent);
+  box-shadow: 0 0 0 4px var(--panel);
   outline-offset: 4px;
-  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
+  background-color: var(--panel-soft);
   transition: transform 0.3s ease;
   pointer-events: none;
 }

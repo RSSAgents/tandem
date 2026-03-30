@@ -8,10 +8,12 @@
   color: var(--text-main);
   line-height: 1.1;
   letter-spacing: -0.02em;
+  padding-left: 10px;
 }
 
 .progressText {
   font-size: var(--mantine-font-size-lg);
   color: var(--text-dim);
   font-weight: 400;
+  padding-left: 10px;
 }

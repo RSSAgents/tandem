@@ -130,7 +130,12 @@ export const TeacherSection = ({
                 }
               }}
             />
-            <Button variant="outline" onClick={onSend} disabled={isDisabled}>
+            <Button
+              variant="outline"
+              onClick={onSend}
+              disabled={isDisabled}
+              className={classes.actionBtn}
+            >
               {t('teacher.ask')}
             </Button>
           </Group>

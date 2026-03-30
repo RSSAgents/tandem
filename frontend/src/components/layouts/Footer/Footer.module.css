@@ -3,8 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-top: 1px solid var(--mantine-color-gray-3);
-  background-color: var(--mantine-color-body);
+  border-top: 1px solid var(--border);
+  background-color: transparent;
   width: 100%;
   margin-top: auto;
   flex-shrink: 0;
@@ -12,8 +12,9 @@
 
 .logo {
   font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--mantine-color-text);
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
 }
 
 .creationYear {

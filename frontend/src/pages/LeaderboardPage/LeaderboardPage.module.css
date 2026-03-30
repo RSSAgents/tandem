@@ -2,19 +2,21 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-height: 100vh;
-  padding: 1rem;
+  padding: var(--mantine-spacing-6xl) var(--mantine-spacing-5xl);
 }
 
 .title {
   text-align: center;
   margin-bottom: 0.25rem;
+  color: var(--text-main);
 }
 
 .paper {
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  background-color: var(--panel);
+  border-color: var(--border);
 }
 
 .scrollArea {
@@ -25,6 +27,19 @@
 .table {
   width: 100%;
   min-width: 600px;
+  color: var(--text-main);
+}
+
+.table :global(th) {
+  background-color: var(--panel-soft);
+  color: var(--text-main);
+  font-weight: 700;
+  font-family: inherit;
+}
+
+.table :global(td) {
+  color: var(--text-main);
+  border-color: var(--border);
 }
 
 .topRank {
