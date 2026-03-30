@@ -14,10 +14,22 @@ export const DASHBOARD_WIDGETS = [
     path: ROUTE_PATHS.STACK_WIDGET,
   },
   {
+    id: 'js-this-quiz',
+    title: 'widgets.this_quiz.title',
+    description: 'widgets.this_quiz.description',
+    path: ROUTE_PATHS.WIDGET_THIS_QUIZ,
+  },
+  {
     id: 'ai-interviewer',
     title: 'widgets.ai_interviewer.title',
     description: 'widgets.ai_interviewer.description',
     path: ROUTE_PATHS.AI_TANDEM,
+  },
+  {
+    id: 'fill_blanks',
+    title: 'widgets.fill_blanks.title',
+    description: 'widgets.fill_blanks.description',
+    path: ROUTE_PATHS.FILL_BLANKS_WIDGET,
   },
 ] as const;
 
