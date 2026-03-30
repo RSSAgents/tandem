@@ -1,4 +1,5 @@
 import * as Utils from '@/utils/DashboardPage-utils';
+import { DASHBOARD_WIDGETS } from '@/utils/DashboardPage-utils';
 import { renderWithProviders } from '@/utils/test-util';
 import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
@@ -10,8 +11,8 @@ vi.mock('react-i18next', () => ({
       if (key === 'welcome') return `Hello, ${options?.name}!`;
       if (key === 'progress_zero') return 'Your journey starts here. Choose your first module!';
       if (key === 'progress_finished') return "Path completed! You're a legend.";
-      if (key === 'status.completed') return 'Finished';
-      if (key === 'status.todo') return 'Start';
+      if (key === 'widgets.status.completed') return 'Finished';
+      if (key === 'widgets.status.todo') return 'Start';
       return key;
     },
   }),
@@ -31,11 +32,17 @@ describe('DashboardPage', () => {
       screen.getByText('Your journey starts here. Choose your first module!'),
     ).toBeInTheDocument();
     const startButtons = screen.getAllByText('Start');
-    expect(startButtons).toHaveLength(2);
+    expect(startButtons).toHaveLength(DASHBOARD_WIDGETS.length);
   });
 
   it('should render correctly when modules are completed', () => {
-    vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => ['js-exec', 'js_stack']);
+    vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => [
+      'js-exec',
+      'js_stack',
+      'js-this-quiz',
+      'fill_blanks',
+      'ai-interviewer',
+    ]);
     vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');
 
     renderDashboard();
@@ -44,6 +51,6 @@ describe('DashboardPage', () => {
     expect(screen.getByText("Path completed! You're a legend.")).toBeInTheDocument();
 
     const finishedButtons = screen.getAllByText('Finished');
-    expect(finishedButtons).toHaveLength(2);
+    expect(finishedButtons).toHaveLength(DASHBOARD_WIDGETS.length);
   });
 });

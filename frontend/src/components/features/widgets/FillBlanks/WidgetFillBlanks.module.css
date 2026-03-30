@@ -1,0 +1,45 @@
+.container {
+  margin-top: 40px;
+}
+
+.statement {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.select {
+  width: 140px;
+  min-width: 120px;
+  display: inline-block;
+}
+
+.editorWrapper {
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.button {
+  width: 100%;
+  max-width: 150px;
+  height: 40px;
+  margin-bottom: 18px;
+}
+
+.correct {
+  border: 2px solid #11b053;
+}
+
+.incorrect {
+  border: 2px solid #e73a26;
+}

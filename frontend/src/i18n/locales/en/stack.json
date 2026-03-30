@@ -1,0 +1,26 @@
+{
+  "stackQueue": {
+    "stack": {
+      "title": "What is LIFO?",
+      "options": [
+        "Last In, First Out - the last element added is the first to be removed",
+        "Linear Input, Final Output - elements are processed in linear order"
+      ],
+      "emptyState": "Stack is empty"
+    },
+    "queue": {
+      "title": "What is FIFO?",
+      "options": [
+        "Fast Input, Fast Output - elements are processed at high speed",
+        "First In, First Out - the first element added is the first to be removed"
+      ],
+      "emptyState": "Queue is empty"
+    },
+    "button": "Submit Answer",
+    "feedback": {
+      "correct": "Correct! Watch the animation...",
+      "incorrect": "Incorrect. Try again!",
+      "completed": "Great job! You've completed the Stack!"
+    }
+  }
+}

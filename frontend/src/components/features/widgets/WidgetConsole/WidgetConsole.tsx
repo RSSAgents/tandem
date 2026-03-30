@@ -1,16 +1,19 @@
-import styles from './WidgetConsole.module.css';
-import { Button, Flex, Paper, Stack, Title, Text, Container } from '@mantine/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { DndContext, closestCenter } from '@dnd-kit/core';
-import { SortableItem } from './SortableItem';
-import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
-import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
-import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
 import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
+import { PageLoader } from '@/components/shared/PageLoader/PageLoader';
+import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
+import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
 import { useWidgetConsole } from '@/hooks/useWidgetConsole';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { Button, Container, Flex, Paper, Stack, Text, Title } from '@mantine/core';
 import { useCallback, useState } from 'react';
+import { SortableItem } from './SortableItem';
+import styles from './WidgetConsole.module.css';
+import { useTranslation } from 'react-i18next';
 
 export const WidgetConsole = () => {
+  const { t } = useTranslation('widgetConsole');
+
   const {
     loading,
     error,
@@ -27,6 +30,7 @@ export const WidgetConsole = () => {
     handleCheckResult,
     handleNextQuestion,
     resetWidget,
+    saveResult,
   } = useWidgetConsole();
 
   const [modalOpened, setModalOpened] = useState(false);
@@ -35,11 +39,12 @@ export const WidgetConsole = () => {
     handleCheckResult();
 
     if (currentIndex === tasks.length - 1) {
-      setTimeout(() => {
+      setTimeout(async () => {
+        await saveResult();
         setModalOpened(true);
       }, 2000);
     }
-  }, [handleCheckResult, currentIndex, tasks.length]);
+  }, [handleCheckResult, saveResult, currentIndex, tasks.length]);
 
   const handleTryAgain = () => {
     resetWidget();
@@ -52,7 +57,7 @@ export const WidgetConsole = () => {
   if (!currentTask) {
     return (
       <Container size={800} className={styles.mainContainer}>
-        <Text ta="center">No tasks available</Text>
+        <Text ta="center">{t('noTasks')}</Text>
       </Container>
     );
   }
@@ -60,14 +65,14 @@ export const WidgetConsole = () => {
   return (
     <Container size={800} className={styles.mainContainer}>
       <Title order={2} className={styles.questionTitle}>
-        In what order will the console.logs appear?
+        {t('title')}
       </Title>
       <Text className={styles.subtitle} c="dimmed">
-        Drag the items into the correct order
+        {t('subtitle')}
       </Text>
 
       <Text className={styles.questionCounter}>
-        Question {currentIndex + 1} of {tasks.length}
+        {t('questionCounter', { current: currentIndex + 1, total: tasks.length })}
       </Text>
       <Stack className={styles.widgetContainer}>
         <Paper className={styles.widgetPaper}>
@@ -87,14 +92,14 @@ export const WidgetConsole = () => {
 
       <Flex className={styles.actionButtons}>
         <Button className={styles.btn} disabled={showResult} onClick={onCheckClick}>
-          Check result
+          {t('checkButton')}
         </Button>
         <Button
           className={styles.btn}
           disabled={!showResult || currentIndex === tasks.length - 1}
           onClick={handleNextQuestion}
         >
-          Next question
+          {t('nextButton')}
         </Button>
       </Flex>
       {showResult && <ResultDisplay isCorrect={isCorrect} explanation={explanation} />}

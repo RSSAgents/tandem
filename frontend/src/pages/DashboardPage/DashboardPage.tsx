@@ -43,7 +43,7 @@ export const DashboardPage = () => {
             title={t(widget.title)}
             description={t(widget.description)}
             path={widget.path}
-            status={t(widget.isCompleted ? 'status.completed' : 'status.todo')}
+            status={t(widget.isCompleted ? 'widgets.status.completed' : 'widgets.status.todo')}
           />
         ))}
       </SimpleGrid>

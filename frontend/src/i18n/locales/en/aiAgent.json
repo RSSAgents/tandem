@@ -1,0 +1,103 @@
+{
+  "settings": {
+    "ready": "Ready",
+    "gentle": "GENTLE",
+    "strict": "STRICT",
+    "normal": "NORMAL",
+    "stress": "STRESS",
+    "codeRunner": "CODE RUNNER"
+  },
+  "topics": {
+    "title": "Learning Topics"
+  },
+  "interviewer": {
+    "label": "INTERVIEWER",
+    "aiInterview": "AI INTERVIEW",
+    "progress": "INTERVIEW PROGRESS",
+    "progressCount": "{{current}} / {{max}}",
+    "timeLeft": "Time left: {{seconds}}s",
+    "junior": "Junior",
+    "middle": "Middle",
+    "senior": "Senior",
+    "generateNext": "Generate Next Question & Answer",
+    "placeholder": "Type your answer...",
+    "send": "Send",
+    "finalScoreLabel": "Final score",
+    "newInterviewPrompt": "Would you like to start a new interview?",
+    "newInterviewDecline": "OK, you can come back later. The current interview history will be saved. To delete it, click the trash icon in the top right corner of this chat.",
+    "newInterviewUnknown": "Please type yes or no.",
+    "alreadyDeclined": "To start a new interview, you need to clear the message history. Click the trash icon in the top right corner of this chat."
+  },
+  "teacher": {
+    "label": "TEACHER",
+    "stressUnavailable": "Teacher help is unavailable in Stress mode.",
+    "placeholder": "Ask teacher...",
+    "ask": "Ask"
+  },
+  "messages": {
+    "runCode": "Run code",
+    "interviewer": "INTERVIEWER",
+    "candidate": "CANDIDATE"
+  },
+  "codeRunnerModal": {
+    "title": "Code Runner",
+    "placeholder": "Press ▶ to run code...",
+    "clear": "Clear",
+    "run": "Run",
+    "styledElement": "Styled element",
+    "defaultCode": "// Write your code here\nconsole.log(\"Hello, world!\");"
+  },
+  "modals": {
+    "resetInterview": {
+      "title": "Start New Interview",
+      "body": "Are you sure you want to start a new interview? The current message history for this topic will be deleted.",
+      "confirm": "Confirm & Start"
+    },
+    "resetTeacher": {
+      "title": "Clear Teacher History",
+      "body": "Are you sure you want to clear the conversation history with the Teacher for this topic?",
+      "confirm": "Clear History"
+    },
+    "cancel": "Cancel"
+  },
+  "mobile": {
+    "settings": "SETTINGS",
+    "topics": "TOPICS",
+    "drawerSettings": "Settings",
+    "drawerTopics": "Topics",
+    "interviewer": "Interviewer",
+    "teacher": "Teacher"
+  },
+  "startMessages": {
+    "interviewer": {
+      "gentleNormal": "In this window, you can practice taking an interview for a Junior Frontend Developer position. Choose one of the topics on the left side of the screen, and I will ask you {{maxQuestions}} questions. At the end, I will evaluate your knowledge level on a {{maxScore}}-point scale.",
+      "strictNormal": "This is a strict interview simulation for a Junior Frontend Developer role. Select a topic on the left. You will face {{maxQuestions}} hard questions without pleasantries. At the end, you will receive an evaluation from 1 to {{maxScore}}.",
+      "gentleStress": "Welcome to the stress interview. Choose one of the topics on the left side of the screen, and I will ask you {{maxQuestions}} questions. You will have only {{timerSeconds}} seconds to answer each question. At the end, I will evaluate your knowledge level on a {{maxScore}}-point scale.",
+      "strictStress": "Welcome to the stress interview. Select a topic. Be prepared for {{maxQuestions}} tough, high-pressure questions and criticism. I will challenge your answers. Final evaluation from 1 to {{maxScore}} at the end.",
+      "readyPrompt": "\n\nAre you ready to start the interview on the topic of {{topic}}?"
+    },
+    "teacher": {
+      "strict": "I am your strict mentor. Ask your questions on the selected topic, but be ready to think. I am here to deepen your understanding, not to spoon-feed you direct answers.",
+      "gentle": "In this window, you can ask any questions regarding the selected topic. I am ready to help you get to the core of the subject and deepen your understanding!"
+    },
+    "aiInterview": {
+      "gentleNormal": "Welcome to the AI Simulation. You will observe a gentle, step-by-step interview for a {{level}} position.",
+      "strictNormal": "Welcome to the strict AI Simulation. Watch a realistic, tough interview for a {{level}} position.",
+      "gentleStress": "Stress AI Simulation loaded. You will see a fast-paced, timed interview for a {{level}} developer.",
+      "strictStress": "Intense Stress AI Simulation. Observe a high-pressure interview scenario for a {{level}} candidate.",
+      "topicSelected": "\n\nSimulation topic selected: {{topic}}. Press the button below to generate the first question and answer."
+    }
+  },
+  "errors": {
+    "speakLanguage": "Please communicate in English.",
+    "timesUp": "Time's up! I couldn't answer in {{timerSeconds}} seconds."
+  },
+  "prompts": {
+    "interviewer": "You are an expert technical interviewer for a Junior Frontend Developer position. Topic: {{topic}}. Vanilla JS.\nSTRICT RULES:\n1. Ask exactly {{maxQuestions}} questions total, but ONLY ONE question per response.\n2. DO NOT include question numbers in your output.\n3. Use '|||' to separate your feedback/comment about the user's previous answer and the next question. Example: \"Great answer! ||| What is a closure?\"\n4. If user doesn't answer, says \"I don't know\", or gives a vague answer:\n   - In GENTLE mode: suggest \"Skip this question\" or offer a hint before proceeding.\n   - In STRICT mode: make a snarky comment and move immediately to the next question.\n5. Only answer clarifying questions about the current interview question. Refuse all other questions {{refusalWord}}.\n6. Tone: {{tone}}.\n7. Never repeat or rephrase a question you have already asked. Each new question must cover a different sub-topic.\n8. On the 20th answer: Analyze everything and include 'FINAL_SCORE: X' (X=1-{{maxScore}}). Your feedback must be plain text only (no tables, no lists), no more than 3 short paragraphs.",
+    "teacher": "Mentor for frontend: {{topic}}.\nYou are an experienced IT mentor and teacher. Your main goal is to help the candidate arrive at the correct answer independently using the Socratic method.\nYour strict rules:\n1. **Never give a direct, ready-made answer immediately.**\n2. Ask guiding questions to nudge the user toward correct reasoning and a deeper understanding of the topic.\n3. **Maintain focus:** only answer questions related to the current topic {{topic}}. Vanilla JS. If the request goes beyond frontend topics, politely decline and steer the conversation back to the interview.\n4. Be patient, supportive, and constructive.\n5. If the candidate is clearly stuck after several attempts, provide a conceptual hint or explain a complex term, but leave the final conclusion to them.\n6. Tone: {{tone}}.",
+    "aiInterview": "You are both a professional Interviewer and a capable Candidate. Your task is to simulate a realistic interview experience. Topic: {{topic}} JavaScript. Play BOTH Interviewer and Candidate. Level: {{level}}. Write only one part from the interviewer and one part from the candidate. Start interviewer part with \"Interviewer:\" and candidate part with \"Candidate:\" on a new line. No question numbers. If it's the 20th, add improvement tips.",
+    "aiInterviewNextExchange": "Next exchange.",
+    "refusalStrict": "strictly",
+    "refusalGentle": "politely"
+  }
+}

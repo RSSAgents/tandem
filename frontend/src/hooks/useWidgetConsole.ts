@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { checkWidgetAnswer, getWidgetTasks, saveConsoleScore } from '@/api/widgetConsole.api';
 import { IConsoleAnswer, IConsoleTask } from '@/types/widgetConsole.types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDragAndDrop } from './useDragAndDrop';
-import { getWidgetTasks, checkWidgetAnswer } from '@/api/widgetConsole.api';
 
 export const useWidgetConsole = () => {
   const [tasks, setTasks] = useState<IConsoleTask[]>([]);
@@ -63,14 +63,14 @@ export const useWidgetConsole = () => {
         timestamp: Date.now(),
       };
 
-      const result = await checkWidgetAnswer(answer);
+      const result = await checkWidgetAnswer(answer, currentTask);
 
       setIsCorrect(result.isCorrect);
       setExplanation(result.explanation || '');
       setShowResult(true);
 
       if (result.isCorrect) {
-        setScore((prevScore) => prevScore + 1);
+        setScore((prevScore) => prevScore + 10);
       }
     } catch {
       setError('Failed to check answer. Please try again.');
@@ -98,6 +98,14 @@ export const useWidgetConsole = () => {
     }
   }, [tasks, resetUserOrder]);
 
+  const saveResult = useCallback(async () => {
+    try {
+      await saveConsoleScore(score);
+    } catch {
+      setError('Failed to save score');
+    }
+  }, [score]);
+
   return {
     tasks,
     loading,
@@ -113,6 +121,7 @@ export const useWidgetConsole = () => {
     handleCheckResult,
     handleNextQuestion,
     resetWidget,
+    saveResult,
 
     sensors,
     handleDragEnd,

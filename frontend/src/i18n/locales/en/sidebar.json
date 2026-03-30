@@ -1,0 +1,8 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "about": "About",
+    "library": "Library",
+    "leaderboard": "Leaderboard"
+  }
+}
