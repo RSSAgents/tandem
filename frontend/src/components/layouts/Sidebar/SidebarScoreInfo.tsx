@@ -8,17 +8,17 @@ export const SidebarScoreInfo = () => {
   return (
     <Paper p="sm" mt="md" radius="md" withBorder className={classes.infoBlock}>
       <Title order={6} className={classes.title}>
-        {t('sidebar.scoreInfo.title')} ⭐
+        {t('sidebar.scoreInfo.title')}
       </Title>
       <Box className={classes.list}>
         <Text size="xs" c="dimmed">
-          ✓ {t('sidebar.scoreInfo.passWidget')}
+          ⭐ {t('sidebar.scoreInfo.passWidget')}
         </Text>
         <Text size="xs" c="dimmed">
-          ✓ {t('sidebar.scoreInfo.repeatWidget')}
+          ⭐ {t('sidebar.scoreInfo.repeatWidget')}
         </Text>
         <Text size="xs" c="dimmed">
-          ✓ {t('sidebar.scoreInfo.studyMaterials')}
+          ⭐ {t('sidebar.scoreInfo.studyMaterials')}
         </Text>
       </Box>
     </Paper>
