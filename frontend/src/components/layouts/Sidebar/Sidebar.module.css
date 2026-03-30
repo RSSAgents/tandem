@@ -82,3 +82,144 @@
   flex-direction: column;
   gap: 10px;
 }
+
+/* Sidebar Snail progress */
+
+.progressBlock {
+  padding: 10px;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+@keyframes borderGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.progressTitle {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+[data-mantine-color-scheme='dark'] .progressTitle {
+  background: linear-gradient(90deg, #ffd700, #ffaa33, #ffd700);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.progressWrapper {
+  position: relative;
+  margin: 12px 0 8px;
+}
+
+@keyframes progressWave {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.progressWrapper :global(.mantine-Progress-bar)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shine 1.5s infinite;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.snail {
+  position: absolute;
+  top: -22px;
+  transition: left 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+  z-index: 10;
+  pointer-events: none;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.snailEmoji {
+  display: block;
+  font-size: 1.6rem;
+  transform: scaleX(1);
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 6px rgba(76, 175, 80, 0.5));
+}
+
+[data-mantine-color-scheme='light'] .percentage {
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+[data-mantine-color-scheme='dark'] .percentage {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.percentage {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+  letter-spacing: 1px;
+}
+
+[data-mantine-color-scheme='light'] .percentage {
+  color: #555;
+}
+
+[data-mantine-color-scheme='dark'] .percentage {
+  color: #aaa;
+}

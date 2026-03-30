@@ -9,6 +9,9 @@
       "passWidget": "Complete a widget - points awarded!",
       "repeatWidget": "Repeat a widget - new score replaces the old one",
       "studyMaterials": "Study in the Library - earn bonus points"
+    },
+    "snailProgress": {
+      "title": "AI Interview Progress"
     }
   }
 }

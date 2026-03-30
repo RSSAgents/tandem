@@ -6,6 +6,7 @@ import classes from './Sidebar.module.css';
 import { SidebarNavigation } from './SidebarNavigation';
 import { useUserScore } from '@/hooks/useUserScore';
 import { SidebarScoreInfo } from './SidebarScoreInfo';
+import { SidebarSnailProgress } from './SidebarSnailProgress';
 
 interface SidebarProps {
   user?: { name: string; score: number };
@@ -43,6 +44,7 @@ export const Sidebar = ({ user = DEFAULT_USER, onClose, mobileBreakpoint }: Side
           </ActionIcon>
         )}
         <UserBlock name={user.name} score={score ?? 0} />
+        <SidebarSnailProgress />
         <SidebarNavigation />
       </Box>
       <SidebarScoreInfo />
