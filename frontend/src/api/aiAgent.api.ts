@@ -1,5 +1,6 @@
 import { Message } from '@/types/aiAgentTypes';
 import { supabase } from '@utils/supabase';
+import { scoreEvents } from '@/utils/scoreEvents';
 
 export const loadAllScores = async (): Promise<Record<string, number>> => {
   const {
@@ -34,6 +35,8 @@ export const saveTopicScore = async (topic: string, score: number): Promise<void
   );
 
   if (error) throw new Error(error.message);
+
+  scoreEvents.emit();
 };
 
 export const saveAiAgentWidgetScore = async (
@@ -57,6 +60,8 @@ export const saveAiAgentWidgetScore = async (
   );
 
   if (error) throw new Error(error.message);
+
+  scoreEvents.emit();
 };
 
 export const loadThreadHistory = async (topic: string, threadType: string): Promise<Message[]> => {
@@ -114,4 +119,6 @@ export const clearThreadHistory = async (topic: string, threadType: string): Pro
     .eq('thread_type', threadType);
 
   if (error) throw new Error(error.message);
+
+  scoreEvents.emit();
 };
