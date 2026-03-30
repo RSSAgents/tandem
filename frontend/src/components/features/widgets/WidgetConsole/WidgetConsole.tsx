@@ -34,6 +34,7 @@ export const WidgetConsole = () => {
   } = useWidgetConsole();
 
   const [modalOpened, setModalOpened] = useState(false);
+  // const correctAnswersCount = score / 10;
 
   const onCheckClick = useCallback(() => {
     handleCheckResult();
@@ -105,7 +106,8 @@ export const WidgetConsole = () => {
       {showResult && <ResultDisplay isCorrect={isCorrect} explanation={explanation} />}
 
       <ScoreDisplayModal
-        score={score}
+        points={score}
+        correctAnswers={score / 10}
         total={tasks.length}
         opened={modalOpened}
         onClose={() => setModalOpened(false)}

@@ -24,10 +24,10 @@ const WidgetFillBlanks = () => {
     currentIndex,
     tasks,
     resultMap,
-
-    correctAnswersCount,
     totalStatements,
     resetWidget,
+    score, // <-- добавить
+    correctAnswersCount, // <-- добавить
   } = useWidgetFillBlanks();
 
   const [modalOpened, setModalOpened] = useState(false);
@@ -129,7 +129,8 @@ const WidgetFillBlanks = () => {
       )}
 
       <ScoreDisplayModal
-        score={correctAnswersCount}
+        points={score} // 64 балла
+        correctAnswers={correctAnswersCount} // 8 ответов
         total={totalStatements}
         opened={modalOpened}
         onClose={() => setModalOpened(false)}
