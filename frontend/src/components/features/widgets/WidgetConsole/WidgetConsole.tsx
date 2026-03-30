@@ -34,7 +34,6 @@ export const WidgetConsole = () => {
   } = useWidgetConsole();
 
   const [modalOpened, setModalOpened] = useState(false);
-  // const correctAnswersCount = score / 10;
 
   const onCheckClick = useCallback(() => {
     handleCheckResult();
