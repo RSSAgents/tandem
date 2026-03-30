@@ -1,3 +1,4 @@
+import { getRandomAvatar } from '@/images/icons';
 import { Avatar, Group, Stack, Text } from '@mantine/core';
 import classes from './UserBlock.module.css';
 
@@ -8,9 +9,11 @@ interface UserBlockProps {
 }
 
 export const UserBlock = ({ name, score, avatarSize = 44 }: UserBlockProps) => {
+  const avatarUrl = getRandomAvatar();
+
   return (
     <Group className={classes.userBlock}>
-      <Avatar size={avatarSize} radius="100%" />
+      <Avatar src={avatarUrl} size={avatarSize} radius="100%" />
       <Stack gap={0}>
         <Text size="sm" className={classes.name}>
           {name}
