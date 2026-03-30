@@ -5,4 +5,11 @@
   background: var(--bg);
   color: var(--text-main);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --mantine-h1-font-size: 70px;
+  --mantine-h1-line-height: 1.1;
+  --mantine-h2-font-size: 148px;
+  --mantine-h2-line-height: 1.2;
+  --mantine-h3-font-size: 40px;
+  --mantine-h3-line-height: 1.3;
 }
