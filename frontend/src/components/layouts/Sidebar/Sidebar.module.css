@@ -23,7 +23,8 @@
 .navLink[data-active] {
   background-color: var(--accent-subtle);
   color: var(--accent);
-  
+}
+
 /* SidebarScoreInfo styles */
 
 .infoBlock {
