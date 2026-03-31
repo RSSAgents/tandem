@@ -27,6 +27,21 @@
   gap: 6px;
 }
 
+.group :global(.mantine-Button-root),
+.group :global(.mantine-ActionIcon-root) {
+  height: 36px;
+  min-height: 36px;
+}
+
+.group :global(.mantine-Button-root) {
+  min-width: 122px;
+}
+
+.group :global(.mantine-ActionIcon-root) {
+  width: 36px;
+  min-width: 36px;
+}
+
 @media (max-width: 480px) {
   .group {
     gap: 4px;
