@@ -200,6 +200,7 @@ export const InterviewerSection = ({
                   color="#1971c2"
                   onClick={onGenerateAi}
                   disabled={!activeTopic || isWaitingForAnswer}
+                  className={classes.actionBtn}
                 >
                   {t('interviewer.generateNext')}
                 </Button>
@@ -226,6 +227,7 @@ export const InterviewerSection = ({
                     variant="outline"
                     onClick={onSend}
                     disabled={!activeTopic || (timer !== null && timer === 0) || isWaitingForAnswer}
+                    className={classes.actionBtn}
                   >
                     {t('interviewer.send')}
                   </Button>

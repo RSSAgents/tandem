@@ -1,4 +1,5 @@
-import { Accordion, Box, Container, Title } from '@mantine/core';
+import { Accordion, Box, Title } from '@mantine/core';
+import { IconPlus } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import classes from './LibraryPage.module.css';
 
@@ -7,26 +8,33 @@ const LibraryPage = () => {
   const libraryData = t('libraryData', { returnObjects: true });
 
   return (
-    <Container>
+    <Box className={classes.wrapper}>
       {libraryData.map((category, categoryIndex) => (
         <Box key={categoryIndex} className={classes.category}>
           <Title order={2} className={classes.subtitle}>
             {category.category}
           </Title>
 
-          <Box className={classes.accordion}>
-            <Accordion defaultValue="">
-              {category.items.map((item) => (
-                <Accordion.Item key={item.value} value={item.value}>
-                  <Accordion.Control>{item.value}</Accordion.Control>
-                  <Accordion.Panel>{item.description}</Accordion.Panel>
-                </Accordion.Item>
-              ))}
-            </Accordion>
-          </Box>
+          <Accordion
+            defaultValue=""
+            className={classes.accordion}
+            classNames={{
+              item: classes.item,
+              control: classes.control,
+              panel: classes.panel,
+            }}
+            chevron={<IconPlus className={classes.icon} />}
+          >
+            {category.items.map((item) => (
+              <Accordion.Item key={item.value} value={item.value}>
+                <Accordion.Control>{item.value}</Accordion.Control>
+                <Accordion.Panel>{item.description}</Accordion.Panel>
+              </Accordion.Item>
+            ))}
+          </Accordion>
         </Box>
       ))}
-    </Container>
+    </Box>
   );
 };
 

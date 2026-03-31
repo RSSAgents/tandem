@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: var(--mantine-spacing-2xl);
-  background-color: var(--panel-soft);
+  background: var(--sidebar-bg);
   border-right: 1px solid var(--border);
 }
 
@@ -15,9 +15,14 @@
   font-weight: 600;
 }
 
-.navLink[data-active] {
-  background-color: rgba(10, 132, 255, 0.1);
+.navLink:hover:not([data-active]) {
+  background-color: var(--accent-subtle);
   color: var(--text-main);
+}
+
+.navLink[data-active] {
+  background-color: var(--accent-subtle);
+  color: var(--accent);
 }
 
 /* SidebarScoreInfo styles */

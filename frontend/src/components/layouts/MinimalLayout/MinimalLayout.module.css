@@ -4,4 +4,5 @@
   flex-direction: column;
   padding-left: var(--app-side-padding);
   padding-right: var(--app-side-padding);
+  background: var(--bg);
 }

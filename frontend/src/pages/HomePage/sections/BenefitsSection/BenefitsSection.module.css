@@ -6,14 +6,14 @@
 
 .sectionTitle {
   font-weight: 800;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--text-main);
 }
 
 .sectionDescription {
   max-width: 600px;
   font-size: 18px;
   margin: auto;
-  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
+  color: var(--text-dim);
 }
 
 .textBlock {
@@ -35,7 +35,7 @@
 .benefitCard {
   display: flex;
   align-items: center;
-  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  background: var(--panel);
   flex: 1 1 calc(50% - 20px);
   height: auto;
   min-height: 80px;

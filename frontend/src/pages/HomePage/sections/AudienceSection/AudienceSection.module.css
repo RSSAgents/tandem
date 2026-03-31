@@ -1,6 +1,6 @@
 .sectionTitle {
   font-weight: 800;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--text-main);
   margin-bottom: 24px;
 }
 
@@ -8,7 +8,7 @@
   max-width: 600px;
   font-size: 18px;
   margin: auto;
-  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
+  color: var(--text-dim);
 }
 
 .grid {
@@ -30,11 +30,9 @@
   border-radius: 10px;
   font-size: 20px;
   font-weight: 500;
-  box-shadow: light-dark(0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03));
-}
-
-.sticker {
-  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border);
+  background: var(--panel-soft);
 }
 
 [data-mantine-color-scheme='light'] .sticker[data-color='green'] {
@@ -63,9 +61,10 @@
 }
 
 [data-mantine-color-scheme='dark'] .sticker {
-  background: var(--mantine-color-dark-6);
-  color: var(--mantine-color-dark-0);
-  border-color: var(--mantine-color-dark-4);
+  background: rgba(17, 24, 39, 0.85);
+  color: var(--text-main);
+  border-color: rgba(99, 163, 255, 0.18);
+  backdrop-filter: blur(8px);
 }
 
 .row:first-child .sticker:nth-child(odd) {
