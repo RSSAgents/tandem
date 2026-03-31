@@ -1,7 +1,7 @@
+import { UserBlock } from '@components/features/UserBlock/UserBlock';
 import { ActionIcon, Box, Stack } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IconX } from '@tabler/icons-react';
-import { UserBlock } from '@components/features/UserBlock/UserBlock';
 import classes from './Sidebar.module.css';
 import { SidebarNavigation } from './SidebarNavigation';
 import { useUserScore } from '@/hooks/useUserScore';

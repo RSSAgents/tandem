@@ -12,6 +12,17 @@ vi.mock('./SidebarNavigation', () => ({
   SidebarNavigation: () => <nav data-testid="sidebar-nav" />,
 }));
 
+vi.mock('@/utils/supabase', () => ({
+  supabase: {
+    auth: {
+      getUser: vi.fn().mockResolvedValue({
+        data: { user: { user_metadata: { username: 'User' } } },
+        error: null,
+      }),
+    },
+  },
+}));
+
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string, options?: TranslationOptions) => {
