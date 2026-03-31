@@ -3,11 +3,11 @@ import classes from './UserBlock.module.css';
 
 interface UserBlockProps {
   name: string;
-  rank: string;
+  score: number;
   avatarSize?: number;
 }
 
-export const UserBlock = ({ name, rank, avatarSize = 44 }: UserBlockProps) => {
+export const UserBlock = ({ name, score, avatarSize = 44 }: UserBlockProps) => {
   return (
     <Group className={classes.userBlock}>
       <Avatar size={avatarSize} radius="100%" />
@@ -16,7 +16,7 @@ export const UserBlock = ({ name, rank, avatarSize = 44 }: UserBlockProps) => {
           {name}
         </Text>
         <Text size="xs" className={classes.rank}>
-          {rank}
+          {score} <span>⭐</span>
         </Text>
       </Stack>
     </Group>

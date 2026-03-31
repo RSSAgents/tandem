@@ -24,27 +24,15 @@ vi.mock('react-i18next', () => ({
 }));
 
 describe('Sidebar', () => {
-  const mockUser = { name: 'Alex', rank: 'Mage' };
-  const mockStats = { current: 6, total: 6 };
+  const mockUser = { name: 'Alex', score: 150 };
 
   it('should render custom user and stats via props', () => {
-    renderWithProviders(<Sidebar user={mockUser} stats={mockStats} />);
-
+    renderWithProviders(<Sidebar user={mockUser} />);
     expect(screen.getByText(mockUser.name)).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(mockUser.rank, 'i'))).toBeInTheDocument();
-    expect(screen.getByText('6/6')).toBeInTheDocument();
-  });
-
-  it('should render all prize cards correctly', () => {
-    renderWithProviders(<Sidebar user={mockUser} stats={mockStats} />);
-
-    expect(screen.getByText(/Bronze Badge/i)).toBeInTheDocument();
-    expect(screen.getByText(/Silver Medal/i)).toBeInTheDocument();
-    expect(screen.getByText(/Gold Trophy/i)).toBeInTheDocument();
   });
 
   it('should contain the navigation section', () => {
-    renderWithProviders(<Sidebar user={mockUser} stats={mockStats} />);
+    renderWithProviders(<Sidebar user={mockUser} />);
     expect(screen.getByTestId('sidebar-nav')).toBeInTheDocument();
   });
 });

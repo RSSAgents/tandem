@@ -1,4 +1,5 @@
 {
   "loading": "Загрузка...",
-  "progress": "{{current}} из {{total}} модулей завершено"
+  "progress": "{{current}} из {{total}} модулей завершено",
+  "continue": "продолжить"
 }
