@@ -1,8 +1,10 @@
 import { Accordion, Box, Container, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import classes from './LibraryPage.module.css';
+import { useLibraryBonus } from '@/hooks/useLibraryBonus';
 
 const LibraryPage = () => {
+  useLibraryBonus();
   const { t } = useTranslation('library');
   const libraryData = t('libraryData', { returnObjects: true });
 
