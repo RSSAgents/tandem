@@ -11,7 +11,27 @@
 }
 
 .rank {
-  color: var(--accent);
-  font-weight: 500;
-  text-transform: capitalize;
+  display: flex;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.rank span {
+  animation: starRotate 3s linear infinite;
+}
+
+@keyframes starRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

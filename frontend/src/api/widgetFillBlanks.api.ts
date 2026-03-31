@@ -1,4 +1,5 @@
 import { supabase } from '@/utils/supabase';
+import { scoreEvents } from '@/utils/scoreEvents';
 
 export const getFillBlanksTasks = async (signal?: AbortSignal) => {
   const { data, error } = await supabase
@@ -47,4 +48,6 @@ export const saveFillBlanksScore = async (score: number) => {
   );
 
   if (error) throw new Error(error.message);
+
+  scoreEvents.emit();
 };

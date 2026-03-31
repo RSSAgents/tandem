@@ -5,7 +5,7 @@ import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
 import { Button, Container, Select, Stack, Title, Text, Group, Box } from '@mantine/core';
 import { useCallback, useState } from 'react';
-import { ScoreDisplayModal } from '../../../shared/ScoreDisplayModal/ScoreDisplayModal';
+import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
 import classes from './WidgetFillBlanks.module.css';
 
 const WidgetFillBlanks = () => {
@@ -24,10 +24,10 @@ const WidgetFillBlanks = () => {
     currentIndex,
     tasks,
     resultMap,
-
-    correctAnswersCount,
     totalStatements,
     resetWidget,
+    score,
+    correctAnswersCount,
   } = useWidgetFillBlanks();
 
   const [modalOpened, setModalOpened] = useState(false);
@@ -129,7 +129,8 @@ const WidgetFillBlanks = () => {
       )}
 
       <ScoreDisplayModal
-        score={correctAnswersCount}
+        points={score}
+        correctAnswers={correctAnswersCount}
         total={totalStatements}
         opened={modalOpened}
         onClose={() => setModalOpened(false)}
