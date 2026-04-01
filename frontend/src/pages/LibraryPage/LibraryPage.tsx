@@ -2,6 +2,7 @@ import { Accordion, Box, Title } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import classes from './LibraryPage.module.css';
+import { FormattedDescription } from '@/utils/formatDescription';
 
 const LibraryPage = () => {
   const { t } = useTranslation('library');
@@ -28,7 +29,9 @@ const LibraryPage = () => {
             {category.items.map((item) => (
               <Accordion.Item key={item.value} value={item.value}>
                 <Accordion.Control>{item.value}</Accordion.Control>
-                <Accordion.Panel>{item.description}</Accordion.Panel>
+                <Accordion.Panel>
+                  <FormattedDescription text={item.description} />
+                </Accordion.Panel>
               </Accordion.Item>
             ))}
           </Accordion>
