@@ -13,10 +13,20 @@
 .logo {
   font-size: 1.2rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   color: var(--text-main);
 }
 
 .creationYear {
   font-size: 20px;
+}
+
+.school {
+  transition: 0.3s ease-in-out;
+  background-color: #f7d84a;
+  border: 1px solid var(--border);
+  border-radius: var(--mantine-radius-sm);
+  &:hover {
+    transform: scale(1.2);
+  }
 }
