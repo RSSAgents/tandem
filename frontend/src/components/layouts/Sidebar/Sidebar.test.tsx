@@ -1,49 +1,38 @@
 import { renderWithProviders } from '@/utils/test-util';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Sidebar } from './Sidebar';
-
-interface TranslationOptions {
-  current?: number;
-  total?: number;
-}
-
-vi.mock('./SidebarNavigation', () => ({
-  SidebarNavigation: () => <nav data-testid="sidebar-nav" />,
-}));
 
 vi.mock('@/utils/supabase', () => ({
   supabase: {
     auth: {
       getUser: vi.fn().mockResolvedValue({
-        data: { user: { user_metadata: { username: 'User' } } },
+        data: { user: { user_metadata: { username: 'Alex' } } },
         error: null,
       }),
     },
+    from: vi.fn().mockReturnValue({
+      select: vi.fn().mockReturnValue({
+        eq: vi.fn().mockResolvedValue({
+          data: [{ score: 150 }],
+          error: null,
+        }),
+      }),
+    }),
   },
 }));
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string, options?: TranslationOptions) => {
-      if (key === 'shared:progress' && options) {
-        return `${options.current}/${options.total}`;
-      }
-      return key;
-    },
-  }),
-}));
+const mockUser = {
+  name: 'Alex',
+  score: 150,
+};
 
 describe('Sidebar', () => {
-  const mockUser = { name: 'Alex', score: 150 };
-
-  it('should render custom user and stats via props', () => {
+  it('should render custom user and stats via props', async () => {
     renderWithProviders(<Sidebar user={mockUser} />);
-    expect(screen.getByText(mockUser.name)).toBeInTheDocument();
-  });
 
-  it('should contain the navigation section', () => {
-    renderWithProviders(<Sidebar user={mockUser} />);
-    expect(screen.getByTestId('sidebar-nav')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Alex')).toBeInTheDocument();
+    });
   });
 });

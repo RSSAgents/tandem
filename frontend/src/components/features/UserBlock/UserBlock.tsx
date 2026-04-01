@@ -5,12 +5,11 @@ import { useEffect, useState } from 'react';
 import classes from './UserBlock.module.css';
 
 interface UserBlockProps {
-  name: string;
   score: number;
   avatarSize?: number;
 }
 
-export const UserBlock = ({ name, score, avatarSize = 44 }: UserBlockProps) => {
+export const UserBlock = ({ score, avatarSize = 44 }: UserBlockProps) => {
   const [userName, setUserName] = useState<React.ReactNode>(<Loader size={12} />);
   const [avatarUrl] = useState(() => {
     const savedAvatar = sessionStorage.getItem('sidebarAvatar');
