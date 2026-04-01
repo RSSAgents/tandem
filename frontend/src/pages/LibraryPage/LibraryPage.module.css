@@ -61,8 +61,70 @@
   color: var(--text-main);
 }
 
+.description {
+  line-height: 1.8;
+  font-size: 1rem;
+  margin-top: 20px;
+  color: light-dark(#1a1b1e, #e9ecef);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: light-dark(#1a1b1e, #f1f3f5);
+  margin: 1rem 0 0.5rem 0;
+  letter-spacing: -0.2px;
+}
+
+.paragraph {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: light-dark(#2c3e50, #ced4da);
+}
+
+.codeBlockWrapper {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  background-color: light-dark(#f8f9fa, #1e1f22);
+  border: 1px solid light-dark(#e9ecef, #2c2e33);
+  transition: all 0.2s ease;
+}
+
+.codeText {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: block;
+  background-color: transparent;
+}
+
 @media (max-width: 768px) {
   .wrapper {
     padding: var(--mantine-spacing-xl) var(--mantine-spacing-lg);
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .title {
+    font-size: 1rem;
+    margin: 1rem 0 0.5rem 0;
+  }
+
+  .paragraph {
+    font-size: 0.95rem;
+  }
+
+  .codePre {
+    font-size: 0.85rem;
+  }
+
+  .codeBlockWrapper {
+    padding: 0.75rem;
   }
 }
