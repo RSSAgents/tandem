@@ -1,15 +1,29 @@
-import { DASHBOARD_WIDGETS, getCompletedIds, getUserName } from '@/utils/DashboardPage-utils';
+import { DASHBOARD_WIDGETS, getCompletedIds } from '@/utils/DashboardPage-utils';
+import { supabase } from '@/utils/supabase';
 import { WidgetCard } from '@components/ui/Card/WidgetCard';
-import { Box, SimpleGrid, Stack, Text, Title } from '@mantine/core';
-import { useMemo } from 'react';
+import { Box, Loader, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classes from './DashboardPage.module.css';
 
 export const DashboardPage = () => {
   const { t } = useTranslation('dashboard');
-
-  const userName = getUserName();
+  const [userName, setUserName] = useState<string | null>(null);
   const completedIds = getCompletedIds();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        setUserName('User');
+        return;
+      }
+      const username = data?.user?.user_metadata?.username ?? 'User';
+      setUserName(username);
+    };
+
+    fetchUser();
+  }, []);
 
   const { widgets, stats } = useMemo(() => {
     const items = DASHBOARD_WIDGETS.map((widget) => ({
@@ -30,7 +44,9 @@ export const DashboardPage = () => {
   return (
     <Box className={classes.wrapper}>
       <Stack gap={4} mb={40}>
-        <Title className={classes.welcomeTitle}>{t('welcome', { name: userName })}</Title>
+        <Title className={classes.welcomeTitle}>
+          {userName === null ? <Loader size={20} /> : t('welcome', { name: userName })}{' '}
+        </Title>
         <Text className={classes.progressText}>
           {t(stats.progressKey, '', { percent: stats.percent })}
         </Text>

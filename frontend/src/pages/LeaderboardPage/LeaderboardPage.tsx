@@ -1,42 +1,38 @@
-import { useTranslation } from 'react-i18next';
-import { ScrollArea, Table, Paper, Stack, Box } from '@mantine/core';
-import classes from './LeaderboardPage.module.css';
 import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
+import { getRandomAvatar } from '@/images/icons';
 import { Winner } from '@/types/winner.types';
+import { Box, Paper, ScrollArea, Stack, Table } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
+import classes from './LeaderboardPage.module.css';
 import { LeaderboardRow } from './LeaderboardRow';
 
 const data: Winner[] = [
   {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
+    avatar: getRandomAvatar(),
     name: 'Ivan Ivanov',
     score: 10,
     widgetsAmount: { completed: 2, notCompleted: 3 },
   },
   {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',
+    avatar: getRandomAvatar(),
     name: 'Marge',
     score: 20,
     widgetsAmount: { completed: 3, notCompleted: 2 },
   },
   {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',
+    avatar: getRandomAvatar(),
     name: 'Liza',
     score: 30,
     widgetsAmount: { completed: 4, notCompleted: 1 },
   },
   {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
+    avatar: getRandomAvatar(),
     name: 'Bart',
     score: 40,
     widgetsAmount: { completed: 5, notCompleted: 0 },
   },
   {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png',
+    avatar: getRandomAvatar(),
     name: 'Homer',
     score: 50,
     widgetsAmount: { completed: 2, notCompleted: 3 },
