@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 
 const AVATAR_SIZE = 120;
 const GITHUB_ICON_SIZE = 14;
-const GRID_COLS = { base: 1, sm: 2, lg: 3 };
+const GRID_COLS = { base: 1, sm: 2, lg: 3, xl: 4 };
 const GITHUB_BASE_URL = 'https://github.com';
 const getGithubAvatarUrl = (username: string) => `${GITHUB_BASE_URL}/${username}.png`;
 const getGithubProfileUrl = (username: string) => `${GITHUB_BASE_URL}/${username}`;
@@ -27,7 +27,7 @@ export const About = () => {
   const team = Array.isArray(teamData) ? teamData : [];
 
   return (
-    <Container size="xl" py="xl">
+    <Container fluid px="3%" py="xl">
       <Stack align="center" mb={50}>
         <Title order={1} mt={30} mb={5} className={classes.title}>
           {t('title')}

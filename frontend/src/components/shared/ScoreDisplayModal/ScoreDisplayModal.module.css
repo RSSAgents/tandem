@@ -14,6 +14,8 @@
   margin-top: 24px;
   padding: 24px;
   text-align: center;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border);
   border-radius: 12px;
+  background-color: var(--panel-soft);
+  color: var(--text-main);
 }

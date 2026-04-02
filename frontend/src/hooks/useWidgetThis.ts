@@ -3,7 +3,8 @@ import { AppLanguage } from '@/i18n/config';
 import { getLocalizedString } from '@/utils/localize';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IThisTask } from '../types/widgetThis.types';
+import { IThisTask } from '@/types/widgetThis.types';
+import { scoreEvents } from '@/utils/scoreEvents';
 
 const POINTS_PER_CORRECT_ANSWER = 10;
 
@@ -69,6 +70,7 @@ export const useWidgetThis = () => {
   const saveResult = useCallback(async () => {
     try {
       await saveThisScore(score);
+      scoreEvents.emit();
     } catch {
       setError('Failed to save score');
     }

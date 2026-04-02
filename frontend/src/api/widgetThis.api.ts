@@ -1,4 +1,5 @@
 import { supabase } from '@/utils/supabase';
+import { scoreEvents } from '@/utils/scoreEvents';
 
 export const getThisTasks = async (signal?: AbortSignal) => {
   const { data, error } = await supabase
@@ -42,4 +43,6 @@ export const saveThisScore = async (score: number) => {
   );
 
   if (error) throw new Error(error.message);
+
+  scoreEvents.emit();
 };

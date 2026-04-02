@@ -1,9 +1,20 @@
 import * as Utils from '@/utils/DashboardPage-utils';
 import { DASHBOARD_WIDGETS } from '@/utils/DashboardPage-utils';
 import { renderWithProviders } from '@/utils/test-util';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { DashboardPage } from './DashboardPage';
+
+vi.mock('@/utils/supabase', () => ({
+  supabase: {
+    auth: {
+      getUser: vi.fn().mockResolvedValue({
+        data: { user: { user_metadata: { username: 'User' } } },
+        error: null,
+      }),
+    },
+  },
+}));
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -21,13 +32,15 @@ vi.mock('react-i18next', () => ({
 describe('DashboardPage', () => {
   const renderDashboard = () => renderWithProviders(<DashboardPage />);
 
-  it('should render correctly for a new user', () => {
+  it('should render correctly for a new user', async () => {
     vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => []);
-    vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');
 
     renderDashboard();
 
-    expect(screen.getByText(/Hello, Alex!/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Hello, User!/i)).toBeInTheDocument();
+    });
+
     expect(
       screen.getByText('Your journey starts here. Choose your first module!'),
     ).toBeInTheDocument();
@@ -35,7 +48,7 @@ describe('DashboardPage', () => {
     expect(startButtons).toHaveLength(DASHBOARD_WIDGETS.length);
   });
 
-  it('should render correctly when modules are completed', () => {
+  it('should render correctly when modules are completed', async () => {
     vi.spyOn(Utils, 'getCompletedIds').mockImplementation(() => [
       'js-exec',
       'js_stack',
@@ -43,11 +56,13 @@ describe('DashboardPage', () => {
       'fill_blanks',
       'ai-interviewer',
     ]);
-    vi.spyOn(Utils, 'getUserName').mockImplementation(() => 'Alex');
 
     renderDashboard();
 
-    expect(screen.getByText(/Hello, Alex!/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Hello, User!/i)).toBeInTheDocument();
+    });
+
     expect(screen.getByText("Path completed! You're a legend.")).toBeInTheDocument();
 
     const finishedButtons = screen.getAllByText('Finished');

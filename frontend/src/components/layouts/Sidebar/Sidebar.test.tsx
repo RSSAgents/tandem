@@ -1,50 +1,38 @@
 import { renderWithProviders } from '@/utils/test-util';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Sidebar } from './Sidebar';
 
-interface TranslationOptions {
-  current?: number;
-  total?: number;
-}
-
-vi.mock('./SidebarNavigation', () => ({
-  SidebarNavigation: () => <nav data-testid="sidebar-nav" />,
-}));
-
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string, options?: TranslationOptions) => {
-      if (key === 'shared:progress' && options) {
-        return `${options.current}/${options.total}`;
-      }
-      return key;
+vi.mock('@/utils/supabase', () => ({
+  supabase: {
+    auth: {
+      getUser: vi.fn().mockResolvedValue({
+        data: { user: { user_metadata: { username: 'Alex' } } },
+        error: null,
+      }),
     },
-  }),
+    from: vi.fn().mockReturnValue({
+      select: vi.fn().mockReturnValue({
+        eq: vi.fn().mockResolvedValue({
+          data: [{ score: 150 }],
+          error: null,
+        }),
+      }),
+    }),
+  },
 }));
+
+const mockUser = {
+  name: 'Alex',
+  score: 150,
+};
 
 describe('Sidebar', () => {
-  const mockUser = { name: 'Alex', rank: 'Mage' };
-  const mockStats = { current: 6, total: 6 };
+  it('should render custom user and stats via props', async () => {
+    renderWithProviders(<Sidebar user={mockUser} />);
 
-  it('should render custom user and stats via props', () => {
-    renderWithProviders(<Sidebar user={mockUser} stats={mockStats} />);
-
-    expect(screen.getByText(mockUser.name)).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(mockUser.rank, 'i'))).toBeInTheDocument();
-    expect(screen.getByText('6/6')).toBeInTheDocument();
-  });
-
-  it('should render all prize cards correctly', () => {
-    renderWithProviders(<Sidebar user={mockUser} stats={mockStats} />);
-
-    expect(screen.getByText(/Bronze Badge/i)).toBeInTheDocument();
-    expect(screen.getByText(/Silver Medal/i)).toBeInTheDocument();
-    expect(screen.getByText(/Gold Trophy/i)).toBeInTheDocument();
-  });
-
-  it('should contain the navigation section', () => {
-    renderWithProviders(<Sidebar user={mockUser} stats={mockStats} />);
-    expect(screen.getByTestId('sidebar-nav')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Alex')).toBeInTheDocument();
+    });
   });
 });

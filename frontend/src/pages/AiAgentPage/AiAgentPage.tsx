@@ -224,6 +224,7 @@ export const AiAgentPage = () => {
                     <Button
                       variant="outline"
                       onClick={() => handleSend('teacher')}
+                      className={classes.actionBtn}
                       disabled={
                         !state.activeTopic ||
                         state.stressMode === 'stress' ||

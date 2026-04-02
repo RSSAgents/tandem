@@ -2,6 +2,7 @@ import { checkWidgetAnswer, getWidgetTasks, saveConsoleScore } from '@/api/widge
 import { IConsoleAnswer, IConsoleTask } from '@/types/widgetConsole.types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDragAndDrop } from './useDragAndDrop';
+import { scoreEvents } from '@/utils/scoreEvents';
 
 export const useWidgetConsole = () => {
   const [tasks, setTasks] = useState<IConsoleTask[]>([]);
@@ -101,6 +102,7 @@ export const useWidgetConsole = () => {
   const saveResult = useCallback(async () => {
     try {
       await saveConsoleScore(score);
+      scoreEvents.emit();
     } catch {
       setError('Failed to save score');
     }
