@@ -6,7 +6,7 @@ Follow these instructions to set up the project locally for development and test
 
 2.  Clone the project repository to your local machine
 
-        https://github.com/RSSAgents/tandem.git
+        git clone https://github.com/RSSAgents/tandem.git
 
 3.  Go to folder final-project
 
