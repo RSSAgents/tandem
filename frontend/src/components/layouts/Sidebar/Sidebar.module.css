@@ -228,3 +228,61 @@
 [data-mantine-color-scheme='dark'] .percentage {
   color: #aaa;
 }
+
+/* for progress in leaderboard page */
+.compact {
+  margin: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  min-width: 70pxortant;
+}
+
+.progressBlock {
+  overflow: visible;
+}
+
+.compact .progressWrapper {
+  position: relative;
+  margin: 4px 0;
+}
+
+.compact .progressWrapper :global(.mantine-Progress-root) {
+  height: 5px;
+  background: #e9ecef;
+  border-radius: 2px;
+}
+
+[data-mantine-color-scheme='dark'] .compact .progressWrapper :global(.mantine-Progress-root) {
+  background: #2c2e33;
+}
+
+.compact .progressWrapper :global(.mantine-Progress-bar) {
+  background: #20bf55;
+  border-radius: 2px;
+}
+
+.compact .snail {
+  position: absolute;
+  top: -10px;
+  transition: left 0.3s ease;
+  animation: none;
+  filter: none;
+}
+
+.compact .snailEmoji {
+  font-size: 1rem;
+  filter: none;
+}
+
+.compact .percentage {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 4px;
+  color: #868e96;
+}
+
+[data-mantine-color-scheme='dark'] .compact .percentage {
+  color: #909296;
+}
