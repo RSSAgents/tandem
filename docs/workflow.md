@@ -26,4 +26,4 @@ We follow the RS School Conventional Commits specification.
 - Present tense ("add feature" not "added feature") should be used.
 - Imperative mood ("move cursor to ..." not "moves cursor to ..." should be used).
 
-📚 More information and examples here: https://rs.school/docs/en/git-convention
+📚 More information and examples here: https://rs.school/docs/git-convention
