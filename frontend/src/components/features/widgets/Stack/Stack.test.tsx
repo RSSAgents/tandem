@@ -98,12 +98,12 @@ describe('StackWidget', () => {
     expect(screen.queryByText('LIFO')).not.toBeInTheDocument();
   });
 
-it('does not show FIFO section initially (should be hidden)', async () => {
-  renderStackWidget();
-  await waitForLoad();
+  it('does not show FIFO section initially (should be hidden)', async () => {
+    renderStackWidget();
+    await waitForLoad();
 
-  const fifoTitle = screen.getByText('FIFO');
-  const fifoSection = fifoTitle.closest(`.${classes.section}`);
-  expect(fifoSection).toHaveClass(classes.sectionHidden);
-});
+    const fifoTitle = screen.getByText('FIFO');
+    const fifoSection = fifoTitle.closest(`.${classes.section}`);
+    expect(fifoSection).toHaveClass(classes.sectionHidden);
+  });
 });
