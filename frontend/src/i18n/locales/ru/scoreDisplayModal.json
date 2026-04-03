@@ -1,0 +1,7 @@
+{
+  "title": "Тест завершён!",
+  "yourScore": "Ваш результат: {{points}} баллов",
+  "correctAnswers": "Правильных ответов: {{correctAnswers}} из {{total}}",
+  "tryAgain": "Попробовать снова",
+  "close": "Закрыть"
+}

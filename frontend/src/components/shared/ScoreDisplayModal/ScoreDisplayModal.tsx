@@ -1,5 +1,6 @@
 import { Button, Flex, Modal, Paper, Text, Title } from '@mantine/core';
 import styles from './ScoreDisplayModal.module.css';
+import { useTranslation } from 'react-i18next';
 
 interface IScoreDisplayModalProps {
   points: number;
@@ -23,6 +24,8 @@ export const ScoreDisplayModal = ({
     onClose();
   };
 
+  const { t } = useTranslation('scoreDisplayModal');
+
   return (
     <Modal
       opened={opened}
@@ -37,18 +40,18 @@ export const ScoreDisplayModal = ({
     >
       <Paper className={styles.scoreContainer}>
         <Title order={3} className={styles.completedTitle}>
-          Test completed!
+          {t('title')}
         </Title>
-        <Text className={styles.completedScore}>Your score: {points} points</Text>
+        <Text className={styles.completedScore}>{t('yourScore', { points })}</Text>
         <Text className={styles.completedScore}>
-          Correct answers: {correctAnswers} out of {total}
+          {t('correctAnswers', { correctAnswers, total })}
         </Text>
         <Flex gap="md" mt="xl" justify="center">
           <Button fullWidth onClick={handleTryAgain} className={styles.closeButton} mt="md">
-            Try again
+            {t('tryAgain')}
           </Button>
           <Button fullWidth onClick={onClose} className={styles.closeButton} mt="md">
-            Close
+            {t('close')}
           </Button>
         </Flex>
       </Paper>

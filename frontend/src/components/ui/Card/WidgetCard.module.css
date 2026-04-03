@@ -28,7 +28,8 @@
 
 .card:hover {
   transform: translateY(-6px);
-  border-color: rgba(10, 132, 255, 0.35);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-heavy);
   text-decoration: none;
 }
 

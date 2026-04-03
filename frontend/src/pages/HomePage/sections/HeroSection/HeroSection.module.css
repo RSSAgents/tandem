@@ -10,7 +10,7 @@
 }
 
 .title {
-  font-size: 70px;
+  font-size: 90px;
   text-shadow: 0 0 10px rgba(34, 139, 230, 0.3);
   line-height: 1.1;
   white-space: pre-line;
@@ -28,9 +28,15 @@
 }
 
 .learnMoreBtn {
+  background-color: var(--accent-subtle) !important;
+  border-color: var(--border) !important;
+  color: var(--text-main) !important;
   transition: all 0.2s ease;
+
   &:hover {
-    border-color: var(--accent);
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: var(--text-on-accent) !important;
     transition: all 0.2s ease;
   }
 }

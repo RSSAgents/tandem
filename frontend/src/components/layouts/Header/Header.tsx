@@ -40,15 +40,15 @@ export const Header = ({ onBurgerClick, burgerOpened = false }: HeaderProps) => 
         {!isLoginPage && !isRegisterPage && (
           <>
             {user ? (
-              <Button color="red" onClick={logout}>
+              <Button variant="outline" onClick={logout}>
                 {t('logout')}
               </Button>
             ) : (
               <>
-                <Button variant="default" component={Link} to="/login">
+                <Button variant="outline" component={Link} to="/login">
                   {t('login')}
                 </Button>
-                <Button component={Link} to="/register">
+                <Button variant="outline" component={Link} to="/register">
                   {t('signup')}
                 </Button>
               </>

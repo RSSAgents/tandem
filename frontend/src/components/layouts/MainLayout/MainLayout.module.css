@@ -13,12 +13,11 @@
 }
 
 .sidebar {
-  background: var(--panel-soft);
+  background: var(--sidebar-bg);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  background-color: var(--mantine-color-body);
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .content {

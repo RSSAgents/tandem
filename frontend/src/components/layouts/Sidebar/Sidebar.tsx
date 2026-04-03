@@ -1,21 +1,21 @@
+import { useUserScore } from '@/hooks/useUserScore';
+import { UserBlock } from '@components/features/UserBlock/UserBlock';
 import { ActionIcon, Box, Stack } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IconX } from '@tabler/icons-react';
-import { UserBlock } from '@components/features/UserBlock/UserBlock';
 import classes from './Sidebar.module.css';
 import { SidebarNavigation } from './SidebarNavigation';
-import { useUserScore } from '@/hooks/useUserScore';
 import { SidebarScoreInfo } from './SidebarScoreInfo';
 import { SidebarSnailProgress } from './SidebarSnailProgress';
 
 interface SidebarProps {
-  user?: { name: string; score: number };
+  user?: { score: number };
   stats?: { current: number; total: number };
   onClose?: () => void;
   mobileBreakpoint?: string | number;
 }
 
-const DEFAULT_USER = { name: 'Alex', score: 150 };
+const DEFAULT_USER = { score: 150 };
 
 export const Sidebar = ({ user = DEFAULT_USER, onClose, mobileBreakpoint }: SidebarProps) => {
   const { score } = useUserScore();
@@ -43,7 +43,7 @@ export const Sidebar = ({ user = DEFAULT_USER, onClose, mobileBreakpoint }: Side
             <IconX size={18} />
           </ActionIcon>
         )}
-        <UserBlock name={user.name} score={score ?? 0} />
+        <UserBlock score={score ?? user.score ?? 0} />
         <SidebarSnailProgress />
         <SidebarNavigation />
       </Box>
