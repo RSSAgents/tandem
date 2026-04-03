@@ -5,10 +5,13 @@ import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
 import { Button, Container, Select, Stack, Title, Text, Group, Box } from '@mantine/core';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
 import classes from './WidgetFillBlanks.module.css';
 
 const WidgetFillBlanks = () => {
+  const { t, i18n } = useTranslation('widgetFillBlanks');
+
   const {
     loading,
     error,
@@ -63,9 +66,9 @@ const WidgetFillBlanks = () => {
 
   return (
     <Container className={classes.container}>
-      <Title order={2}>Fill in the blanks</Title>
+      <Title order={2}>{t('title')}</Title>
       <Text size="sm" c="dimmed">
-        Question {currentIndex + 1} of {tasks.length}
+        {t('questionProgress', { current: currentIndex + 1, total: tasks.length })}
       </Text>
 
       <Box className={classes.editorWrapper}>
@@ -74,7 +77,8 @@ const WidgetFillBlanks = () => {
 
       <Stack mt="lg">
         {currentTask.payload.statements.map((s, index) => {
-          const text = s.text.ru;
+          const lang = i18n.language as 'ru' | 'en';
+          const text = s.text[lang] || s.text.en;
           const parts = text.split('{{blank}}');
 
           return (
@@ -83,7 +87,7 @@ const WidgetFillBlanks = () => {
               <Text span>{parts[0]}</Text>
 
               <Select
-                data={s.options.ru.map((opt, index) => ({
+                data={(s.options[lang] || s.options.en).map((opt, index) => ({
                   value: String(index),
                   label: opt,
                 }))}
@@ -107,24 +111,22 @@ const WidgetFillBlanks = () => {
 
       <Group mt="lg">
         <Button disabled={currentIndex === 0} onClick={handlePreviousQuestion}>
-          Previous
+          {t('buttons.previous')}
         </Button>
 
         <Button disabled={!isAllAnswered || showResult} onClick={onCheckClick}>
-          Check result
+          {t('buttons.checkResult')}
         </Button>
 
         <Button disabled={!showResult} onClick={handleNextQuestion}>
-          Next
+          {t('buttons.next')}
         </Button>
       </Group>
 
       {showResult && (
         <ResultDisplay
           isCorrect={allCorrect}
-          explanation={
-            allCorrect ? 'Great job!' : 'Some answers are incorrect. Check highlighted answers.'
-          }
+          explanation={allCorrect ? t('messages.correct') : t('messages.incorrect')}
         />
       )}
 
