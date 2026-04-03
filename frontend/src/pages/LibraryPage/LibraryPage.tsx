@@ -2,9 +2,11 @@ import { Accordion, Box, Title } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import classes from './LibraryPage.module.css';
+import { useLibraryBonus } from '@/hooks/useLibraryBonus';
 import { FormattedDescription } from '@/utils/formatDescription';
 
 const LibraryPage = () => {
+  useLibraryBonus();
   const { t } = useTranslation('library');
   const libraryData = t('libraryData', { returnObjects: true });
 
