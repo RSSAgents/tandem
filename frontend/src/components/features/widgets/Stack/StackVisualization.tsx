@@ -44,30 +44,30 @@ const StackVisualization = ({ stack, queue, quizState }: StackVisualizationProps
         </Box>
       )}
 
-      {(quizState === 'fifo-animation' || quizState === 'completed') && (
-        <Box className={classes.section}>
-          <Text className={classes.sectionTitle}>FIFO</Text>
-          <Box className={classes.queueContainer}>
-            <AnimatePresence mode="popLayout">
-              {queue.map((item) => (
-                <motion.div
-                  key={`queue-${item}`}
-                  className={classes.queueItem}
-                  initial={QUEUE_ANIMATION_CONFIG.initial}
-                  animate={QUEUE_ANIMATION_CONFIG.animate}
-                  exit={QUEUE_ANIMATION_CONFIG.exit}
-                  layout
-                >
-                  <Text className={classes.itemText}>{item}</Text>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-            {queue.length === 0 && quizState !== 'fifo-animation' && (
-              <Text className={classes.emptyText}>{t('stackQueue.queue.emptyState')}</Text>
-            )}
-          </Box>
+      <Box
+        className={`${classes.section} ${quizState === 'fifo-animation' || quizState === 'completed' ? '' : classes.sectionHidden}`}
+      >
+        <Text className={classes.sectionTitle}>FIFO</Text>
+        <Box className={classes.queueContainer}>
+          <AnimatePresence mode="popLayout">
+            {queue.map((item) => (
+              <motion.div
+                key={`queue-${item}`}
+                className={classes.queueItem}
+                initial={QUEUE_ANIMATION_CONFIG.initial}
+                animate={QUEUE_ANIMATION_CONFIG.animate}
+                exit={QUEUE_ANIMATION_CONFIG.exit}
+                layout
+              >
+                <Text className={classes.itemText}>{item}</Text>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {queue.length === 0 && quizState !== 'fifo-animation' && (
+            <Text className={classes.emptyText}>{t('stackQueue.queue.emptyState')}</Text>
+          )}
         </Box>
-      )}
+      </Box>
     </Box>
   );
 };

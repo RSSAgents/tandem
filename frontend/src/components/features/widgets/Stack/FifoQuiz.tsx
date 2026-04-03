@@ -35,15 +35,19 @@ const FifoQuiz = ({
           onChange={(e) => setSelectedFifo(e.currentTarget.value)}
         />
       </MantineStack>
-      {showFifoFeedback && (
-        <Text
-          className={`${classes.feedbackText} ${
-            selectedFifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
-          }`}
-        >
-          {selectedFifo === 'correct' ? stackQueue.feedback.correct : stackQueue.feedback.incorrect}
-        </Text>
-      )}
+
+      <Text
+        className={`${classes.feedbackText} ${
+          selectedFifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
+        } ${!showFifoFeedback ? classes.feedbackHidden : ''}`}
+      >
+        {showFifoFeedback
+          ? selectedFifo === 'correct'
+            ? stackQueue.feedback.correct
+            : stackQueue.feedback.incorrect
+          : ' '}
+      </Text>
+
       <Button className={classes.submitButton} disabled={!selectedFifo} onClick={handleFifoAnswer}>
         {t('stackQueue.button')}
       </Button>
