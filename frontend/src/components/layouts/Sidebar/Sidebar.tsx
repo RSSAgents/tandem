@@ -7,6 +7,7 @@ import classes from './Sidebar.module.css';
 import { SidebarNavigation } from './SidebarNavigation';
 import { SidebarScoreInfo } from './SidebarScoreInfo';
 import { SidebarSnailProgress } from './SidebarSnailProgress';
+import { useAiAgentState } from '@/hooks/useAiAgentState';
 
 interface SidebarProps {
   user?: { score: number };
@@ -19,6 +20,7 @@ const DEFAULT_USER = { score: 150 };
 
 export const Sidebar = ({ user = DEFAULT_USER, onClose, mobileBreakpoint }: SidebarProps) => {
   const { score } = useUserScore();
+  const { readinessPercentage } = useAiAgentState();
 
   const bp =
     typeof mobileBreakpoint === 'number' ? `${mobileBreakpoint}px` : (mobileBreakpoint ?? '48em');
@@ -44,7 +46,7 @@ export const Sidebar = ({ user = DEFAULT_USER, onClose, mobileBreakpoint }: Side
           </ActionIcon>
         )}
         <UserBlock score={score ?? user.score ?? 0} />
-        <SidebarSnailProgress />
+        <SidebarSnailProgress percent={readinessPercentage || 0} />
         <SidebarNavigation />
       </Box>
       <SidebarScoreInfo />

@@ -1,20 +1,32 @@
 import { Box, Text, Flex, Paper, Progress } from '@mantine/core';
-import { useAiAgentState } from '@/hooks/useAiAgentState';
 import classes from './Sidebar.module.css';
 import { useTranslation } from 'react-i18next';
 
-export const SidebarSnailProgress = () => {
-  const { t } = useTranslation('sidebar');
-  const { readinessPercentage } = useAiAgentState();
+interface SidebarSnailProgressProps {
+  percent: number;
+  title?: string;
+  showTitle?: boolean;
+  compact?: boolean;
+}
 
-  const percent = Math.min(100, Math.max(0, readinessPercentage || 0));
+export const SidebarSnailProgress = ({
+  percent: rawPercent,
+  title,
+  showTitle = true,
+  compact = false,
+}: SidebarSnailProgressProps) => {
+  const { t } = useTranslation('sidebar');
+
+  const percent = Math.min(100, Math.max(0, rawPercent || 0));
   const snailPosition = `${percent}%`;
 
   return (
-    <Paper className={classes.progressBlock}>
-      <Flex align="center" gap="xs" mb="xl">
-        <Text className={classes.progressTitle}>{t('sidebar.snailProgress.title')}</Text>
-      </Flex>
+    <Paper className={`${classes.progressBlock} ${compact ? classes.compact : ''}`}>
+      {showTitle && (
+        <Flex align="center" gap="xs" mb="xl">
+          <Text className={classes.progressTitle}>{title || t('sidebar.snailProgress.title')}</Text>
+        </Flex>
+      )}
 
       <Box className={classes.progressWrapper}>
         <Progress value={percent} color="teal" />

@@ -1,6 +1,6 @@
 import { Container, Title, Text, Paper, Image, useMantineColorScheme } from '@mantine/core';
-import leaderboardImageDark from './leaderboard-dark.jpg';
-import leaderboardImageLight from './leaderboard-light.jpg';
+import leaderboardImageDark from './lead-dark.jpg';
+import leaderboardImageLight from './lead-light.jpg';
 import classes from './LeaderboardSection.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';

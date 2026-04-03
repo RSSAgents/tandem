@@ -1,17 +1,17 @@
 import { Avatar, Group, Table, Text } from '@mantine/core';
-import { ProgressBar } from '@/components/features/ProgressBar/ProgressBar';
-import { Winner } from '@/types/winner.types';
 import { RANK_DISPLAY } from '@/constants/rankDisplay';
 import classes from './LeaderboardPage.module.css';
+import { LeaderboardUser } from '@/api/leaderboard.api';
+import { getRandomAvatar } from '@/images/icons';
+import { SidebarSnailProgress } from '@/components/layouts/Sidebar/SidebarSnailProgress';
 
 interface LeaderboardRowProps {
-  item: Winner;
+  user: LeaderboardUser;
   rank: number;
 }
 
-export const LeaderboardRow = ({ item, rank }: LeaderboardRowProps) => {
-  const totalAmountOfWidgets = item.widgetsAmount.completed + item.widgetsAmount.notCompleted;
-  const completedWidgets = (item.widgetsAmount.completed / totalAmountOfWidgets) * 100;
+export const LeaderboardRow = ({ user, rank }: LeaderboardRowProps) => {
+  const avatar = getRandomAvatar();
   const rankDisplay = RANK_DISPLAY[rank as keyof typeof RANK_DISPLAY] || `#${rank}`;
 
   return (
@@ -23,25 +23,20 @@ export const LeaderboardRow = ({ item, rank }: LeaderboardRowProps) => {
       </Table.Td>
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={26} src={item.avatar} radius={26} alt="" />
+          <Avatar size={26} src={avatar} radius={26} alt="" />
           <Text size="sm" fw={500}>
-            {item.name}
+            {user.username}
           </Text>
         </Group>
       </Table.Td>
       <Table.Td>
         <Group gap={4}>
           <span>⭐</span>
-          {item.score}
+          {user.total_score}
         </Group>
       </Table.Td>
       <Table.Td>
-        <Group justify="space-between">
-          <Text fz="xs" c="teal" fw={700}>
-            {completedWidgets.toFixed(0)}%
-          </Text>
-        </Group>
-        <ProgressBar current={item.widgetsAmount.completed} total={totalAmountOfWidgets} />
+        <SidebarSnailProgress percent={user.total_percent_ai} showTitle={false} compact={true} />
       </Table.Td>
     </Table.Tr>
   );
