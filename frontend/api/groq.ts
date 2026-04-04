@@ -21,7 +21,12 @@ export default async function handler(req: Request): Promise<Response> {
       Authorization: `Bearer ${groqApiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ model, messages, temperature: temperature ?? 0.7, stream: stream ?? false }),
+    body: JSON.stringify({
+      model,
+      messages,
+      temperature: temperature ?? 0.7,
+      stream: stream ?? false,
+    }),
   });
 
   if (stream) {

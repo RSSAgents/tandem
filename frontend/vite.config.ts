@@ -20,12 +20,12 @@ export default defineConfig(({ mode }) => {
   };
 
   return {
-  build: {
-    emptyOutDir: true,
-    minify: true,
-    outDir: 'dist',
-    sourcemap: false,
-  },
+    build: {
+      emptyOutDir: true,
+      minify: true,
+      outDir: 'dist',
+      sourcemap: false,
+    },
     plugins: [react()],
     resolve: {
       alias: {
