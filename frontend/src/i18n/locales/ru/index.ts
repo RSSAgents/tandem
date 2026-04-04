@@ -19,6 +19,7 @@ import about from './about.json';
 import sidebar from './sidebar.json';
 import stack from './stack.json';
 import scoreDisplayModal from './scoreDisplayModal.json';
+import widgetFillBlanks from './widgetFillBlanks.json';
 
 export const ru = {
   aiAgent,
@@ -42,4 +43,5 @@ export const ru = {
   sidebar,
   stack,
   scoreDisplayModal,
+  widgetFillBlanks,
 };
