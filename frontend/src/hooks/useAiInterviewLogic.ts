@@ -393,7 +393,7 @@ export const useAiInterviewLogic = (state: AgentState) => {
       if (letters.length > 2) {
         const cyr = (letters.match(/[а-яА-ЯёЁ]/g) || []).length;
         const lat = (letters.match(/[a-zA-Z]/g) || []).length;
-        if ((lang === 'en' && cyr > lat) || (lang === 'ru' && lat > cyr)) {
+        if (lang === 'en' && cyr > lat) {
           state.addMessage(targetThreadId, {
             id: crypto.randomUUID(),
             sender: 'ai',
