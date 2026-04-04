@@ -1,22 +1,12 @@
 import { MODELS } from '@constants/aiAgentConstants';
 
 export const callGroqAPI = async (messages: { role: string; content: string }[]) => {
-  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-  if (!apiKey) return 'API Key is missing.';
-
   for (const model of MODELS) {
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch('/api/groq', {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model,
-          messages,
-          temperature: 0.7,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model, messages }),
       });
 
       const data = await response.json();
@@ -36,23 +26,12 @@ export const callGroqAPIStream = async (
   messages: { role: string; content: string }[],
   onChunk: (chunk: string) => void,
 ): Promise<string> => {
-  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-  if (!apiKey) return 'API Key is missing.';
-
   for (const model of MODELS) {
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch('/api/groq', {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model,
-          messages,
-          temperature: 0.7,
-          stream: true,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model, messages, stream: true }),
       });
 
       if (!response.ok) {
