@@ -7,10 +7,13 @@ export default async function handler(req: Request): Promise<Response> {
 
   const groqApiKey = process.env.GROQ_API_KEY;
   if (!groqApiKey) {
-    return new Response(JSON.stringify({ error: { message: 'API key not configured on server' } }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: { message: 'API key not configured on server' } }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
   }
 
   const { model, messages, temperature, stream } = await req.json();
