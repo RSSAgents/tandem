@@ -1,6 +1,6 @@
 ## Self-Assessment
 
-**Ссылка на PR:** https://github.com/RSSAgents/tandem/pull/
+**Ссылка на PR:** [PR#250](https://github.com/RSSAgents/tandem/pull/250)
 
 ### Personal Features
 
