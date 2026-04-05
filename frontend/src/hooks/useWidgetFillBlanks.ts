@@ -22,6 +22,7 @@ export const useWidgetFillBlanks = () => {
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   const currentTask = tasks[currentIndex];
@@ -84,10 +85,14 @@ export const useWidgetFillBlanks = () => {
 
     for (const s of currentTask.payload.statements) {
       const answerIndex = answers[currentTask.id]?.[s.id];
-      if (answerIndex === undefined) continue;
+      const key = `${currentTask.id}_${s.id}`;
+
+      if (answerIndex === undefined) {
+        results[key] = false;
+        continue;
+      }
 
       const isCorrect = await checkFillBlanksAnswer(currentTask.id, s.id, answerIndex);
-      const key = `${currentTask.id}_${s.id}`;
       results[key] = isCorrect;
 
       if (isCorrect) {
@@ -111,13 +116,27 @@ export const useWidgetFillBlanks = () => {
       setIsCorrect(false);
     } else {
       try {
-        const correctCountAll = Object.values(resultMap).filter(Boolean).length;
+        let correctCountAll = 0;
+
+        for (const task of tasks) {
+          for (const s of task.payload.statements) {
+            const key = `${task.id}_${s.id}`;
+
+            if (resultMap[key] === true) {
+              correctCountAll++;
+            }
+          }
+        }
         setCorrectAnswersCount(correctCountAll);
 
         const finalScore = Math.round((correctCountAll / totalStatements) * 80);
-        setScore(finalScore);
-
-        await saveFillBlanksScore(finalScore);
+        if (finalScore > bestScore) {
+          setBestScore(finalScore);
+          setScore(finalScore);
+          await saveFillBlanksScore(finalScore);
+        } else {
+          setScore(finalScore);
+        }
       } catch {
         setError('Failed to save score');
       }
