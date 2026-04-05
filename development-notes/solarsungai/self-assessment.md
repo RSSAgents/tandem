@@ -1,4 +1,4 @@
-# Self-Assessment — Solarsungai
+# Self-Assessment - Solarsungai
 
 ## Таблица фич
 
@@ -93,7 +93,7 @@ View `questions_public` скрывает `correctAnswer` - правильный 
 
 ## Мои два личных Feature Component
 
-### 1. AI Agent — Chat UI + Interview Logic
+### 1. AI Agent - Chat UI + Interview Logic
 
 **Что это:** полноценный AI-ассистент для подготовки к техническому интервью с тремя независимыми режимами работы.
 
@@ -114,20 +114,52 @@ View `questions_public` скрывает `correctAnswer` - правильный 
 
 ---
 
-### 2. Supabase Auth — регистрация, авторизация, профили
+### 2. Supabase - полная интеграция с базой данных
 
-**Что это:** полноценная система аутентификации на Supabase Auth без собственного бэкенда.
+**Что это:** полный бэкенд-слой приложения на Supabase (PostgreSQL + Auth) без собственного сервера.
 
-**Что реализовано:**
+#### Схема базы данных и подключение
 
-- `signUp` с **предварительной проверкой уникальности** email и username через RPC-функцию `check_registration_available` (SECURITY DEFINER) - данные не дублируются, RLS не расширяется.
-- Триггер `on_auth_user_created` автоматически создаёт запись в таблице `profiles` - username и email всегда синхронизированы.
-- Если email уже занят - вместо просто ошибки пользователь получает **предложение восстановить пароль**; при согласии уходит письмо через `resetPasswordForEmail`.
-- Email-подтверждение с кастомным шаблоном письма в Supabase.
-- `AuthProvider` с `onAuthStateChange` - сессия не теряется при F5, logout обрабатывается везде.
-- Все ошибки (дубль email, дубль username, неверный пароль, сетевая ошибка) и сообщения об успехе - **полностью локализованы** на EN/RU.
+Спроектировала и создала структуру таблиц в Supabase Dashboard:
 
-**Почему это нетривиально:** стандартный `signUp` в Supabase не возвращает ошибку при дублировании - он тихо отправляет повторное письмо.
-Пришлось делать RPC-функцию с `SECURITY DEFINER` на стороне базы, которая проверяет `auth.users` и `profiles` до вызова `signUp`.
+- `profiles` - профиль пользователя (username, email), создаtтся автоматически триггером `on_auth_user_created` после регистрации.
+- `questions` - единая таблица для вопросов всех виджетов с полем `payload JSONB`. Вместо отдельной таблицы под каждый виджет - одна гибкая структура: при добавлении нового виджета схема не меняется.
+- `questions_public` (View) - публичное представление таблицы `questions`, которое **скрывает поле `correctAnswer`**. Правильный ответ никогда не уходит на клиент.
+- `ai_topic_scores` - баллы пользователя по темам AI-агента (`user_id`, `topic`, `score`).
+- `ai_message_history` - история переписки AI-агента (`user_id`, `topic`, `thread_type`, `messages JSONB`).
+- `widget_scores` - баллы по виджетам (`user_id`, `widget_type`, `score`, `max_score`).
 
-**Ключевые файлы:** [auth.api.ts](../../frontend/src/api/auth.api.ts), [AuthProvider.tsx](../../frontend/src/providers/AuthProvider.tsx), [AuthContext.ts](../../frontend/src/providers/AuthContext.ts)
+Подключение к проекту - единый клиент через `createClient` в [`supabase.ts`](../../frontend/src/utils/supabase.ts), ключи вынесены в `.env` (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`). Все модули импортируют только этот инстанс - нет дублирования клиентов.
+
+#### Загрузка вопросов и проверка ответов
+
+Для каждого виджета - отдельный API-модуль в `src/api/`. Запросы читают только из View `questions_public` (без `correctAnswer`), проверка правильности - через RPC-функции на стороне базы:
+- `getWidgetTasks()` — загружает вопросы виджета из `questions_public` по фильтру `type`.
+- `check_console_answer(question_id, user_answer)` - RPC-функция, сравнивает ответ пользователя с `correctAnswer` из защищённой таблицы и возвращает только `{ isCorrect, score, explanation }`. Фронтенд не видит правильный ответ никогда.
+- Текст вопросов и варианты ответов хранятся как `{ "ru": "...", "en": "..." }` прямо в JSONB payload - локализация на уровне данных через готовую утилиту `getLocalizedString`.
+
+#### Сохранение и загрузка истории AI-агента
+
+История каждого треда (тема + тип треда) сохраняется в `ai_message_history` и загружается при открытии диалога:
+- `saveThreadHistory(topic, threadType, messages)` - `upsert` по ключу `user_id + topic + thread_type`; если запись уже есть — обновляется, не дублируется.
+- `loadThreadHistory(topic, threadType)` - загружает массив сообщений при смене темы; в `useThreadHistory.ts` управляет флагом `isLoadingHistory`, чтобы не показывать старую историю во время загрузки.
+- `clearThreadHistory(topic, threadType)` - удаляет историю конкретного треда при сбросе диалога.
+
+#### Сохранение баллов
+
+Единая таблица `widget_scores` для всех виджетов + отдельная `ai_topic_scores` для тем AI-агента:
+- `saveTopicScore(topic, score)` - `upsert` по `user_id + topic`; обновляет лучший результат по теме.
+- `saveAiAgentWidgetScore(totalScore, maxScore)` - сохраняет итоговый балл AI-агента в `widget_scores` с `widget_type: 'ai-agent'`.
+- `saveStackScore(score)` - аналогично для виджета Stack в [`widgetStack.api.ts`](../../frontend/src/api/widgetStack.api.ts).
+- Все `upsert` используют `onConflict` - нет дублирования строк, всегда актуальный результат.
+
+#### Авторизация
+
+- `signUp` с **предварительной проверкой уникальности** email и username через RPC-функцию `check_registration_available` (`SECURITY DEFINER`).
+   Cтандартный `signUp` в Supabase при дублировании тихо отправляет повторное письмо без ошибки; RPC-функция проверяет `auth.users` и `profiles` до вызова `signUp`.
+- Если email уже занят - вместо ошибки пользователь получает **предложение восстановить пароль** через `resetPasswordForEmail`.
+- `AuthProvider` с `onAuthStateChange` - сессия восстанавливается после F5, logout обрабатывается везде.
+- Все ошибки и сообщения об успехе **полностью локализованы** на EN/RU.
+ 
+**Ключевые файлы:** [supabase.ts](../../frontend/src/utils/supabase.ts), [auth.api.ts](../../frontend/src/api/auth.api.ts), [aiAgent.api.ts](../../frontend/src/api/aiAgent.api.ts), [widgetConsole.api.ts](../../frontend/src/api/widgetConsole.api.ts), [widgetStack.api.ts](../../frontend/src/api/widgetStack.api.ts), [AuthProvider.tsx](../../frontend/src/providers/AuthProvider.tsx)
+ 
