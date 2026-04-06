@@ -71,3 +71,30 @@ For deployment, the project will use Vercel.
 - Обеспечили качество кода через тестирование: unit-тестами покрыли большинство компонентов, а E2E-тесты проверяют ключевую пользовательскую логику
 - Реализовали полную интернационализацию проекта с поддержкой русского и английского языков
 - Мы справились со всеми поставленными задачами: все компоненты интегрированы, все фичи реализованы — перед нами полноценный, завершённый проект
+
+**Участники и ссылки на дневники:**
+
+- Fayzullo (Fayzullo05): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/fayzullo05)
+- Ilia (D15ND): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/D15ND)
+- Margarita (solarsungai): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/solarsungai)
+- Marta (27moon): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/27moon)
+- Vika (oneilcode): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/oneilcode)
+
+**Доска (ссылка и скриншот):**
+
+https://github.com/orgs/RSSAgents/projects/1/views/1
+
+![alt text](image.png)
+
+**Лучшие ПР:**
+
+[PR 1](https://github.com/RSSAgents/tandem/pull/215)
+[PR 2](https://github.com/RSSAgents/tandem/pull/50#event-23056591936)
+[PR 3](https://github.com/RSSAgents/tandem/pull/156#event-23613878422)
+
+**Meeting notes:**
+
+
+**Self-assessment PR:**
+
+
