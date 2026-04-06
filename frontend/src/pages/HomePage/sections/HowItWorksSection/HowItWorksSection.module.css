@@ -1,6 +1,6 @@
 .sectionTitle {
   font-weight: 800;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--text-main);
   margin-bottom: 24px;
 }
 
@@ -14,7 +14,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -45,8 +47,10 @@
 
 .card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2);
-  border-color: transparent;
+  box-shadow:
+    var(--shadow-heavy),
+    0 0 20px var(--accent-glow);
+  border-color: var(--accent);
 }
 
 .cardTitle {
@@ -70,7 +74,7 @@
   right: 20px;
   font-size: 15rem;
   line-height: 1;
-  color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  color: var(--text-dim);
   transition: all 0.3s ease;
   opacity: 0.1;
   pointer-events: none;

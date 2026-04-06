@@ -1,0 +1,15 @@
+{
+  "title": "Fill in the blanks",
+  "questionProgress": "Question {{current}} of {{total}}",
+
+  "buttons": {
+    "previous": "Previous",
+    "checkResult": "Check result",
+    "next": "Next"
+  },
+
+  "messages": {
+    "correct": "Great job!",
+    "incorrect": "Some answers are incorrect. Check highlighted answers."
+  }
+}

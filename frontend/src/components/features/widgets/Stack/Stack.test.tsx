@@ -5,6 +5,7 @@ import { screen, waitFor } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import { describe, expect, it } from 'vitest';
 import StackWidget from './Stack';
+import classes from './Stack.module.css';
 
 const withI18n = (component: React.ReactNode) => (
   <I18nextProvider i18n={i18n}>{component}</I18nextProvider>
@@ -97,9 +98,12 @@ describe('StackWidget', () => {
     expect(screen.queryByText('LIFO')).not.toBeInTheDocument();
   });
 
-  it('does not show FIFO section initially', async () => {
+  it('does not show FIFO section initially (should be hidden)', async () => {
     renderStackWidget();
     await waitForLoad();
-    expect(screen.queryByText('FIFO')).not.toBeInTheDocument();
+
+    const fifoTitle = screen.getByText('FIFO');
+    const fifoSection = fifoTitle.closest(`.${classes.section}`);
+    expect(fifoSection).toHaveClass(classes.sectionHidden);
   });
 });

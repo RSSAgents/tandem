@@ -1,6 +1,7 @@
 {
   "login": "Войти",
   "signup": "Регистрация",
+  "logout": "Выйти",
   "themeToggle": "Переключить тему",
   "selectLanguage": "Выбрать язык"
 }

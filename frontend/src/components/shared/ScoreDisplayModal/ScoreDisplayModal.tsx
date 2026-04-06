@@ -1,26 +1,30 @@
 import { Button, Flex, Modal, Paper, Text, Title } from '@mantine/core';
 import styles from './ScoreDisplayModal.module.css';
-import { IScoreDisplayProps } from '@/types/scoreDisplay.types';
+import { useTranslation } from 'react-i18next';
 
-interface IScoreDisplayModalProps extends IScoreDisplayProps {
+interface IScoreDisplayModalProps {
+  points: number;
+  correctAnswers: number;
+  total: number;
   opened: boolean;
   onClose: () => void;
   onTryAgain: () => void;
 }
 
 export const ScoreDisplayModal = ({
-  score,
+  points,
+  correctAnswers,
   total,
   opened,
   onClose,
   onTryAgain,
 }: IScoreDisplayModalProps) => {
-  const totalPoints = score * 10;
-
   const handleTryAgain = () => {
     onTryAgain();
     onClose();
   };
+
+  const { t } = useTranslation('scoreDisplayModal');
 
   return (
     <Modal
@@ -36,18 +40,18 @@ export const ScoreDisplayModal = ({
     >
       <Paper className={styles.scoreContainer}>
         <Title order={3} className={styles.completedTitle}>
-          Test completed!
+          {t('title')}
         </Title>
-        <Text className={styles.completedScore}>Your score: {totalPoints} points</Text>
+        <Text className={styles.completedScore}>{t('yourScore', { points })}</Text>
         <Text className={styles.completedScore}>
-          Correct answers: {score} out of {total}
+          {t('correctAnswers', { correctAnswers, total })}
         </Text>
         <Flex gap="md" mt="xl" justify="center">
           <Button fullWidth onClick={handleTryAgain} className={styles.closeButton} mt="md">
-            Try again
+            {t('tryAgain')}
           </Button>
           <Button fullWidth onClick={onClose} className={styles.closeButton} mt="md">
-            Close
+            {t('close')}
           </Button>
         </Flex>
       </Paper>

@@ -6,34 +6,34 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  gap: 20px;
+  gap: 10px;
 }
 
 .title {
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--text-main);
   text-align: center;
   font-size: 28px;
   margin-bottom: 5px;
 }
 
 .controls {
-  margin-bottom: 15px;
   width: 100%;
   max-width: 600px;
-  min-height: 220px;
+  min-height: 240px;
+  height: 240px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 40px;
+  gap: 10px;
 }
 
 .quizBox {
   width: 100%;
   padding: 20px;
-  border: 2px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-gray-7));
+  border: 2px solid var(--border);
   border-radius: 12px;
-  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--panel);
+  box-shadow: var(--shadow-light);
   overflow: hidden;
 }
 
@@ -42,11 +42,24 @@
   font-weight: 600;
   margin-bottom: 16px;
   text-align: center;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--text-main);
 }
 
 .radioGroup {
   gap: 16px;
+}
+
+.radioGroup :global(.mantine-Radio-radio) {
+  border-color: var(--accent);
+}
+
+.radioGroup :global(.mantine-Radio-radio:checked) {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.radioGroup :global(.mantine-Radio-label) {
+  color: var(--text-main);
 }
 
 .feedbackText {
@@ -54,14 +67,24 @@
   margin-top: 16px;
   text-align: center;
   font-weight: 500;
+  min-height: 20px;
+}
+
+.feedbackHidden {
+  visibility: hidden;
+}
+
+.sectionHidden {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .feedbackCorrect {
-  color: var(--mantine-color-green-6);
+  color: var(--success);
 }
 
 .feedbackIncorrect {
-  color: var(--mantine-color-red-6);
+  color: var(--error);
 }
 
 .submitButton {
@@ -69,10 +92,17 @@
   width: 100%;
 }
 
+.submitButton:disabled {
+  background-color: var(--accent-subtle) !important;
+  color: var(--text-dim) !important;
+  border-color: var(--border) !important;
+  opacity: 0.6;
+}
+
 .completedText {
   font-size: 20px;
   font-weight: 700;
-  color: var(--mantine-color-green-6);
+  color: var(--success);
   text-align: center;
 }
 
@@ -94,7 +124,7 @@
 }
 
 .sectionTitle {
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--text-main);
   margin-bottom: 10px;
   font-size: 20px;
   font-weight: 700;
@@ -109,9 +139,9 @@
   max-height: 280px;
   width: 100%;
   padding: 15px;
-  border: 3px dashed light-dark(var(--mantine-color-gray-4), var(--mantine-color-gray-7));
+  border: 3px dashed var(--border);
   border-radius: 12px;
-  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  background: var(--panel-soft);
   gap: 8px;
   position: relative;
   overflow: hidden;
@@ -127,9 +157,9 @@
   width: 100%;
   max-width: 100%;
   padding: 15px;
-  border: 3px dashed light-dark(var(--mantine-color-gray-4), var(--mantine-color-gray-7));
+  border: 3px dashed var(--border);
   border-radius: 12px;
-  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  background: var(--panel-soft);
   gap: 8px;
   position: relative;
   overflow-x: auto;
@@ -142,9 +172,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--mantine-color-blue-6), var(--mantine-color-blue-8));
+  background: var(--gradient-accent);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-light);
   cursor: default;
   flex-shrink: 0;
 }
@@ -155,9 +185,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--mantine-color-green-6), var(--mantine-color-green-8));
+  background: linear-gradient(135deg, var(--success), #15803d);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-light);
   cursor: default;
   flex-shrink: 0;
 }
@@ -165,7 +195,7 @@
 .itemText {
   font-size: 18px;
   font-weight: 700;
-  color: var(--mantine-color-white);
+  color: var(--text-on-accent);
 }
 
 .emptyText {
@@ -175,7 +205,7 @@
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: 14px;
-  color: var(--mantine-color-dimmed);
+  color: var(--text-dim);
 }
 
 @media (max-width: 768px) {

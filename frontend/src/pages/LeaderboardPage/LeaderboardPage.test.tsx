@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { it, expect, beforeAll, vi } from 'vitest';
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from '@/utils/test-util';
 import { LeaderboardPage } from './LeaderboardPage';
@@ -11,63 +11,27 @@ beforeAll(() => {
   };
 });
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
+vi.mock('@/hooks/useLeaderboard', () => ({
+  useLeaderboard: () => ({
+    leaders: [
+      { username: 'User 1', total_score: 100, total_percent_ai: 10 },
+      { username: 'User 2', total_score: 50, total_percent_ai: 5 },
+    ],
+    loading: false,
+    error: null,
   }),
 }));
 
-describe('LeaderboardPage', () => {
-  it('displays table headers', () => {
-    renderWithProviders(<LeaderboardPage />);
+it('displays user rows when data exists', () => {
+  renderWithProviders(<LeaderboardPage />);
 
-    const headers = document.querySelectorAll('thead th');
-    expect(headers.length).toBeGreaterThan(0);
-  });
+  const rows = document.querySelectorAll('tbody tr');
+  expect(rows.length).toBe(2);
+});
 
-  it('displays all participants', () => {
-    renderWithProviders(<LeaderboardPage />);
+it('displays scores for each user', () => {
+  renderWithProviders(<LeaderboardPage />);
 
-    expect(screen.getByText('Homer')).toBeDefined();
-    expect(screen.getByText('Bart')).toBeDefined();
-    expect(screen.getByText('Liza')).toBeDefined();
-    expect(screen.getByText('Marge')).toBeDefined();
-    expect(screen.getByText('Ivan Ivanov')).toBeDefined();
-  });
-
-  it('displays avatars for all participants', () => {
-    renderWithProviders(<LeaderboardPage />);
-
-    const avatars = document.querySelectorAll('img');
-    expect(avatars.length).toBe(5);
-  });
-
-  it('displays Homer as first place', () => {
-    renderWithProviders(<LeaderboardPage />);
-
-    const homerElement = screen.getByText('Homer');
-    const parentRow = homerElement.closest('tr');
-    expect(parentRow?.textContent).toContain('50');
-    expect(parentRow?.textContent).toContain('1');
-  });
-
-  it('displays Ivan Ivanov with 10 points', () => {
-    renderWithProviders(<LeaderboardPage />);
-
-    const ivanElement = screen.getByText('Ivan Ivanov');
-    const parentRow = ivanElement.closest('tr');
-    expect(parentRow?.textContent).toContain('10');
-  });
-
-  it('sorts participants by score in descending order', () => {
-    renderWithProviders(<LeaderboardPage />);
-
-    const rows = document.querySelectorAll('tbody tr');
-
-    expect(rows[0]?.textContent).toContain('Homer');
-    expect(rows[1]?.textContent).toContain('Bart');
-    expect(rows[2]?.textContent).toContain('Liza');
-    expect(rows[3]?.textContent).toContain('Marge');
-    expect(rows[4]?.textContent).toContain('Ivan Ivanov');
-  });
+  expect(screen.getByText('100')).toBeDefined();
+  expect(screen.getByText('50')).toBeDefined();
 });

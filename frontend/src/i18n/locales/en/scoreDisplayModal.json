@@ -1,0 +1,7 @@
+{
+  "title": "Test completed!",
+  "yourScore": "Your score: {{points}} points",
+  "correctAnswers": "Correct answers: {{correctAnswers}} out of {{total}}",
+  "tryAgain": "Try again",
+  "close": "Close"
+}

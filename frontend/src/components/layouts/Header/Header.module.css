@@ -23,4 +23,49 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.group :global(.mantine-Button-root),
+.group :global(.mantine-ActionIcon-root) {
+  height: 36px;
+  min-height: 36px;
+}
+
+.group :global(.mantine-Button-root) {
+  min-width: 122px;
+}
+
+.group :global(.mantine-ActionIcon-root) {
+  width: 36px;
+  min-width: 36px;
+}
+
+@media (max-width: 480px) {
+  .group {
+    gap: 4px;
+  }
+
+  .group :global(.mantine-Button-root) {
+    font-size: 11px;
+    padding: 4px 8px;
+    height: 28px;
+  }
+
+  .group :global(.mantine-ActionIcon-root) {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
 }

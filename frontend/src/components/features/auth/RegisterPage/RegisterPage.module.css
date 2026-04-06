@@ -6,23 +6,35 @@
 }
 
 .card {
-  width: 380px;
-  padding: var(--mantine-spacing-xl) var(--mantine-spacing-2xl);
+  width: 400px;
+  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-2xl);
 
   border-radius: var(--mantine-radius-2xl);
   background: var(--card-bg);
   border: 1px solid var(--border);
 
-  box-shadow: var(--shadow-light);
+  box-shadow: var(--shadow-heavy);
   position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 0%, var(--accent-glow), transparent 60%);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .signinLink {
   text-align: center;
   cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .signinLink:hover {
-  color: var(--accent);
+  color: var(--accent-hover);
 }

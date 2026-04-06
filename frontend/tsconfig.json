@@ -33,7 +33,8 @@
       "@providers/*": ["./src/providers/*"],
       "@i18n/*": ["./src/i18n/*"],
       "@pages/*": ["./src/pages/*"],
-      "@constants/*": ["./src/constants/*"]
+      "@constants/*": ["./src/constants/*"],
+      "@images/*": ["./src/images/*"]
     }
   },
   "include": ["src"],

@@ -1,6 +1,6 @@
 .sectionTitle {
   font-weight: 800;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--text-main);
   text-align: center;
 }
 

@@ -13,7 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export const useAiInterviewLogic = (state: AgentState) => {
-  const { t } = useTranslation('aiAgent');
+  const { t, i18n } = useTranslation('aiAgent');
 
   const getStartMessageForType = (type: ThreadType, topic: string | null) => {
     const params = {
@@ -384,6 +384,25 @@ export const useAiInterviewLogic = (state: AgentState) => {
         ...prev,
         [state.activeTopic!]: { ...prev[state.activeTopic!], [type]: '' },
       }));
+    }
+
+    // Language check: if user wrote in wrong script, warn and skip API call
+    if (!forcedText) {
+      const lang = (i18n.resolvedLanguage || 'en').toLowerCase();
+      const letters = text.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
+      if (letters.length > 2) {
+        const cyr = (letters.match(/[а-яА-ЯёЁ]/g) || []).length;
+        const lat = (letters.match(/[a-zA-Z]/g) || []).length;
+        if (lang === 'en' && cyr > lat) {
+          state.addMessage(targetThreadId, {
+            id: crypto.randomUUID(),
+            sender: 'ai',
+            text: t('errors.speakLanguage'),
+            timestamp: Date.now(),
+          });
+          return;
+        }
+      }
     }
 
     state.setIsWaitingForAnswer(true);

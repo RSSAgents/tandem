@@ -1,0 +1,15 @@
+{
+  "title": "Заполните пропуски",
+  "questionProgress": "Вопрос {{current}} из {{total}}",
+
+  "buttons": {
+    "previous": "Назад",
+    "checkResult": "Проверить",
+    "next": "Далее"
+  },
+
+  "messages": {
+    "correct": "Отлично!",
+    "incorrect": "Есть ошибки. Проверьте выделенные ответы."
+  }
+}

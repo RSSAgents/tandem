@@ -35,15 +35,19 @@ const LifoQuiz = ({
           onChange={(e) => setSelectedLifo(e.currentTarget.value)}
         />
       </MantineStack>
-      {showLifoFeedback && (
-        <Text
-          className={`${classes.feedbackText} ${
-            selectedLifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
-          }`}
-        >
-          {selectedLifo === 'correct' ? stackQueue.feedback.correct : stackQueue.feedback.incorrect}
-        </Text>
-      )}
+
+      <Text
+        className={`${classes.feedbackText} ${
+          selectedLifo === 'correct' ? classes.feedbackCorrect : classes.feedbackIncorrect
+        } ${!showLifoFeedback ? classes.feedbackHidden : ''}`}
+      >
+        {showLifoFeedback
+          ? selectedLifo === 'correct'
+            ? stackQueue.feedback.correct
+            : stackQueue.feedback.incorrect
+          : ' '}
+      </Text>
+
       <Button className={classes.submitButton} disabled={!selectedLifo} onClick={handleLifoAnswer}>
         {t('stackQueue.button')}
       </Button>

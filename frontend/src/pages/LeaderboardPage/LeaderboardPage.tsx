@@ -1,55 +1,51 @@
-import { useTranslation } from 'react-i18next';
-import { ScrollArea, Table, Paper, Stack, Container } from '@mantine/core';
-import classes from './LeaderboardPage.module.css';
 import { WINNERS_TABLE_HEADERS } from '@/constants/winnerTableHeaders';
-import { Winner } from '@/types/winner.types';
+import { Box, Loader, Paper, ScrollArea, Stack, Table, Text } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
+import classes from './LeaderboardPage.module.css';
 import { LeaderboardRow } from './LeaderboardRow';
-
-const data: Winner[] = [
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
-    name: 'Ivan Ivanov',
-    score: 10,
-    widgetsAmount: { completed: 2, notCompleted: 3 },
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',
-    name: 'Marge',
-    score: 20,
-    widgetsAmount: { completed: 3, notCompleted: 2 },
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',
-    name: 'Liza',
-    score: 30,
-    widgetsAmount: { completed: 4, notCompleted: 1 },
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
-    name: 'Bart',
-    score: 40,
-    widgetsAmount: { completed: 5, notCompleted: 0 },
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png',
-    name: 'Homer',
-    score: 50,
-    widgetsAmount: { completed: 2, notCompleted: 3 },
-  },
-];
-
-const sortedByScoreData = [...data].sort((a, b) => b.score - a.score);
+import { useLeaderboard } from '@/hooks/useLeaderboard';
 
 export const LeaderboardPage = () => {
   const { t } = useTranslation('leaderboard');
 
+  const { leaders, loading, error } = useLeaderboard();
+
+  if (loading) {
+    return (
+      <Box className={classes.wrapper}>
+        <Paper withBorder p="md" radius="lg" className={classes.paper}>
+          <Loader size="lg" />
+        </Paper>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box className={classes.wrapper}>
+        <Paper withBorder p="md" radius="lg" className={classes.paper}>
+          <Text c="red" ta="center">
+            {error}
+          </Text>
+        </Paper>
+      </Box>
+    );
+  }
+
+  if (leaders.length === 0) {
+    return (
+      <Box className={classes.wrapper}>
+        <Paper withBorder p="md" radius="lg" className={classes.paper}>
+          <Text c="dimmed" ta="center">
+            No users yet. Be the first!
+          </Text>
+        </Paper>
+      </Box>
+    );
+  }
+
   return (
-    <Container size="xl" className={classes.wrapper}>
+    <Box className={classes.wrapper}>
       <Paper withBorder p="md" radius="lg" className={classes.paper}>
         <Stack gap="lg">
           <ScrollArea className={classes.scrollArea}>
@@ -62,14 +58,14 @@ export const LeaderboardPage = () => {
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
-                {sortedByScoreData.map((item, index) => (
-                  <LeaderboardRow key={index} item={item} rank={index + 1} />
+                {leaders.map((user, index) => (
+                  <LeaderboardRow key={user.username} user={user} rank={index + 1} />
                 ))}
               </Table.Tbody>
             </Table>
           </ScrollArea>
         </Stack>
       </Paper>
-    </Container>
+    </Box>
   );
 };
