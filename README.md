@@ -69,11 +69,11 @@ For deployment, the project will use Vercel.
 
 **Ссылки на дневники и Self-assessment PR:**
 
-- Fayzullo (Fayzullo05): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/fayzullo05) [self-assessment](development-notes/fayzullo05/self-assessment.md)
-- Ilia (D15ND): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/D15ND) [self-assessment](development-notes/D15ND/self-assessment.md)
-- Margarita (solarsungai): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/solarsungai) [self-assessment](development-notes/solarsungai/self-assessment.md)
-- Marta (27moon): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/27moon) [self-assessment](development-notes/27moon/self-assessment.md)
-- Vika (oneilcode): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/oneilcode) [self-assessment](development-notes/oneilcode/self-assessment.md)
+- Fayzullo (Fayzullo05): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/fayzullo05) | [self-assessment](development-notes/fayzullo05/self-assessment.md)
+- Ilia (D15ND): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/D15ND) | [self-assessment](development-notes/D15ND/self-assessment.md)
+- Margarita (solarsungai): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/solarsungai) | [self-assessment](development-notes/solarsungai/self-assessment.md)
+- Marta (27moon): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/27moon) | [self-assessment](development-notes/27moon/self-assessment.md)
+- Vika (oneilcode): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/oneilcode) | [self-assessment](development-notes/oneilcode/self-assessment.md)
 
 **Доска (ссылка и скриншот):**
 
