@@ -22,7 +22,6 @@ const WidgetFillBlanks = () => {
     handleNextQuestion,
     handlePreviousQuestion,
     showResult,
-    isAllAnswered,
     isLastQuestion,
     currentIndex,
     tasks,
@@ -124,11 +123,7 @@ const WidgetFillBlanks = () => {
           {t('buttons.previous')}
         </Button>
 
-        <Button
-          className={classes.btn}
-          disabled={!isAllAnswered || showResult}
-          onClick={onCheckClick}
-        >
+        <Button className={classes.btn} disabled={showResult} onClick={onCheckClick}>
           {t('buttons.checkResult')}
         </Button>
 
