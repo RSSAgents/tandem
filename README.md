@@ -13,17 +13,18 @@
 
 This project was developed by the RSSAgents team as part of the RS School JS/FE course:
 
-| Role                   | Name      | GitHub                           |
-| ---------------------- | --------- | -------------------------------- |
-| **Team Lead - Mentor** | Shakhzod  | (https://github.com/Shakhzod235) |
-| **Mentor**             | Diana     | (https://github.com/bt-diana)    |
-| **Mentor**             | Khayitbek | (https://github.com/Khayitbek03) |
-| **Mentor**             | Daria     | (https://github.com/dashque)     |
-| **Developer**          | Fayzullo  | (https://github.com/Fayzullo05)  |
-| **Developer**          | Ilia      | (https://github.com/D15ND)       |
-| **Developer**          | Margarita | (https://github.com/solarsungai) |
-| **Developer**          | Marta     | (https://github.com/27moon)      |
-| **Developer**          | Vika      | (https://github.com/oneilcode)   |
+| Role                   | Name      | GitHub                               |
+| ---------------------- | --------- | -------------------------------------|
+| **Team Lead - Mentor** | Shakhzod  | (https://github.com/Shakhzod235)     |
+| **Mentor**             | Diana     | (https://github.com/bt-diana)        |
+| **Mentor**             | Khayitbek | (https://github.com/Khayitbek03)     |
+| **Mentor**             | Daria     | (https://github.com/dashque)         |
+| **Mentor**             | Margarita | (https://github.com/Margaryta-Maletz)|
+| **Developer**          | Fayzullo  | (https://github.com/Fayzullo05)      |
+| **Developer**          | Ilia      | (https://github.com/D15ND)           |
+| **Developer**          | Margarita | (https://github.com/solarsungai)     |
+| **Developer**          | Marta     | (https://github.com/27moon)          |
+| **Developer**          | Vika      | (https://github.com/oneilcode)       |
 
 ## 🏗️ Tech Stack
 
@@ -54,3 +55,19 @@ For deployment, the project will use Vercel.
 ## 🚀 Checkpoint week 5🔗
 
 **Ссылка на видео:** [checkpoint-5](https://youtu.be/Wa8RyWGipxc)
+
+## 💣 Checkpoint week 7🔗
+
+**Ссылка на видео:** [checkpoint-7](https://www.youtube.com/watch?v=A4Hip18og64)
+
+**Чем гордимся:**
+
+- Современный стек технологий
+- Менторская поддержка (старт с архитектурой, фидбеки и ревью ПР)
+- Использовали дизайн-систему Mantine — это позволило использовать готовые компоненты «из коробки» без необходимости самостоятельной реализации, а через провайдер темы настроили единое управление цветом, который автоматически применяется ко всем блокам
+- Реализована регистрация с подтверждением email - пользователь получает письмо с работающей ссылкой для активации аккаунта
+- Настроили интеграцию с Supabase для авторизации, а данные для виджетов загружаются динамически при каждом рендере
+- Автоматизировали контроль качества: при каждом коммите срабатывают хуки (ESLint, Prettier, typecheck, unit и E2E тесты), а в GitHub Actions настроены CI/CD-проверки
+- Обеспечили качество кода через тестирование: unit-тестами покрыли большинство компонентов, а E2E-тесты проверяют ключевую пользовательскую логику
+- Реализовали полную интернационализацию проекта с поддержкой русского и английского языков
+- Мы справились со всеми поставленными задачами: все компоненты интегрированы, все фичи реализованы — перед нами полноценный, завершённый проект
