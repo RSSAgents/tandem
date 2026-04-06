@@ -162,4 +162,5 @@ View `questions_public` скрывает `correctAnswer` - правильный 
 - Все ошибки и сообщения об успехе **полностью локализованы** на EN/RU.
  
 **Ключевые файлы:** [supabase.ts](../../frontend/src/utils/supabase.ts), [auth.api.ts](../../frontend/src/api/auth.api.ts), [aiAgent.api.ts](../../frontend/src/api/aiAgent.api.ts), [widgetConsole.api.ts](../../frontend/src/api/widgetConsole.api.ts), [widgetStack.api.ts](../../frontend/src/api/widgetStack.api.ts), [AuthProvider.tsx](../../frontend/src/providers/AuthProvider.tsx)
- 
+
+**PR link:** [Self Assessment PR](https://github.com/RSSAgents/tandem/pull/247)
