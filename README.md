@@ -82,17 +82,17 @@ For deployment, the project will use Vercel.
 
 **Доска (ссылка и скриншот):**
 
-[Board](https://github.com/orgs/RSSAgents/projects/1/views/1)
+- [Board](https://github.com/orgs/RSSAgents/projects/1/views/1)
 
 ![alt text](image.png)
 
 **Лучшие ПР:**
 
-[PR 1](https://github.com/RSSAgents/tandem/pull/215)
+- [PR 1](https://github.com/RSSAgents/tandem/pull/215)
 
-[PR 2](https://github.com/RSSAgents/tandem/pull/50#event-23056591936)
+- [PR 2](https://github.com/RSSAgents/tandem/pull/50#event-23056591936)
 
-[PR 3](https://github.com/RSSAgents/tandem/pull/156#event-23613878422)
+- [PR 3](https://github.com/RSSAgents/tandem/pull/156#event-23613878422)
 
 **Meeting notes:**
 
