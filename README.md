@@ -1,6 +1,6 @@
 # RS JS/FE Final Project: Tandem - SPA Application
 
-**Tandem** is an interactive platform designed to help developers prepare for technical interviews and practice hard skills (JavaScript, TypeScript, Algorithms) through quizzes and coding challenges.
+**Tandem** is a project that prepares you for a technical interview for a Frontend Developer role. It includes an AI assistant that helps you get ready for the interview, along with widgets where you can practice, and a knowledge library where you can study the material. You can also earn points and compete with developers from around the world.
 
 ## 📚 Documentation
 
@@ -34,17 +34,12 @@ This project was developed by the RSSAgents team as part of the RS School JS/FE 
 - **Forms** | React Hook Form
 - **State Management** | Redux Toolkit
 - **Backend** | Node.js, Fastify
-- **Database & Auth** | Firebase / Supabase
+- **Database & Auth** | Supabase
 - **Build Tool** | Vite
 - **Code Quality** | ESLint, Prettier, Husky
 - **Testing** | Unit tests (React Testing Library), End-to-end tests (Cypress), Vitest
 - **CI/CD** | GitHub Actions (Dev → Staging, Main → Production)
 - **API Client** | Axios
-
-## 📈 Task Tracking
-
-- Development progress is managed via [GitHub Projects](https://github.com/orgs/RSSAgents/projects/1/views/1).
-- Development Diary - https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/rs-tandem/DEVELOPMENT_DIARY.md
 
 ## 🚀 Deployment
 
