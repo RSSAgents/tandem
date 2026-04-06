@@ -67,13 +67,13 @@ For deployment, the project will use Vercel.
 - Реализовали полную интернационализацию проекта с поддержкой русского и английского языков
 - Мы справились со всеми поставленными задачами: все компоненты интегрированы, все фичи реализованы - перед нами полноценный, завершённый проект
 
-**Участники и ссылки на дневники:**
+**Ссылки на дневники и Self-assessment PR:**
 
-- Fayzullo (Fayzullo05): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/fayzullo05)
-- Ilia (D15ND): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/D15ND)
-- Margarita (solarsungai): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/solarsungai)
-- Marta (27moon): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/27moon)
-- Vika (oneilcode): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/oneilcode)
+- Fayzullo (Fayzullo05): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/fayzullo05) [self-assessment](development-notes/fayzullo05/self-assessment.md)
+- Ilia (D15ND): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/D15ND) [self-assessment](development-notes/D15ND/self-assessment.md)
+- Margarita (solarsungai): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/solarsungai) [self-assessment](development-notes/solarsungai/self-assessment.md)
+- Marta (27moon): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/27moon) [self-assessment](development-notes/27moon/self-assessment.md)
+- Vika (oneilcode): [notes](https://github.com/RSSAgents/tandem/tree/main/development-notes/oneilcode) [self-assessment](development-notes/oneilcode/self-assessment.md)
 
 **Доска (ссылка и скриншот):**
 
@@ -83,9 +83,9 @@ For deployment, the project will use Vercel.
 
 **Лучшие ПР:**
 
-- [PR 1](https://github.com/RSSAgents/tandem/pull/215)
-- [PR 2](https://github.com/RSSAgents/tandem/pull/50#event-23056591936)
-- [PR 3](https://github.com/RSSAgents/tandem/pull/156#event-23613878422)
+- [Pull Request 1](https://github.com/RSSAgents/tandem/pull/215)
+- [Pull Request 2](https://github.com/RSSAgents/tandem/pull/50#event-23056591936)
+- [Pull Request 3](https://github.com/RSSAgents/tandem/pull/156#event-23613878422)
 
 **Meeting notes:**
 
@@ -94,8 +94,3 @@ For deployment, the project will use Vercel.
 - [14.03.2026](docs/meeting-notes/14.03.2026/note.md)
 - [26.03.2026](docs/meeting-notes/26.03.2026/note.md)
 - [04.04.2026](docs/meeting-notes/4.04.2026/note.md)
-
-
-**Self-assessment PR:**
-
-
