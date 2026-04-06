@@ -1,6 +1,6 @@
 # Self-Assessment
 
-Ссылка на PR: !!!![PR#260]()!!!!
+Ссылка на PR: [PR#260](https://github.com/RSSAgents/tandem/pull/256)
 
 ## Personal Features
 
@@ -48,4 +48,4 @@
 | **Frameworks**       | **React:** Использование библиотеки React                                                                              | +5            |
 |                      | **Angular:** Использование фреймворка Angular                                                                          | +10           |
 |                      | **Vue:** Использование фреймворка Vue                                                                                  | +5            |
-|                      | **Meta-Framework:** SSR/SSG/ISR через мета-фреймворк (Next.js, Nuxt, Analog)        
+|                      | **Meta-Framework:** SSR/SSG/ISR через мета-фреймворк (Next.js, Nuxt, Analog)
