@@ -96,6 +96,12 @@ For deployment, the project will use Vercel.
 
 **Meeting notes:**
 
+- [22.02.2026](docs/meeting-notes/22.02.2026/note.md)
+- [07.03.2026](docs/meeting-notes/7.03.2026/note.md)
+- [14.03.2026](docs/meeting-notes/14.03.2026/note.md)
+- [26.03.2026](docs/meeting-notes/26.03.2026/note.md)
+- [04.04.2026](docs/meeting-notes/4.04.2026/note.md)
+
 
 **Self-assessment PR:**
 
