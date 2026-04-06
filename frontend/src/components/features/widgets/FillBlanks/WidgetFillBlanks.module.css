@@ -78,6 +78,7 @@
   width: 100%;
   flex: 1;
   height: 44px;
+  min-height: 44px;
   border-radius: 10px;
   transition: all 0.2s ease;
 }
