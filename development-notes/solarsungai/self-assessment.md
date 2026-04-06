@@ -131,3 +131,4 @@ View `questions_public` скрывает `correctAnswer` - правильный 
 Пришлось делать RPC-функцию с `SECURITY DEFINER` на стороне базы, которая проверяет `auth.users` и `profiles` до вызова `signUp`.
 
 **Ключевые файлы:** [auth.api.ts](../../frontend/src/api/auth.api.ts), [AuthProvider.tsx](../../frontend/src/providers/AuthProvider.tsx), [AuthContext.ts](../../frontend/src/providers/AuthContext.ts)
+**PR link:** https://github.com/RSSAgents/tandem/pull/247
