@@ -78,11 +78,14 @@ export default function WidgetThis() {
       <Stack gap="md" className={classes.contentStack}>
         <Group className={classes.header}>
           <Stack gap={0}>
-            <Text size="xl" fw={900} tt="uppercase" lts={1.8}>
+            <Text size="xl" fw={900}>
               "this"
             </Text>
-            <Text size="xs" c="dimmed" fw={700}>
-              {currentIndex + 1} / {tasks.length}
+            <Text className={classes.counter} data-testid="task-counter">
+              {t('widgets.this_quiz.question_step', {
+                current: currentIndex + 1,
+                total: tasks.length,
+              })}
             </Text>
           </Stack>
         </Group>
