@@ -16,6 +16,7 @@ import {
   Progress,
   ScrollArea,
   SegmentedControl,
+  Select,
   Text,
   Textarea,
 } from '@mantine/core';
@@ -23,6 +24,7 @@ import classes from '@pages/AiAgentPage/AiAgentPage.module.css';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface InterviewerSectionProps {
   interviewerMode: InterviewerMode;
@@ -72,6 +74,7 @@ export const InterviewerSection = ({
   const { t } = useTranslation('aiAgent');
   const timerColor = timer !== null && timer < TIMER_WARNING_THRESHOLD ? 'red' : undefined;
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const isNarrow = useMediaQuery('(max-width: 420px)');
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -100,25 +103,40 @@ export const InterviewerSection = ({
       >
         <Box mb="md">
           <Group justify="space-between" align="center" mb="xs">
-            <SegmentedControl
-              value={interviewerMode}
-              onChange={(value) => onInterviewerModeChange(value as InterviewerMode)}
-              data={
-                isMobile
-                  ? [
-                      { label: t('interviewer.label'), value: 'interviewer' },
-                      { label: t('interviewer.aiInterview'), value: 'ai-interview' },
-                      { label: t('teacher.label'), value: 'teacher' },
-                    ]
-                  : [
-                      { label: t('interviewer.label'), value: 'interviewer' },
-                      { label: t('interviewer.aiInterview'), value: 'ai-interview' },
-                    ]
-              }
-              classNames={{
-                root: classes.modeSwitcher,
-              }}
-            />
+            {(() => {
+              const modeData = [
+                { label: t('interviewer.label'), value: 'interviewer' },
+                { label: t('interviewer.aiInterview'), value: 'ai-interview' },
+                ...(isMobile
+                  ? [{ label: t('teacher.label'), value: 'teacher' }]
+                  : []),
+              ];
+              return isNarrow ? (
+                <Select
+                  value={interviewerMode}
+                  onChange={(value) => value && onInterviewerModeChange(value as InterviewerMode)}
+                  data={modeData}
+                  size="xs"
+                  allowDeselect={false}
+                  style={{ flex: 1 }}
+                  classNames={{
+                    input: classes.modeSelect,
+                    wrapper: classes.modeSelectWrapper,
+                    dropdown: classes.modeSelectDropdown,
+                    option: classes.modeSelectOption,
+                  }}
+                />
+              ) : (
+                <SegmentedControl
+                  value={interviewerMode}
+                  onChange={(value) => onInterviewerModeChange(value as InterviewerMode)}
+                  data={modeData}
+                  classNames={{
+                    root: classes.modeSwitcher,
+                  }}
+                />
+              );
+            })()}
             <ActionIcon
               className={classes.trashIconBtn}
               onClick={onResetClick}

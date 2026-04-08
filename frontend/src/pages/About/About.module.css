@@ -1,6 +1,7 @@
 .title {
   color: var(--accent);
   letter-spacing: -0.03em;
+  text-align: center;
 }
 
 .subtitle {
@@ -61,7 +62,7 @@
 .memberName {
   letter-spacing: 0.03em;
   margin-top: 10px;
-  white-space: nowrap;
+  text-align: center;
 }
 
 .roleText {
@@ -109,5 +110,15 @@
 
   .memberCard:nth-last-child(2):nth-child(4n + 1) {
     grid-column-start: 2;
+  }
+}
+
+@media (max-width: 400px) {
+  .memberCard {
+    padding: var(--mantine-spacing-md);
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
   }
 }
