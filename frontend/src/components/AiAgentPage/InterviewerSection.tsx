@@ -107,9 +107,7 @@ export const InterviewerSection = ({
               const modeData = [
                 { label: t('interviewer.label'), value: 'interviewer' },
                 { label: t('interviewer.aiInterview'), value: 'ai-interview' },
-                ...(isMobile
-                  ? [{ label: t('teacher.label'), value: 'teacher' }]
-                  : []),
+                ...(isMobile ? [{ label: t('teacher.label'), value: 'teacher' }] : []),
               ];
               return isNarrow ? (
                 <Select
