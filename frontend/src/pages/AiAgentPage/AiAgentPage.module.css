@@ -15,14 +15,31 @@
   margin: 0 auto;
 }
 
+@keyframes slideInNavbar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @media (max-width: 1170px) {
   :global(body.ai-agent-page .mantine-AppShell-root) {
     --app-shell-navbar-offset: 0rem !important;
+  }
+
+  :global(body.ai-agent-page:not(.sidebar-opened) .mantine-AppShell-root) {
     --app-shell-navbar-width: 0rem !important;
   }
 
-  :global(body.ai-agent-page .mantine-AppShell-navbar) {
+  :global(body.ai-agent-page:not(.sidebar-opened) .mantine-AppShell-navbar) {
     display: none !important;
+  }
+
+  :global(body.ai-agent-page.sidebar-opened .mantine-AppShell-navbar) {
+    z-index: 300 !important;
+    animation: slideInNavbar 0.3s ease !important;
   }
 
   :global(body.ai-agent-page .mantine-Burger-root) {
@@ -111,6 +128,34 @@
   padding: 1px;
   flex: 1;
   height: 30px;
+}
+
+.modeSelect {
+  background-color: var(--panel-soft);
+  border-color: var(--border);
+  color: var(--text-main);
+}
+
+.modeSelectWrapper input:focus,
+.modeSelectWrapper input[data-focus] {
+  border-color: var(--border) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.modeSelectDropdown {
+  background-color: var(--panel-soft);
+  border: 1px solid var(--border);
+}
+
+.modeSelectOption {
+  color: var(--text-main);
+}
+
+.modeSelectOption:hover,
+.modeSelectOption[data-combobox-active] {
+  background-color: var(--accent-subtle);
+  color: var(--accent);
 }
 
 .modeSwitcher [data-active] {

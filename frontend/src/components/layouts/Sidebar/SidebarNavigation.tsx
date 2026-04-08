@@ -4,7 +4,11 @@ import { Link, useLocation } from 'react-router-dom';
 import classes from './Sidebar.module.css';
 import { useTranslation } from 'react-i18next';
 
-export const SidebarNavigation = () => {
+interface SidebarNavigationProps {
+  onClose?: () => void;
+}
+
+export const SidebarNavigation = ({ onClose }: SidebarNavigationProps) => {
   const { pathname } = useLocation();
   const { t } = useTranslation('sidebar');
 
@@ -26,6 +30,7 @@ export const SidebarNavigation = () => {
           active={pathname === path}
           className={classes.navLink}
           variant="filled"
+          onClick={onClose}
         />
       ))}
     </Stack>
