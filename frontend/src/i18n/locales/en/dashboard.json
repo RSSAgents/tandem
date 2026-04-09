@@ -21,7 +21,8 @@
       "description": "Test your understanding of JavaScript `this`",
       "verify": "verify",
       "finish": "finish",
-      "explanation": "explanation"
+      "explanation": "explanation",
+      "question_step": "Question {{current}} of {{total}}"
     },
     "status": {
       "todo": "Start",

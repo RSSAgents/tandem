@@ -2,11 +2,30 @@
   max-width: 700px;
   width: 100%;
   margin: 0 auto;
+  margin-top: 20px;
   padding: 20px;
   height: 740px;
   display: flex;
   flex-direction: column;
   position: relative;
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+.counter {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--mantine-color-dimmed);
 }
 
 .contentStack {
@@ -20,7 +39,7 @@
   width: 100%;
   border-radius: var(--mantine-radius-md);
   border: 1px solid var(--border);
-  background-color: var(--panel);
+  background: var(--panel);
   margin-bottom: var(--mantine-spacing-md);
   flex-shrink: 0;
   position: relative;
@@ -29,6 +48,32 @@
 
 .optionsStack {
   flex-grow: 1;
+}
+
+.optionButton {
+  background-color: var(--panel-soft);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  color: var(--mantine-color-text);
+}
+
+.optionButton[data-selected='true']:not([data-answered='true']) {
+  background-color: var(--mantine-color-brand-filled);
+}
+
+.optionButton[data-result='correct'] {
+  background-color: var(--mantine-color-green-filled) !important;
+  border-color: transparent;
+}
+
+.optionButton[data-result='wrong'] {
+  background-color: var(--mantine-color-red-filled) !important;
+  border-color: transparent;
+}
+
+.optionButton:disabled:not([data-selected='true']) {
+  opacity: 0.5;
+  filter: grayscale(0.8);
 }
 
 .footerArea {
