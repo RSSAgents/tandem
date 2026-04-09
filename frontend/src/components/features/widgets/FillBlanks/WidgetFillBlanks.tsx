@@ -3,7 +3,7 @@ import { ErrorDisplay } from '@/components/shared/ErrorDisplay/ErrorDisplay';
 import { CodeEditor } from '@/components/shared/CodeEditor/CodeEditor';
 import { ResultDisplay } from '@/components/shared/ResultDisplay/ResultDisplay';
 import { useWidgetFillBlanks } from '@/hooks/useWidgetFillBlanks';
-import { Button, Container, Select, Stack, Title, Text, Group, Box } from '@mantine/core';
+import { Button, Container, Select, Stack, Title, Text, Group, Box, Flex } from '@mantine/core';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScoreDisplayModal } from '@/components/shared/ScoreDisplayModal/ScoreDisplayModal';
@@ -22,7 +22,6 @@ const WidgetFillBlanks = () => {
     handleNextQuestion,
     handlePreviousQuestion,
     showResult,
-    isAllAnswered,
     isLastQuestion,
     currentIndex,
     tasks,
@@ -65,60 +64,70 @@ const WidgetFillBlanks = () => {
   });
 
   return (
-    <Container className={classes.container}>
-      <Title order={2}>{t('title')}</Title>
-      <Text size="sm" c="dimmed">
+    <Container size="xl" className={classes.container}>
+      <Title order={2} className={classes.title}>
+        {t('title')}
+      </Title>
+
+      <Text className={classes.subtitle} c="dimmed">
         {t('questionProgress', { current: currentIndex + 1, total: tasks.length })}
       </Text>
 
-      <Box className={classes.editorWrapper}>
-        <CodeEditor />
-      </Box>
+      <Flex className={classes.content}>
+        <Box className={classes.editorWrapper}>
+          <CodeEditor />
+        </Box>
 
-      <Stack mt="lg">
-        {currentTask.payload.statements.map((s, index) => {
-          const lang = i18n.language as 'ru' | 'en';
-          const text = s.text[lang] || s.text.en;
-          const parts = text.split('{{blank}}');
+        <Stack className={classes.statementsWrapper}>
+          {currentTask.payload.statements.map((s, index) => {
+            const lang = i18n.language as 'ru' | 'en';
+            const text = s.text[lang] || s.text.en;
+            const parts = text.split('{{blank}}');
 
-          return (
-            <Group key={s.id} className={classes.statement}>
-              <Text className={classes.index}>{index + 1}.</Text>
-              <Text span>{parts[0]}</Text>
+            return (
+              <Group key={s.id} className={classes.statement}>
+                <Text className={classes.index}>{index + 1}.</Text>
+                <Text span>{parts[0]}</Text>
 
-              <Select
-                data={(s.options[lang] || s.options.en).map((opt, index) => ({
-                  value: String(index),
-                  label: opt,
-                }))}
-                value={
-                  answers[currentTask.id]?.[s.id] !== undefined
-                    ? String(answers[currentTask.id][s.id])
-                    : null
-                }
-                onChange={(val) => handleChange(s.id, val)}
-                classNames={{
-                  input: classes[getSelectStatus(s.id)],
-                }}
-                disabled={showResult}
-              />
+                <Select
+                  data={(s.options[lang] || s.options.en).map((opt, index) => ({
+                    value: String(index),
+                    label: opt,
+                  }))}
+                  value={
+                    answers[currentTask.id]?.[s.id] !== undefined
+                      ? String(answers[currentTask.id][s.id])
+                      : null
+                  }
+                  onChange={(val) => handleChange(s.id, val)}
+                  className={classes.select}
+                  classNames={{
+                    input: classes[getSelectStatus(s.id)],
+                  }}
+                  disabled={showResult}
+                />
 
-              <Text span>{parts[1]}</Text>
-            </Group>
-          );
-        })}
-      </Stack>
+                <Text span>{parts[1]}</Text>
+              </Group>
+            );
+          })}
+        </Stack>
+      </Flex>
 
-      <Group mt="lg">
-        <Button disabled={currentIndex === 0} onClick={handlePreviousQuestion}>
+      <Group className={classes.actionButtons}>
+        <Button
+          className={classes.btn}
+          disabled={currentIndex === 0}
+          onClick={handlePreviousQuestion}
+        >
           {t('buttons.previous')}
         </Button>
 
-        <Button disabled={!isAllAnswered || showResult} onClick={onCheckClick}>
+        <Button className={classes.btn} disabled={showResult} onClick={onCheckClick}>
           {t('buttons.checkResult')}
         </Button>
 
-        <Button disabled={!showResult} onClick={handleNextQuestion}>
+        <Button className={classes.btn} disabled={isLastQuestion} onClick={handleNextQuestion}>
           {t('buttons.next')}
         </Button>
       </Group>

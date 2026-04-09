@@ -47,7 +47,7 @@ export const Sidebar = ({ user = DEFAULT_USER, onClose, mobileBreakpoint }: Side
         )}
         <UserBlock score={score ?? user.score ?? 0} />
         <SidebarSnailProgress percent={readinessPercentage || 0} />
-        <SidebarNavigation />
+        <SidebarNavigation onClose={onClose} />
       </Box>
       <SidebarScoreInfo />
     </Stack>

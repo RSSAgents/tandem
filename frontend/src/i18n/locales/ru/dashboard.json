@@ -17,7 +17,8 @@
       "description": "Проверьте свои знания о `this` в JavaScript",
       "verify": "Проверить",
       "finish": "Завершить",
-      "explanation": "Пояснение"
+      "explanation": "Пояснение",
+      "question_step": "Вопрос {{current}} из {{total}}"
     },
     "ai_interviewer": {
       "title": "ИИ Интервьюер",

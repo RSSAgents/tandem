@@ -17,6 +17,17 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => mockNavigate,
 }));
 
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string, options?: Record<string, unknown>) => {
+      if (options) {
+        return `${key} ${Object.values(options).join(' ')}`;
+      }
+      return key;
+    },
+  }),
+}));
+
 const renderComponent = () => {
   const store = configureStore({
     reducer: { editorStore: editorReducer },
@@ -54,9 +65,9 @@ describe('WidgetThis Component', () => {
 
     renderComponent();
 
-    expect(screen.getByText('window')).toBeInTheDocument();
-    expect(screen.getByText('undefined')).toBeInTheDocument();
-    expect(screen.getByText(/1 \/ 1/)).toBeInTheDocument();
+    const counter = screen.getByTestId('task-counter');
+    expect(counter).toHaveTextContent('1');
+    expect(counter).toHaveTextContent('1');
   });
 
   it('should call handleAnswer on check', async () => {

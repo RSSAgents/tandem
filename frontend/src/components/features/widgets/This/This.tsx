@@ -76,13 +76,16 @@ export default function WidgetThis() {
   return (
     <Paper className={classes.wrapper} p="xl" radius="xl" withBorder shadow="xl">
       <Stack gap="md" className={classes.contentStack}>
-        <Group justify="space-between">
+        <Group className={classes.header}>
           <Stack gap={0}>
-            <Text size="lg" fw={900} tt="uppercase" lts={1.5}>
+            <Text size="xl" fw={900}>
               "this"
             </Text>
-            <Text size="xs" c="dimmed" fw={700}>
-              {currentIndex + 1} / {tasks.length}
+            <Text className={classes.counter} data-testid="task-counter">
+              {t('widgets.this_quiz.question_step', {
+                current: currentIndex + 1,
+                total: tasks.length,
+              })}
             </Text>
           </Stack>
         </Group>
@@ -94,15 +97,15 @@ export default function WidgetThis() {
         <Stack gap="xs" className={classes.optionsStack}>
           {currentTask?.payload?.options?.map((opt) => {
             const isSelected = selected === opt;
-            let color = isSelected ? 'brand' : 'gray';
-            if (isAnswered && isSelected) color = isCorrect ? 'green' : 'red';
+            const status = !isAnswered || !isSelected ? undefined : isCorrect ? 'correct' : 'wrong';
 
             return (
               <Button
                 key={`${currentTask.id}-${opt}`}
                 className={classes.optionButton}
-                variant={isAnswered && isSelected ? 'filled' : 'outline'}
-                color={color}
+                data-selected={isSelected}
+                data-result={status}
+                variant="unstyled"
                 onClick={() => !isAnswered && setSelected(opt)}
                 disabled={isAnswered && !isSelected}
                 fullWidth

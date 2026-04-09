@@ -10,6 +10,10 @@
   :global(.mantine-AppShell-navbar) {
     max-width: 260px;
   }
+
+  :global(body.sidebar-opened .mantine-AppShell-navbar) {
+    z-index: 300 !important;
+  }
 }
 
 .sidebar {
@@ -23,4 +27,11 @@
 .content {
   flex: 1;
   display: flex;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 199;
 }
